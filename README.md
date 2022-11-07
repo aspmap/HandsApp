@@ -1,4 +1,4 @@
-# Stogram
+# HandsApp
 Аналог Instagram (веб-версия)
 
 Адрес в сети интернет: http://stogram.moscow/
