@@ -1,6 +1,7 @@
 package run.itlife.service;
 
 import run.itlife.dto.PostDto;
+import run.itlife.entity.Likes;
 import run.itlife.entity.Post;
 import java.util.List;
 
@@ -26,5 +27,7 @@ public interface PostService {
     int countSubscribesPosts(String username);
     List<Post> searchTags(String substring);
     int countSearchTags(String substring);
+
+    List<Long> isLikePost(String username);
 
 }

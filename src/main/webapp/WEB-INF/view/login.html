@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Stogram - Вход</title>
+    <title th:text="#{application_name} + ' - ' + #{page_label_login}"></title>
     <link th:href="@{/resources/css/login.css}" rel="stylesheet">
     <link th:href="@{/resources/css/sign-up.css}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -34,39 +34,40 @@
             <div class="form-container">
                 <div class="top">
                     <div class="logo">
-                        <img th:src="@{/resources/img/nav/stogram.png}" alt="Strogram" style="width: 120px;">
+                        <img class="logo_handsapp" th:src="@{/resources/img/nav/stogram.png}" alt="Strogram" style="width: 120px;">
                     </div>
                     <form action="login" method="POST">
                         <div class="form">
                             <div class="input_field">
-                                <input type="text" name="username" placeholder="Имя пользователя" id="username" class="input">
+                                <input type="text" name="username" th:placeholder="#{input_username}" id="username" class="input">
                             </div>
                             <div class="input_field">
-                                <input type="password" name="password" placeholder="Пароль" id="password" class="input">
+                                <input type="password" name="password" th:placeholder="#{input_password}" id="password" class="input">
                             </div>
-                            <button class="deactivate" id="submit" type="submit" disabled>Войти</button>
+                            <button class="deactivate" id="submit" type="submit" disabled><span th:text="#{text_to_come_in}"></span></button>
                         </div>
                     </form>
                     <div class="or">
                         <div class="line"></div>
-                        <p>ИЛИ</p>
+                        <p th:text="#{text_or}"></p>
                         <div class="line"></div>
                     </div>
                     <div class="dif">
                          <div class="fb">
                              <img th:src="@{/resources/img/login/vk.png}" alt="facebook">
-                             <p>Войти через ВКонтакте</p>
+                             <p th:text="#{text_log_in}"></p>
                          </div>
                         <div class="forgot">
-                            <a href="#">Забыли пароль?</a>
+                            <a href="#" th:text="#{text_forgot_password} + '?'"></a>
                         </div>
                     </div>
                 </div>
                 <div class="signup">
-                    <p>У Вас еще нет аккаунта? <a th:href="@{/register}">Зарегистрироваться</a></p>
+                    <p th:text="#{text_you_dont_have_an_account_yet} + '?'"></p>
+                    <a th:href="@{/register}" th:text="#{text_register}"></a>
                 </div>
                 <div class="apps">
-                    <p>Установите приложение</p>
+                    <p th:text="#{text_install_the_app}"></p>
                     <div class="icons">
                         <a href="#">
                             <img th:src="@{/resources/img/login/appstore.png}" alt="appstore">
@@ -82,11 +83,11 @@
     <div class="footer">
         <div class="links">
             <ul>
-                <li><a href="#">О НАС</a></li>
-                <li><a href="#">ПОДДЕРЖКА</a></li>
-                <li><a href="#">API</a></li>
-                <li><a href="#">КОНФИДЕНЦИАЛЬНОСТЬ</a></li>
-                <li><a href="#">УСЛОВИЯ</a></li>
+                <li><a href="#" th:text="#{text_about_us}"></a></li>
+                <li><a href="#" th:text="#{text_support}"></a></li>
+                <li><a href="#" th:text="#{text_api}"></a></li>
+                <li><a href="#" th:text="#{text_confidentiality}"></a></li>
+                <li><a href="#" th:text="#{text_terms}"></a></li>
             </ul>
         </div>
 

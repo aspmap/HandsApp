@@ -18,7 +18,7 @@
             <div class="post">
                 <div class="info">
                     <div class="user">
-                        <p class="comments-logo">Ваши подписки</p>
+                        <p class="comments-logo" th:text="#{text_your_subscriptions}"></p>
                     </div>
                 </div>
             </div>
@@ -37,10 +37,10 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <b class="description-comments-user"><span th:text="${subs.subUserId.username}"></span></b>
-                                                <div>
-                                                    <p th:if="${subs.subUserId.surname != null && subs.subUserId.firstname != null}" class="post-time-comments" th:text="${subs.subUserId.surname} + ' ' + ${subs.subUserId.firstname}"></p>
-                                                </div>
+                                                <a th:href="@{/sub-posts/{user}(user = ${subs.subUserId.username})}">
+                                                    <p th:text="${subs.subUserId.username}" class="username"></p>
+                                                </a>
+                                                <p th:if="${subs.subUserId.surname != null && subs.subUserId.firstname != null}" class="post-time-comments" th:text="${subs.subUserId.surname} + ' ' + ${subs.subUserId.firstname}"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div th:if="${sub.isEmpty()}">
-                            <p class="usersNotFound"  th:text="'У вас нет подписок'"></p>
+                            <p class="usersNotFound"  th:text="#{text_you_dont_have_any_subscriptions}"></p>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
             <div class="post">
                 <div class="info">
                     <div class="user">
-                        <p class="comments-logo">Рекомендации для вас</p>
+                        <p class="comments-logo" th:text="#{text_recommendations_for_you}"></p>
                     </div>
                 </div>
             </div>
@@ -77,10 +77,10 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <b class="description-comments-user"><span th:text="${users.username}"></span></b>
-                                                <div>
-                                                    <p th:if="${users.surname != null && users.firstname != null}" class="post-time-comments" th:text="${users.surname} + ' ' + ${users.firstname}" ></p>
-                                                </div>
+                                                <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
+                                                    <p th:text="${users.username}" class="username"></p>
+                                                </a>
+                                                <p th:if="${users.surname != null && users.firstname != null}" class="post-time-comments" th:text="${users.surname} + ' ' + ${users.firstname}"></p>
                                             </div>
                                         </div>
                                     </div>

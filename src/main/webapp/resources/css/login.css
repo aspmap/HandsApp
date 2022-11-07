@@ -35,6 +35,10 @@ body {
 	margin: 0 auto 35px;
 }
 
+.logo_handsapp {
+	width: 210px !important;
+}
+
 .wrapper .header .form .input_field{
 	margin-bottom: 5px;
 }

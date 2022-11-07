@@ -18,7 +18,7 @@
             <div class="post">
                 <div class="info">
                     <div class="user">
-                        <p class="comments-logo">Подписки</p>
+                        <p class="comments-logo" th:text="#{text_subscriptions}"></p>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div th:if="${sub.isEmpty()}">
-                            <p class="usersNotFound"  th:text="'У пользователя нет подписок'"></p>
+                            <p class="usersNotFound"  th:text="#{text_the_user_has_no_subscriptions}"></p>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
             <div class="post">
                 <div class="info">
                     <div class="user">
-                        <p class="comments-logo">Рекомендации для вас</p>
+                        <p class="comments-logo" th:text="#{text_recommendations_for_you}"></p>
                     </div>
                 </div>
             </div>

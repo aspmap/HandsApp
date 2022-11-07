@@ -47,6 +47,8 @@ public class UserServiceImpl implements UserService {
         user.setRoles(List.of(roleRepository.findByName("USER")));
         user.setCreatedAt(LocalDateTime.now());
         user.setIsActive(true);
+        user.setFirstname(user.getFirstname());
+        user.setSurname(user.getSurname());
         userRepository.save(user);
     }
 

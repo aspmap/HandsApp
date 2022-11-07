@@ -47,16 +47,16 @@
                             <img th:src="@{/resources/img/nav/comment.png}" class="icon" alt="">
                         </a>
                     </div>
-                    <p th:if="${countLikes != 0}" class="likes" th:text="'Нравится: ' + ${countLikes}"></p>
+                    <p th:if="${countLikes != 0}" class="likes" th:text="#{label_likes} + ': ' + ${countLikes}"></p>
                     <b class="description">
                         <span th:text="${post.user.username}"></span>
                     </b>
                     <span class="description" th:text="${post.content}"></span>
-                    <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
+                    <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
 
                     <!-- Comments -->
                     <div class="view-source comments-view">
-                        <a th:href="@{/comment/sub/{postId}(postId = ${post.postId})}" th:each="like, state : ${post.comments}" class="description comments" th:text="${state.last} ? 'Смотреть все комментарии (' + ${state.count} + ')' : ''"></a>
+                        <a th:href="@{/comment/sub/{postId}(postId = ${post.postId})}" th:each="like, state : ${post.comments}" class="description comments" th:text="${state.last} ? #{label_see_all_comments} + ' (' + ${state.count} + ')' : ''"></a>
                     </div>
                 </div>
 
@@ -69,9 +69,9 @@
                                 <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
                             </div>
                         </div>
-                        <input type="text" class="comment-box description" name="commentText"  th:placeholder="'Комментировать как ' + ${user} + '...'">
+                        <input type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'">
                         <br>
-                        <button class="comment-btn">Опубликовать</button>
+                        <button class="comment-btn" th:text="#{button_publish}"></button>
                     </form>
                 </div>
             </div>

@@ -20,9 +20,9 @@
                     <img id="profilePicture" th:src="@{/resources/img/icons/upload.png}">
                 </label>
                 <br>
-                <textarea name="content" class="profile-box description" rows="4" placeholder="Введите текст поста"></textarea>
+                <textarea name="content" class="profile-box description" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>
                 <br>
-                <button type="submit" class="btn btn-outline-dark">Опубликовать пост</button>
+                <button type="submit" class="btn btn-outline-dark" th:text="#{button_publish_a_post}"></button>
             </form>
 
             <!-- Footer -->

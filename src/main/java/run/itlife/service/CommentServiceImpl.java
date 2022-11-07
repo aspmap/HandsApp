@@ -3,6 +3,7 @@ package run.itlife.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import run.itlife.dto.CommentDto;
 import run.itlife.entity.Comment;
 import run.itlife.repository.CommentRepository;
@@ -14,6 +15,7 @@ import static run.itlife.utils.SecurityUtils.ACCESS_DENIED;
 // Уровень обслуживания
 // Класс, реализующий интерфейс, который отвечает за логику создания комментариев
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 
     // сервисы в свою очередь включают репозиторий

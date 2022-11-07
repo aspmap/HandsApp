@@ -66,12 +66,12 @@
                         </div>
                         <a th:href="@{/comment/{postId}(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/comment.png}" class="icon" alt=""></a>
                     </div>
-                    <p th:each="like, state : ${post.postLike}" class="likes" th:text="${state.last} ? 'Нравится: ' + ${state.count} : ''"></p>
+                    <p th:each="like, state : ${post.postLike}" class="likes" th:text="${state.last} ? #{label_likes} + ': ' + ${state.count} : ''"></p>
                     <b class="description">
                         <span th:text="${post.user.username}"></span>
                     </b>
                     <span class="description-normal" th:text="${post.content}"></span>
-                    <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
+                    <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
                 </div>
             </div>
 

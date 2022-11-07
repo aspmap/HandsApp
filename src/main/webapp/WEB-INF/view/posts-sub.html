@@ -21,20 +21,23 @@
                             <img th:unless="${userinfo_sub.photo == null}" th:src="@{'/resources/img/users/' + ${user_sub} + '/profile/' + ${userinfo_sub.photo}}" alt="">
                         </div>
                         <div>
+
+
+
                             <p class="username-main" th:text="${user_sub}"></p>
                             <p class="description-main">
-                                <span th:text="${countPosts} + ' публикаций '"></span>
+                                <span th:text="${countPosts} + ' ' + #{label_publications}"></span>
                                 <a th:href="@{/subscribers_subuser/{user}(user = ${user_sub})}">
-                                    <span th:text="${countSubscribers} + ' подписчиков '"></span>
+                                    <span th:text="${countSubscribers} + ' ' + #{label_subscribers}"></span>
                                 </a>
                                 <a th:href="@{/subscriptions_subuser/{user}(user = ${user_sub})}">
-                                    <span th:text="${countSubscribe} + ' подписок'"></span>
+                                    <span th:text="${countSubscribe} + ' ' + #{label_subscriptions}"></span>
                                 </a>
                             </p>
                         </div>
                     </div>
-                    <a th:if="${isSub == 0 && !user.equals(user_sub)} " th:href="@{/subscription/{user}(user = ${user_sub})}" class="btn btn-outline-dark">Подписаться</a>
-                    <a th:if="${isSub != 0 && !user.equals(user_sub)}" th:href="@{/unsubscription/{user}(user = ${user_sub})}" class="btn btn-outline-danger">Отписаться</a>
+                    <a th:if="${isSub == 0 && !user.equals(user_sub)} " th:href="@{/subscription/{user}(user = ${user_sub})}" class="btn btn-outline-dark" th:text="#{button_subscribe}"></a>
+                    <a th:if="${isSub != 0 && !user.equals(user_sub)}" th:href="@{/unsubscription/{user}(user = ${user_sub})}" class="btn btn-outline-danger" th:text="#{button_unsubscribe}"></a>
                 </div>
             </section>
             <div class="post">
@@ -43,7 +46,7 @@
                         <div class="row">
                             <div class="no_public" th:if="${countPosts == 0}" >
                                 <img th:src="@{'/resources/img/icons/face.png'}" alt="">
-                                <h1 class="h3 mb-3 font-weight-normal no_public">Пока нет публикаций</h1>
+                                <h1 class="h3 mb-3 font-weight-normal no_public" th:text="#{text_no_posts_yet}"></h1>
                             </div>
                             <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
                                 <a th:href="@{/posts_detail_subuser/{user}#post- (user = ${user_sub})} + ${post.postId}">

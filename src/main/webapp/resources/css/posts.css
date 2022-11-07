@@ -41,7 +41,8 @@ body{
 
 .brand-img{
   height: 90%;
-  margin-top: 5px;
+  margin-top: 0px;
+  width: 150px;
 }
 
 .search-box{

@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:include="fragments.html :: header">
-    <title id="pageTitle">Stogram - Профиль</title>
+    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_searching_results}"></title>
 </head>
 
 <!-- Navigation -->
@@ -16,7 +16,7 @@
             <div class="post">
                 <div class="info">
                     <div class="user">
-                        <p class="comments-logo">Найдено пользователей</p>
+                        <p class="comments-logo" th:text="#{text_found_users}"></p>
                         <p class="comments-logo" th:text="'(' + ${countSearchUsers} + ')'"></p>
                     </div>
                 </div>
@@ -50,14 +50,14 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="usersNotFound" th:if="${countSearchUsers == 0}">Пользователи не найдены</p>
+                        <p class="usersNotFound" th:if="${countSearchUsers == 0}" th:text="#{text_users_not_found}"></p>
                     </div>
                 </div>
             </div>
             <div class="post">
                 <div class="info">
                     <div class="user">
-                        <p class="comments-logo">Найдено постов с тегом</p>
+                        <p class="comments-logo" th:text="#{text_found_posts_with_tag}"></p>
                         <p class="comments-logo" th:text="' #' + ${tagUserName}"></p>
                         <p class="comments-logo" th:text="'(' + ${countSearchTags} + ')'"></p>
                     </div>
@@ -78,7 +78,7 @@
                                 </a>
                             </div>
                         </div>
-                        <p class="usersNotFound" th:if="${countSearchTags == 0}" th:text="'Посты с тегом #' + ${tagUserName} + ' не найдены'"></p>
+                        <p class="usersNotFound" th:if="${countSearchTags == 0}" th:text="#{text_posts_with_a_tag} + ' #' + ${tagUserName} + ' ' + #{text_not_found}"></p>
                     </div>
                 </div>
             </div>

@@ -16,7 +16,7 @@
             <div class="post">
                 <div class="info">
                     <div class="user">
-                        <p class="comments-logo">Отчеты об ошибках</p>
+                        <p class="comments-logo" th:text="#{text_bug_reports}"></p>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="post-content">
                     <span class="description-normal" th:text="${bug.bugText}"></span>
-                    <p class="post-time" th:text="${#temporals.format(bug.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
+                    <p class="post-time" th:text="${#temporals.format(bug.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
                 </div>
             </div>
 

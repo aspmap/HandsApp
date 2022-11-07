@@ -106,7 +106,7 @@
     <div class="nav-wrapper">
         <a th:href="@{/}"><img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt=""></a>
         <form class="search-form" method="GET" th:action="@{/search}">
-            <input type="text" class="search-box" name="search" placeholder="Найти">
+            <input type="text" class="search-box" name="search" th:placeholder="#{input_find}">
         </form>
         <div class="nav-items">
             <a class="icon" th:href="@{/}">
@@ -120,10 +120,10 @@
                     <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
                     <ul class="nalumes-nucludem">
                         <li>
-                            <a th:href="@{/post/newImage}">Фото</a>
+                            <a th:href="@{/post/newImage}"><span th:text="#{menu_photo}"></span></a>
                         </li>
                         <li>
-                            <a th:href="@{/post/newVideo}">Видео</a>
+                            <a th:href="@{/post/newVideo}"><span th:text="#{menu_video}"></span></a>
                         </li>
                     </ul>
                 </li>
@@ -135,16 +135,22 @@
                         <img th:unless="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
                         <ul class="nalumes-nucludem">
                             <li>
-                                <a th:href="@{/posts}">Профиль</a>
+                                <a th:href="@{/posts}"><span th:text="#{menu_profile}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/profile_edit/{user}(user = ${user})}">Настройки</a>
+                                <a th:href="@{/profile_edit/{user}(user = ${user})}"><span th:text="#{menu_settings}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/qrcode/}">QR-код</a>
+                                <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/logout}">Выйти</a>
+                                <a th:href="@{/?lang=en}" th:text="#{label_en}"></a>
+                            </li>
+                            <li>
+                                <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
+                            </li>
+                            <li>
+                                <a th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
                             </li>
                         </ul>
                     </li>
@@ -160,7 +166,7 @@
             <img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt="">
         </a>
         <form class="search-form" method="GET" th:action="@{/search}">
-            <input type="text" class="search-box" name="search" placeholder="Найти">
+            <input type="text" class="search-box" name="search" th:placeholder="#{input_find}">
         </form>
         <div class="nav-items">
             <a class="icon" th:href="@{/}">
@@ -174,10 +180,10 @@
                     <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
                     <ul class="nalumes-nucludem">
                         <li>
-                            <a th:href="@{/post/newImage}">Фото</a>
+                            <a th:href="@{/post/newImage}"><span th:text="#{menu_photo}"></span></a>
                         </li>
                         <li>
-                            <a th:href="@{/post/newVideo}">Видео</a>
+                            <a th:href="@{/post/newVideo}"><span th:text="#{menu_video}"></span></a>
                         </li>
                     </ul>
                 </li>
@@ -189,16 +195,22 @@
                         <img th:unless="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
                         <ul class="nalumes-nucludem">
                             <li>
-                                <a th:href="@{/posts}">Профиль</a>
+                                <a th:href="@{/posts}"><span th:text="#{menu_profile}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/profile_edit/{user}(user = ${user})}">Настройки</a>
+                                <a th:href="@{/profile_edit/{user}(user = ${user})}"><span th:text="#{menu_settings}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/qrcode/}">QR-код</a>
+                                <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/logout}">Выйти</a>
+                                <a th:href="@{/?lang=en}" th:text="#{label_en}"></a>
+                            </li>
+                            <li>
+                                <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
+                            </li>
+                            <li>
+                                <a th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
                             </li>
                         </ul>
                     </li>
@@ -212,7 +224,7 @@
 <div class="right-col" th:fragment="right-column">
 
     <!-- Recomendations -->
-    <p class="suggestion-text">Рекомендации для вас</p>
+    <p class="suggestion-text"><span th:text="#{text_recommendations_for_you}"></span></p>
     <div class="profile-card" th:each="users: ${userOnlyList}">
         <div class="profile-pic">
             <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
@@ -230,8 +242,10 @@
 </div>
 
 <!-- Footer -->
-<p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.19.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></p>
-<footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.19.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></footer>
+<p class="text-muted" th:fragment="footer-login">© 2022 <span th:text="#{application_name}"></span> (<span th:text="#{label_version_app}"></span>). <span th:text="#{text_found_an_error}"></span>? <a class="description comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
+</p>
+<footer class="text-muted" th:fragment="footer">© 2022 <span th:text="#{application_name}"></span> (<span th:text="#{label_version_app}"></span>). <span th:text="#{text_found_an_error}"></span>? <a class="description comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
+</footer>
 
 </body>
 </html>

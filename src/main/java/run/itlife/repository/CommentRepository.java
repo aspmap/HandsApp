@@ -17,7 +17,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
             "join post p on p.post_id = c.post_id " +
             "join users u on c.user_id = u.user_id " +
             "where p.post_id = ? " +
-            "order by c.created_at ", nativeQuery = true)
+            "order by c.created_at ", nativeQuery = true) // TODO Попробовать использовать именованные параметры
     List<Comment> sortCommentsByDate(long id);
 
 }

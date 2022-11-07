@@ -26,7 +26,7 @@
                     <div class="modal-dialog modal-md" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Загрузка изображения</h5>
+                                <h5 class="modal-title" id="modalLabel" th:text="#{text_image_upload}"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -35,7 +35,7 @@
                                 <div class="form-group">
                                     <div class="thumbimg ">
                                         <input type="file" name="image" id="image" style="display:none;" accept="image/png, image/gif, image/jpeg">
-                                        <button type="button" onclick="image.click();" class="btn st-cropper-select-btn btn-secondary btn-md">Выберите изображение</button>
+                                        <button type="button" onclick="image.click();" class="btn st-cropper-select-btn btn-secondary btn-md" th:text="#{button_choose_an_image}"></button>
                                         <div class="showimg  d-flex justify-content-center pt-3" >
                                             <div class="row imgdiv" id="imgdiv" style="" >
                                                 <img id="imagecan">
@@ -46,10 +46,10 @@
                             </div>
 
                             <div class="modal-footer d-flex justify-content-center">
-                                <button type="button" onclick="onClickUpload()" class="btn btn-primary st-cropper-upload-btn btn-md">Загрузить
+                                <button type="button" onclick="onClickUpload()" class="btn btn-primary st-cropper-upload-btn btn-md" th:text="#{button_download}">
                                     <i class="fa fa-spinner fa-spin showloading" style="color:white; font-size:12px; display:none;  position:absolute; margin-left: 3px; margin-top: 4px;"></i>
                                 </button>
-                                <button type="button" class="btn btn-secondary btn-md st-cropper-close-btn" data-dismiss="modal">Закрыть</button>
+                                <button type="button" class="btn btn-secondary btn-md st-cropper-close-btn" data-dismiss="modal" th:text="#{button_close}"></button>
                             </div>
                         </div>
                     </div>
@@ -57,36 +57,36 @@
                 <!-- Modal Window End -->
 
                 <div class="info_input post">
-                    <input th:field="*{username}" type="text" class="profile-box-input description" placeholder="Введите логин" readonly>
+                    <input th:field="*{username}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_login}" readonly>
                 </div>
                 <div class="info_input post">
-                    <input th:field="*{password}" type="password" class="profile-box-input description" placeholder="Введите пароль">
+                    <input th:field="*{password}" type="password" class="profile-box-input description" th:placeholder="#{input_enter_password}">
                 </div>
                 <div class="info_input post">
-                    <input th:field="*{surname}" type="text" class="profile-box-input description" placeholder="Введите фамилию">
+                    <input th:field="*{surname}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_last_name}">
                 </div>
                 <div class="info_input post">
-                    <input th:field="*{firstname}" type="text" class="profile-box-input description" placeholder="Введите имя">
+                    <input th:field="*{firstname}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_name}">
                 </div>
                 <br>
-                <textarea th:field="*{info}" class="profile-box description" rows="9" placeholder="Введите информацию о себе"></textarea>
+                <textarea th:field="*{info}" class="profile-box description" rows="9" th:placeholder="#{input_enter_information_about_yourself}"></textarea>
                 <div class="info_input post">
-                    <input th:field="*{www}" type="text" class="profile-box-input description" placeholder="Введите сайт">
+                    <input th:field="*{www}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_site}">
                 </div>
                 <div class="info_input post">
-                    <input th:field="*{email}" type="text" class="profile-box-input description" placeholder="Введите e-mail">
+                    <input th:field="*{email}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_email}">
                 </div>
                 <div class="info_input post">
-                    <input th:field="*{phone}" type="text" class="profile-box-input description" placeholder="Введите телефон">
+                    <input th:field="*{phone}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_phone}">
                 </div>
                 <div class="info_input post">
                     <select class="profile-box-input description" rows="9" th:field="*{sex}">
-                        <option th:value="${sex_male}" th:text="${sex_male.getTitle()}"></option>
-                        <option th:value="${sex_female}" th:text="${sex_female.getTitle()}"></option>
+                        <option th:value="${sex_male}" th:text="#{input_male}"></option>
+                        <option th:value="${sex_female}" th:text="#{input_female}"></option>
                     </select>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-outline-dark">Изменить данные профиля</button>
+                <button type="submit" class="btn btn-outline-dark"><span th:text="#{button_edit_profile_information}"></span></button>
             </form>
 
             <!-- Footer -->

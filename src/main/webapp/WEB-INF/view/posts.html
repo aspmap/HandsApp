@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 
 <head th:include="fragments.html :: header">
-    <title id="pageTitle">Stogram - Профиль</title>
+    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_my_posts}"></title>
 </head>
 
 <!-- Navigation -->
@@ -24,13 +25,13 @@
                         <div>
                             <p class="username-main" th:text="${user}"></p>
                             <p class="description-main">
-                                <span th:text="${countPosts} + ' публикаций '"></span>
-                                <a th:href="@{/subscribers}"><span th:text="${countSubscribers} + ' подписчиков '"></span></a>
-                                <a th:href="@{/subscriptions}"><span th:text="${countSubscribe} + ' подписок'"></span></a>
+                                <span th:text="${countPosts} + ' ' + #{label_publications}"></span>
+                                <a th:href="@{/subscribers}"><span th:text="${countSubscribers} + ' ' + #{label_subscribers}"></span></a>
+                                <a th:href="@{/subscriptions}"><span th:text="${countSubscribe} + ' ' + #{label_subscriptions}"></span></a>
                             </p>
                         </div>
                     </div>
-                    <a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn btn-outline-dark">Редактировать профиль</a>
+                    <a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn btn-outline-dark" th:text="#{button_edit_profile}"></a>
                 </div>
             </section>
             <div class="post">
@@ -39,7 +40,7 @@
                         <div class="row">
                             <div class="no_public" th:if="${countPosts == 0}" >
                                 <img th:src="@{'/resources/img/icons/face.png'}" alt="">
-                                <h1 class="h3 mb-3 font-weight-normal no_public">Пока нет публикаций</h1>
+                                <h1 class="h3 mb-3 font-weight-normal no_public" th:text="#{text_no_posts_yet}"></h1>
                             </div>
                             <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
                                 <a th:href="@{/posts_detail#post-} + ${post.postId}">

@@ -50,6 +50,7 @@ public class PostController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("posts_sub", postService.findSubscribesPosts(username));
         modelMap.put("countPosts", postService.countSubscribesPosts(username));
+        modelMap.put("isYourLike", postService.isLikePost(username)); // TODO как выдернуть id поста??
         return "posts-detail-sub";
     }
 
@@ -83,6 +84,8 @@ public class PostController {
         modelMap.put("posts", postService.sortedPostsByDate(user));
         modelMap.put("user_sub", user);
         modelMap.put("userinfo_sub", userService.findByUsername(user));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("isYourLike", postService.isLikePost(username));
         return "posts-detail-subuser";
     }
 

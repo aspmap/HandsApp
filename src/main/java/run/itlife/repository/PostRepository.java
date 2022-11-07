@@ -2,6 +2,7 @@ package run.itlife.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import run.itlife.entity.Likes;
 import run.itlife.entity.Post;
 
 import java.util.List;
@@ -57,5 +58,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     int countSearchTags(String substring);
 
     List<Post> findByContentLikeIgnoreCase(String substring);
+
+    @Query(value = "select l.post_id from likes l " +
+            "join users u on u.user_id = l.user_id " +
+            "where u.username LIKE ? ", nativeQuery = true)
+    List<Long> isLikePost(String username);
 
 }

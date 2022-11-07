@@ -16,9 +16,9 @@
         <div class="left-col">
             <form method="POST" th:action="@{/post/edit}" th:object="${post}" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{postId}"/>
-                <textarea th:field="*{content}" class="profile-box description" rows="4" placeholder="Введите текст поста"></textarea>
+                <textarea th:field="*{content}" class="profile-box description" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>
                 <br>
-                <button type="submit" class="btn btn-outline-dark">Отредактировать пост</button>
+                <button type="submit" class="btn btn-outline-dark" th:text="#{button_edit_post}"></button>
             </form>
 
             <!-- Footer -->

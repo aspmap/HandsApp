@@ -24,7 +24,7 @@
                     <div class="modal-dialog modal-md" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Загрузка изображения</h5>
+                                <h5 class="modal-title" id="modalLabel" th:text="#{text_image_upload}"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -33,7 +33,7 @@
                                 <div class="form-group">
                                     <div class="thumbimg ">
                                         <input type="file" name="image" id="image" style="display:none;" accept="image/png, image/gif, image/jpeg">
-                                        <button type="button" onclick="image.click();" class="btn st-cropper-select-btn btn-secondary btn-md">Выберите изображение</button>
+                                        <button type="button" onclick="image.click();" class="btn st-cropper-select-btn btn-secondary btn-md" th:text="#{button_choose_an_image}"></button>
                                         <div class="showimg  d-flex justify-content-center pt-3" >
                                             <div class="row imgdiv" id="imgdiv" style="" >
                                                 <img id="imagecan">
@@ -43,19 +43,19 @@
                                 </div>
                             </div>
                             <div class="modal-footer d-flex justify-content-center">
-                                <button type="button" onclick="onClickUpload()" class="btn btn-primary st-cropper-upload-btn btn-md">Загрузить
+                                <button type="button" onclick="onClickUpload()" class="btn btn-primary st-cropper-upload-btn btn-md" th:text="#{button_download}">
                                     <i class="fa fa-spinner fa-spin showloading" style="color:white; font-size:12px; display:none;  position:absolute; margin-left: 3px; margin-top: 4px;"></i>
                                 </button>
-                                <button type="button" class="btn btn-secondary btn-md st-cropper-close-btn" data-dismiss="modal">Закрыть</button>
+                                <button type="button" class="btn btn-secondary btn-md st-cropper-close-btn" data-dismiss="modal" th:text="#{button_close}"></button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Modal Window End -->
 
-                <textarea name="content" class="profile-box description" rows="4" placeholder="Введите текст поста"></textarea>
+                <textarea name="content" class="profile-box description" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>
                 <br>
-                <button type="submit" class="btn btn-outline-dark">Опубликовать пост</button>
+                <button type="submit" class="btn btn-outline-dark" th:text="#{button_publish_a_post}"></button>
             </form>
 
             <!-- Footer -->
