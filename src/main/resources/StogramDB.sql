@@ -41,7 +41,7 @@ CREATE TABLE subscriptions (
 CREATE TABLE likes (
     like_id bigserial PRIMARY KEY,
     user_id bigint REFERENCES users(user_id),
-    post_id bigint REFERENCES post(post_id));
+    post_id bigint REFERENCES post(post_id) ON DELETE CASCADE);
 
 CREATE TABLE post (
     post_id bigserial PRIMARY KEY,
