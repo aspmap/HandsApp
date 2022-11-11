@@ -16,5 +16,6 @@ public interface UserService extends UserDetailsService {
     List<User> getUsersOnly();
     List<User> searchUsers(String substring);
     int countSearchUsers(String substring);
+    void delete_profile(String user);
 
 }

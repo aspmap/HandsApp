@@ -29,18 +29,18 @@ CREATE TABLE role (
     name varchar(50) not null);
 
 CREATE TABLE user_role (
-    user_id bigint REFERENCES users (user_id),
+    user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
     role_id int REFERENCES role(role_id),
     PRIMARY KEY (user_id, role_id));
 
 CREATE TABLE subscriptions (
     sub_id bigserial PRIMARY KEY,
-    user_id bigint REFERENCES users(user_id),
-    user_sub_id bigint REFERENCES users(user_id));
+    user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
+    user_sub_id bigint REFERENCES users(user_id) ON DELETE CASCADE);
 
 CREATE TABLE likes (
     like_id bigserial PRIMARY KEY,
-    user_id bigint REFERENCES users(user_id),
+    user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
     post_id bigint REFERENCES post(post_id) ON DELETE CASCADE);
 
 CREATE TABLE post (
@@ -48,21 +48,21 @@ CREATE TABLE post (
     photo varchar(15),
     extention varchar(5),
     content text NOT NULL,
-    user_id bigint REFERENCES users(user_id),
+    user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone);
 
 CREATE TABLE comment (
     comment_id bigserial PRIMARY KEY,
     post_id bigint REFERENCES post(post_id) ON DELETE CASCADE,
-    user_id bigint REFERENCES users(user_id),
+    user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
     comment_text text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone);
 
 CREATE TABLE bugs (
     bug_id bigserial PRIMARY KEY,
-    user_id bigint REFERENCES users(user_id),
+    user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
     username varchar(150),
     bug_text text,
     created_at timestamp without time zone);
@@ -90,3 +90,50 @@ insert into comment (post_id, comment_text, created_at) values (1, 'Excellent!',
 insert into comment (post_id, comment_text, created_at) values (1, 'Wonderful!', current_timestamp);
 insert into comment (post_id, comment_text, created_at) values (3, 'Disgusting!', current_timestamp);
 insert into comment (post_id, comment_text, created_at) values (3, 'Atrocious!', current_timestamp);
+
+-- Если в БД не была указано каскадное удаление (добавление каскадного удаления для удаления профиля пользователя)
+
+--ALTER TABLE user_role DROP CONSTRAINT user_role_user_id_fkey;
+--ALTER TABLE user_role
+--ADD CONSTRAINT user_role_user_id_fkey FOREIGN KEY (user_id)
+--REFERENCES users(user_id) ON DELETE CASCADE;
+
+--ALTER TABLE subscriptions DROP CONSTRAINT subscriptions_user_sub_id_fkey;
+--ALTER TABLE subscriptions
+--ADD CONSTRAINT subscriptions_user_sub_id_fkey FOREIGN KEY (user_sub_id)
+--REFERENCES users(user_id) ON DELETE CASCADE;
+
+--ALTER TABLE subscriptions DROP CONSTRAINT subscriptions_user_id_fkey;
+--ALTER TABLE subscriptions
+--ADD CONSTRAINT subscriptions_user_id_fkey FOREIGN KEY (user_id)
+--REFERENCES users(user_id) ON DELETE CASCADE;
+
+--ALTER TABLE likes DROP CONSTRAINT likes_user_id_fkey;
+--ALTER TABLE likes
+--ADD CONSTRAINT likes_user_id_fkey FOREIGN KEY (user_id)
+--REFERENCES users(user_id) ON DELETE CASCADE;
+
+--ALTER TABLE likes DROP CONSTRAINT likes_post_id_fkey;
+--ALTER TABLE likes
+--ADD CONSTRAINT likes_post_id_fkey FOREIGN KEY (post_id)
+--REFERENCES post(post_id) ON DELETE CASCADE;
+
+--ALTER TABLE post DROP CONSTRAINT post_user_id_fkey;
+--ALTER TABLE post
+--ADD CONSTRAINT post_user_id_fkey FOREIGN KEY (user_id)
+--REFERENCES users(user_id) ON DELETE CASCADE;
+
+--ALTER TABLE comment DROP CONSTRAINT comment_post_id_fkey;
+--ALTER TABLE comment
+--ADD CONSTRAINT comment_post_id_fkey FOREIGN KEY (post_id)
+--REFERENCES post(post_id) ON DELETE CASCADE;
+
+--ALTER TABLE comment DROP CONSTRAINT comment_user_id_fkey;
+--ALTER TABLE comment
+--ADD CONSTRAINT comment_user_id_fkey FOREIGN KEY (user_id)
+--REFERENCES users(user_id) ON DELETE CASCADE;
+
+--ALTER TABLE bugs DROP CONSTRAINT bugs_user_id_fkey;
+--ALTER TABLE bugs
+--ADD CONSTRAINT bugs_user_id_fkey FOREIGN KEY (user_id)
+--REFERENCES users(user_id) ON DELETE CASCADE;
