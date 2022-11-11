@@ -2,6 +2,7 @@ package run.itlife.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import run.itlife.utils.SecurityUtils;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
+import static run.itlife.utils.SecurityUtils.*;
 
 // Уровень обслуживания
 // Класс, реализующий интерфейс, который отвечает за логику создания пользователей, поиск пользователей
@@ -77,6 +81,13 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.isEmpty(userDto.getWww()))
             user.setWww(userDto.getWww());
         userRepository.save(user);
+    }
+
+    @Override
+    public void delete_profile(String user) {
+       // TODO Добавить проверку юзера
+        Optional<User> username = userRepository.findByUsername(user);
+        userRepository.deleteById(username.get().getUserId());
     }
 
     @Override

@@ -1,14 +1,12 @@
 package run.itlife.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import run.itlife.dto.UserDto;
 import run.itlife.entity.User;
 import run.itlife.enums.Sex;
@@ -63,6 +61,25 @@ public class UserController {
         } catch (EntityExistsException e) {
             return "exist";
         }
+    }
+
+    @GetMapping("/profile_delete/{user}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String profile_delete(ModelMap modelMap, @PathVariable String user){
+        setCommonParams(modelMap, user);
+        return "profile-delete";
+    }
+
+    @PostMapping("/profile_delete/{user}")
+    @PreAuthorize("hasRole('USER')")
+    public String delete_profile(@PathVariable String user){
+        userService.delete_profile(user);
+        //удаляем папки и файлы пользователя
+        File dir_img = new File(context.getRealPath("/resources/img/users/" + user));
+        File dir_video = new File(context.getRealPath("/resources/video/users/" + user));
+        recursiveDelete(dir_img);
+        recursiveDelete(dir_video);
+        return "redirect:/";
     }
 
     @GetMapping("/profile_edit/{user}")
@@ -185,6 +202,19 @@ public class UserController {
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userslist", userService.findAll());
         modelMap.put("userOnlyList", userService.getUsersOnly());
+    }
+
+    public static void recursiveDelete(File file) {
+        if (!file.exists())
+            return;
+
+        if (file.isDirectory()) {
+            for (File f : file.listFiles()) {
+                recursiveDelete(f);
+            }
+        }
+        file.delete();
+        System.out.println("Удаленный файл или папка: " + file.getAbsolutePath());
     }
 
 }

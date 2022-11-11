@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:include="fragments.html :: header">
-    <title id="pageTitle">HandsApp - Редактирование поста</title>
+    <title id="pageTitle">HandsApp - Удаление профиля</title>
 </head>
 
 <!-- Navigation -->
@@ -14,11 +14,10 @@
 <section class="main-post">
     <div class="wrapper-posts">
         <div class="left-col">
-            <form method="POST" th:action="@{/post/edit}" th:object="${post}" enctype="multipart/form-data">
-                <input type="hidden" th:field="*{postId}"/>
-                <textarea th:field="*{content}" class="profile-box description" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>
+            <p class="h3 mb-3 font-weight-normal text-center" th:text="'Внимание! После подтверждения будут удалены все ваши посты, фотографии, лайки, комментарии. Вы уверены?'"></p>
+            <form method="POST" th:action="*{username}" th:object="${userinfo}">
                 <br>
-                <button type="submit" class="btn btn-outline-dark" th:text="#{button_edit_post}"></button>
+                <button type="submit" class="btn btn-outline-danger"><span th:text="#{button_delete_profile_confirm}"></span></button>
             </form>
 
             <!-- Footer -->
