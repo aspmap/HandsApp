@@ -118,15 +118,17 @@ DELETE http://stogram.moscow/api/post/295
 
 Страница пользователя без подписок
 
-![2022-06-11_02-15-12](https://user-images.githubusercontent.com/15989675/173162035-7e5966cb-6fe5-462e-9eab-a91141f508fd.jpg)
+![2022-12-11_16-09-23](https://user-images.githubusercontent.com/15989675/206905853-dcd85916-4795-4070-8738-f49a0cb8144f.jpg)
+
+![2022-12-11_16-13-47](https://user-images.githubusercontent.com/15989675/206905867-8f90f421-6bc6-4792-96fd-b0034deec64c.jpg)
 
 Редактирование профиля
 
-![2022-06-11_02-16-42](https://user-images.githubusercontent.com/15989675/173162059-9fcea065-275c-48cd-8554-d6d594e8c056.jpg)
+![2022-12-11_16-12-18](https://user-images.githubusercontent.com/15989675/206905873-f514dc47-253a-454b-9599-fd446d311a8e.jpg)
 
 Создание поста
 
-![2022-06-11_02-16-59](https://user-images.githubusercontent.com/15989675/173162082-c23c1604-e3c1-4c10-836e-36ffdeb51106.jpg)
+![2022-12-11_16-14-06](https://user-images.githubusercontent.com/15989675/206905885-ffe85b44-8787-46ce-9838-bfff98a3ad6e.jpg)
 
 ![2022-06-11_02-17-23](https://user-images.githubusercontent.com/15989675/173162100-e1d511b5-d6eb-46e4-a581-c821376ea52c.jpg)
 
@@ -136,7 +138,7 @@ DELETE http://stogram.moscow/api/post/295
 
 Страница с постами текущего пользователя
 
-![2022-06-11_02-15-53](https://user-images.githubusercontent.com/15989675/173162151-cfc859ba-fe45-43a7-b04f-141567f019fb.jpg)
+![2022-12-11_16-11-14](https://user-images.githubusercontent.com/15989675/206905905-f1f8a51f-8c6d-4c6b-9b44-66336cf63700.jpg)
 
 Изменение поста
 
@@ -144,7 +146,7 @@ DELETE http://stogram.moscow/api/post/295
 
 Страница с постами по подписке
 
-![2022-06-11_02-18-46](https://user-images.githubusercontent.com/15989675/173162214-bbee91b8-c6ab-4e2b-8b47-b0c7dd8cb7bf.jpg)
+![2022-12-11_16-09-23](https://user-images.githubusercontent.com/15989675/206905928-7cb3ed88-a8fc-4ac8-a67c-8ed057b3431c.jpg)
 
 Страница пользователя на которого можно подписаться или отписаться
 
@@ -152,15 +154,15 @@ DELETE http://stogram.moscow/api/post/295
 
 Страница с подписчиками
 
-![2022-06-11_02-19-34](https://user-images.githubusercontent.com/15989675/173162336-d7ca04f6-51a4-4ebe-9c9a-763c41d45961.jpg)
+![2022-12-11_16-19-44](https://user-images.githubusercontent.com/15989675/206906063-94b7bfbc-e142-495d-a1dd-eaa4fb47716e.jpg)
 
 Страница с подписками
 
-![2022-06-11_02-19-50](https://user-images.githubusercontent.com/15989675/173162357-a3a6e4fa-e4d3-4d0e-af6b-45bdd0242623.jpg)
+![2022-12-11_16-09-55](https://user-images.githubusercontent.com/15989675/206906031-75b605de-0004-4904-b7ed-dd7dd2792818.jpg)
 
 Поиск пользователей и постов по тегам
 
-![2022-06-11_02-20-35](https://user-images.githubusercontent.com/15989675/173162381-a2820b5b-08d2-46fc-b7c3-738bc37b82d5.jpg)
+![2022-12-11_16-10-36](https://user-images.githubusercontent.com/15989675/206905966-ab7f90a1-f2ad-4189-b85c-9910fb08f8e7.jpg)
 
 QR-код страницы пользователя
 
@@ -168,8 +170,8 @@ QR-код страницы пользователя
 
 Страница авторизации
 
-![2022-06-11_02-21-45](https://user-images.githubusercontent.com/15989675/173162409-312c8875-6031-4c17-9dac-276e0a4216a7.jpg)
+![2022-12-11_16-08-54](https://user-images.githubusercontent.com/15989675/206905990-7460c7a7-1508-4504-9248-cb779fba9149.jpg)
 
 Страница регистрации
 
-![2022-06-11_02-22-23](https://user-images.githubusercontent.com/15989675/173162439-5eb72aa2-ebea-4641-a609-48ac8d217eb5.jpg)
+![2022-12-11_16-18-36](https://user-images.githubusercontent.com/15989675/206906008-748b61e3-5c4f-46ac-9309-cc375f70d205.jpg)
