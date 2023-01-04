@@ -59,22 +59,22 @@
 
 Выборка постов по ключевому слову
 
-GET http://stogram.moscow/api/post?search=москва
+GET http://handsapp.online/api/post?search=москва
 
 
 Выборка всех постов
 
-GET http://stogram.moscow/api/post
+GET http://handsapp.online/api/post
 
 
 Поиск поста по ID
 
-GET http://stogram.moscow/api/post/284
+GET http://handsapp.online/api/post/284
 
 
 Создание поста
 
-POST http://stogram.moscow/api/post/
+POST http://handsapp.online/api/post/
 
 Пример запроса
 
@@ -93,7 +93,7 @@ POST http://stogram.moscow/api/post/
 
 Редактирование поста
 
-PUT http://stogram.moscow/api/post/294
+PUT http://handsapp.online/api/post/294
 
 Пример запроса
 
@@ -112,7 +112,7 @@ PUT http://stogram.moscow/api/post/294
 
 Удаление поста
 
-DELETE http://stogram.moscow/api/post/295
+DELETE http://handsapp.online/api/post/295
 
 
 :iphone: **Внешний вид приложения на текущий момент:**
