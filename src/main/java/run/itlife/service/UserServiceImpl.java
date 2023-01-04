@@ -120,16 +120,11 @@ public class UserServiceImpl implements UserService {
             UserDto dtoOne = new UserDto();
             usersString = splitUsers.get(i).split(",");
             int usersStringLength = usersString.length;
-            if(usersStringLength > 0)
-                dtoOne.setIsSub(usersString[0]);
-            if(usersStringLength > 1)
-                dtoOne.setUsername(usersString[1]);
-            if(usersStringLength > 2)
-                dtoOne.setPhoto(usersString[2]);
-            if(usersStringLength > 3)
-                dtoOne.setFirstname(usersString[3]);
-            if(usersStringLength > 4)
-                dtoOne.setSurname(usersString[4]);
+            dtoOne.setIsSub(usersString[0]);
+            dtoOne.setUsername(usersString[1].trim());
+            dtoOne.setPhoto(usersString[2].trim());
+            dtoOne.setFirstname(usersString[3].trim());
+            dtoOne.setSurname(usersString[4].trim());
             dto.add(dtoOne);
         }
         return dto;

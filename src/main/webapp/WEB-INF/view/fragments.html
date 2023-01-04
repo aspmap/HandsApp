@@ -228,7 +228,7 @@
     <div class="profile-card" th:each="users: ${usersOnlyKey}">
         <div class="profile-pic">
             <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
-                <img th:if="${users.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                <img th:if="${users.photo == null || users.photo == ''}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                 <img th:unless="${users.photo == null}" th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
             </a>
         </div>

@@ -41,7 +41,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "(select count(s.sub_id) from subscriptions s " +
             "join users u2 on u2.user_id = s.user_sub_id " +
             "join users u1 on u1.user_id = s.user_id " +
-            "where u1.username = ? and u2.username = u.username) isSub, u.username, u.photo, u.firstname, u.surname " +
+            "where u1.username = ? and u2.username = u.username) isSub, CONCAT(u.username, ' ') as username, CONCAT(u.photo, ' ') as photo, CONCAT(u.firstname, ' ') as firstname, CONCAT(u.surname, ' ') as surname " +
             "from users u " +
             "join user_role ur on ur.user_id = u.user_id " +
             "join role r on r.role_id = ur.role_id " +
