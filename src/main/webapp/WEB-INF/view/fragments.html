@@ -233,11 +233,14 @@
             </a>
         </div>
         <div>
+            <div>
             <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
-                <p th:text="${users.username}" class="username"></p>
+                <span th:text="${users.username}" class="username"></span>
             </a>
-            <p th:if="${users.surname != null && users.firstname != null}" th:text="${users.surname} + ' ' + ${users.firstname}" class="sub-text"></p>
-             <a th:if="${users.isSub == '0'}" th:href="@{/subscription_fr/{user}(user = ${users.username})}" class="sub-btn" th:text="#{button_subscribe}"></a>
+            <a th:if="${users.isSub == '0'}" th:href="@{/subscription_fr/{user}(user = ${users.username})}" class="sub-btn" th:text="#{button_subscribe}"></a>
+            </div>
+                <p th:if="${users.surname != null && users.firstname != null}" th:text="${users.surname} + ' ' + ${users.firstname}" class="sub-text"></p>
+
         </div>
     </div>
 </div>
