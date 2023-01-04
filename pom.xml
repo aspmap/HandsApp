@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>run.itlife</groupId>
-  <artifactId>Stogram</artifactId>
+  <artifactId>HandsApp</artifactId>
   <version>1.1-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>Stogram Maven Webapp</name>
+  <name>HandsApp Maven Webapp</name>
   <url>http://www.example.com</url>
 
   <properties>
@@ -146,7 +146,7 @@
   </dependencies>
 
   <build>
-    <finalName>Stogram</finalName>
+    <finalName>HandsApp</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>

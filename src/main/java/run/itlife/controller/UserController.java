@@ -202,6 +202,7 @@ public class UserController {
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userslist", userService.findAll());
         modelMap.put("userOnlyList", userService.getUsersOnly());
+        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
     }
 
     public static void recursiveDelete(File file) {

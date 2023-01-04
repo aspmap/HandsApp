@@ -36,6 +36,13 @@ public class SubscriptionsController {
         return "posts-sub";
     }
 
+    @GetMapping("/subscription_fr/{user}")
+    @PreAuthorize("hasRole('USER')")
+    public String subscribe_from_recommendations(ModelMap modelMap, @PathVariable String user){
+        subscriptionsService.createSub(user);
+        return "redirect:/posts";
+    }
+
     @GetMapping("/subscription/{user}")
     @PreAuthorize("hasRole('USER')")
     public String subscribe(@PathVariable String user){

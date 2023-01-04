@@ -257,6 +257,7 @@ public class PostController {
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userOnlyList", userService.getUsersOnly());
+        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
         modelMap.put("contextPath", context.getContextPath());
     }
 

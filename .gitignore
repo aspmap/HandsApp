@@ -9,6 +9,7 @@ build/
 src/main/gen
 target/
 src/main/webapp/resources/img/users
+src/main/webapp/resources/video
 
 # Compiled class file
 *.class

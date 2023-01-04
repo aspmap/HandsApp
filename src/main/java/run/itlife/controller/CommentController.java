@@ -118,6 +118,7 @@ public class CommentController {
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userslist", userService.findAll());
         modelMap.put("userOnlyList", userService.getUsersOnly());
+        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
     }
 
 }

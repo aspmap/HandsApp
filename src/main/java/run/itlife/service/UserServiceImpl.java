@@ -2,7 +2,6 @@ package run.itlife.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,10 +15,9 @@ import javax.persistence.EntityExistsException;
 import org.springframework.transaction.annotation.Transactional;
 import run.itlife.utils.SecurityUtils;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static run.itlife.utils.SecurityUtils.*;
 
 // Уровень обслуживания
 // Класс, реализующий интерфейс, который отвечает за логику создания пользователей, поиск пользователей
@@ -110,7 +108,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsersOnly() {
-        return userRepository.getUsersOnly();
+         return userRepository.getUsersOnly();
+    }
+
+    @Override
+    public ArrayList<UserDto> getUsersOnlyKey(String currentUsername) {
+        ArrayList<UserDto> dto = new ArrayList<>();
+        ArrayList<String> splitUsers = userRepository.getUsersOnlyKey(currentUsername);
+        String[] usersString = null;
+        for (int i = 0; i < splitUsers.size(); i++) {
+            UserDto dtoOne = new UserDto();
+            usersString = splitUsers.get(i).split(",");
+            int usersStringLength = usersString.length;
+            if(usersStringLength > 0)
+                dtoOne.setIsSub(usersString[0]);
+            if(usersStringLength > 1)
+                dtoOne.setUsername(usersString[1]);
+            if(usersStringLength > 2)
+                dtoOne.setPhoto(usersString[2]);
+            if(usersStringLength > 3)
+                dtoOne.setFirstname(usersString[3]);
+            if(usersStringLength > 4)
+                dtoOne.setSurname(usersString[4]);
+            dto.add(dtoOne);
+        }
+        return dto;
     }
 
     @Override

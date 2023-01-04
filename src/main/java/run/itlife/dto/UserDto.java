@@ -14,6 +14,16 @@ public class UserDto {
     private String phone;
     private String sex;
 
+    private String isSub;
+
+    public String getIsSub() {
+        return isSub;
+    }
+
+    public void setIsSub(String isSub) {
+        this.isSub = isSub;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -101,5 +111,6 @@ public class UserDto {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
 
 }
