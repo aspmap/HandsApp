@@ -16,7 +16,7 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
 
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.register(WebConfig.class);
-        ServletRegistration.Dynamic dispatcher = container.addServlet("StogramDispatcher", new DispatcherServlet(context));
+        ServletRegistration.Dynamic dispatcher = container.addServlet("HandsAppDispatcher", new DispatcherServlet(context));
         //DispatcherServlet - его задача обрабатывать запросы
         //Класс DispatcherServlet является центральным сервлетом, который получает запросы и направляет их соответствующим контроллерам
         //DispatcherServlet создается вместо web.xml

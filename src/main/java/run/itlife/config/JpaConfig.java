@@ -22,7 +22,7 @@ import java.util.Properties;
 @EnableJpaRepositories("run.itlife.repository")
 public class JpaConfig {
 
-    private static final String URL = "jdbc:postgresql://127.0.0.1:5432/Stogram";
+    private static final String URL = "jdbc:postgresql://127.0.0.1:5432/HandsApp";
     private static final String LOGIN = "postgres";
     private static final String PASSWORD = "NtCn0db4";
 

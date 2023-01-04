@@ -52,6 +52,7 @@ public class BugsController {
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userOnlyList", userService.getUsersOnly());
+        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
     }
 
 }
