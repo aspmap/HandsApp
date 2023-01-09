@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import run.itlife.dto.BugsDto;
 import run.itlife.entity.Bugs;
+import run.itlife.entity.User;
 import run.itlife.repository.BugsRepository;
 import run.itlife.repository.UserRepository;
 import run.itlife.utils.SecurityUtils;
@@ -34,6 +35,19 @@ public class BugsServiceImpl implements BugsService {
         bugs.setUserId(userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username)));
         bugs.setCreatedAt(LocalDateTime.now());
+        bugsRepository.save(bugs);
+    }
+
+    @Override
+    public void createFromKafka(BugsDto bugsDto) {
+        Bugs bugs = new Bugs();
+        String username = bugsDto.getUsername();
+        User userId = userRepository.findByUsername(username).orElseThrow();
+        bugs.setUsername(bugsDto.getUsername());
+        bugs.setBugText(bugsDto.getBugText());
+        bugs.setUserId(userId);
+        LocalDateTime localdatetime = LocalDateTime.parse(bugsDto.getCreatedAtText());
+        bugs.setCreatedAt(localdatetime);
         bugsRepository.save(bugs);
     }
 
