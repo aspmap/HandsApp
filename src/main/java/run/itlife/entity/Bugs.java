@@ -22,6 +22,16 @@ public class Bugs {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public User getUserId() {
         return userId;
     }

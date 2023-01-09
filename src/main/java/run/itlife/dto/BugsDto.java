@@ -1,20 +1,60 @@
 package run.itlife.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import run.itlife.entity.User;
 import java.time.LocalDateTime;
 
+@JsonAutoDetect
 public class BugsDto {
-
+    @JsonIgnore
     private Long bugId;
-    private User userId;
+
+    private Long userId;
     private String bugText;
+
+    @JsonIgnore
     private LocalDateTime createdAt;
 
-    public User getUserId() {
+    private String createdAtText;
+
+    private String username;
+
+
+    public String getCreatedAtText() {
+        return createdAtText;
+    }
+
+    public void setCreatedAtText(String createdAtText) {
+        this.createdAtText = createdAtText;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
+
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(User  userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -34,11 +74,4 @@ public class BugsDto {
         this.bugText = bugText;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }

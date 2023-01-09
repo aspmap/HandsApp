@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:include="fragments.html :: header">
-    <title id="pageTitle">Stogram - Ошибки</title>
+    <title id="pageTitle">HandsApp - Ошибки</title>
 </head>
 
 <!-- Navigation -->
@@ -24,7 +24,10 @@
             <div class="post" th:each="bug: ${bugs}" th:id="'bugs-' + ${bug.bugId}">
                 <div class="info">
                     <div class="user">
-                        <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${bug.userId.username} + '/profile/' + ${bug.userId.photo}}" alt=""></div>
+                        <div class="profile-pic">
+                            <img th:if="${bug.userId.photo == null || bug.userId.photo == ''}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                            <img th:unless="${bug.userId.photo == null}" th:src="@{'/resources/img/users/' + ${bug.userId.username} + '/profile/' + ${bug.userId.photo}}" alt="">
+                        </div>
                         <p th:text="${bug.userId.username}" class="username"></p>
                     </div>
                 </div>
