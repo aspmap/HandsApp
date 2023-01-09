@@ -15,6 +15,7 @@
 2. Apache Tomcat 9.0.37
 3. Java 15.0.1
 4. PostgreSQL 12
+5. Apache Kafka 3.3.1
 
 :computer: **Разворачивание и запуск проекта:**
 1. Клонируем проект: git clone https://github.com/pavlov150/HandsApp.git
