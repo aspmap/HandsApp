@@ -16,6 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username); // Возвращает юзера
 
+    User findByUsername(User user); // Возвращает юзера
+
     @Query(value = "select * from users u " +
             "join user_role ur on ur.user_id = u.user_id " +
             "join role r on r.role_id = ur.role_id " +

@@ -51,7 +51,7 @@ public class PostController {
         modelMap.put("posts_sub", postService.findSubscribesPosts(username));
         modelMap.put("countPosts", postService.countSubscribesPosts(username));
         modelMap.put("isYourLike", postService.isLikePost(username)); // TODO как выдернуть id поста??
-        return "posts-detail-sub";
+        return "posts/posts-detail-sub";
     }
 
     //@RequestMapping(value = "/posts_detail", method = RequestMethod.GET)
@@ -62,7 +62,7 @@ public class PostController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("posts", postService.sortedPostsByDate(username));
         modelMap.put("countLikes", likesService.countLikesByUsername(username));
-        return "posts-detail";
+        return "posts/posts-detail";
     }
 
     @GetMapping("/posts")
@@ -74,7 +74,7 @@ public class PostController {
         modelMap.put("countPosts", postService.countPosts(username));
         modelMap.put("countSubscribe", subscriptionsService.countSubscribe(username));
         modelMap.put("countSubscribers", subscriptionsService.countSubscribers(username));
-        return "posts";
+        return "posts/posts";
     }
 
     @GetMapping("/posts_detail_subuser/{user}")
@@ -86,14 +86,14 @@ public class PostController {
         modelMap.put("userinfo_sub", userService.findByUsername(user));
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("isYourLike", postService.isLikePost(username));
-        return "posts-detail-subuser";
+        return "posts/posts-detail-subuser";
     }
 
     @GetMapping("/post/newVideo")
     @PreAuthorize("hasRole('USER')")
     public String postNewVideo(ModelMap modelMap) {
         setCommonParams(modelMap);
-        return "post-new-video";
+        return "posts/post-new-video";
     }
 
     @PostMapping("/post/newVideo")
@@ -133,12 +133,12 @@ public class PostController {
                     stream.close();
                     return "redirect:/post/" + postId;
                 }
-                return "error";
+                return "messages-templates/error";
             } catch (Exception e) {
-                return "error";
+                return "messages-templates/error";
             }
         } else {
-            return "error";
+            return "messages-templates/error";
         }
     }
 
@@ -146,7 +146,7 @@ public class PostController {
     @PreAuthorize("hasRole('USER')")
     public String postNewImage(ModelMap modelMap) {
         setCommonParams(modelMap);
-        return "post-new-img";
+        return "posts/post-new-img";
     }
 
     @PostMapping("/post/newImage")
@@ -184,10 +184,10 @@ public class PostController {
                 stream.close();
                 return "redirect:/post/" + postId;
             } catch (Exception e) {
-                return "error";
+                return "messages-templates/error";
             }
         } else {
-            return "error";
+            return "messages-templates/error";
         }
     }
 
@@ -197,7 +197,7 @@ public class PostController {
         setCommonParams(modelMap);
         postService.checkAuthority(postId);
         modelMap.put("post", postService.getAsDto(postId));
-        return "post-edit";
+        return "posts/post-edit";
     }
 
     @PostMapping("/post/edit")
@@ -220,7 +220,7 @@ public class PostController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("countLikes", likesService.countLikesByPostId(id));
         modelMap.put("isLike", likesService.isLikePostForCurrentUser(id, username));
-        return "post-view-sub";
+        return "posts/post-view-sub";
     }
 
     @GetMapping("/post/{id}")
@@ -233,7 +233,7 @@ public class PostController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("countLikes", likesService.countLikesByPostId(id));
         modelMap.put("isLike", likesService.isLikePostForCurrentUser(id, username));
-        return "post-view";
+        return "posts/post-view";
     }
 
     @PostMapping("/post/{id}/delete")

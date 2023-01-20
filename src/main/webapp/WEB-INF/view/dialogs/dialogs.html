@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+  <title id="pageTitle">HandsApp - Диалоги</title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main">
+  <div class="wrapper">
+    <div class="left-col">
+
+      <!-- Dialogs -->
+      <div class="post">
+        <div class="info">
+          <div class="user">
+            <p class="comments-logo" th:text="#{text_dialogs}"></p>
+          </div>
+        </div>
+      </div>
+      <div class="post">
+        <div class="post-content">
+          <div class="view-source comments-view">
+            <div th:each="dialogs_view: ${dialogs}">
+              <div class="media-body">
+                <div class="info-comments">
+                  <div class="user-comments">
+                    <div class="profile-card">
+                      <div class="profile-pic-comments">
+                        <a th:href="@{/messages/{dialogId}(dialogId = ${dialogs_view.dialogId})}">
+                          <img th:if="${dialogs_view.imgDialog == null or dialogs_view.imgDialog == ''}" th:src="@{'/resources/img/icons/avatar_dialog.jpg'}" alt="">
+                          <img th:unless="${dialogs_view.imgDialog == null or dialogs_view.imgDialog == ''}" th:src="@{'/resources/img/dialogs/' + ${dialogs_view.nameDialog} + '/' + ${dialogs_view.imgDialog}}" alt="">
+                        </a>
+                      </div>
+                      <div>
+                        <a th:href="@{/messages/{dialogId}(dialogId = ${dialogs_view.dialogId})}">
+                          <p th:text="${dialogs_view.nameDialog}" class="username"></p>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer th:insert="fragments.html :: footer"></footer>
+
+    </div>
+
+    <!-- Right Column -->
+    <div th:insert="fragments.html :: right-column"></div>
+  </div>
+</section>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -5,8 +5,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 //Маппинг сущностей с БД
@@ -26,6 +28,27 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Dialogs> dialogs; //TODO Здесь List заменил на Set (жертвуя производительностью), т.к. приложение не запускалось и выдывало ошибку MultipleBagFetchException. В будущем доработать
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
+    @OneToMany(mappedBy = "user")
+    private List<Messages> messages;
+
+    @OneToMany(mappedBy = "userId")
+    private List<Bugs> bugs;
+
+    @OneToMany(mappedBy = "userLikeId")
+    private List<Likes> userLike;
+
+    @Column(name = "is_active")
+    private boolean isActive;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     private String username;
 
@@ -47,20 +70,45 @@ public class User implements UserDetails {
 
     private String sex;
 
-    @OneToMany(mappedBy = "user" )
-    private List<Post> posts;
+    public Set<Dialogs> getDialogs() {
+        return dialogs;
+    }
 
-    @OneToMany(mappedBy = "userId" )
-    private List<Bugs> bugs;
+    public void setDialogs(Set<Dialogs> dialogs) {
+        this.dialogs = dialogs;
+    }
 
-    @OneToMany(mappedBy = "userLikeId")
-    private List<Likes> userLike;
+    public List<Messages> getMessages() {
+        return messages;
+    }
 
-    @Column(name = "is_active")
-    private boolean isActive;
+    public void setMessages(List<Messages> messages) {
+        this.messages = messages;
+    }
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<Bugs> getBugs() {
+        return bugs;
+    }
+
+    public void setBugs(List<Bugs> bugs) {
+        this.bugs = bugs;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 
     public User() {
         createdAt = LocalDateTime.now();
@@ -72,14 +120,6 @@ public class User implements UserDetails {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
     }
 
     public List<Likes> getUserLike() {
@@ -225,6 +265,11 @@ public class User implements UserDetails {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    @Override
+    public String toString() {
+        return username;
     }
 
 }

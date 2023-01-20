@@ -63,10 +63,10 @@ public class BugsController {
         try {
             AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(KafkaConfig.class);
             context.getBean(Sender.class).sendMsg(result, keyData);
-            return "message-send";
+            return "messages-templates/message-send";
         }
             catch (KafkaException ke) {
-            return "errorkafka";
+            return "messages-templates/errorkafka";
         }
     }
 
@@ -82,7 +82,7 @@ public class BugsController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String bugNew(ModelMap modelMap) {
         setCommonParams(modelMap);
-        return "bugs-add";
+        return "bugs/bugs-add";
     }
 
     /*@PostMapping("/bug/new")
@@ -99,7 +99,7 @@ public class BugsController {
         modelMap.put("bugs", bugsService.listAllBugs());
         modelMap.put("userslist", userService.findAll());
         setCommonParams(modelMap);
-        return "bugs";
+        return "bugs/bugs";
     }
 
     private void setCommonParams(ModelMap modelMap) {

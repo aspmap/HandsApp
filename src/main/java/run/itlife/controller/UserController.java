@@ -1,7 +1,6 @@
 package run.itlife.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -59,7 +58,7 @@ public class UserController {
             userService.create(user);
             return "redirect:/login";
         } catch (EntityExistsException e) {
-            return "exist";
+            return "messages-templates/exist";
         }
     }
 
@@ -67,7 +66,7 @@ public class UserController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String profile_delete(ModelMap modelMap, @PathVariable String user){
         setCommonParams(modelMap, user);
-        return "profile-delete";
+        return "profile/profile-delete";
     }
 
     @PostMapping("/profile_delete/{user}")
@@ -88,7 +87,7 @@ public class UserController {
         setCommonParams(modelMap, user);
         modelMap.put("sex_male", Sex.MALE);
         modelMap.put("sex_female", Sex.FEMALE);
-        return "profile-edit";
+        return "profile/profile-edit";
     }
 
     @PostMapping("/profile_edit")
@@ -131,7 +130,7 @@ public class UserController {
                 stream.close();
                 return "redirect:/posts/";
             } catch (Exception e) {
-                return "error";
+                return "messages-templates/error";
             }
         } else {
            userService.checkAuthority(userDto.getUserId());
@@ -146,7 +145,7 @@ public class UserController {
         setCommonParams(modelMap);
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("sub", subscriptionsService.findSubscribes(username));
-        return "subscriptions";
+        return "subs/subscriptions";
     }
 
     @GetMapping("/subscribers")
@@ -155,7 +154,7 @@ public class UserController {
         setCommonParams(modelMap);
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("sub", subscriptionsService.findSubscribers(username));
-        return "subscribers";
+        return "subs/subscribers";
     }
 
     @GetMapping("/subscriptions_subuser/{user}")
@@ -163,7 +162,7 @@ public class UserController {
     public String find_Subscribes_subuser(ModelMap modelMap, @PathVariable String user) {
         setCommonParams(modelMap);
         modelMap.put("sub", subscriptionsService.findSubscribes(user));
-        return "subscriptions-subuser";
+        return "subs/subscriptions-subuser";
     }
 
     @GetMapping("/subscribers_subuser/{user}")
@@ -171,7 +170,7 @@ public class UserController {
     public String find_Subscribers_subuser(ModelMap modelMap, @PathVariable String user) {
         setCommonParams(modelMap);
         modelMap.put("sub", subscriptionsService.findSubscribers(user));
-        return "subscribers-subuser";
+        return "subs/subscribers-subuser";
     }
 
     @GetMapping("/search")
@@ -215,7 +214,7 @@ public class UserController {
             }
         }
         file.delete();
-        System.out.println("Удаленный файл или папка: " + file.getAbsolutePath());
+        //System.out.println("Удаленный файл или папка: " + file.getAbsolutePath());
     }
 
 }

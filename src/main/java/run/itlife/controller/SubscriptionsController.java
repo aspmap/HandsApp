@@ -33,7 +33,7 @@ public class SubscriptionsController {
         setCommonParams(modelMap, user);
         setCommonParams(modelMap);
         modelMap.put("isSub", subscriptionsService.isSubscribe(username, user));
-        return "posts-sub";
+        return "posts/posts-sub";
     }
 
     @GetMapping("/subscription_fr/{user}")

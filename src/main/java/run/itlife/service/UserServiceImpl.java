@@ -83,9 +83,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete_profile(String user) {
-       // TODO Добавить проверку юзера
         Optional<User> username = userRepository.findByUsername(user);
-        userRepository.deleteById(username.get().getUserId());
+        if(username.isPresent()) {
+            userRepository.deleteById(username.get().getUserId());
+        }
     }
 
     @Override
@@ -115,7 +116,7 @@ public class UserServiceImpl implements UserService {
     public ArrayList<UserDto> getUsersOnlyKey(String currentUsername) {
         ArrayList<UserDto> dto = new ArrayList<>();
         ArrayList<String> splitUsers = userRepository.getUsersOnlyKey(currentUsername);
-        String[] usersString = null;
+        String[] usersString;
         for (int i = 0; i < splitUsers.size(); i++) {
             UserDto dtoOne = new UserDto();
             usersString = splitUsers.get(i).split(",");

@@ -1,5 +1,9 @@
 package run.itlife.dto;
 
+import run.itlife.entity.Dialogs;
+
+import java.util.Set;
+
 public class UserDto {
 
     private Long userId;
@@ -13,8 +17,16 @@ public class UserDto {
     private String email;
     private String phone;
     private String sex;
-
+    private Set<Dialogs> dialogs;
     private String isSub;
+
+    public Set<Dialogs> getDialogs() {
+        return dialogs;
+    }
+
+    public void setDialogs(Set<Dialogs> dialogs) {
+        this.dialogs = dialogs;
+    }
 
     public String getIsSub() {
         return isSub;
@@ -111,6 +123,5 @@ public class UserDto {
     public void setSex(String sex) {
         this.sex = sex;
     }
-
 
 }

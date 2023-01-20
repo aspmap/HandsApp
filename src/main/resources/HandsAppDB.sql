@@ -8,11 +8,14 @@ drop table if exists role;
 drop table if exists users;
 drop table if exists subscriptions;
 drop table if exists bugs;
+drop table if exists dialogs;
+drop table if exists messages;
+drop table if exists user_dialog;
 
 CREATE TABLE users (
     user_id bigserial PRIMARY KEY,
-    username varchar(150) not null UNIQUE,
-    password varchar(150) not null,
+    username varchar(150) NOT NULL UNIQUE,
+    password varchar(150) NOT NULL,
     surname varchar(150),
     firstname varchar(150),
     photo varchar(50),
@@ -21,12 +24,12 @@ CREATE TABLE users (
     email varchar(50),
     phone varchar(20),
     sex varchar(7),
-    created_at timestamp not null,
+    created_at timestamp NOT NULL,
     is_active boolean);
 
 CREATE TABLE role (
     role_id int PRIMARY KEY,
-    name varchar(50) not null);
+    name varchar(50) NOT NULL);
 
 CREATE TABLE user_role (
     user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
@@ -55,7 +58,7 @@ CREATE TABLE post (
 CREATE TABLE comment (
     comment_id bigserial PRIMARY KEY,
     post_id bigint REFERENCES post(post_id) ON DELETE CASCADE,
-    user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
+    user_id bigint REFERENCES users(user_id),
     comment_text text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone);
@@ -66,6 +69,45 @@ CREATE TABLE bugs (
     username varchar(150),
     bug_text text,
     created_at timestamp without time zone);
+
+CREATE TABLE dialogs (
+    dialog_id bigserial PRIMARY KEY,
+    name_dialog varchar(150),
+    img_dialog  varchar(150),
+    created_at timestamp without time zone);
+
+CREATE TABLE user_dialog (
+    ud_id bigserial PRIMARY KEY,
+    user_id bigint REFERENCES users(user_id),
+    dialog_id bigint REFERENCES dialogs(dialog_id)
+--    UNIQUE (user_id, dialog_id)
+    );
+
+CREATE TABLE messages (
+    message_id bigserial PRIMARY KEY,
+    dialog_id bigint REFERENCES dialogs(dialog_id),
+    user_id bigint REFERENCES users(user_id),
+    message_text text NOT NULL,
+    message_file text,
+    is_read boolean,
+    created_at timestamp without time zone);
+
+insert into dialogs (created_at) values ('2020-12-12 16:10:23'::timestamp);
+insert into dialogs (created_at) values ('2021-12-12 16:10:23'::timestamp);
+insert into dialogs (created_at) values ('2019-12-12 16:10:23'::timestamp);
+insert into dialogs (created_at) values ('2020-12-12 16:10:23'::timestamp);
+
+insert into messages (dialog_id, user_id, message_text, is_read, created_at) values (1, 1, 'Тестовое сообщение', false, '2022-12-12 16:10:23'::timestamp);
+insert into messages (dialog_id, user_id, message_text, is_read, created_at) values (1, 2, 'Тестовое сообщение', false, '2022-12-12 16:10:23'::timestamp);
+insert into messages (dialog_id, user_id, message_text, is_read, created_at) values (2, 1, 'Тестовое сообщение', false, '2022-12-12 16:10:23'::timestamp);
+insert into messages (dialog_id, user_id, message_text, is_read, created_at) values (2, 3, 'Тестовое сообщение', false, '2022-12-12 16:10:23'::timestamp);
+insert into messages (dialog_id, user_id, message_text, is_read, created_at) values (2, 1, 'Тестовое сообщение', false, '2022-12-12 16:10:23'::timestamp);
+insert into messages (dialog_id, user_id, message_text, is_read, created_at) values (2, 3, 'Тестовое сообщение', false, '2022-12-12 16:10:23'::timestamp);
+insert into messages (dialog_id, user_id, message_text, is_read, created_at) values (3, 2, 'Тестовое сообщение', false, '2022-12-12 16:10:23'::timestamp);
+insert into messages (dialog_id, user_id, message_text, is_read, created_at) values (3, 3, 'Тестовое сообщение', false, '2022-12-12 16:10:23'::timestamp);
+insert into messages (dialog_id, user_id, message_text, is_read, created_at) values (4, 2, 'Тестовое сообщение', false, '2022-12-12 16:10:23'::timestamp);
+insert into messages (dialog_id, user_id, message_text, is_read, created_at) values (4, 4, 'Тестовое сообщение', false, '2022-12-12 16:10:23'::timestamp);
+insert into messages (dialog_id, user_id, message_text, is_read, created_at) values (4, 2, 'Тестовое сообщение', false, '2022-12-12 16:10:23'::timestamp);
 
 insert into role values (1, 'ADMIN');
 insert into role values (2, 'USER');
