@@ -99,14 +99,14 @@ public class CommentController {
     @PreAuthorize("hasRole('USER')")
     public String comments(@PathVariable long id, ModelMap modelMap){
         setCommonParams(id, modelMap);
-        return "comments";
+        return "comments/comments";
     }
 
     @GetMapping("/sub/{id}")
     @PreAuthorize("hasRole('USER')")
     public String comments_sub(@PathVariable long id, ModelMap modelMap){
         setCommonParams(id, modelMap);
-        return "comments-sub";
+        return "comments/comments-sub";
     }
 
     private void setCommonParams(long id, ModelMap modelMap) {

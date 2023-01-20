@@ -36,7 +36,8 @@
                             </p>
                         </div>
                     </div>
-                    <a th:if="${isSub == 0 && !user.equals(user_sub)} " th:href="@{/subscription/{user}(user = ${user_sub})}" class="btn btn-outline-dark" th:text="#{button_subscribe}"></a>
+                    <a th:href="@{/dialogs/{usernameCompanion}(usernameCompanion = ${user_sub})}" class="btn btn-outline-dark" th:text="#{button_dialog}"></a>
+                    <a th:if="${isSub == 0 && !user.equals(user_sub)}" th:href="@{/subscription/{user}(user = ${user_sub})}" class="btn btn-outline-dark" th:text="#{button_subscribe}"></a>
                     <a th:if="${isSub != 0 && !user.equals(user_sub)}" th:href="@{/unsubscription/{user}(user = ${user_sub})}" class="btn btn-outline-danger" th:text="#{button_unsubscribe}"></a>
                 </div>
             </section>

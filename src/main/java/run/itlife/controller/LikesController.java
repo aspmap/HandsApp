@@ -24,7 +24,7 @@ public class LikesController {
 
     @GetMapping("/like/{postId}")
     @PreAuthorize("hasRole('USER')")
-    public String create_like(@PathVariable long postId){ // TODO седаль по аналогии как с регистрацией и созданием комментариев
+    public String create_like(@PathVariable long postId){
         likesService.create_like(postId);
         return "redirect:/post/{postId}";
     }
