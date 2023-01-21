@@ -225,4 +225,14 @@ public class PostServiceImpl implements PostService {
         return isLike;
     }
 
+    @Override
+    public List<Post> selectMyLikesPosts(String username) {
+        return postRepository.selectMyLikesPosts(username);
+    }
+
+    @Override
+    public Long countMyLikesPosts(String username) {
+        return postRepository.countMyLikesPosts(username);
+    }
+
 }

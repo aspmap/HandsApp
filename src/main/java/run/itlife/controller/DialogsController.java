@@ -34,6 +34,7 @@ public class DialogsController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("dialogs", dialogsService.findDialogsByUsername(username));
         setCommonParams(modelMap);
+        System.out.println(new DialogsController(userService, dialogsService,messagesService));
         return "dialogs/dialogs";
     }
 

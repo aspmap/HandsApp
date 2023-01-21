@@ -28,5 +28,7 @@ public interface PostService {
     List<Post> searchTags(String substring);
     int countSearchTags(String substring);
     List<Long> isLikePost(String username);
+    List<Post> selectMyLikesPosts(String username);
+    Long countMyLikesPosts(String username);
 
 }

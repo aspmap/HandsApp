@@ -250,6 +250,16 @@ public class PostController {
         return "redirect:/posts_detail";
     }
 
+    @GetMapping("/posts_my_likes")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String posts_my_likes(ModelMap modelMap) {
+        setCommonParams(modelMap);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("posts", postService.selectMyLikesPosts(username));
+        modelMap.put("countPosts", postService.countMyLikesPosts(username));
+        return "posts/posts-my-likes";
+    }
+
     private void setCommonParams(ModelMap modelMap) {
         modelMap.put("users", userService.findAll());
         modelMap.put("userslist", userService.findAll());
