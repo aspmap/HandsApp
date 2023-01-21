@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import static run.itlife.utils.EditImage.resizeImage;
 import static run.itlife.utils.OtherUtils.generateFileName;
+import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
 
 //UserController, отвечающий за логин юзеров и т.д.
 //Создаем в папке view страницу register.html. Далее необходимо сделать, чтобы мы пересылали данные в контроллер.
@@ -65,13 +66,18 @@ public class UserController {
     @GetMapping("/profile_delete/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String profile_delete(ModelMap modelMap, @PathVariable String user){
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!username.equals(user)) {
+            setCommonParams(modelMap);
+            return "messages-templates/404";
+        }
         setCommonParams(modelMap, user);
         return "profile/profile-delete";
     }
 
     @PostMapping("/profile_delete/{user}")
     @PreAuthorize("hasRole('USER')")
-    public String delete_profile(@PathVariable String user){
+    public String delete_profile(ModelMap modelMap, @PathVariable String user){
         userService.delete_profile(user);
         //удаляем папки и файлы пользователя
         File dir_img = new File(context.getRealPath("/resources/img/users/" + user));
@@ -84,6 +90,11 @@ public class UserController {
     @GetMapping("/profile_edit/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String profile_edit(ModelMap modelMap, @PathVariable String user){
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!username.equals(user)) {
+            setCommonParams(modelMap);
+            return "messages-templates/404";
+        }
         setCommonParams(modelMap, user);
         modelMap.put("sex_male", Sex.MALE);
         modelMap.put("sex_female", Sex.FEMALE);
@@ -196,6 +207,7 @@ public class UserController {
     }
 
     private void setCommonParams(ModelMap modelMap) {
+        //setCommonParams(modelMap); //TODO зачем это?
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));

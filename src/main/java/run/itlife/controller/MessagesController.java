@@ -38,6 +38,10 @@ public class MessagesController {
         if(usersOwner.contains(username)) {
             modelMap.put("messages", messagesService.findMessagesByDialogId(dialogId));
         }
+        else {
+            setCommonParams(modelMap);
+            return "messages-templates/404";
+        }
 
         // выводим в заголовке фото и имя собеседника
         if(usersOwner.size() != 0) {
@@ -50,7 +54,8 @@ public class MessagesController {
             }
         }
         else {
-            modelMap.put("userDialogName", "Диалог удален или не существует");
+            setCommonParams(modelMap);
+            return "messages-templates/404";
         }
 
         //выводим в заголовке количество сообщений
