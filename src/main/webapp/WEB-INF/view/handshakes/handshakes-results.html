@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">HandsApp - Результаты поиска связей</title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+
+            <!-- Results -->
+            <div class="post">
+                <div class="info">
+                    <div class="user">
+                        <p class="comments-logo" th:text="#{text_found_handshakes}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="post">
+                <div class="post-content">
+                    <div class="view-source comments-view">
+                        <div class="media-body">
+                            <div class="info-comments">
+                                <div class="user-comments">
+                                    <div class="profile-card">
+                                        <div th:if="${countHandshakes == 0}">
+                                            <b class="description-comments-user"><span th:text="#{text_handshakes_results_not_found1} + ' ' + ${wantedUsername} + ' ' + #{text_handshakes_results_not_found2}"></span></b>
+                                        </div>
+                                        <div th:if="${countHandshakes > 0}">
+                                            <b class="description-comments-user"><span th:text="#{text_handshakes_results_found1} + ' ' + ${wantedUsername} + ' ' + #{text_handshakes_results_found2} + ' ' + ${countHandshakes} + ' ' + #{text_handshakes_results_found3}"></span></b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <p class="text-center">
+                <a th:href="@{/handshakes-search}" th:text="#{text_back_to_search_handshakes}"></a>
+            </p>
+            <br>
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+        </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
+    </div>
+
+</section>
+
+</body>
+</html>
