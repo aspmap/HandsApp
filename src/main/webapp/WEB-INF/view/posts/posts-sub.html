@@ -21,9 +21,6 @@
                             <img th:unless="${userinfo_sub.photo == null}" th:src="@{'/resources/img/users/' + ${user_sub} + '/profile/' + ${userinfo_sub.photo}}" alt="">
                         </div>
                         <div>
-
-
-
                             <p class="username-main" th:text="${user_sub}"></p>
                             <p class="description-main">
                                 <span th:text="${countPosts} + ' ' + #{label_publications}"></span>

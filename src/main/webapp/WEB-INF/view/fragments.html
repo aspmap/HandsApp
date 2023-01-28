@@ -12,6 +12,7 @@
     <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
     <link th:href="@{/resources/css/messages.css}" rel="stylesheet">
     <link th:href="@{/resources/css/menu.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/handshakes.css}" rel="stylesheet">
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
     <title th:include=":: #pageTitle"></title>
@@ -80,6 +81,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.css">
     <link th:href="@{/resources/css/crop.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/handshakes.css}" rel="stylesheet">
     <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
     <link th:href="@{/resources/css/menu.css}" rel="stylesheet">
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
@@ -148,6 +150,9 @@
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
                             </li>
                             <li>
+                                <a sec:authorize="hasRole('ADMIN')" th:href="@{/handshakes-search}"><span th:text="#{menu_handshakes}"></span></a>
+                            </li>
+                            <li>
                                 <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
                             </li>
                             <li>
@@ -212,6 +217,9 @@
                             </li>
                             <li>
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
+                            </li>
+                            <li>
+                                <a sec:authorize="hasRole('ADMIN')" th:href="@{/handshakes-search}"><span th:text="#{menu_handshakes}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
