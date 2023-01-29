@@ -6,6 +6,7 @@ import run.itlife.repository.HandshakeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -29,6 +30,11 @@ public class HandshakeServiceImpl implements HandshakeService {
         List<Long> userSubIdList = new ArrayList<>();
         userSubIdList = handshakeRepository.selectUsersSubId();
         return userSubIdList;
+    }
+
+    @Override
+    public List<String> findUsersById(Long userId) {
+        return handshakeRepository.findUsersById(userId);
     }
 
 }
