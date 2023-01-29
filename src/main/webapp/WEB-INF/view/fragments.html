@@ -150,16 +150,13 @@
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
                             </li>
                             <li>
-                                <a sec:authorize="hasRole('ADMIN')" th:href="@{/handshakes-search}"><span th:text="#{menu_handshakes}"></span></a>
+                                <a th:href="@{/handshakes_search}"><span th:text="#{menu_handshakes}"></span></a>
+                            </li>
+                            <li>
+                                <a th:href="@{/my_world}"><span th:text="#{menu_my_world}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/?lang=en}" th:text="#{label_en}"></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
                             </li>
                             <li>
                                 <a th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
@@ -219,16 +216,13 @@
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
                             </li>
                             <li>
-                                <a sec:authorize="hasRole('ADMIN')" th:href="@{/handshakes-search}"><span th:text="#{menu_handshakes}"></span></a>
+                                <a th:href="@{/handshakes_search}"><span th:text="#{menu_handshakes}"></span></a>
+                            </li>
+                            <li>
+                                <a th:href="@{/my_world}"><span th:text="#{menu_my_world}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/?lang=en}" th:text="#{label_en}"></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
                             </li>
                             <li>
                                 <a th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
@@ -268,8 +262,13 @@
 
 <!-- Footer -->
 <p class="text-muted" th:fragment="footer-login">© 2022-2023 <span th:text="#{application_name}"></span> (<span th:text="#{label_version_app}"></span>). <span th:text="#{text_found_an_error}"></span>? <a class="description comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
+    <br>
+    <span class="text-center" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
 </p>
+
 <footer class="text-muted" th:fragment="footer">© 2022-2023 <span th:text="#{application_name}"></span> (<span th:text="#{label_version_app}"></span>). <span th:text="#{text_found_an_error}"></span>? <a class="description comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
+    <br>
+    <span class="text-center" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
 </footer>
 
 </body>
