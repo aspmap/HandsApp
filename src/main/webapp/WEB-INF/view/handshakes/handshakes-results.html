@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <div class="handshakes">
+            <div class="handshakes" th:if="${calcCountHandshakes.size() != 0}">
                 <div class="handshakes-content">
                     <div class="view-source handshakes-view">
                         <table>
@@ -54,10 +54,9 @@
                                 </div>
                             </tr>
                             <tr>
-                            <div th:each="linkUsersResults, state: ${LinkUsersTree}">
-
-                                    <td>
-                                        <div class="handshakes-tree">
+                            <div th:if="${linkUsersResults.key != '0'}" th:each="linkUsersResults, state: ${LinkUsersTree}">
+                                <td>
+                                    <div class="handshakes-tree">
                                         <div class="handshakes-comments">
                                             <div  class="handshakes-profile-card">
                                                 <div class="profile-pic-handshakes">
@@ -76,26 +75,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    </td>
-                                    <td class="img-position">
-                                        <img class="arrow-size" th:src="@{'/resources/img/nav/arrow-right.png'}" th:if="${!state.last}" alt="">
-                                    </td>
-
-
-
-
-                        </div>
-                             </tr>
+                                </td>
+                                <td class="img-position">
+                                    <img class="arrow-size" th:src="@{'/resources/img/nav/arrow-right.png'}" th:if="${!state.last}" alt="">
+                                </td>
+                            </div>
+                            </tr>
                         </table>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
             <br>
             <p class="text-center">
                 <a th:href="@{/handshakes_search}" th:text="#{text_back_to_search_handshakes}"></a>

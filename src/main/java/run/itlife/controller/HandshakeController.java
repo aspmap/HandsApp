@@ -33,17 +33,6 @@ public class HandshakeController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String handshakes_search(ModelMap modelMap) {
         setCommonParams(modelMap);
-
-        // блокируем страницу для пользователей при обращении напрямую
-        //String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        //User userCheckRole = userService.findByUsername(username);
-        //if(!userCheckRole.getUsername().isEmpty()) {
-        //    for (Role u: userCheckRole.getRoles()) {
-        //        if(u.getName().equals("USER")) {
-        //            return "messages-templates/404";
-        //        }
-        //    }
-        //}
         return "handshakes/handshakes-search";
     }
 
@@ -52,16 +41,6 @@ public class HandshakeController {
     public String handshakes_results(ModelMap modelMap, @RequestParam(required = false) String wantedUsername) {
         setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        // блокируем страницу для пользователей при обращении напрямую
-        //User userCheckRole = userService.findByUsername(username);
-        //if(!userCheckRole.getUsername().isEmpty()) {
-        //    for (Role u: userCheckRole.getRoles()) {
-        //        if(u.getName().equals("USER")) {
-        //            return "messages-templates/404";
-        //        }
-        //    }
-        //}
 
         Long userIdListNew = 0L;
         int countHandshakes = 0;
@@ -85,19 +64,23 @@ public class HandshakeController {
                 userSubIdList = handshakeService.selectUsersSubId();
 
                 // Осуществляем рекурсивный поиск по колонкам
-                int countHandshakesResult = searchWantedUser(userIdList, userIdListNew, currentUserId, i, userSubIdList, wantedUserId, countHandshakes);
-                List<Long> linkUsersResult = searchLinksWantedUser(userIdList, userIdListNew, currentUserId, i, userSubIdList, wantedUserId, countHandshakes, linkUsers);
+                boolean isFirstPass = true;
+                int countHandshakesResult = searchWantedUser(userIdList, userIdListNew, currentUserId, i, userSubIdList, wantedUserId, countHandshakes, isFirstPass);
+                List<Long> linkUsersResult = searchLinksWantedUser(userIdList, userIdListNew, currentUserId, i, userSubIdList, wantedUserId, countHandshakes, isFirstPass, linkUsers);
 
                 // Собираем цепочку связей для визуализации на странице
                 Map<String,String> resultLinkUsers = new HashMap<>();
-                resultLinkUsers = findLinkUsers(linkUsersResult);
+                if(linkUsersResult != null) {
+                    resultLinkUsers = findLinkUsers(linkUsersResult);
+                }
+                else {
+                    resultLinkUsers.put("0", "0");
+                }
 
                 List<Integer> calcCountHandshakesResult = calcCountHandshakes(resultLinkUsers);
 
-
                 modelMap.put("countHandshakes", countHandshakesResult);
                 modelMap.put("wantedUsername", wantedUsername);
-                //modelMap.put("linkUsers", linkUsersResult);
                 modelMap.put("LinkUsersTree", resultLinkUsers);
                 modelMap.put("calcCountHandshakes", calcCountHandshakesResult);
 
@@ -122,8 +105,8 @@ public class HandshakeController {
     private Map<String,String> findLinkUsers(List<Long> linkUsersResult) {
         List<String> findUserByIdLink = null;
         Map<String,String> resultLinkUsers = new HashMap<>();
-        for(int k = 0; k < linkUsersResult.size(); k++) {
-            findUserByIdLink = handshakeService.findUsersById(linkUsersResult.get(k));
+        for(int i = 0; i < linkUsersResult.size(); i++) {
+            findUserByIdLink = handshakeService.findUsersById(linkUsersResult.get(i));
 
             String[] findUserByIdLinkArray = findUserByIdLink.toString().split(",");
             String[] linkUsernameSplit = findUserByIdLinkArray[0].split("\\u005b");
@@ -145,69 +128,84 @@ public class HandshakeController {
         return calcCountHandshakes;
     }
 
-    private int searchWantedUser(List<Long> userIdList, Long userIdListNew, Long initialUser, int i, List<Long> userSubIdList, Long wantedUser, int countHandshakes) {
-        exitCycle: for(i = 0; i < userIdList.size(); i++) {
-            if(countHandshakes == 0) {
-                if(userIdList.get(i) == initialUser) {
-                    userIdListNew = userSubIdList.get(i);
+    private int searchWantedUser(List<Long> userIdList, Long userIdListNew, Long initialUser, int i, List<Long> userSubIdList, Long wantedUser, int countHandshakes, boolean isFirstPass) {
+        mainCycle: for(i = 0; i < userIdList.size(); i++) {
+        if(countHandshakes == 0 && isFirstPass) {
+            if (userIdList.get(i) == initialUser && isFirstPass) {
+                userIdListNew = userSubIdList.get(i);
+                if (userIdListNew == wantedUser) {
                     countHandshakes++;
-                    if(userIdListNew == wantedUser) {
-                        break exitCycle;
-                    }
-                    int countHandshakesResult = searchWantedUser(userIdList, userIdListNew, initialUser, i, userSubIdList, wantedUser, countHandshakes);
-                    return countHandshakesResult;
+                    break mainCycle;
                 }
             }
-            if(countHandshakes > 0 || countHandshakes < 7) {
-                if(userIdListNew == userIdList.get(i)) {
-                    userIdListNew = userSubIdList.get(i);
-                    countHandshakes++;
-                    if (userIdListNew == wantedUser) {
-                        break exitCycle;
-                    }
-                    int countHandshakesResult = searchWantedUser(userIdList, userIdListNew, initialUser, i, userSubIdList, wantedUser, countHandshakes);
-                    return countHandshakesResult;
-                }
-            }
-            if(countHandshakes > 6) {
-                countHandshakes = 0;
-                return countHandshakes;
+            if(i == userIdList.size()-1) {
+                countHandshakes++;
+                isFirstPass = false;
+                i=-1;
+                continue mainCycle;
             }
         }
-        return countHandshakes;
+        if(countHandshakes > 0 && countHandshakes < 7 && !isFirstPass) {
+            if(userIdList.get(i) == initialUser) {
+                userIdListNew = userSubIdList.get(i);
+            }
+            if(userIdListNew == userIdList.get(i)) {
+                userIdListNew = userSubIdList.get(i);
+                countHandshakes++;
+                if (userIdListNew == wantedUser) {
+                    break mainCycle;
+                }
+                int countHandshakesResult = searchWantedUser(userIdList, userIdListNew, initialUser, i, userSubIdList, wantedUser, countHandshakes, isFirstPass);
+                return countHandshakesResult;
+            }
+        }
+        if(countHandshakes > 6) {
+            countHandshakes = 0;
+            return countHandshakes;
+        }
+    }
+    return countHandshakes;
     }
 
-    private List<Long> searchLinksWantedUser(List<Long> userIdList, Long userIdListNew, Long initialUser, int i, List<Long> userSubIdList, Long wantedUser, int countHandshakes, List<Long> linkUsers) {
-
-        exitCycle: for(i = 0; i < userIdList.size(); i++) {
-            if(countHandshakes == 0) {
-                if(userIdList.get(i) == initialUser) {
-                    linkUsers.add(initialUser);
+    private List<Long> searchLinksWantedUser(List<Long> userIdList, Long userIdListNew, Long initialUser, int i, List<Long> userSubIdList, Long wantedUser, int countHandshakes, boolean isFirstPass, List<Long> linkUsers) {
+        linkUsers.add(initialUser);
+        mainCycle: for(i = 0; i < userIdList.size(); i++) {
+            if(countHandshakes == 0 && isFirstPass) {
+                if (userIdList.get(i) == initialUser && isFirstPass) {
                     userIdListNew = userSubIdList.get(i);
-                    linkUsers.add(userIdListNew);
-                    countHandshakes++;
-                    if(userIdListNew == wantedUser) {
-                        break exitCycle;
+                    if (userIdListNew == wantedUser) {
+                        countHandshakes++;
+                        linkUsers.add(userIdListNew);
+                        break mainCycle;
                     }
-                    linkUsers = searchLinksWantedUser(userIdList, userIdListNew, initialUser, i, userSubIdList, wantedUser, countHandshakes, linkUsers);
-                    return linkUsers;
+                }
+                if(i == userIdList.size()-1) {
+                    countHandshakes++;
+                    isFirstPass = false;
+                    i=-1;
+                    continue mainCycle;
                 }
             }
-            if(countHandshakes > 0 || countHandshakes < 7) {
-                if(userIdListNew == userIdList.get(i)) {
+            if(countHandshakes > 0 && countHandshakes < 7 && !isFirstPass) {
+                if(userIdList.get(i) == initialUser) {
                     userIdListNew = userSubIdList.get(i);
+                }
+                if(userIdListNew == userIdList.get(i)) {
                     linkUsers.add(userIdListNew);
+                    userIdListNew = userSubIdList.get(i);
                     countHandshakes++;
+                    linkUsers.add(userIdListNew);
                     if (userIdListNew == wantedUser) {
-                        break exitCycle;
+                        linkUsers.add(userIdListNew);
+                        break mainCycle;
                     }
-                    linkUsers = searchLinksWantedUser(userIdList, userIdListNew, initialUser, i, userSubIdList, wantedUser, countHandshakes, linkUsers);
+                    linkUsers = searchLinksWantedUser(userIdList, userIdListNew, initialUser, i, userSubIdList, wantedUser, countHandshakes, isFirstPass, linkUsers);
                     return linkUsers;
                 }
             }
             if(countHandshakes > 6) {
                 countHandshakes = 0;
-                return linkUsers;
+                return linkUsers = null;
             }
         }
         return linkUsers;
