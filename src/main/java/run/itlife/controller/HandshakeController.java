@@ -130,6 +130,11 @@ public class HandshakeController {
 
     private int searchWantedUser(List<Long> userIdList, Long userIdListNew, Long initialUser, int i, List<Long> userSubIdList, Long wantedUser, int countHandshakes, boolean isFirstPass) {
         mainCycle: for(i = 0; i < userIdList.size(); i++) {
+        //if(!isFirstPass && i == userIdList.size()-1) {
+        //    countHandshakes = 1;
+        //}
+        // TODO Теперь необходимо учесть если исходного юзера больше 6, то нужно как-то счетчик countHandshakes сбрасывать или ввести новый (общий и по каждой цепочке)
+        // TODO Остальное вроде работает правильно
         if(countHandshakes == 0 && isFirstPass) {
             if (userIdList.get(i) == initialUser && isFirstPass) {
                 userIdListNew = userSubIdList.get(i);
