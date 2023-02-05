@@ -54,7 +54,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
     @Query(value = "select u.* from users u " +
-    "where u.username LIKE ? ", nativeQuery = true)
+            "left join user_role ur on u.user_id = ur.user_id " +
+            "left join role r on ur.role_id = r.role_id " +
+    "where u.username LIKE ? AND r.name LIKE 'USER'", nativeQuery = true)
     List<User> searchUsers(String substring);
 
     @Query(value = "select count(u.username) from users u " +
