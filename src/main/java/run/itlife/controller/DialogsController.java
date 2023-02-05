@@ -43,28 +43,27 @@ public class DialogsController {
         setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         byte countDublicatesDialog = dialogsService.checkDuplicateDialogues(username, usernameCompanion);
-        if(countDublicatesDialog == 0) {
+        if (countDublicatesDialog == 0) {
             dialogsService.create(dialogs, usernameCompanion);
         }
-        Long dialogIdByUsers = dialogsService.getDialogIdByUsers(username,usernameCompanion);
+        Long dialogIdByUsers = dialogsService.getDialogIdByUsers(username, usernameCompanion);
         List<String> usersOwner = messagesService.findUsersByDialogId(dialogIdByUsers);
-        if(messagesService.countMessagesInDialog(dialogIdByUsers) != 0) {
-            if(usersOwner.contains(username)) {
+        if (messagesService.countMessagesInDialog(dialogIdByUsers) != 0) {
+            if (usersOwner.contains(username)) {
                 modelMap.put("messages", messagesService.findMessagesByDialogId(dialogIdByUsers));
             }
         }
 
         // выводим в заголовке фото и имя собеседника
-        if(usersOwner.size() != 0) {
-            for (String u: usersOwner) {
-                if(!u.equals(username)) {
+        if (usersOwner.size() != 0) {
+            for (String u : usersOwner) {
+                if (!u.equals(username)) {
                     String userDialogPhoto = messagesService.getUserPhotoByUsername(u);
                     modelMap.put("userDialogName", u);
                     modelMap.put("userDialogPhoto", userDialogPhoto);
                 }
             }
-        }
-        else {
+        } else {
             modelMap.put("userDialogName", "Диалог удален или не существует");
         }
         modelMap.put("countMessagesInDialog", messagesService.countMessagesInDialog(dialogIdByUsers));

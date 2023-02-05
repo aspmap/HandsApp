@@ -52,6 +52,14 @@ public class Bugs {
         return bugText;
     }
 
+    /**
+     * Sets the value of the code property.
+     *
+     * @param bugText
+     *     Текст бага. Возвращаемый тип
+     *     {@link String }
+     *
+     */
     public void setBugText(String bugText) {
         this.bugText = bugText;
     }
@@ -60,6 +68,14 @@ public class Bugs {
         return createdAt;
     }
 
+    /**
+     * Sets the value of the code property.
+     *
+     * @param createdAt
+     *     Дата создания бага. Возвращаемый тип
+     *     {@link LocalDateTime }
+     *
+     */
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
