@@ -11,6 +11,7 @@ import run.itlife.entity.Messages;
 import run.itlife.service.DialogsService;
 import run.itlife.service.MessagesService;
 import run.itlife.service.UserService;
+
 import java.util.List;
 
 @Controller
@@ -35,16 +36,15 @@ public class MessagesController {
         List<String> usersOwner = messagesService.findUsersByDialogId(dialogId);
 
         //выводим сообщения участников
-        if(usersOwner.contains(username)) {
+        if (usersOwner.contains(username)) {
             modelMap.put("messages", messagesService.findMessagesByDialogId(dialogId));
-        }
-        else {
+        } else {
             setCommonParams(modelMap);
             return "messages-templates/404";
         }
 
         // выводим в заголовке фото и имя собеседника
-        if(usersOwner.size() != 0) {
+        if (usersOwner.size() != 0) {
             for (String u : usersOwner) {
                 if (!u.equals(username)) {
                     String userDialogPhoto = messagesService.getUserPhotoByUsername(u);
@@ -52,8 +52,7 @@ public class MessagesController {
                     modelMap.put("userDialogPhoto", userDialogPhoto);
                 }
             }
-        }
-        else {
+        } else {
             setCommonParams(modelMap);
             return "messages-templates/404";
         }
@@ -70,7 +69,7 @@ public class MessagesController {
 
     @PostMapping("messages/create/{dialogId}")
     @PreAuthorize("hasRole('USER')")
-    public String create(Messages messages, @PathVariable Long dialogId){
+    public String create(Messages messages, @PathVariable Long dialogId) {
         messagesService.create(messages, dialogId);
         return "redirect:/messages/" + dialogId;
     }
