@@ -22,6 +22,7 @@ public class HandshakeController {
 
     private final HandshakeService handshakeService;
     private final UserService userService;
+    final short LIMIT_SIZE_HANDSHAKE = 6;
 
     @Autowired
     public HandshakeController(HandshakeService handshakeService, UserService userService) {
@@ -127,7 +128,7 @@ public class HandshakeController {
             if (!isFirstPass) {
                 countMatched = false;
                 for (int j = 0; j < userIdLeftColumnList.size(); j++) {
-                    if (value.size() > 6) {
+                    if (value.size() > LIMIT_SIZE_HANDSHAKE) {
                         value = new ArrayList<>();
                     }
                     if (userIdNextLink == userIdLeftColumnList.get(j)) {
@@ -135,7 +136,7 @@ public class HandshakeController {
                         userIdNextLink = userIdRightColumnList.get(j);
                         key++;
                         value.add(userIdNextLink);
-                        if (value.size() > 6) {
+                        if (value.size() > LIMIT_SIZE_HANDSHAKE) {
                             value = new ArrayList<>();
                             isFirstPass = true;
                             continue firstCycle;
@@ -148,7 +149,7 @@ public class HandshakeController {
                     }
                     if (countMatched) {
                         stopCycle = stopCycle + 1;
-                        if (stopCycle > 6) {
+                        if (stopCycle > LIMIT_SIZE_HANDSHAKE) {
                             return mapUsers;
                         }
                         searchWantedUser(initialUser, wantedUser, userIdNextLink, userIdLeftColumnList, userIdRightColumnList, isFirstPass, value, mapUsers, stopCycle);
