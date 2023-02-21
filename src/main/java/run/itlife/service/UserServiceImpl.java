@@ -49,6 +49,24 @@ public class UserServiceImpl implements UserService {
         user.setRoles(List.of(roleRepository.findByName("USER")));
         user.setCreatedAt(LocalDateTime.now());
         user.setIsActive(true);
+        user.setIsClosed(false);
+        user.setIsHidden(false);
+        user.setIsGoogle(false);
+        user.setFirstname(user.getFirstname());
+        user.setSurname(user.getSurname());
+        userRepository.save(user);
+    }
+
+    public void createGoogleUser(User user) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent())
+            throw new EntityExistsException();
+        user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
+        user.setRoles(List.of(roleRepository.findByName("USER")));
+        user.setCreatedAt(LocalDateTime.now());
+        user.setIsActive(true);
+        user.setIsClosed(false);
+        user.setIsHidden(false);
+        user.setIsGoogle(true);
         user.setFirstname(user.getFirstname());
         user.setSurname(user.getSurname());
         userRepository.save(user);
@@ -126,6 +144,8 @@ public class UserServiceImpl implements UserService {
             dtoOne.setPhoto(usersString[2].trim());
             dtoOne.setFirstname(usersString[3].trim());
             dtoOne.setSurname(usersString[4].trim());
+            dtoOne.setEmail(usersString[5].trim());
+            dtoOne.setIsGoogle(usersString[6].trim());
             dto.add(dtoOne);
         }
         return dto;

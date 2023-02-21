@@ -3,6 +3,7 @@ package run.itlife.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -84,7 +85,8 @@ public class PostServiceImpl implements PostService {
         post.setExtFile(postDto.getExtFile());
         post.setContent(postDto.getContent());
         post.setCreatedAt(LocalDateTime.now());
-        String username = SecurityUtils.getCurrentUserDetails().getUsername();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        //String username = SecurityUtils.getCurrentUserDetails().getUsername();
         post.setUser(userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username)));
         postRepository.save(post);

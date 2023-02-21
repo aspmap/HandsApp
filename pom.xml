@@ -17,7 +17,7 @@
     <maven.compiler.source>15</maven.compiler.source>
     <maven.compiler.target>15</maven.compiler.target>
     <junit.version>4.11</junit.version>
-    <spring-webmvc.version>5.3.16</spring-webmvc.version>
+    <spring-webmvc.version>5.3.25</spring-webmvc.version>
     <postgresql.version>42.3.1</postgresql.version>
     <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
     <thymeleaf-spring5.version>3.0.11.RELEASE</thymeleaf-spring5.version>
@@ -25,9 +25,9 @@
     <spring-data-jpa.version>2.6.1</spring-data-jpa.version>
     <hibernate-core.version>5.6.5.Final</hibernate-core.version>
     <thymeleaf-extras-java8time.version>3.0.4.RELEASE</thymeleaf-extras-java8time.version>
-    <spring-security-core.version>5.6.1</spring-security-core.version>
-    <spring-security-web.version>5.6.1</spring-security-web.version>
-    <spring-security-config.version>5.6.1</spring-security-config.version>
+    <spring-security-core.version>5.8.1</spring-security-core.version>
+    <spring-security-web.version>5.8.1</spring-security-web.version>
+    <spring-security-config.version>5.8.1</spring-security-config.version>
     <thymeleaf-extras-springsecurity5.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity5.version>
     <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
     <commons-fileupload.version>1.4</commons-fileupload.version>
@@ -38,6 +38,8 @@
     <jackson-datatype-jsr310.version>2.13.3</jackson-datatype-jsr310.version>
     <spring-kafka.version>2.9.4</spring-kafka.version>
     <spring-kafka-test.version>2.9.4</spring-kafka-test.version>
+    <spring-security-oauth2-client.version>5.8.1</spring-security-oauth2-client.version>
+    <spring-security-oauth2-jose.version>5.8.1</spring-security-oauth2-jose.version>
   </properties>
 
   <dependencies>
@@ -154,6 +156,16 @@
       <artifactId>spring-kafka-test</artifactId>
       <version>${spring-kafka-test.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-client</artifactId>
+      <version>${spring-security-oauth2-client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-jose</artifactId>
+      <version>${spring-security-oauth2-jose.version}</version>
     </dependency>
   </dependencies>
 

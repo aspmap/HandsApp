@@ -47,6 +47,18 @@ public class User implements UserDetails {
     @Column(name = "is_active")
     private boolean isActive;
 
+    @Column(name = "is_google")
+    private boolean isGoogle;
+
+    @Column(name = "is_hidden")
+    private boolean isHidden;
+
+    @Column(name = "is_closed")
+    private boolean isClosed;
+
+    @Column(name = "last_visit")
+    private LocalDateTime lastVisit;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -69,6 +81,39 @@ public class User implements UserDetails {
     private String phone;
 
     private String sex;
+
+
+    public boolean getIsGoogle() {
+        return isGoogle;
+    }
+
+    public void setIsGoogle(boolean google) {
+        isGoogle = google;
+    }
+
+    public boolean getIsHidden() {
+        return isHidden;
+    }
+
+    public void setIsHidden(boolean hidden) {
+        isHidden = hidden;
+    }
+
+    public boolean getIsClosed() {
+        return isClosed;
+    }
+
+    public void setIsClosed(boolean closed) {
+        isClosed = closed;
+    }
+
+    public LocalDateTime getLastVisit() {
+        return lastVisit;
+    }
+
+    public void setLastVisit(LocalDateTime lastVisit) {
+        this.lastVisit = lastVisit;
+    }
 
     public Set<Dialogs> getDialogs() {
         return dialogs;

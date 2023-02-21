@@ -36,6 +36,12 @@ public class SubscriptionsController {
         return "posts/posts-sub";
     }
 
+    /**
+     * Подписка в рекомендациях
+     * @param modelMap
+     * @param user
+     * @return
+     */
     @GetMapping("/subscription_fr/{user}")
     @PreAuthorize("hasRole('USER')")
     public String subscribe_from_recommendations(ModelMap modelMap, @PathVariable String user){
@@ -53,7 +59,8 @@ public class SubscriptionsController {
     @GetMapping("/unsubscription/{user}")
     @PreAuthorize("hasRole('USER')")
     public String unsubscribe(@PathVariable String user){
-        long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
+        long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
+        //long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
         long subUserId = userService.findByUsername(user).getUserId().longValue();
         subscriptionsService.deleteSubscribeLong(currentUserId, subUserId);
         return "redirect:/sub-posts/{user}";

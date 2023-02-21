@@ -39,10 +39,6 @@
                 </a>
                 <div class="post-content">
                     <div class="reaction-wrapper">
-
-
-
-
                         <div th:if="${!post.postLike.isEmpty()}">
                             <div th:each="likes, state : ${post.postLike}">
                                 <div th:if="${likes.userLikeId.username.equals(userinfo.username) && isYourLike.contains(post.postId)}">
@@ -57,9 +53,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
 
                         <div th:if="${post.postLike.isEmpty()}">
                             <a th:href="@{/like_detail_subuser/{user}/{postId}(postId = ${post.postId}, user = ${post.user.username})}">
@@ -92,7 +85,8 @@
                                 <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
                             </div>
                         </div>
-                        <input type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'">
+                        <input th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'">
+                        <input th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'">
                         <br>
                         <button class="comment-btn" th:text="#{button_publish}"></button>
                     </form>

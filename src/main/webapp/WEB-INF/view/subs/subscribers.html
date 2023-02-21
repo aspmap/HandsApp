@@ -33,12 +33,14 @@
                                             <div class="profile-pic-comments">
                                                 <a th:href="@{/sub-posts/{user}(user = ${subs.currentUserId.username})}">
                                                     <img th:if="${subs.currentUserId.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                    <img th:unless="${subs.currentUserId.photo == null}" th:src="@{'/resources/img/users/' + ${subs.currentUserId.username} + '/profile/' + ${subs.currentUserId.photo}}" alt="">
+                                                    <img th:if="${subs.currentUserId.photo != null and subs.currentUserId.isGoogle == false}" th:src="@{'/resources/img/users/' + ${subs.currentUserId.username} + '/profile/' + ${subs.currentUserId.photo}}" alt="">
+                                                    <img th:if="${subs.currentUserId.photo != null and subs.currentUserId.isGoogle == true}" th:src="${subs.currentUserId.photo}" alt="">
                                                 </a>
                                             </div>
                                             <div>
                                                 <a th:href="@{/sub-posts/{user}(user = ${subs.currentUserId.username})}">
-                                                    <p th:text="${subs.currentUserId.username}" class="username"></p>
+                                                    <p th:if="${subs.currentUserId.isGoogle == false}" th:text="${subs.currentUserId.username}" class="username"></p>
+                                                    <p th:if="${subs.currentUserId.isGoogle == true}" th:text="${subs.currentUserId.email}" class="username"></p>
                                                 </a>
                                                 <p th:if="${subs.currentUserId.surname != null && subs.currentUserId.firstname != null}" class="post-time-comments" th:text="${subs.currentUserId.surname} + ' ' + ${subs.currentUserId.firstname}"></p>
                                             </div>
@@ -72,13 +74,15 @@
                                         <div class="profile-card">
                                             <div class="profile-pic-comments">
                                                 <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
-                                                    <img th:if="${users.photo == null || users.photo == ''}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                    <img th:unless="${users.photo == null}" th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
+                                                    <img th:if="${users.photo == ''}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                    <img th:if="${users.photo != '' and users.isGoogle == 'f'}" th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
+                                                    <img th:if="${users.photo != '' and users.isGoogle == 't'}" th:src="${users.photo}" alt="">
                                                 </a>
                                             </div>
                                             <div>
                                                 <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
-                                                    <span th:text="${users.username}" class="username"></span>
+                                                    <span th:if="${users.isGoogle == 'f'}" th:text="${users.username}" class="username"></span>
+                                                    <span th:if="${users.isGoogle == 't'}" th:text="${users.email}" class="username"></span>
                                                 </a>
                                                 <a th:if="${users.isSub == '0'}" th:href="@{/subscription_fr/{user}(user = ${users.username})}" class="sub-btn" th:text="#{button_subscribe}"></a>
                                                 <p th:if="${users.surname != null && users.firstname != null}" class="post-time-comments" th:text="${users.surname} + ' ' + ${users.firstname}"></p>

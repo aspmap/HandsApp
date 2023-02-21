@@ -24,11 +24,13 @@
                         <div class="profile-pic">
                             <a th:href="@{/sub-posts/{user}(user = ${post.user.username})}">
                                 <img th:if="${post.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                <img th:unless="${post.user.photo == null}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/profile/' + ${post.user.photo}}" alt="">
+                                <img th:if="${post.user.photo != null and post.user.isGoogle == false}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/profile/' + ${post.user.photo}}" alt="">
+                                <img th:if="${post.user.photo != null and post.user.isGoogle == true}" th:src="${post.user.photo}" alt="">
                             </a>
                         </div>
                         <a th:href="@{/sub-posts/{user}(user = ${post.user.username})}">
-                            <p class="username" th:text="${post.user.username}"></p>
+                            <p th:if="${post.user.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
+                            <p th:if="${post.user.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
                         </a>
                     </div>
                     <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/delete_one_post(postId = ${post.postId})}">
@@ -56,7 +58,8 @@
                     </div>
                     <p th:if="${countLikes != 0}" class="likes" th:text="#{label_likes} + ': ' + ${countLikes}"></p>
                     <b class="description">
-                        <span th:text="${post.user.username}"></span>
+                        <span th:if="${post.user.isGoogle == false}" th:text="${post.user.username}"></span>
+                        <span th:if="${post.user.isGoogle == true}" th:text="${post.user.email}"></span>
                     </b>
                     <span class="description" th:text="${post.content}"></span>
                     <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
@@ -76,7 +79,8 @@
                                 <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
                             </div>
                         </div>
-                        <input type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'">
+                        <input th:if="${post.user.isGoogle == false}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'">
+                        <input th:if="${post.user.isGoogle == true}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'">
                         <br>
                         <button class="comment-btn" th:text="#{button_publish}"></button>
                     </form>

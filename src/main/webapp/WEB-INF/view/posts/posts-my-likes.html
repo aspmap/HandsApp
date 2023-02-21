@@ -19,7 +19,8 @@
                     <div class="user-main">
                         <div class="profile-pic-main">
                             <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                            <img th:unless="${userinfo.photo == null}" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${userinfo.username} + '/profile/' + ${userinfo.photo}}" alt="">
+                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
                         </div>
                         <div>
                             <p class="username-main" th:text="#{text_my_likes}"></p>

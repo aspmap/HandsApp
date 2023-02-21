@@ -1,8 +1,12 @@
 package run.itlife.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ResolvableType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +23,11 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.Map;
+
 import static run.itlife.utils.EditImage.resizeImage;
 import static run.itlife.utils.OtherUtils.generateFileName;
-import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
 
 //UserController, отвечающий за логин юзеров и т.д.
 //Создаем в папке view страницу register.html. Далее необходимо сделать, чтобы мы пересылали данные в контроллер.
@@ -29,7 +35,12 @@ import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
 //идти на контроллер для регистрации
 @Controller
 public class UserController {
-
+    private static String authorizationRequestBaseUri = "oauth2/authorization";
+    Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
+    @Autowired
+    private OAuth2AuthorizedClientService authorizedClientService;
+    @Autowired
+    private ClientRegistrationRepository clientRegistrationRepository;
     private final UserService userService;
     private final SubscriptionsService subscriptionsService;
     private final PostService postService;
@@ -44,7 +55,16 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(ModelMap modelMap){
+    public String login(ModelMap model){
+        Iterable<ClientRegistration> clientRegistrations = null;
+        ResolvableType type = ResolvableType.forInstance(clientRegistrationRepository)
+                .as(Iterable.class);
+        if (type != ResolvableType.NONE &&
+                ClientRegistration.class.isAssignableFrom(type.resolveGenerics()[0])) {
+            clientRegistrations = (Iterable<ClientRegistration>) clientRegistrationRepository;
+        }
+        clientRegistrations.forEach(registration -> oauth2AuthenticationUrls.put(registration.getClientName(), authorizationRequestBaseUri + "/" + registration.getRegistrationId()));
+        model.addAttribute("urls", oauth2AuthenticationUrls);
         return "login";
     }
 
@@ -226,7 +246,6 @@ public class UserController {
             }
         }
         file.delete();
-        //System.out.println("Удаленный файл или папка: " + file.getAbsolutePath());
     }
 
 }

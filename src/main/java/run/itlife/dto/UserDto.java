@@ -20,6 +20,16 @@ public class UserDto {
     private Set<Dialogs> dialogs;
     private String isSub;
 
+    private String isGoogle;
+
+    public String getIsGoogle() {
+        return isGoogle;
+    }
+
+    public void setIsGoogle(String isGoogle) {
+        this.isGoogle = isGoogle;
+    }
+
     public Set<Dialogs> getDialogs() {
         return dialogs;
     }

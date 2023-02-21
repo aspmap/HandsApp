@@ -32,13 +32,15 @@
                                             <div class="profile-pic-comments">
                                                 <a th:href="@{/sub-posts/{user}(user = ${results.username})}">
                                                     <img th:if="${results.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                    <img th:unless="${results.photo == null}" th:src="@{'/resources/img/users/' + ${results.username} + '/profile/' + ${results.photo}}" alt="">
+                                                    <img th:if="${results.photo != null and results.isGoogle == false}" th:src="@{'/resources/img/users/' + ${results.username} + '/profile/' + ${results.photo}}" alt="">
+                                                    <img th:if="${results.photo != null and results.isGoogle == true}" th:src="${results.photo}" alt="">
                                                 </a>
                                             </div>
                                             <div>
                                                 <a th:href="@{/sub-posts/{user}(user = ${results.username})}">
                                                     <b class="description-comments-user">
-                                                        <span th:text="${results.username}"></span>
+                                                        <span th:if="${results.isGoogle == false}" th:text="${results.username}"></span>
+                                                        <span th:if="${results.isGoogle == true}" th:text="${results.email}"></span>
                                                     </b>
                                                 </a>
                                                 <div>

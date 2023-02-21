@@ -2,6 +2,7 @@ package run.itlife.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,11 +31,17 @@ public class DialogsServiceImpl implements DialogsService {
 
     @Override
     public void create(Dialogs dialogs, String usernameCompanion) {
-        String username = SecurityUtils.getCurrentUserDetails().getUsername();
+        //String username = SecurityUtils.getCurrentUserDetails().getUsername();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
         User userCompanion = userRepository.findByUsername(usernameCompanion).orElseThrow(() -> new UsernameNotFoundException(usernameCompanion));
         dialogs.setCreatedAt(LocalDateTime.now());
-        dialogs.setNameDialog("Диалог " + username + " и " + userCompanion);
+        if(user.getIsGoogle() == true) {
+            dialogs.setNameDialog("Диалог " + user.getEmail() + " и " + userCompanion);
+        }
+        else {
+            dialogs.setNameDialog("Диалог " + username + " и " + userCompanion);
+        }
         dialogsRepository.save(dialogs);
         Set<User> users = new HashSet<>();
         users.add(user);

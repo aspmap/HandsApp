@@ -21,9 +21,11 @@
                     <div class="user">
                         <div class="profile-pic">
                             <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                            <img th:unless="${userinfo.photo == null}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/profile/' + ${userinfo.photo}}" alt="">
+                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${userinfo.username} + '/profile/' + ${userinfo.photo}}" alt="">
+                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
                         </div>
-                        <p class="username" th:text="${post.user.username}"></p>
+                        <p th:if="${userinfo.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
+                        <p th:if="${userinfo.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
                     </div>
                     <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'">
                         <img th:src="@{/resources/img/nav/delete.png}" class="delete" alt="">
@@ -68,7 +70,8 @@
                     </div>
                     <p th:each="like, state : ${post.postLike}" class="likes" th:text="${state.last} ? #{label_likes} + ': ' + ${state.count} : ''"></p>
                     <b class="description">
-                        <span th:text="${post.user.username}"></span>
+                        <span th:if="${userinfo.isGoogle == false}" th:text="${post.user.username}"></span>
+                        <span th:if="${userinfo.isGoogle == true}" th:text="${post.user.email}"></span>
                     </b>
                     <span class="description-normal" th:text="${post.content}"></span>
                     <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>

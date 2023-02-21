@@ -33,7 +33,8 @@
                 <input type="hidden" th:field="*{postId}"/>
                 <div class="post-content">
                     <b class="description">
-                        <span th:text="${post.user.username}"></span>
+                        <span th:if="${post.user.isGoogle == false}" th:text="${post.user.username}"></span>
+                        <span th:if="${post.user.isGoogle == true}" th:text="${post.user.email}"></span>
                     </b>
                     <span class="description-normal" th:text="${post.content}"></span>
                     <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
@@ -48,13 +49,15 @@
                                         <div class="profile-pic-comments">
                                             <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
                                                 <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
+                                                <img th:if="${comment.user.photo != null and comment.user.isGoogle == false}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
+                                                <img th:if="${comment.user.photo != null and comment.user.isGoogle == true}" th:src="${comment.user.photo}" alt="">
                                             </a>
                                         </div>
                                         <div>
                                             <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
                                                 <b class="description-comments-user">
-                                                    <span th:text="${comment.user.username}"></span>
+                                                    <span th:if="${comment.user.isGoogle == false}" th:text="${comment.user.username}"></span>
+                                                    <span th:if="${comment.user.isGoogle == true}" th:text="${comment.user.email}"></span>
                                                 </b>
                                             </a>
                                             <span class="description-comments" th:text="${comment.commentText}"></span>
@@ -79,7 +82,8 @@
                                 <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
                             </div>
                         </div>
-                        <input type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'">
+                        <input th:if="${post.user.isGoogle == false}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'">
+                        <input th:if="${post.user.isGoogle == true}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${post.user.email} + '...'">
                         <br>
                         <button class="comment-btn" th:text="#{button_publish}"></button>
                     </form>

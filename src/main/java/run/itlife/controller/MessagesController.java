@@ -48,8 +48,12 @@ public class MessagesController {
             for (String u : usersOwner) {
                 if (!u.equals(username)) {
                     String userDialogPhoto = messagesService.getUserPhotoByUsername(u);
+                    String userDialogEmail = messagesService.getUserEmailByUsername(u);
+                    String userDialogGoogle = messagesService.getUserGoogleByUsername(u);
                     modelMap.put("userDialogName", u);
                     modelMap.put("userDialogPhoto", userDialogPhoto);
+                    modelMap.put("userDialogEmail", userDialogEmail);
+                    modelMap.put("userDialogGoogle", userDialogGoogle);
                 }
             }
         } else {

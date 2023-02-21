@@ -2,6 +2,7 @@ package run.itlife.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,8 @@ public class LikesController {
     @GetMapping("/unlike/{postId}")
     @PreAuthorize("hasRole('USER')")
     public String delete_like(@PathVariable long postId){
-        long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
+        long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
+        //long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
         likesService.delete_like(currentUserId, postId);
         return "redirect:/post/{postId}";
     }
@@ -47,7 +49,8 @@ public class LikesController {
     @GetMapping("/unlike_view_sub/{postId}")
     @PreAuthorize("hasRole('USER')")
     public String delete_like_sub(@PathVariable long postId){
-        long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
+        long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
+        //long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
         likesService.delete_like(currentUserId, postId);
         return "redirect:/post-view-sub/{postId}";
     }
@@ -62,7 +65,8 @@ public class LikesController {
     @GetMapping("/unlike_detail/{postId}")
     @PreAuthorize("hasRole('USER')")
     public String delete_like_detail(@PathVariable long postId){
-        long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
+        long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
+        //long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
         likesService.delete_like(currentUserId, postId);
         return "redirect:/posts_detail";
     }
@@ -77,7 +81,8 @@ public class LikesController {
     @GetMapping("/unlike_detail_sub/{postId}")
     @PreAuthorize("hasRole('USER')")
     public String delete_like_detail_sub(@PathVariable long postId){
-        long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
+        long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
+        //long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
         likesService.delete_like(currentUserId, postId);
         return "redirect:/";
     }
@@ -92,7 +97,8 @@ public class LikesController {
     @GetMapping("/unlike_detail_subuser/{user}/{postId}")
     @PreAuthorize("hasRole('USER')")
     public String delete_like_detail_subuser(@PathVariable long postId, @PathVariable String user){
-        long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
+        long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
+        // long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
         likesService.delete_like(currentUserId, postId);
         return "redirect:/posts_detail_subuser/{user}";
     }

@@ -74,6 +74,16 @@ public class MessagesServiceImpl implements MessagesService {
     }
 
     @Override
+    public String getUserEmailByUsername(String username) {
+        return messagesRepository.getUserEmailByUsername(username);
+    }
+
+    @Override
+    public String getUserGoogleByUsername(String username) {
+        return messagesRepository.getUserGoogleByUsername(username);
+    }
+
+    @Override
     public List<String> findUsersByDialogId(Long dialogId) {
         return messagesRepository.findUsersByDialogId(dialogId);
     }

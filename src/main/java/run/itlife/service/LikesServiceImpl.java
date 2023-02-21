@@ -1,6 +1,7 @@
 package run.itlife.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import run.itlife.entity.Likes;
@@ -42,7 +43,8 @@ public class LikesServiceImpl implements LikesService {
     @Override
     public void create_like(Long postId) {
         Likes likes = new Likes();
-        likes.setUserLikeId(userService.findByUsername(getCurrentUserDetails().getUsername()));
+        likes.setUserLikeId(userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        //likes.setUserLikeId(userService.findByUsername(getCurrentUserDetails().getUsername()));
         likes.setPostLikeId(postService.findById(postId));
         likesRepository.save(likes);
     }

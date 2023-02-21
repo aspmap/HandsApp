@@ -4,43 +4,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+
 import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.PostDto;
+import run.itlife.entity.User;
+import run.itlife.repository.UserRepository;
 import run.itlife.service.*;
+
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+
 import static run.itlife.utils.EditImage.resizeImage;
 import static run.itlife.utils.OtherUtils.generateFileName;
 
 //Контроллер для постов (создание, редактирование, удаление)
 @Controller
 public class PostController {
-
     private final PostService postService;
     private final LikesService likesService;
     private final UserService userService;
     private final CommentService commentService;
     private final SubscriptionsService subscriptionsService;
+    private final UserRepository userRepository;
     private final ServletContext context;
 
     @Autowired
     ServletContext servletContext;
 
     @Autowired
-    public PostController(PostService postsService, LikesService likesService, UserService userService, CommentService commentService, ServletContext context, SubscriptionsService subscriptionsService) {
+    public PostController(PostService postsService, LikesService likesService, UserService userService, CommentService commentService, ServletContext context, SubscriptionsService subscriptionsService, UserRepository userRepository) {
         this.postService = postsService;
         this.likesService = likesService;
         this.userService = userService;
         this.commentService = commentService;
         this.subscriptionsService = subscriptionsService;
         this.context = context;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/")
@@ -51,6 +59,28 @@ public class PostController {
         modelMap.put("posts_sub", postService.findSubscribesPosts(username));
         modelMap.put("countPosts", postService.countSubscribesPosts(username));
         modelMap.put("isYourLike", postService.isLikePost(username)); // TODO как выдернуть id поста??
+        return "posts/posts-detail-sub";
+    }
+
+    @GetMapping("/main")
+    public String getLoginInfo(ModelMap modelMap, OAuth2AuthenticationToken authentication) {
+        String username = authentication.getPrincipal().getAttribute("sub");
+        User user = userRepository.findByUsername(username).orElseGet(() -> {
+            User newUser = new User();
+            newUser.setUsername(authentication.getPrincipal().getAttribute("sub"));
+            newUser.setFirstname(authentication.getPrincipal().getAttribute("given_name"));
+            newUser.setPassword(authentication.getPrincipal().getAttribute("at_hash"));
+            newUser.setSurname(authentication.getPrincipal().getAttribute("family_name"));
+            newUser.setEmail(authentication.getPrincipal().getAttribute("email"));
+            newUser.setPhoto(authentication.getPrincipal().getAttribute("picture"));
+            userService.createGoogleUser(newUser);
+            return newUser;
+        });
+
+        setCommonParams(modelMap, username);
+        modelMap.put("posts_sub", postService.findSubscribesPosts(username));
+        modelMap.put("countPosts", postService.countSubscribesPosts(username));
+        modelMap.put("isYourLike", postService.isLikePost(username));
         return "posts/posts-detail-sub";
     }
 
@@ -104,7 +134,7 @@ public class PostController {
 
         if (!file.isEmpty()) {
             try {
-                if(file.getContentType().equals("video/mp4") || file.getContentType().equals("video/quicktime") ) {
+                if (file.getContentType().equals("video/mp4") || file.getContentType().equals("video/quicktime")) {
                     String extension;
                     switch (file.getContentType()) {
                         case "video/mp4":
@@ -212,7 +242,7 @@ public class PostController {
 
     @GetMapping("/post-view-sub/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String post_view_sub(@PathVariable long id, ModelMap modelMap){
+    public String post_view_sub(@PathVariable long id, ModelMap modelMap) {
         setCommonParams(modelMap);
         modelMap.put("post", postService.findById(id));
         modelMap.put("comments", commentService.sortCommentsByDate(id));
@@ -225,7 +255,7 @@ public class PostController {
 
     @GetMapping("/post/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String post(@PathVariable long id, ModelMap modelMap){
+    public String post(@PathVariable long id, ModelMap modelMap) {
         setCommonParams(modelMap);
         modelMap.put("post", postService.findById(id));
         modelMap.put("comments", commentService.sortCommentsByDate(id));
@@ -239,13 +269,13 @@ public class PostController {
     @PostMapping("/post/{id}/delete")
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable long id){
+    public void delete(@PathVariable long id) {
         postService.delete(id);
     }
 
     @GetMapping("/post/{id}/delete_one_post")
     @PreAuthorize("hasRole('USER')")
-    public String delete_one_post(@PathVariable long id){
+    public String delete_one_post(@PathVariable long id) {
         postService.delete(id);
         return "redirect:/posts_detail";
     }
@@ -264,6 +294,16 @@ public class PostController {
         modelMap.put("users", userService.findAll());
         modelMap.put("userslist", userService.findAll());
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userOnlyList", userService.getUsersOnly());
+        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
+        modelMap.put("contextPath", context.getContextPath());
+    }
+
+    private void setCommonParams(ModelMap modelMap, String username) {
+        modelMap.put("users", userService.findAll());
+        modelMap.put("userslist", userService.findAll());
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userOnlyList", userService.getUsersOnly());

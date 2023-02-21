@@ -23,7 +23,8 @@
                         <div class="profile-pic">
                             <a th:href="@{/sub-posts/{user}(user = ${post_sub.user.username})}">
                                 <img th:if="${post_sub.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                <img th:unless="${post_sub.user.photo == null}" th:src="@{'/resources/img/users/' + ${post_sub.user.username} + '/profile/' + ${post_sub.user.photo}}" alt="">
+                                <img th:if="${post_sub.user.photo != null and post_sub.user.isGoogle == false}" th:src="@{'/resources/img/users/' + ${post_sub.user.username} + '/profile/' + ${post_sub.user.photo}}" alt="">
+                                <img th:if="${post_sub.user.photo != null and post_sub.user.isGoogle == true}" th:src="${post_sub.user.photo}" alt="">
                             </a>
                         </div>
                         <a th:href="@{/sub-posts/{user}(user = ${post_sub.user.username})}">
@@ -82,7 +83,9 @@
                         <div class="info-view">
                             <div class="user">
                                 <div class="profile-pic">
-                                    <img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                                    <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
                                 </div>
                             </div>
                         </div>

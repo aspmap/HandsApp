@@ -1,6 +1,7 @@
 package run.itlife.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import run.itlife.entity.Post;
@@ -27,7 +28,8 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
     @Override
     public void createSub(String userSub) {
         Subscriptions subscriptions = new Subscriptions();
-        subscriptions.setCurrentUserId(userService.findByUsername(getCurrentUserDetails().getUsername()));
+        subscriptions.setCurrentUserId(userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        //subscriptions.setCurrentUserId(userService.findByUsername(getCurrentUserDetails().getUsername()));
         subscriptions.setSubUserId(userService.findByUsername(userSub));
         subscriptionsRepository.save(subscriptions);
     }
