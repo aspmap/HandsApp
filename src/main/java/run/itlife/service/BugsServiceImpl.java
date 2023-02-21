@@ -2,6 +2,7 @@ package run.itlife.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +32,8 @@ public class BugsServiceImpl implements BugsService {
     public void create(BugsDto bugsDto) {
         Bugs bugs = new Bugs();
         bugs.setBugText(bugsDto.getBugText());
-        String username = SecurityUtils.getCurrentUserDetails().getUsername();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        //String username = SecurityUtils.getCurrentUserDetails().getUsername();
         bugs.setUserId(userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username)));
         bugs.setCreatedAt(LocalDateTime.now());

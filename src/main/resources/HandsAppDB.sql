@@ -18,14 +18,18 @@ CREATE TABLE users (
     password varchar(150) NOT NULL,
     surname varchar(150),
     firstname varchar(150),
-    photo varchar(50),
+    photo varchar(150),
     info varchar(255),
     www varchar(150),
     email varchar(50),
     phone varchar(20),
     sex varchar(7),
     created_at timestamp NOT NULL,
-    is_active boolean);
+    is_active boolean,
+    is_google boolean,
+    is_hidden boolean,
+    is_closed boolean,
+    last_visit timestamp without time zone);
 
 CREATE TABLE role (
     role_id int PRIMARY KEY,

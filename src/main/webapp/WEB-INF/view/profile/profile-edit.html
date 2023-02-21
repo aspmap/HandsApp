@@ -18,7 +18,8 @@
                 <textarea id="blob-img" name="file" class="form-control" rows="4" placeholder="" style="display:none;"></textarea>
                 <div>
                     <img th:if="${userinfo.photo == null}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/icons/avatar.jpg'}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
-                    <img th:unless="${userinfo.photo == null}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
+                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
+                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" class="profile-pic-edit" id="profilePicture" th:src="${userinfo.photo}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
                 </div>
 
                 <!-- Modal Window -->
@@ -84,6 +85,14 @@
                         <option th:value="${sex_male}" th:text="#{input_male}"></option>
                         <option th:value="${sex_female}" th:text="#{input_female}"></option>
                     </select>
+                </div>
+                <div>
+                    <span th:text="#{input_enter_is_hidden}"></span>
+                    <input  th:field="*{isHidden}" type="checkbox">
+                </div>
+                <div>
+                    <span th:text="#{input_enter_is_closed}"></span>
+                    <input th:field="*{isClosed}" type="checkbox">
                 </div>
                 <br>
                 <button type="submit" class="btn btn-outline-dark"><span th:text="#{button_edit_profile_information}"></span></button>

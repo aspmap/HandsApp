@@ -12,6 +12,8 @@ public interface MessagesService {
     List<String> findUsersInDialog(Long dialogId);
     List<String> getDialogIdByUsersOwner(String username1, String username2);
     String getUserPhotoByUsername(String username);
+    String getUserEmailByUsername(String username);
+    String getUserGoogleByUsername(String username);
     List<String> findUsersByDialogId(Long dialogId);
 
 }

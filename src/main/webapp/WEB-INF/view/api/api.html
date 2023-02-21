@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header-login">
+  <title id="pageTitle">HandsApp - API</title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main-post">
+  <div class="wrapper-posts">
+    <div class="left-col">
+      <br><br><br><br>
+      <h1 class="h3 mb-3 font-weight-normal text-center" th:text="'REST-API'"></h1>
+      <br>
+      <span th:text="'Используется Basic-Auth'"></span>
+      <span th:text="'Выборка постов по ключевому слову'"><b></b></span>
+      <span th:text="'GET http://handsapp.online/api/post?search=москва'"></span>
+      <span th:text="'Выборка всех постов'"><b></b></span>
+      <span th:text="'GET http://handsapp.online/api/post'"></span>
+      <span th:text="'Поиск поста по ID'"><b></b></span>
+      <span th:text="'GET http://handsapp.online/api/post/284'"></span>
+      <span th:text="'Создание поста'"><b></b></span>
+      <span th:text="'POST http://handsapp.online/api/post'"></span>
+      <span th:text="'Пример запроса'"></span>
+      <span th:text="'Редактирование поста'"><b></b></span>
+      <span th:text="'PUT http://handsapp.online/api/post/294'"></span>
+      <span th:text="'Пример запроса'"></span>
+      <span th:text="'Удаление поста'"><b></b></span>
+      <span th:text="'DELETE http://handsapp.online/api/post/295'"></span>
+
+      <p class="text-center">
+        <a th:href="@{/}" th:text="#{text_back_to_main_page}"></a>
+      </p>
+      <br><br><br><br>
+      <p class="text-center" th:insert="fragments.html :: footer-login"></p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

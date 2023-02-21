@@ -21,6 +21,7 @@ public class SecurityUtils {
         if (!(principal instanceof  UserDetails))
             throw new AccessDeniedException(ACCESS_DENIED);
         return (UserDetails)principal;
+
     }
 
     //Закрытие доступа к странице для всех кроме USERS
@@ -33,7 +34,9 @@ public class SecurityUtils {
     }
 
     public static boolean hasAuthority(String username) {
-        return Objects.equals(username, getCurrentUserDetails().getUsername());
+        //return Objects.equals(username, getCurrentUserDetails().getUsername());
+        return Objects.equals(username, SecurityContextHolder.getContext().getAuthentication().getName());
+
     }
 
     public static void checkAuthority(String username) {

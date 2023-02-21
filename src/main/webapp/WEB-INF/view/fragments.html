@@ -108,28 +108,37 @@
 <nav class="navbar" th:fragment="navigation">
     <div class="nav-wrapper">
         <a th:href="@{/}"><img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt=""></a>
-        <form class="search-form" method="GET" th:action="@{/search}">
+        <form class="search-form" method="GET" th:action="@{/search}" sec:authorize="isAuthenticated()">
             <input type="text" class="search-box" name="search" th:placeholder="#{input_find}">
         </form>
         <div class="nav-items">
-            <a class="icon" th:href="@{/}">
+            <a class="icon" id="home-icon" sec:authorize="isAuthenticated()" th:href="@{/}">
                 <img th:src="@{/resources/img/nav/home.png}" class="icon" alt="">
             </a>
             <a class="icon" sec:authorize="hasRole('ADMIN')" th:href="@{/bugs_view}">
                 <img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
             </a>
-            <a class="icon" th:href="@{/dialogs}">
+            <a class="icon" sec:authorize="isAuthenticated()" th:href="@{/dialogs}">
                 <img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
             </a>
-            <ul class=" nav-list icon">
+            <a class="icon" sec:authorize="isAuthenticated()" th:href="@{/handshakes_search}">
+                <img th:src="@{/resources/img/nav/handshakes.png}" class="icon" alt="">
+            </a>
+            <ul class="nav-list icon" sec:authorize="isAuthenticated()">
                 <li class="icon">
                     <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
                     <ul class="nalumes-nucludem">
                         <li>
-                            <a th:href="@{/post/newImage}"><span th:text="#{menu_photo}"></span></a>
+                            <a class="icon" th:href="@{/post/newImage}">
+                                <img th:src="@{/resources/img/nav/photo.png}" class="icon" alt="">
+                                <span th:text="#{menu_photo}"></span>
+                            </a>
                         </li>
                         <li>
-                            <a th:href="@{/post/newVideo}"><span th:text="#{menu_video}"></span></a>
+                            <a class="icon" th:href="@{/post/newVideo}">
+                                <img th:src="@{/resources/img/nav/video.png}" class="icon" alt="">
+                                <span th:text="#{menu_video}"></span>
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -138,7 +147,8 @@
                 <ul class="icon user-profile nav-list" sec:authorize="isAuthenticated()">
                     <li>
                         <img th:if="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                        <img th:unless="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                        <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" class="icon user-profile" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                        <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" class="icon user-profile" th:src="${userinfo.photo}" alt="">
                         <ul class="nalumes-nucludem">
                             <li>
                                 <a th:href="@{/posts}"><span th:text="#{menu_profile}"></span></a>
@@ -148,9 +158,6 @@
                             </li>
                             <li>
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/handshakes_search}"><span th:text="#{menu_handshakes}"></span></a>
                             </li>
                             <!--<li>
                                 <a th:href="@{/my_world}"><span th:text="#{menu_my_world}"></span></a>
@@ -174,28 +181,37 @@
         <a th:href="@{/}">
             <img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt="">
         </a>
-        <form class="search-form" method="GET" th:action="@{/search}">
+        <form class="search-form" method="GET" th:action="@{/search}" sec:authorize="isAuthenticated()">
             <input type="text" class="search-box" name="search" th:placeholder="#{input_find}">
         </form>
         <div class="nav-items">
-            <a class="icon" th:href="@{/}">
+            <a class="icon" id="home-icon" th:href="@{/}">
                 <img th:src="@{/resources/img/nav/home.png}" class="icon" alt="">
             </a>
             <a class="icon" sec:authorize="hasRole('ADMIN')" th:href="@{/bugs_view}">
                 <img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
             </a>
-            <a class="icon" th:href="@{/dialogs}">
+            <a class="icon" sec:authorize="isAuthenticated()" th:href="@{/dialogs}">
                 <img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
             </a>
-            <ul class=" nav-list icon">
+            <a class="icon" sec:authorize="isAuthenticated()" th:href="@{/handshakes_search}">
+                <img th:src="@{/resources/img/nav/handshakes.png}" class="icon" alt="">
+            </a>
+            <ul class="nav-list icon" sec:authorize="isAuthenticated()">
                 <li class="icon">
                     <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
                     <ul class="nalumes-nucludem">
                         <li>
-                            <a th:href="@{/post/newImage}"><span th:text="#{menu_photo}"></span></a>
+                            <a class="icon" th:href="@{/post/newImage}">
+                                <img th:src="@{/resources/img/nav/photo.png}" class="icon" alt="">
+                                <span th:text="#{menu_photo}"></span>
+                            </a>
                         </li>
                         <li>
-                            <a th:href="@{/post/newVideo}"><span th:text="#{menu_video}"></span></a>
+                            <a class="icon" th:href="@{/post/newVideo}">
+                                <img th:src="@{/resources/img/nav/video.png}" class="icon" alt="">
+                                <span th:text="#{menu_video}"></span>
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -204,7 +220,8 @@
                 <ul class="icon user-profile nav-list" sec:authorize="isAuthenticated()">
                     <li>
                         <img th:if="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                        <img th:unless="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                        <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" class="icon user-profile" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                        <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" class="icon user-profile" th:src="${userinfo.photo}" alt="">
                         <ul class="nalumes-nucludem">
                             <li>
                                 <a th:href="@{/posts}"><span th:text="#{menu_profile}"></span></a>
@@ -214,9 +231,6 @@
                             </li>
                             <li>
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/handshakes_search}"><span th:text="#{menu_handshakes}"></span></a>
                             </li>
                             <!--<li>
                                 <a th:href="@{/my_world}"><span th:text="#{menu_my_world}"></span></a>
@@ -243,14 +257,16 @@
     <div class="profile-card" th:each="users: ${usersOnlyKey}">
         <div class="profile-pic">
             <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
-                <img th:if="${users.photo == null || users.photo == ''}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                <img th:unless="${users.photo == null}" th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
+                <img th:if="${users.photo == ''}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                <img th:if="${users.photo != '' and users.isGoogle == 'f'}" th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
+                <img th:if="${users.photo != '' and users.isGoogle == 't'}" th:src="${users.photo}" alt="">
             </a>
         </div>
         <div>
             <div>
             <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
-                <span th:text="${users.username}" class="username"></span>
+                <span th:if="${users.isGoogle == 'f'}" th:text="${users.username}" class="username"></span>
+                <span th:if="${users.isGoogle == 't'}" th:text="${users.email}" class="username"></span>
             </a>
             <a th:if="${users.isSub == '0'}" th:href="@{/subscription_fr/{user}(user = ${users.username})}" class="sub-btn" th:text="#{button_subscribe}"></a>
             </div>

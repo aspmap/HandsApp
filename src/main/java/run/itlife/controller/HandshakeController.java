@@ -43,8 +43,10 @@ public class HandshakeController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String handshakes_results(ModelMap modelMap, @RequestParam(required = false) String wantedUsername) {
         setCommonParams(modelMap);
+
         // Получаем Id текущего пользователя
-        Long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
+        Long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
+        //Long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
         Long userIdNextLink = 0L;
 
         if (wantedUsername == null || wantedUsername.equals("")) {

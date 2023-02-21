@@ -47,4 +47,11 @@ public interface MessagesRepository extends JpaRepository<Messages, Long> {
             "where u.username = ? ", nativeQuery = true)
     String getUserPhotoByUsername(String username);
 
+    @Query(value = "select u.email from users u " +
+            "where u.username = ? ", nativeQuery = true)
+    String getUserEmailByUsername(String username);
+
+    @Query(value = "select u.is_google from users u " +
+            "where u.username = ? ", nativeQuery = true)
+    String getUserGoogleByUsername(String username);
 }

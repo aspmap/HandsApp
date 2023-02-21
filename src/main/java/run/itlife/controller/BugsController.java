@@ -29,7 +29,7 @@ public class BugsController {
     private final UserService userService;
 
     @Autowired
-    public BugsController(BugsService bugsService, UserService userService, KafkaTemplate<Integer, String> template) {
+    public BugsController(BugsService bugsService, UserService userService) {
         this.bugsService = bugsService;
         this.userService = userService;
     }
@@ -56,7 +56,7 @@ public class BugsController {
         String result = writer.toString();
 
         //Генерим рандомный ключ
-        int key = (int) (Math.random()*(1000+1));
+        int key = (int) (Math.random() * (1000 + 1));
         Integer keyData = key;
 
         //Отправляем данные в Кафку
@@ -64,8 +64,7 @@ public class BugsController {
             AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(KafkaConfig.class);
             context.getBean(Sender.class).sendMsg(result, keyData);
             return "messages-templates/message-send";
-        }
-            catch (KafkaException ke) {
+        } catch (KafkaException ke) {
             return "messages-templates/errorkafka";
         }
     }
