@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
@@ -27,9 +28,9 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableWebSecurity
 @PropertySource("classpath:application.properties")
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan("run.itlife")
-public class WebSecurityConfig /*extends WebSecurityConfigurerAdapter*/ {
+public class WebSecurityConfig {
     private static List<String> clients = Arrays.asList("google");
     private static String CLIENT_PROPERTY_KEY = "spring.security.oauth2.client.registration.";
     @Autowired
@@ -72,8 +73,10 @@ public class WebSecurityConfig /*extends WebSecurityConfigurerAdapter*/ {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/resources/**")
+                .antMatchers("/login", "/resources/css/**", "/resources/js/**", "/resources/img/icons/**", "/resources/img/login/**")
                 .permitAll()
+                .antMatchers("/resources/img/users/**", "/resources/video/**")
+                .authenticated()
                 .and()
                 .oauth2Login()
                 .defaultSuccessUrl("/main", true)

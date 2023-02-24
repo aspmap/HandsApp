@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:include="fragments.html :: header">
     <title id="pageTitle" th:text="#{application_name} + ' - ' + #{text_my_likes}"></title>
@@ -11,24 +10,16 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
 <!-- Page Content -->
-<section class="main-post">
-    <div class="wrapper-posts">
+<section class="main">
+    <div class="wrapper">
         <div class="left-col">
-            <section class="text-center">
-                <div sec:authorize="isAuthenticated()" class="info-main">
-                    <div class="user-main">
-                        <div class="profile-pic-main">
-                            <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${userinfo.username} + '/profile/' + ${userinfo.photo}}" alt="">
-                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
-                        </div>
-                        <div>
-                            <p class="username-main" th:text="#{text_my_likes}"></p>
-
-                        </div>
+            <div class="post">
+                <div class="info">
+                    <div class="user">
+                        <p class="comments-logo" th:text="#{text_my_likes}"></p>
                     </div>
                 </div>
-            </section>
+            </div>
             <div class="post">
                 <div class="post-content">
                     <div class="view-source comments-view">
@@ -56,6 +47,9 @@
             <footer th:insert="fragments.html :: footer"></footer>
 
         </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
     </div>
 </section>
 

@@ -77,7 +77,7 @@ public class UserController {
     public String register(User user) {
         try {
             userService.create(user);
-            return "redirect:/login";
+            return "messages-templates/registration-success";
         } catch (EntityExistsException e) {
             return "messages-templates/exist";
         }
