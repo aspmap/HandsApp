@@ -22,7 +22,7 @@ public class HandshakeController {
 
     private final HandshakeService handshakeService;
     private final UserService userService;
-    final short LIMIT_SIZE_HANDSHAKE = 6;
+    //final short LIMIT_SIZE_HANDSHAKE = 6;
 
     @Autowired
     public HandshakeController(HandshakeService handshakeService, UserService userService) {
@@ -40,12 +40,12 @@ public class HandshakeController {
     @PostMapping("/handshakes_results")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String handshakes_results(ModelMap modelMap, @RequestParam(required = false) String wantedUsername) {
+
         setCommonParams(modelMap);
 
         // Получаем Id текущего пользователя
         Long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
-        //Long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
-        Long userIdNextLink = 0L;
+        //Long userIdNextLink = 0L;
 
         if (wantedUsername == null || wantedUsername.equals("")) {
             return "handshakes/handshakes-search";
@@ -62,37 +62,43 @@ public class HandshakeController {
                 List<Long> userIdRightColumnList = new ArrayList<>();
                 userIdRightColumnList = handshakeService.selectUsersSubId();
 
+                //++++ Собираем в очередь связи
+                ArrayDeque<List<Long>> queue = getUsersLevels(currentUserId, userIdLeftColumnList, userIdRightColumnList);
 
-                Map<Long, List<Long>> countHandshakesResult = searchWantedUser(currentUserId, wantedUserId, userIdLeftColumnList, userIdRightColumnList);
-                //Map<Long, List<Long>> countHandshakesResult = searchWantedUser123(value, key, mapUsers, isFirstPass, countInitialUserNext, countInitialUser, userIdNextLink, currentUserId, wantedUserId, userIdLeftColumnList, userIdRightColumnList);
-                //Map<Long, List<Long>> countHandshakesResult = searchWantedUser(isEnd, countInitialUser, countInitialUserNext, currentUserId, wantedUserId, userIdNextLink, userIdLeftColumnList, userIdRightColumnList, isFirstPass, value, mapUsers, stopCycle);
+                //++++ Выводим число рукопожатий
+                int countHandshakes = countLinks(queue, wantedUserId);
+
+                // Поиск связей
+                //Map<Long, List<Long>> countHandshakesResult = searchWantedUser(countHandshakes, currentUserId, wantedUserId, userIdLeftColumnList, userIdRightColumnList);
 
                 // В полученной мапе ищем кратчайшую связь и записываем в minEntry
-                Map.Entry<Long, List<Long>> minEntry = null;
-                minEntry = searchMinRelation(countHandshakesResult);
+                //Map.Entry<Long, List<Long>> minEntry = null;
+                //minEntry = searchMinRelation(countHandshakesResult);
 
                 // Собираем цепочку связей для визуализации на странице в виде иконок
-                Map<String, String> resultLinkUsers = new HashMap<>();
-                List<Long> usersIds = new ArrayList<>();
-                resultLinkUsers = createLinksVisual(usersIds, currentUserId, minEntry);
+                //Map<String, String> resultLinkUsers = new HashMap<>();
+
+                //resultLinkUsers = createLinksVisual(currentUserId, minEntry);
 
                 // Выводим число рукопожатий - преобразуем в Long. -1 - минусуем текущего пользователя
-                Long resultLinkUsersLong = Long.valueOf(resultLinkUsers.size() - 1);
+                //Long resultLinkUsersLong = Long.valueOf(resultLinkUsers.size() - 1);
 
                 // Выводим номер рукопожатия для корректной работы условий на странице с результатами
-                List<Integer> viewNumberOfHandshake = viewNumberOfHandshakes(resultLinkUsers);
+                //List<Integer> viewNumberOfHandshake = viewNumberOfHandshakes(resultLinkUsers);
+                //List<Integer> viewNumberOfHandshake = viewNumberOfHandshakesNew(countHandshakes);
 
                 // Выводим число рукопожатий
-                modelMap.put("countHandshakes", resultLinkUsersLong);
+                modelMap.put("countHandshakes", countHandshakes);
 
-                // Выводим имя искомого пользователя
+                // Выводим данные искомого пользователя
                 modelMap.put("wantedUsername", wantedUsername);
+                modelMap.put("wantedUserinfo", userService.findByUsername(wantedUsername));
 
                 // Собираем цепочку связей для визуализации на странице в виде иконок
-                modelMap.put("LinkUsersTree", resultLinkUsers);
+                //modelMap.put("LinkUsersTree", resultLinkUsers);
 
                 // Выводим номер рукопожатия
-                modelMap.put("viewNumberOfHandshake", viewNumberOfHandshake);
+                //modelMap.put("viewNumberOfHandshake", viewNumberOfHandshake);
 
                 return "handshakes/handshakes-results";
             } catch (Exception e) {
@@ -102,132 +108,186 @@ public class HandshakeController {
     }
 
     /**
-     * @param initialUser          Текущий пользователь
-     * @param userIdLeftColumnList Список пользователей
-     * @return countInitialUser Возвращается максимальное количество возможных связей
+     * Метод, собирающий связи исходного пользователя с подписчиками до шестого уровня
+     * @param initialUser
+     * @param userIdLeftColumnList
+     * @param userIdRightColumnList
+     * @return возвращаются связи исходного пользователя с подписчиками до шестого уровня
      */
-    private int countInitialUser(Long initialUser, List<Long> userIdLeftColumnList) {
-        int countInitialUser = 0;
+    private ArrayDeque<List<Long>> getUsersLevels(Long initialUser, List<Long> userIdLeftColumnList, List<Long> userIdRightColumnList) {
+
+        List<Long> friends1 = new ArrayList<>();
+        List<Long> friends2 = new ArrayList<>();
+        List<Long> friends3 = new ArrayList<>();
+        List<Long> friends4 = new ArrayList<>();
+        List<Long> friends5 = new ArrayList<>();
+        List<Long> friends6 = new ArrayList<>();
+
         for (int i = 0; i < userIdLeftColumnList.size(); i++) {
-            if (userIdLeftColumnList.get(i) == initialUser) {
-                countInitialUser++;
+            if (initialUser == userIdLeftColumnList.get(i)) {
+                friends1.add(userIdRightColumnList.get(i));
+
+                for (int j = 0; j < userIdLeftColumnList.size(); j++) {
+                    if (friends1.get((friends1.size() - 1)) == userIdLeftColumnList.get(j)) {
+                        friends2.add(userIdRightColumnList.get(j));
+
+                        for (int k = 0; k < userIdLeftColumnList.size(); k++) {
+                            if (friends2.get((friends2.size() - 1)) == userIdLeftColumnList.get(k)) {
+                                friends3.add(userIdRightColumnList.get(k));
+
+                                for (int m = 0; m < userIdLeftColumnList.size(); m++) {
+                                    if (friends3.get((friends3.size() - 1)) == userIdLeftColumnList.get(m)) {
+                                        friends4.add(userIdRightColumnList.get(m));
+
+                                        for (int n = 0; n < userIdLeftColumnList.size(); n++) {
+                                            if (friends4.get((friends4.size() - 1)) == userIdLeftColumnList.get(n)) {
+                                                friends5.add(userIdRightColumnList.get(n));
+
+                                                for (int s = 0; s < userIdLeftColumnList.size(); s++) {
+                                                    if (friends5.get((friends5.size() - 1)) == userIdLeftColumnList.get(s)) {
+                                                        friends6.add(userIdRightColumnList.get(s));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
-        return countInitialUser;
+        ArrayDeque<List<Long>> queue = new ArrayDeque<>();
+        queue.add(friends1);
+        queue.add(friends2);
+        queue.add(friends3);
+        queue.add(friends4);
+        queue.add(friends5);
+        queue.add(friends6);
+        return queue;
     }
 
     /**
-     * Метод, осуществляющий поиск связей (тестовый вариант)
-     *
-     * @param initialUser           Текущий пользователь
-     * @param wantedUser            Искомый пользователь
-     * @param userIdLeftColumnList  Список пользователей
-     * @param userIdRightColumnList Список пользователей
-     * @return mapUsers - возвращаем все найденные связи
+     * Метод, считающий количество рукопожатий
+     * @param queue      массив данных всех шести уровней
+     * @param wantedUser искомый пользователь
+     * @return возвращается число рукопожатий
      */
-    private Map<Long, List<Long>> searchWantedUser(Long initialUser, Long wantedUser, List<Long> userIdLeftColumnList, List<Long> userIdRightColumnList) {
-        // Складываем найденные цепочки
-        List<Long> value = new ArrayList<>();
-        Long key = 0L;
-        Map<Long, List<Long>> mapUsers = new HashMap<>();
-        // Считаем максимальное количество возможных связей
-        int countInitialUserNext = 0;
-        int countInitialUser = countInitialUser(initialUser, userIdLeftColumnList);
-        // Текущий пользователь
-        Long userIdNextLink = 0L;
+    private int countLinks(ArrayDeque<List<Long>> queue, Long wantedUser) {
+        int i = 0;
+        while (!queue.isEmpty()) {
+            i++;
+            List<Long> user = queue.pollFirst();
+            if (user.contains(wantedUser)) {
+                return i;
+            }
+        }
+        return 0;
+    }
 
-        firstCycle:
-        for (int i = 0; i < userIdLeftColumnList.size(); i++) {
-         //   if (countInitialUserNext < countInitialUser) {
-                if (initialUser == userIdLeftColumnList.get(i)) {
-                    userIdNextLink = userIdRightColumnList.get(i);
-                    countInitialUserNext = countInitialUserNext + 1;
-                    value = new ArrayList<>();
-                    key++;
-                    value.add(userIdNextLink);
-                    if (value.size() > 6) {
-                        value = new ArrayList<>();
-                        continue firstCycle;
-                    }
-                    if (wantedUser == userIdNextLink) {
-                        mapUsers.put(key, value);
-                        value = new ArrayList<>();
-                        break firstCycle;
-                    }
-                    secondCycle:
-                    for (int j = 0; j < userIdLeftColumnList.size(); j++) {
-                        if (userIdNextLink == userIdLeftColumnList.get(j)) {
-                            userIdNextLink = userIdRightColumnList.get(j);
-                            key++;
-                            value.add(userIdNextLink);
-                            if (value.size() > 6) {
-                                value = new ArrayList<>();
-                                continue firstCycle;
-                            }
-                            if (wantedUser == userIdNextLink) {
-                                mapUsers.put(key, value);
-                                value = new ArrayList<>();
-                                break secondCycle;
-                            }
-                            thirdCycle:
-                            for (int k = 0; k < userIdLeftColumnList.size(); k++) {
-                                if (userIdNextLink == userIdLeftColumnList.get(k)) {
-                                    userIdNextLink = userIdRightColumnList.get(k);
-                                    key++;
-                                    value.add(userIdNextLink);
-                                    if (value.size() > 6) {
-                                        value = new ArrayList<>();
-                                        continue firstCycle;
-                                    }
-                                    if (wantedUser == userIdNextLink) {
-                                        mapUsers.put(key, value);
-                                        value = new ArrayList<>();
-                                        break thirdCycle;
-                                    }
-                                    thirthCycle:
-                                    for (int l = 0; l < userIdLeftColumnList.size(); l++) {
-                                        if (userIdNextLink == userIdLeftColumnList.get(l)) {
-                                            userIdNextLink = userIdRightColumnList.get(l);
-                                            key++;
-                                            value.add(userIdNextLink);
-                                            if (value.size() > 6) {
-                                                value = new ArrayList<>();
-                                                continue firstCycle;
-                                            }
-                                            if (wantedUser == userIdNextLink) {
-                                                mapUsers.put(key, value);
-                                                value = new ArrayList<>();
-                                                break thirthCycle;
-                                            }
-                                            firthCycle:
-                                            for (int m = 0; m < userIdLeftColumnList.size(); m++) {
-                                                if (userIdNextLink == userIdLeftColumnList.get(m)) {
-                                                    userIdNextLink = userIdRightColumnList.get(m);
-                                                    key++;
-                                                    value.add(userIdNextLink);
-                                                    if (value.size() > 6) {
-                                                        value = new ArrayList<>();
-                                                        continue firstCycle;
-                                                    }
-                                                    if (wantedUser == userIdNextLink) {
-                                                        mapUsers.put(key, value);
-                                                        value = new ArrayList<>();
-                                                        break firthCycle;
-                                                    }
-                                                    sixthCycle:
-                                                    for (int n = 0; n < userIdLeftColumnList.size(); n++) {
-                                                        if (userIdNextLink == userIdLeftColumnList.get(n)) {
-                                                            userIdNextLink = userIdRightColumnList.get(n);
-                                                            key++;
-                                                            value.add(userIdNextLink);
-                                                            if (value.size() > 6) {
-                                                                value = new ArrayList<>();
-                                                                continue firstCycle;
-                                                            }
-                                                            if (wantedUser == userIdNextLink) {
-                                                                mapUsers.put(key, value);
-                                                                value = new ArrayList<>();
-                                                                break sixthCycle;
+    /**
+     * Помещает в очередь все уровни (Метод пока не используется, находится в разработке на перспективу, для вывода полной цепочки на странице)
+     * @param initialUser
+     * @param userIdLeftColumnList
+     * @param userIdRightColumnList
+     * @return
+     */
+    private Map<Long, List<Long>> searchWantedUser(int countHandshakes, Long initialUser, Long wantedUser, List<Long> userIdLeftColumnList, List<Long> userIdRightColumnList) {
+        List<Long> friends1 = new ArrayList<>();
+        List<Long> friends2 = new ArrayList<>();
+        List<Long> friends3 = new ArrayList<>();
+        List<Long> friends4 = new ArrayList<>();
+        List<Long> friends5 = new ArrayList<>();
+        List<Long> friends6 = new ArrayList<>();
+        List<Long> searched = new ArrayList<>();
+        Map<Long, List<Long>> mapUsers = new HashMap<>();
+        List<Long> users = new ArrayList<>();
+        Long p = 0L;
+
+        if (countHandshakes >= 1) {
+            for (int i = 0; i < userIdLeftColumnList.size(); i++) {
+                if (!searched.contains(userIdRightColumnList.get(i))) {
+                    if (initialUser == userIdLeftColumnList.get(i)) {
+                        users = new ArrayList<>();
+                        searched = new ArrayList<>();
+                        friends1.add(userIdRightColumnList.get(i));
+                        searched.add(userIdLeftColumnList.get(i));
+                        users.add(friends1.get(getIndexOfLastElement(friends1)));
+                        if (friends1.get(getIndexOfLastElement(friends1)) == wantedUser) {
+                            mapUsers.put(p, users);
+                            return mapUsers;
+                        }
+
+                        if (countHandshakes >= 2) {
+                            for (int j = 0; j < userIdLeftColumnList.size(); j++) {
+                                if (!searched.contains(userIdRightColumnList.get(j))) {
+                                    if (friends1.get(getIndexOfLastElement(friends1)) == userIdLeftColumnList.get(j)) {
+                                        friends2.add(userIdRightColumnList.get(j));
+                                        searched.add(userIdLeftColumnList.get(j));
+                                        users.add(friends2.get(getIndexOfLastElement(friends2)));
+                                        if (friends2.get(getIndexOfLastElement(friends2)) == wantedUser) {
+                                            mapUsers.put(p, users);
+                                            return mapUsers;
+                                        }
+
+                                        if (countHandshakes >= 3) {
+                                            for (int k = 0; k < userIdLeftColumnList.size(); k++) {
+                                                if (!searched.contains(userIdRightColumnList.get(k))) {
+                                                    if (friends2.get(getIndexOfLastElement(friends2)) == userIdLeftColumnList.get(k)) {
+                                                        friends3.add(userIdRightColumnList.get(k));
+                                                        searched.add(userIdLeftColumnList.get(k));
+                                                        users.add(friends3.get(getIndexOfLastElement(friends3)));
+                                                        if (friends3.get(getIndexOfLastElement(friends3)) == wantedUser) {
+                                                            mapUsers.put(p, users);
+                                                            return mapUsers;
+                                                        }
+
+                                                        if (countHandshakes >= 4) {
+                                                            for (int m = 0; m < userIdLeftColumnList.size(); m++) {
+                                                                if (!searched.contains(userIdRightColumnList.get(m))) {
+                                                                    if (friends3.get(getIndexOfLastElement(friends3)) == userIdLeftColumnList.get(m)) {
+                                                                        friends4.add(userIdRightColumnList.get(m));
+                                                                        searched.add(userIdLeftColumnList.get(m));
+                                                                        users.add(friends4.get(getIndexOfLastElement(friends4)));
+                                                                        if (friends4.get(getIndexOfLastElement(friends4)) == wantedUser) {
+                                                                            mapUsers.put(p, users);
+                                                                            return mapUsers;
+                                                                        }
+
+                                                                        if (countHandshakes >= 5) {
+                                                                            for (int n = 0; n < userIdLeftColumnList.size(); n++) {
+                                                                                if (!searched.contains(userIdRightColumnList.get(n))) {
+                                                                                    if (friends4.get(getIndexOfLastElement(friends4)) == userIdLeftColumnList.get(n)) {
+                                                                                        friends5.add(userIdRightColumnList.get(n));
+                                                                                        searched.add(userIdLeftColumnList.get(n));
+                                                                                        users.add(friends5.get(getIndexOfLastElement(friends5)));
+                                                                                        if (friends5.get(getIndexOfLastElement(friends5)) == wantedUser) {
+                                                                                            mapUsers.put(p, users);
+                                                                                            return mapUsers;
+                                                                                        }
+
+                                                                                        if (countHandshakes == 6) {
+                                                                                            for (int s = 0; s < userIdLeftColumnList.size(); s++) {
+                                                                                                if (!searched.contains(userIdRightColumnList.get(s))) {
+                                                                                                    if (friends5.get(getIndexOfLastElement(friends5)) == userIdLeftColumnList.get(s)) {
+                                                                                                        friends6.add(userIdRightColumnList.get(s));
+                                                                                                        searched.add(userIdLeftColumnList.get(s));
+                                                                                                        users.add(friends6.get(getIndexOfLastElement(friends6)));
+                                                                                                        if (friends6.get(getIndexOfLastElement(friends6)) == wantedUser) {
+                                                                                                            mapUsers.put(p, users);
+                                                                                                            return mapUsers;
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -240,14 +300,58 @@ public class HandshakeController {
                         }
                     }
                 }
-           // }
+            }
         }
         return mapUsers;
     }
 
     /**
+     * Метод, возвращающий индекс последнего элемента
+     * @param object объект типа List
+     * @return возвращается индекс последнего элемента
+     */
+    private int getIndexOfLastElement(List<Long> object) {
+        return (object.size() - 1);
+    }
+
+    /**
+     * Метод, считающий количество подписок у текущего пользователя
+     * @param initialUser          текущий пользователь
+     * @param userIdLeftColumnList список пользователей
+     * @return возвращается количество подписок у текущего пользователя
+     */
+    private int countInitialUser(Long initialUser, List<Long> userIdLeftColumnList) {
+        int countInitialUser = 0;
+        for (int i = 0; i < userIdLeftColumnList.size(); i++) {
+            if (userIdLeftColumnList.get(i) == initialUser) {
+                countInitialUser++;
+            }
+        }
+        return countInitialUser;
+    }
+
+    /**
      * Метод, собирающий цепочку связей для визуализации на странице в виде иконок
-     *
+     * @param currentUserId
+     * @param minEntry
+     * @return
+     */
+    Map<String, String> createLinksVisual(Long currentUserId, Map.Entry<Long, List<Long>> minEntry) {
+        List<Long> usersIds = new ArrayList<>();
+        Map<String, String> resultLinkUsers = new HashMap<>();
+        if (minEntry != null) {
+            usersIds.add(currentUserId);
+            usersIds.addAll(minEntry.getValue());
+            resultLinkUsers = findLinkUsers(usersIds);
+
+        } else {
+            resultLinkUsers.clear();
+        }
+        return resultLinkUsers;
+    }
+
+    /**
+     * Метод, собирающий цепочку связей для визуализации на странице в виде иконок
      * @param linkUsersResult
      * @return
      */
@@ -267,8 +371,7 @@ public class HandshakeController {
     }
 
     /**
-     * Метод, который выводит номер связи
-     *
+     * Метод, выводящий номер связи
      * @param resultLinkUsers
      * @return
      */
@@ -281,10 +384,22 @@ public class HandshakeController {
     }
 
     /**
+     * Метод, выводящий номер связи
+     * @param countHandshakes
+     * @return
+     */
+    List<Integer> viewNumberOfHandshakesNew(int countHandshakes) {
+        List<Integer> calcCountHandshakes = new ArrayList<>();
+        for (int i = 1; i <= countHandshakes; i++) {
+            calcCountHandshakes.add(i);
+        }
+        return calcCountHandshakes;
+    }
+
+    /**
      * Метод, в котором ищем кратчайшую связь и записываем в minEntry
-     *
      * @param countHandshakesResult
-     * @return minEntry - возвращается минимальная связь
+     * @return возвращается минимальная связь
      */
     private Map.Entry<Long, List<Long>> searchMinRelation(Map<Long, List<Long>> countHandshakesResult) {
         Map.Entry<Long, List<Long>> minEntry = null;
@@ -297,27 +412,9 @@ public class HandshakeController {
     }
 
     /**
-     * Метод, собирающий цепочку связей для визуализации на странице в виде иконок
-     *
-     * @param usersIds
-     * @param currentUserId
-     * @param minEntry
-     * @return
+     * Общие методы для отображения информации на странице
+     * @param modelMap
      */
-    Map<String, String> createLinksVisual(List<Long> usersIds, Long
-            currentUserId, Map.Entry<Long, List<Long>> minEntry) {
-        Map<String, String> resultLinkUsers = new HashMap<>();
-        if (minEntry != null) {
-            usersIds.add(currentUserId);
-            usersIds.addAll(minEntry.getValue());
-            resultLinkUsers = findLinkUsers(usersIds);
-
-        } else {
-            resultLinkUsers.clear();
-        }
-        return resultLinkUsers;
-    }
-
     private void setCommonParams(ModelMap modelMap) {
         modelMap.put("users", userService.findAll());
         modelMap.put("userslist", userService.findAll());
@@ -329,250 +426,3 @@ public class HandshakeController {
     }
 
 }
-
-// TODO Допилить через рекурсию
-// TODO В "modelMap.put("countHandshakes", resultLinkUsers.size())"
-//int countInitialUser = countInitialUser(currentUserId, userIdLeftColumnList);
-// Осуществляем рекурсивный поиск по колонкам и помещаем все варианты в мапу
-//boolean isFirstPass = true;
-//boolean isFirstIn = true;
-//List<Long> value = new ArrayList<>(); // Храним отдельно каждую цепочку и потом сохраняем в mapUsers
-//Map<Long, List<Long>> mapUsers = new HashMap<>(); // Собираем все совпадения
-//int stopCycle = 0; // Нужна, если нет ни одного совпадения - выходим из рекурсии
-//int countInitialUserNext = 0;
-//boolean isEnd = false;
-//Long key = 0L;
-
-/*    private Map<Long, List<Long>> searchWantedUser123(List<Long> value, Long key, Map<Long, List<Long>> mapUsers, boolean isFirstPass, int countInitialUserNext, int countInitialUser, Long userIdNextLink, Long initialUser, Long wantedUser, List<Long> userIdLeftColumnList, List<Long> userIdRightColumnList) {
-
-        firstCycle:
-        for (int i = 0; i < userIdLeftColumnList.size(); i++) {
-            if (isFirstPass) {
-                if (countInitialUserNext < countInitialUser) {
-                    if (initialUser == userIdLeftColumnList.get(i)) {
-                        userIdNextLink = userIdRightColumnList.get(i);
-                        countInitialUserNext = countInitialUserNext + 1;
-                        value = new ArrayList<>();
-                        key++;
-                        value.add(userIdNextLink);
-                        if (value.size() > 6) {
-                            value = new ArrayList<>();
-                            continue firstCycle;
-                        }
-                        if (wantedUser == userIdNextLink) {
-                            mapUsers.put(key, value);
-                            value = new ArrayList<>();
-                            break firstCycle;
-                        }
-                        isFirstPass = false;
-
-                    }
-
-                    if (!isFirstPass) {
-                        secondCycle:
-                        for (int j = 0; j < userIdLeftColumnList.size(); j++) {
-                            if (userIdNextLink == userIdLeftColumnList.get(j)) {
-                                userIdNextLink = userIdRightColumnList.get(j);
-                                key++;
-                                value.add(userIdNextLink);
-                                if (value.size() > 6) {
-                                    value = new ArrayList<>();
-                                    isFirstPass = true;
-                                    continue firstCycle;
-                                }
-                                if (wantedUser == userIdNextLink) {
-                                    mapUsers.put(key, value);
-                                    value = new ArrayList<>();
-                                    isFirstPass = true;
-                                    continue firstCycle;
-                                }
-                                searchWantedUser123(value, key, mapUsers, isFirstPass, countInitialUserNext, countInitialUser, userIdNextLink, initialUser, wantedUser, userIdLeftColumnList, userIdRightColumnList);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return mapUsers;
-    }*/
-
- /*   private Map<Long, List<Long>> searchWantedUser(boolean isEnd, int countInitialUser, int countInitialUserNext, Long initialUser, Long wantedUser, Long userIdNextLink, List<Long> userIdLeftColumnList, List<Long> userIdRightColumnList, boolean isFirstPass, List<Long> value, Map<Long, List<Long>> mapUsers, int stopCycle) {
-
-        Long key = 0L;
-        boolean countMatched = false;
-
-        firstCycle:
-        for (int i = 0; i < userIdLeftColumnList.size(); i++) {
-            if (isFirstPass) {
-                if (initialUser == userIdLeftColumnList.get(i)) {
-                    userIdNextLink = userIdRightColumnList.get(i);
-                    key++;
-                    countInitialUserNext = countInitialUserNext + 1;
-                    System.out.println("countInitialUserNext " + countInitialUserNext);
-                    System.out.println("initialUser 1: " + initialUser);
-                    System.out.println("userIdNextLink 1: " + userIdNextLink);
-                    value = new ArrayList<>();
-                    value.add(userIdNextLink);
-                    if (wantedUser == userIdNextLink) {
-
-                        mapUsers.put(key, value);
-                        value = new ArrayList<>();
-                        continue firstCycle;
-                    }
-                    isFirstPass = false;
-                }
-            }
-
-            if (!isFirstPass) {
-                countMatched = false;
-                for (int j = 0; j < userIdLeftColumnList.size(); j++) {
-                    if (value.size() > LIMIT_SIZE_HANDSHAKE) {
-                        value = new ArrayList<>();
-                    }
-                    if (userIdNextLink == userIdLeftColumnList.get(j)) {
-                        countMatched = true;
-                        userIdNextLink = userIdRightColumnList.get(j);
-                        System.out.println("userIdNextLink 2: " + userIdNextLink);
-                        key++;
-                        value.add(userIdNextLink);
-                        if (value.size() > LIMIT_SIZE_HANDSHAKE) {
-                            value = new ArrayList<>();
-                            isFirstPass = true;
-                            continue firstCycle;
-                        }
-                        if (wantedUser == userIdNextLink) {
-                            mapUsers.put(key, value);
-                            isFirstPass = true;
-                            continue firstCycle;
-                        }
-                    }
-                   // searchWantedUser(countInitialUser, countInitialUserNext, initialUser, wantedUser, userIdNextLink, userIdLeftColumnList, userIdRightColumnList, isFirstPass, value, mapUsers, stopCycle);
-                    if (countMatched) {
-                        stopCycle = stopCycle + 1;
-                        if (stopCycle > LIMIT_SIZE_HANDSHAKE) {
-                            continue firstCycle;
-                            //return mapUsers;
-                        }
-                        if(countInitialUserNext <= countInitialUser) {
-                        searchWantedUser(isEnd, countInitialUser, countInitialUserNext, initialUser, wantedUser, userIdNextLink, userIdLeftColumnList, userIdRightColumnList, isFirstPass, value, mapUsers, stopCycle);
-                        }
-                        else {
-                            return mapUsers;
-                        }
-
-                    }
-                    if ((j == userIdLeftColumnList.size() - 1) && !countMatched) {
-                        isFirstPass = true;
-                        countMatched = false;
-                        i++;
-                        continue firstCycle;
-                    }
-                }
-            }
-        }
-        return mapUsers;
-    }*/
-
-   /* private Map<Long, List<Long>> searchWantedUser(boolean isFirstPass, int countInitialUserNext, int countInitialUser, Long initialUser, Long wantedUser, Long userIdNextLink, List<Long> userIdLeftColumnList, List<Long> userIdRightColumnList, Map<Long, List<Long>> mapUsers) {
-        // userIdNextLink = initialUser;
-*//*        int countInitialUser = 0;
-        int countIteration = 0;*//*
-        //System.out.println("userIdNextLink 1: " + userIdNextLink);
-        //System.out.println("countInitialUserNext 1: " + countInitialUserNext);
-        //System.out.println("countInitialUser " + countInitialUser);
-
-        firstCycle:
-        for (int i = 0; i < userIdLeftColumnList.size(); i++) {
-            if (isFirstPass) {
-                if (countInitialUserNext > countInitialUser) {
-                    break;
-                }
-                if (initialUser == userIdLeftColumnList.get(i)) {
-                    userIdNextLink = userIdRightColumnList.get(i);
-                    countInitialUserNext++;
-                    System.out.println("countInitialUserNext " + countInitialUserNext);
-                    System.out.println("initialUser: " + initialUser);
-                    isFirstPass = false;
-                }
-            }
-            if (!isFirstPass) {
-                if (countInitialUserNext > countInitialUser) {
-                    break;
-                }
-                for (int j = 0; j < userIdLeftColumnList.size(); j++) {
-                    if (userIdNextLink == userIdLeftColumnList.get(j)) {
-                        userIdNextLink = userIdRightColumnList.get(j);
-                        System.out.println("userIdNextLink 2: " + userIdNextLink);
-                        searchWantedUser(isFirstPass, countInitialUserNext, countInitialUser, initialUser, wantedUser, userIdNextLink, userIdLeftColumnList, userIdRightColumnList, mapUsers);
-                        //return mapUsers;
-                        isFirstPass = true;
-                    }
-                }
-            }
-        }
-        return mapUsers;
-    }*/
-
- /*   private Map<Long, List<Long>> searchWantedUser(Long initialUser, Long wantedUser, Long userIdNextLink, List<Long> userIdLeftColumnList, List<Long> userIdRightColumnList, boolean isFirstPass, List<Long> value, Map<Long, List<Long>> mapUsers, int stopCycle) {
-
-        Long key = 0L;
-        boolean countMatched = false;
-
-        firstCycle:
-        for (int i = 0; i < userIdLeftColumnList.size(); i++) {
-            if (isFirstPass) {
-                if (initialUser == userIdLeftColumnList.get(i)) {
-                    userIdNextLink = userIdRightColumnList.get(i);
-                    value = new ArrayList<>();
-                    key++;
-                    value.add(userIdNextLink);
-                    if (wantedUser == userIdNextLink) {
-                        mapUsers.put(key, value);
-                        value = new ArrayList<>();
-                        break firstCycle;
-                    }
-                    isFirstPass = false;
-                }
-            }
-
-            if (!isFirstPass) {
-                countMatched = false;
-                for (int j = 0; j < userIdLeftColumnList.size(); j++) {
-                    if (value.size() > LIMIT_SIZE_HANDSHAKE) {
-                        value = new ArrayList<>();
-                    }
-                    if (userIdNextLink == userIdLeftColumnList.get(j)) {
-                        countMatched = true;
-                        userIdNextLink = userIdRightColumnList.get(j);
-                        key++;
-                        value.add(userIdNextLink);
-                        if (value.size() > LIMIT_SIZE_HANDSHAKE) {
-                            value = new ArrayList<>();
-                            isFirstPass = true;
-                            continue firstCycle;
-                        }
-                        if (wantedUser == userIdNextLink) {
-                            mapUsers.put(key, value);
-                            isFirstPass = true;
-                            break firstCycle;
-                        }
-                    }
-                    if (countMatched) {
-                        stopCycle = stopCycle + 1;
-                        if (stopCycle > LIMIT_SIZE_HANDSHAKE) {
-                            return mapUsers;
-                        }
-                        searchWantedUser(initialUser, wantedUser, userIdNextLink, userIdLeftColumnList, userIdRightColumnList, isFirstPass, value, mapUsers, stopCycle);
-                        return mapUsers;
-                    }
-                    if ((j == userIdLeftColumnList.size() - 1) && !countMatched) {
-                        isFirstPass = true;
-                        countMatched = false;
-                        i++;
-                        break;
-                    }
-                }
-            }
-        }
-        return mapUsers;
-    }*/
