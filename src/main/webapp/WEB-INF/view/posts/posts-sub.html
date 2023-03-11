@@ -24,6 +24,11 @@
                         <div>
                             <p th:if="${userinfo_sub.isGoogle == false}" class="username-main" th:text="${user_sub}"></p>
                             <p th:if="${userinfo_sub.isGoogle == true}" class="username-main" th:text="${userinfo_sub.email}"></p>
+                            <p class="description-main" th:if="${userinfo_sub.surname != null && userinfo_sub.firstname != null}" th:text="${userinfo_sub.surname} + ' ' + ${userinfo_sub.firstname}"></p>
+                            <p th:if="${userinfo_sub.www != null}" class="description-main">
+                                <span th:text="#{label_site}"></span>
+                                <a th:href="${userinfo_sub.www}"><span th:text="${userinfo_sub.www}"></span></a>
+                            </p>
                             <p class="description-main">
                                 <span th:text="${countPosts} + ' ' + #{label_publications}"></span>
                                 <a th:href="@{/subscribers_subuser/{user}(user = ${user_sub})}">
