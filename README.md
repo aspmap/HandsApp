@@ -125,6 +125,10 @@ DELETE http://handsapp.online/api/post/295
 
 :iphone: **Внешний вид приложения на текущий момент:**
 
+Страница c результатами поиска связей
+
+![photo_2023-01-29_13-06-36](https://user-images.githubusercontent.com/15989675/224484659-9fd00c35-0e5f-4882-b5b9-7be9bc7aa1de.jpg)
+
 Страница пользователя без подписок
 
 ![2022-12-11_16-09-23](https://user-images.githubusercontent.com/15989675/206905853-dcd85916-4795-4070-8738-f49a0cb8144f.jpg)
