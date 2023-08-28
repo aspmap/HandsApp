@@ -7,6 +7,8 @@ pipeline {
         sh "mvn package"
         sh "mv /var/lib/jenkins/workspace/HandsAppPipeline/target/HandsApp.war /var/lib/jenkins/workspace/HandsAppPipeline/target/ROOT.war"
         echo "Deploy"
+        sh "sudo -i"
+        sh "su - jenkins"
         sh "scp /var/lib/jenkins/workspace/HandsAppPipeline/target/ROOT.war root@195.161.62.229:/opt/tomcat/webapps/111"
         echo "End1"
       }
