@@ -24,6 +24,10 @@ pipeline {
     stage('Restart Tomcat') {
       steps {
         echo "Restart Tomcat"
+                 bash '''
+            #!/bin/bash
+            echo "hello world"
+         '''
         echo "End Restart Tomcat"
       }
     }
