@@ -1,0 +1,24 @@
+pipeline {
+  agent any
+  stages {
+    stage('Build & Package') {
+      steps {
+        echo "Package Project"
+        sh "mvn package"
+        sh "mv /var/lib/jenkins/workspace/HandsAppPipeline/target/HandsApp.war /var/lib/jenkins/workspace/HandsAppPipeline/target/ROOT.war"
+        echo "End Build and Package"
+      }
+    }
+    stage('Deploy') {
+      steps {
+        echo "Deploy Project"
+        sh "scp -r root@195.161.62.229:/opt/tomcat/webapps/ROOT root@195.161.62.229:/opt/backups/Jenkins"
+        sh "scp /var/lib/jenkins/workspace/HandsAppPipeline/target/ROOT.war root@195.161.62.229:/opt/tomcat/webapps"
+        sh "sleep 30"
+        sh "scp -r root@195.161.62.229:/opt/backups/Jenkins/ROOT/resources/video root@195.161.62.229:/opt/tomcat/webapps/ROOT/resources"
+        sh "scp -r root@195.161.62.229:/opt/backups/Jenkins/ROOT/resources/img root@195.161.62.229:/opt/tomcat/webapps/ROOT/resources"
+        echo "End Deploy"
+      }
+    }
+  }
+}
