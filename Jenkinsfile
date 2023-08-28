@@ -24,7 +24,7 @@ pipeline {
     stage('Restart Tomcat') {
       steps {
         echo "Restart Tomcat"
-        sh "ssh root@$195.161.62.229:/opt/tomcat/bin/shutdown.sh"
+        sh (script: "ssh root@$195.161.62.229 '/opt/tomcat/bin/shutdown.sh'", returnStdout: true).trim()
         echo "End Restart Tomcat"
       }
     }
