@@ -17,6 +17,7 @@ pipeline {
         sh "sleep 30"
         sh "scp -r root@195.161.62.229:/opt/backups/Jenkins/ROOT/resources/video root@195.161.62.229:/opt/tomcat/webapps/ROOT/resources"
         sh "scp -r root@195.161.62.229:/opt/backups/Jenkins/ROOT/resources/img root@195.161.62.229:/opt/tomcat/webapps/ROOT/resources"
+        sh "scp root@195.161.62.229:/opt/backups/Jenkins/ROOT/WEB-INF/classes/application.properties root@195.161.62.229:/opt/tomcat/webapps/ROOT/WEB-INF/classes/application.properties"
         echo "End Deploy"
       }
     }
