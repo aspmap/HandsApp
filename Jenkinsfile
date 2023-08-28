@@ -25,7 +25,7 @@ pipeline {
       steps {
         echo "Restart Tomcat"
         sh "ssh root@195.161.62.229 /opt/tomcat/bin/shutdown.sh"
-        sh "sleep 10"
+        sh "sleep 5"
         sh "ssh root@195.161.62.229 /opt/tomcat/bin/startup.sh"
         echo "End Restart Tomcat"
       }
