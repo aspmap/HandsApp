@@ -21,5 +21,12 @@ pipeline {
         echo "End Deploy Project"
       }
     }
+    stage('Restart Tomcat') {
+      steps {
+        echo "Restart Tomcat"
+        sh "ssh root@$195.161.62.229 "/opt/tomcat/bin/shutdown.sh"
+        echo "End Restart Tomcat"
+      }
+    }
   }
 }
