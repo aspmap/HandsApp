@@ -11,7 +11,7 @@ pipeline {
         sh "scp /var/lib/jenkins/workspace/HandsAppPipeline/target/ROOT.war root@195.161.62.229:/opt/tomcat/webapps/111"
         sh "scp -r root@195.161.62.229:/opt/backups/Jenkins/ROOT/resources/video root@195.161.62.229:/opt/backups/files"
         sh "scp -r root@195.161.62.229:/opt/backups/Jenkins/ROOT/resources/img root@195.161.62.229:/opt/backups/files"
-        echo "End1"
+        echo "End"
       }
     }
   }
