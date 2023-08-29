@@ -91,8 +91,11 @@ public class HandshakeController {
                 modelMap.put("countHandshakes", countHandshakes);
 
                 // Выводим данные искомого пользователя
+                String username = SecurityContextHolder.getContext().getAuthentication().getName();
                 modelMap.put("wantedUsername", wantedUsername);
                 modelMap.put("wantedUserinfo", userService.findByUsername(wantedUsername));
+                modelMap.put("userinfo_check", checkUsername(username));
+
 
                 // Собираем цепочку связей для визуализации на странице в виде иконок
                 //modelMap.put("LinkUsersTree", resultLinkUsers);
@@ -423,6 +426,13 @@ public class HandshakeController {
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userOnlyList", userService.getUsersOnly());
         modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
+    }
+
+    private String checkUsername(String username) {
+        if(userService.findByUsername(username).getIsGoogle() == true) {
+            username = userService.findByUsername(username).getEmail();
+        }
+        return username;
     }
 
 }

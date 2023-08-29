@@ -22,8 +22,8 @@
                             <img th:if="${userinfo_sub.photo != null and userinfo_sub.isGoogle == true}" th:src="${userinfo_sub.photo}" alt="">
                         </div>
                         <div>
-                            <p th:if="${userinfo_sub.isGoogle == false}" class="username-main" th:text="${user_sub}"></p>
-                            <p th:if="${userinfo_sub.isGoogle == true}" class="username-main" th:text="${userinfo_sub.email}"></p>
+                            <p th:if="${userinfo_sub.isGoogle == false}" class="username-main gradient" th:text="${user_sub}"></p>
+                            <p th:if="${userinfo_sub.isGoogle == true}" class="username-main gradient" th:text="${userinfo_sub.email}"></p>
                             <p class="description-main" th:if="${userinfo_sub.surname != null && userinfo_sub.firstname != null}" th:text="${userinfo_sub.surname} + ' ' + ${userinfo_sub.firstname}"></p>
                             <p th:if="${userinfo_sub.www != null}" class="description-main">
                                 <span th:text="#{label_site}"></span>

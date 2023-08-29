@@ -24,8 +24,8 @@
                             <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
                         </div>
                         <div>
-                            <p th:if="${userinfo.isGoogle == false}" class="username-main" th:text="${user}"></p>
-                            <p th:if="${userinfo.isGoogle == true}" class="username-main" th:text="${userinfo.email}"></p>
+                            <p th:if="${userinfo.isGoogle == false}" class="username-main gradient" th:text="${user}"></p>
+                            <p th:if="${userinfo.isGoogle == true}" class="username-main gradient" th:text="${userinfo.email}"></p>
                             <p class="description-main" th:if="${userinfo.surname != null && userinfo.firstname != null}" th:text="${userinfo.surname} + ' ' + ${userinfo.firstname}"></p>
                             <p th:if="${userinfo.www != null}" class="description-main">
                                 <span th:text="#{label_site}"></span>

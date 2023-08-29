@@ -47,9 +47,6 @@ public class BugsDto {
         this.username = username;
     }
 
-
-
-
     public Long getUserId() {
         return userId;
     }

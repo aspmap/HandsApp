@@ -12,7 +12,7 @@
 
 body {
     width: 100%;
-    background: #fafafa;
+    background: #f5f5f5;
     position: relative;
     font-family: 'roboto', sans-serif;
 }
@@ -24,7 +24,7 @@ body {
     width: 100%;
     height: 50px;
     background: #fff;
-    border-bottom: 1px solid #dfdfdf;
+    border-bottom: 1px solid #898989;
     display: flex;
     justify-content: center;
     padding: 5px 0;
@@ -272,7 +272,7 @@ body {
     width: 100%;
     height: auto;
     background: #fff;
-    border: 1px solid #dfdfdf;
+    border: 1px solid #898989;
     margin-top: 20px;
 }
 
@@ -350,7 +350,7 @@ body {
 .info-main .username-main {
     width: auto;
     color: #000;
-    font-size: 34px;
+    font-size: 20px;
     margin-left: 20px;
     margin-right: 20px;
 }
@@ -737,4 +737,14 @@ p {
 
 .usersNotFound {
     margin-bottom: 19px;
+}
+
+.gradient {
+    font-family: 'Rubik One', sans-serif;
+    text-transform: uppercase;
+    background: linear-gradient(0deg, #0B2349 33%, #2463a7 66%, #a08ad6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #0B2349;
+    display: table;
 }
