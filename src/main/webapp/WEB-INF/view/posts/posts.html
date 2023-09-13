@@ -18,9 +18,9 @@
                 <div sec:authorize="isAuthenticated()" class="info-main">
                     <div class="user-main">
                         <div class="profile-pic-main">
-                            <img th:if="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" class="icon user-profile" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
-                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" class="icon user-profile" th:src="${userinfo.photo}" alt="">
+                            <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
                             <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
                         </div>
                         <div>
