@@ -70,7 +70,6 @@ CREATE TABLE comment (
 CREATE TABLE bugs (
     bug_id bigserial PRIMARY KEY,
     user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
-    username varchar(150),
     bug_text text,
     created_at timestamp without time zone);
 

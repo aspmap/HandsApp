@@ -34,9 +34,9 @@ public class BugsController {
         this.userService = userService;
     }
 
-    @PostMapping("/bug/new")
+    @PostMapping("/bug/newKafka")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String postNewBug(BugsDto bugsDto, ModelMap modelMap) throws IOException {
+    public String postNewBugKafka(BugsDto bugsDto, ModelMap modelMap) throws IOException {
 
         //Подготавливаем данные для отправки в Кафку
         setCommonParams(modelMap);
@@ -84,13 +84,13 @@ public class BugsController {
         return "bugs/bugs-add";
     }
 
-    /*@PostMapping("/bug/new")
+    @PostMapping("/bug/new")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String postNewBug(BugsDto bugsDto, ModelMap modelMap) {
         setCommonParams(modelMap);
         bugsService.create(bugsDto);
-        return "message-send";
-    }*/
+        return "messages-templates/message-send";
+    }
 
     @GetMapping("/bugs_view")
     @PreAuthorize("hasRole('ADMIN')")
