@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService {
     public void create(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent())
             throw new EntityExistsException();
+        user.setUsername(user.getUsername().toLowerCase());
         user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(List.of(roleRepository.findByName("USER")));
         user.setCreatedAt(LocalDateTime.now());

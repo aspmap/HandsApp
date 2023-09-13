@@ -207,6 +207,7 @@ public class UserController {
     @GetMapping("/search")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String search(ModelMap modelMap, @RequestParam(required = false) String search) {
+        search = search.toLowerCase();
         setCommonParams(modelMap);
         modelMap.put("countSearchUsers", userService.countSearchUsers(search));
         modelMap.put("countSearchTags", postService.countSearchTags(search));

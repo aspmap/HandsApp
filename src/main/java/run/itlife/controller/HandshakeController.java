@@ -40,7 +40,7 @@ public class HandshakeController {
     @PostMapping("/handshakes_results")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String handshakes_results(ModelMap modelMap, @RequestParam(required = false) String wantedUsername) {
-
+        wantedUsername = wantedUsername.toLowerCase();
         setCommonParams(modelMap);
 
         // Получаем Id текущего пользователя
