@@ -28,7 +28,8 @@
                             </a>
                         </div>
                         <a th:href="@{/sub-posts/{user}(user = ${post_sub.user.username})}">
-                            <p class="username" th:text="${post_sub.user.username}"></p>
+                            <p th:if="${post_sub.user.isGoogle == false}" class="username" th:text="${post_sub.user.username}"></p>
+                            <p th:if="${post_sub.user.isGoogle == true}" class="username" th:text="${post_sub.user.email}"></p>
                         </a>
                     </div>
                 </div>
@@ -65,7 +66,10 @@
                     </div>
                     <p th:each="like, state : ${post_sub.postLike}" class="likes" th:text="${state.last} ? #{label_likes} + ': ' + ${state.count} : ''"></p>
                     <b class="description">
-                        <span th:text="${post_sub.user.username}"></span>
+                        <span th:if="${post_sub.user.isGoogle == false}"
+                              th:text="${post_sub.user.username}"></span>
+                        <span th:if="${post_sub.user.isGoogle == true}"
+                              th:text="${post_sub.user.email}"></span>
                     </b>
                     <span class="description-normal" th:text="${post_sub.content}"></span>
                     <p class="post-time" th:text="${#temporals.format(post_sub.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
