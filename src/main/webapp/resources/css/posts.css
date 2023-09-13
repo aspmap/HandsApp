@@ -513,8 +513,8 @@ a {
 .post-time-comments {
     color: rgba(0, 0, 0, 0.5);
     font-size: 12px;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    margin-bottom: 0px;
+    margin-top: 0px;
     margin-left: 0px;
 }
 
