@@ -95,7 +95,7 @@ POST http://handsapp.online/api/post/
     
     "content": "Test API create",
     
-    "createdAt": "2022-06-12 02:18:59"
+    "createdAt": "2022-06-12 02:18:58"
 }
 ```
 
