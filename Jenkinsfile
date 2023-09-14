@@ -11,7 +11,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        echo "Deploy Project"
+        echo "Deploy Project 1"
         sh "scp -r root@195.161.62.229:/opt/tomcat/webapps/ROOT root@195.161.62.229:/opt/backups/Jenkins"
         sh "scp /var/lib/jenkins/workspace/HandsAppPipeline/target/ROOT.war root@195.161.62.229:/opt/tomcat/webapps"
         sh "sleep 30"
