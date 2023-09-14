@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header-add-img">
+    <title id="pageTitle">HandsApp - Редактирование профиля</title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation-add-img"></nav>
+
+<!-- Page Content -->
+<section class="main-post">
+    <div class="wrapper-posts">
+        <div class="left-col">
+            <form method="POST" th:action="@{/profile_edit}" th:object="${userinfo}" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{userId}"/>
+                <textarea id="blob-img" name="file" class="form-control" rows="4" placeholder="" style="display:none;"></textarea>
+                <div>
+                    <img th:if="${userinfo.photo == null}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/icons/avatar.jpg'}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
+                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
+                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" class="profile-pic-edit" id="profilePicture" th:src="${userinfo.photo}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
+                </div>
+
+                <!-- Modal Window -->
+                <div class="modal fade" id="profileImageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-md" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel" th:text="#{text_image_upload}"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <div class="thumbimg ">
+                                        <input type="file" name="image" id="image" style="display:none;" accept="image/png, image/gif, image/jpeg">
+                                        <button type="button" onclick="image.click();" class="btn st-cropper-select-btn btn-secondary btn-md" th:text="#{button_choose_an_image}"></button>
+                                        <div class="showimg  d-flex justify-content-center pt-3" >
+                                            <div class="row imgdiv" id="imgdiv" style="" >
+                                                <img id="imagecan">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button type="button" onclick="onClickUpload()" class="btn btn-primary st-cropper-upload-btn btn-md" th:text="#{button_download}">
+                                    <i class="fa fa-spinner fa-spin showloading" style="color:white; font-size:12px; display:none;  position:absolute; margin-left: 3px; margin-top: 4px;"></i>
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-md st-cropper-close-btn" data-dismiss="modal" th:text="#{button_close}"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Window End -->
+
+                <div class="info_input post">
+                    <input th:field="*{username}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_login}" readonly>
+                </div>
+                <div class="info_input post">
+                    <input th:field="*{password}" type="password" class="profile-box-input description" th:placeholder="#{input_enter_password}">
+                </div>
+                <div class="info_input post">
+                    <input th:field="*{surname}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_last_name}">
+                </div>
+                <div class="info_input post">
+                    <input th:field="*{firstname}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_name}">
+                </div>
+                <br>
+                <textarea th:field="*{info}" class="profile-box description" rows="9" th:placeholder="#{input_enter_information_about_yourself}"></textarea>
+                <div class="info_input post">
+                    <input th:field="*{www}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_site}">
+                </div>
+                <div class="info_input post">
+                    <input th:field="*{email}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_email}">
+                </div>
+                <div class="info_input post">
+                    <input th:field="*{phone}" type="text" class="profile-box-input description" th:placeholder="#{input_enter_phone}">
+                </div>
+                <div class="info_input post">
+                    <select class="profile-box-input description" rows="9" th:field="*{sex}">
+                        <option th:value="${sex_male}" th:text="#{input_male}"></option>
+                        <option th:value="${sex_female}" th:text="#{input_female}"></option>
+                    </select>
+                </div>
+                <div>
+                    <span th:text="#{input_enter_is_hidden}"></span>
+                    <input  th:field="*{isHidden}" type="checkbox">
+                </div>
+                <div>
+                    <span th:text="#{input_enter_is_closed}"></span>
+                    <input th:field="*{isClosed}" type="checkbox">
+                </div>
+                <br>
+                <button type="submit" class="btn btn-outline-dark"><span th:text="#{button_edit_profile_information}"></span></button>
+                <a th:href="@{/profile_delete/{user}(user = ${user})}" class="btn btn-outline-danger" th:text="#{button_delete_profile}"></a>
+            </form>
+
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+
+        </div>
+    </div>
+</section>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- partial -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.js"></script>
+<script type="text/javascript" th:src="@{/resources/js/crop.js}"></script>
+
+</body>
+</html>

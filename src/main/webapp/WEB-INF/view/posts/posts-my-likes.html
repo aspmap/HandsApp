@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{text_my_likes}"></title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+            <div class="post">
+                <div class="info">
+                    <div class="user">
+                        <p class="comments-logo" th:text="#{text_my_likes}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="post">
+                <div class="post-content">
+                    <div class="view-source comments-view">
+                        <div class="row">
+                            <div class="no_public" th:if="${countPosts == 0}" >
+                                <img th:src="@{'/resources/img/icons/face.png'}" alt="">
+                                <h1 class="h3 mb-3 font-weight-normal no_public" th:text="#{text_no_likes_posts_yet}"></h1>
+                            </div>
+                            <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="${post.postId}">
+                                <a th:href="@{/post-view-sub/} + ${post.postId}">
+                                    <div class="card mb-4">
+                                        <img th:if="${post.extFile == 'png' || post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
+                                        <video class="video-size" th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" height="300px" width="300px" controls loop muted>
+                                            <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}">
+                                        </video>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+
+        </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+<script src="../resources/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

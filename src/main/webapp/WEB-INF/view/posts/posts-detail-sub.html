@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">HandsApp - Подписки</title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+            <div class="no_public" th:if="${countPosts == 0}" >
+                <img th:src="@{'/resources/img/icons/face.png'}" alt="">
+                <h1 class="h3 mb-3 font-weight-normal no_public" th:text="#{text_no_subscriptions_yet}"></h1>
+            </div>
+            <div th:unless="${countPosts == 0}" class="post" th:each="post_sub: ${posts_sub}" >
+                <div class="info">
+                    <div class="user">
+                        <div class="profile-pic">
+                            <a th:href="@{/sub-posts/{user}(user = ${post_sub.user.username})}">
+                                <img th:if="${post_sub.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                <img th:if="${post_sub.user.photo != null and post_sub.user.isGoogle == false}" th:src="@{'/resources/img/users/' + ${post_sub.user.username} + '/profile/' + ${post_sub.user.photo}}" alt="">
+                                <img th:if="${post_sub.user.photo != null and post_sub.user.isGoogle == true}" th:src="${post_sub.user.photo}" alt="">
+                            </a>
+                        </div>
+                        <a th:href="@{/sub-posts/{user}(user = ${post_sub.user.username})}">
+                            <p th:if="${post_sub.user.isGoogle == false}" class="username" th:text="${post_sub.user.username}"></p>
+                            <p th:if="${post_sub.user.isGoogle == true}" class="username" th:text="${post_sub.user.email}"></p>
+                        </a>
+                    </div>
+                </div>
+                <a th:href="@{/post-view-sub/{postId}(postId = ${post_sub.postId})}">
+                    <img th:if="${post_sub.extFile == 'png' || post_sub.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post_sub.user.username} + '/' + ${post_sub.photo}}" class="post-image" alt="">
+                    <video th:if="${post_sub.extFile == 'mp4' || post_sub.extFile == 'mov'}" width="100%" autoplay controls loop muted>
+                        <source th:src="@{'/resources/video/users/' + ${post_sub.user.username} + '/' + ${post_sub.photo}}" type=video/mp4>
+                    </video>
+                </a>
+                <div class="post-content">
+                    <div class="reaction-wrapper">
+                        <div th:if="${!post_sub.postLike.isEmpty()}">
+                            <div th:each="likes, state : ${post_sub.postLike}">
+                                <div th:if="${likes.userLikeId.username.equals(userinfo.username) && isYourLike.contains(post_sub.postId)}">
+                                    <a th:href="@{/unlike_detail_sub/{postId}(postId = ${post_sub.postId})}">
+                                        <img th:src="@{/resources/img/icons/like.png}" class="icon" alt="">
+                                    </a>
+                                </div>
+                                <div th:if="${!likes.userLikeId.username.equals(userinfo.username) && state.size >= 0 && state.index == (state.size - 1) && !isYourLike.contains(post_sub.postId)}">
+                                    <a th:href="@{/like_detail_sub/{postId}(postId = ${post_sub.postId})}">
+                                        <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:if="${post_sub.postLike.isEmpty()}">
+                            <a th:href="@{/like_detail_sub/{postId}(postId = ${post_sub.postId})}">
+                                <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
+                            </a>
+                        </div>
+                        <a th:href="@{/comment/sub/{postId}(postId = ${post_sub.postId})}">
+                            <img th:src="@{/resources/img/nav/comment.png}" class="icon" alt="">
+                        </a>
+                    </div>
+                    <p th:each="like, state : ${post_sub.postLike}" class="likes" th:text="${state.last} ? #{label_likes} + ': ' + ${state.count} : ''"></p>
+                    <b class="description">
+                        <span th:if="${post_sub.user.isGoogle == false}"
+                              th:text="${post_sub.user.username}"></span>
+                        <span th:if="${post_sub.user.isGoogle == true}"
+                              th:text="${post_sub.user.email}"></span>
+                    </b>
+                    <span class="description-normal" th:text="${post_sub.content}"></span>
+                    <p class="post-time" th:text="${#temporals.format(post_sub.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
+
+                    <!-- Comments -->
+                    <div class="view-source comments-view">
+                        <a th:href="@{/comment/sub/{postId}(postId = ${post_sub.postId})}" th:each="like, state : ${post_sub.comments}" class="description comments" th:text="${state.last} ? #{label_see_all_comments} + ' (' + ${state.count} + ')' : ''"></a>
+                    </div>
+                </div>
+
+                <!-- Comments Form -->
+                <div sec:authorize="hasAnyRole('USER')">
+                    <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment_detail_sub}">
+                        <input type="hidden" name="postId" th:value="${post_sub.postId}" />
+                        <div class="info-view">
+                            <div class="user">
+                                <div class="profile-pic">
+                                    <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_add_a_comment} + '...'">
+                        <br>
+                        <button class="comment-btn" th:text="#{button_publish}"></button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+
+        </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
+
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+
+</body>
+</html>

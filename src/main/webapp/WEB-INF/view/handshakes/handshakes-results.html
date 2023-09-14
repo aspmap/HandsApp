@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">HandsApp - Результаты поиска связей</title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+
+            <!-- Results -->
+            <div class="post">
+                <div class="info">
+                    <div class="user">
+                        <p class="comments-logo" th:text="#{text_found_handshakes}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="post">
+                <div class="post-content">
+                    <div class="view-source comments-view">
+                        <div class="media-body">
+                            <div class="info-comments">
+                                <div class="user-comments">
+                                    <div class="profile-card">
+                                        <div th:if="${countHandshakes <= 0}">
+                                            <b class="description-comments-user">
+                                                <span th:text="#{text_handshakes_results_not_found1} + ' '"></span>
+                                                <a th:href="@{/sub-posts/{user}(user = ${wantedUsername})}">
+                                                    <b class="description-handshakes-user">
+                                                        <span th:text="${wantedUsername}"></span>
+                                                    </b>
+                                                </a>
+                                                <span th:text="#{text_handshakes_results_not_found2}"></span>
+                                            </b>
+                                        </div>
+                                        <div th:if="${countHandshakes > 0}">
+                                            <b class="description-comments-user">
+                                                <span th:text="#{text_handshakes_results_found1} + ' '"></span>
+                                                <a th:href="@{/sub-posts/{user}(user = ${wantedUsername})}">
+                                                    <b class="description-handshakes-user">
+                                                        <span th:text="${wantedUsername}"></span>
+                                                    </b>
+                                                </a>
+                                                <span th:if="${countHandshakes == 1}" th:text="#{text_handshakes_results_found2} + ' ' + ${countHandshakes} + ' ' + #{text_handshakes_results_found3}"></span>
+                                                <span th:if="${countHandshakes > 1 and countHandshakes < 5}" th:text="#{text_handshakes_results_found2} + ' ' + ${countHandshakes} + ' ' + #{text_handshakes_results_found4}"></span>
+                                                <span th:if="${countHandshakes > 4 and countHandshakes < 7}" th:text="#{text_handshakes_results_found2} + ' ' + ${countHandshakes} + ' ' + #{text_handshakes_results_found5}"></span>
+                                            </b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="handshakes" th:if="${countHandshakes > 0}">
+                <div class="handshakes-content">
+                    <div class="view-source handshakes-view">
+                        <table>
+<!--                            <tr class="header-table-handshakes">
+                                <div th:each="calc: ${viewNumberOfHandshake}">
+                                    <th></th>
+                                    <th th:class="header-th-handshakes" th:text="${calc}"></th>
+                                </div>
+                                <div>
+                                    <th></th>
+                                    <th th:class="header-th-handshakes"></th>
+                                </div>
+                            </tr>-->
+                            <tr class="header-table-handshakes">
+                                <div>
+                                    <th></th>
+                                    <th th:if="${countHandshakes == 1}" th:class="header-th-handshakes" th:text="${countHandshakes} + ' ' + #{text_handshakes_results_found3}"></th>
+                                    <th th:if="${countHandshakes > 1 and countHandshakes < 5}" th:class="header-th-handshakes" th:text="${countHandshakes} + ' ' + #{text_handshakes_results_found4}"></th>
+                                    <th th:if="${countHandshakes > 4 and countHandshakes < 7}" th:class="header-th-handshakes" th:text="${countHandshakes} + ' ' + #{text_handshakes_results_found5}"></th>
+
+
+                                </div>
+                                <div>
+                                    <th></th>
+                                    <th th:class="header-th-handshakes"></th>
+                                </div>
+                            </tr>
+                            <tr>
+<!--                                <div th:if="${linkUsersResults.key != '0'}" th:each="linkUsersResults, state: ${LinkUsersTree}">
+                                    <td>
+                                        <div class="handshakes-tree">
+                                            <div class="handshakes-comments">
+                                                <div class="handshakes-profile-card">
+                                                    <div class="profile-pic-handshakes">
+                                                        <a th:href="@{/sub-posts/{user}(user = ${linkUsersResults.key})}">
+                                                            <img th:if="${linkUsersResults.value == 'null'}"
+                                                                 th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                            <img th:unless="${linkUsersResults.value == 'null'}"
+                                                                 th:src="@{'/resources/img/users/' + ${linkUsersResults.key} + '/profile/' + ${linkUsersResults.value}}"
+                                                                 alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <a th:href="@{/sub-posts/{user}(user = ${linkUsersResults.key})}">
+                                                            <b class="description-handshakes-user">
+                                                                <span th:text="${linkUsersResults.key}"></span>
+                                                            </b>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="img-position">
+                                        <img class="arrow-size" th:src="@{'/resources/img/nav/arrow-right.png'}"
+                                             th:if="${!state.last}" alt="">
+                                    </td>
+                                </div>-->
+                                <div>
+                                    <td>
+                                        <div class="handshakes-tree">
+                                            <div class="handshakes-comments">
+                                                <div class="handshakes-profile-card">
+                                                    <div class="profile-pic-handshakes">
+                                                        <a th:href="@{/sub-posts/{user}(user = ${userinfo.username})}">
+                                                            <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${userinfo.username} + '/profile/' + ${userinfo.photo}}" alt="">
+                                                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <a th:href="@{/sub-posts/{user}(user = ${userinfo.username})}">
+                                                            <b class="description-handshakes-user">
+                                                                <span th:text="${userinfo_check}"></span>
+                                                            </b>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="img-position">
+                                        <img class="arrow-size" th:src="@{'/resources/img/nav/arrow-right.png'}" alt="">
+                                    </td>
+                                    <td>
+                                        <div class="handshakes-tree">
+                                            <div class="handshakes-comments">
+                                                <div class="handshakes-profile-card">
+                                                    <div class="profile-pic-handshakes">
+                                                        <a th:href="@{/sub-posts/{user}(user = ${wantedUsername})}">
+                                                            <img th:if="${wantedUserinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                            <img th:if="${wantedUserinfo.photo != null and wantedUserinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${wantedUserinfo.username} + '/profile/' + ${wantedUserinfo.photo}}" alt="">
+                                                            <img th:if="${wantedUserinfo.photo != null and wantedUserinfo.isGoogle == true}" th:src="${wantedUserinfo.photo}" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <a th:href="@{/sub-posts/{user}(user = ${wantedUsername})}">
+                                                            <b class="description-handshakes-user">
+                                                                <span th:text="${wantedUsername}"></span>
+                                                            </b>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </div>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <p class="text-center">
+                <a th:href="@{/handshakes_search}" th:text="#{text_back_to_search_handshakes}"></a>
+            </p>
+            <br>
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+        </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
+    </div>
+
+</section>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">HandsApp - Сообщения</title>
+</head>
+
+<script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/jquery.scrollTo.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/test.js}"></script>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+            <div class="post">
+                <div class="info">
+                    <div class="user">
+                        <div class="profile-pic">
+                            <a th:href="@{/dialogs/}">
+                                <img th:src="@{'/resources/img/nav/arrow-left.png'}" alt="">
+                            </a>
+                        </div>
+                        <div class="profile-pic-messages">
+                            <a th:href="@{/sub-posts/{user}(user = ${userDialogName})}">
+                                <img th:if="${userDialogPhoto == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                <img th:if="${userDialogPhoto != null and userDialogGoogle == 'false'}" th:src="@{'/resources/img/users/' + ${userDialogName} + '/profile/' + ${userDialogPhoto}}" alt="">
+                                <img th:if="${userDialogPhoto != null and userDialogGoogle == 'true'}" th:src="${userDialogPhoto}" alt="">
+                            </a>
+                        </div>
+                        <div>
+                            <a th:href="@{/sub-posts/{user}(user = ${userDialogName})}">
+                                <b class="description-comments-user">
+                                    <span th:if="${userDialogGoogle == 'false'}" th:text="${userDialogName} + ' (Всего сообщений: ' + ${countMessagesInDialog} + ')'"></span>
+                                    <span th:if="${userDialogGoogle == 'true'}" th:text="${userDialogEmail} + ' (Всего сообщений: ' + ${countMessagesInDialog} + ')'"></span>
+                                </b>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-content scroll-dialog" id="scroll-dialog">
+                    <!-- Messages -->
+                    <div th:if="${countMessagesInDialog > 0}" class="view-source comments-view">
+                        <div th:each="messages_view: ${messages}">
+                            <div th:if="${userinfo.username.equals(messages_view.user.username)}" class="media-body">
+                                <div class="info-messages-right">
+                                    <div th:if="${countMessagesInDialog > 0}" class="user-comments dialogs-right">
+                                        <div class="alert alert-primary" role="alert" style="border-radius: 0.50rem; margin-bottom: 0rem">
+                                            <span class="dialog-message-right" th:text="${messages_view.messageText}"></span>
+                                        </div>
+                                        <span class="time-message-right" th:text="${#temporals.format(messages_view.createdAt, 'dd.MM.yyyy HH:mm')}"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:unless="${userinfo.username.equals(messages_view.user.username)}" class="media-body">
+                                <div class="info-messages-left">
+                                    <div th:if="${countMessagesInDialog > 0}" class="user-comments dialogs-left">
+                                        <div class="alert alert-secondary" role="alert" style="border-radius: 0.50rem; margin-bottom: 0rem">
+                                            <span class="dialog-message-left" th:text="${messages_view.messageText}"></span>
+                                        </div>
+                                        <span class="time-message-left" th:text="${#temporals.format(messages_view.createdAt, 'dd.MM.yyyy HH:mm')}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div th:unless="${countMessagesInDialog > 0}" class="view-source comments-view">
+                        <br><br><br>
+                        <h1 class="h3 mb-3 font-weight-normal text-center" th:text="#{text_no_messages}"></h1>
+                        <br><br><br>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    $('#scroll-dialog').test();
+                </script>
+
+                <!-- Messages Form -->
+                <div sec:authorize="hasAnyRole('USER')" th:object="${messages}">
+                    <form class="comment-wrapper" method="POST" th:action="@{/messages/create/{dialogId} (dialogId = ${dialog.dialogId})}">
+                    <form class="comment-wrapper" method="POST">
+                        <input type="hidden" name="dialogId" th:value="${dialog.dialogId}" />
+                        <div class="info-view">
+                            <div class="user">
+                                <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
+                            </div>
+                        </div>
+                        <input th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.username} + '...'">
+                        <input th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.email} + '...'">
+                        <br>
+                        <button class="comment-btn" th:text="#{button_send_message}"></button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+        </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
+
+    </div>
+</section>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

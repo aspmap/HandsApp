@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header-login">
+  <title id="pageTitle">HandsApp - Ошибка отправки отзыва</title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main-post">
+  <div class="wrapper-posts">
+    <div class="left-col">
+      <br><br><br><br>
+      <h1 class="h3 mb-3 font-weight-normal text-center" th:text="#{text_publishing_error_kafka}"></h1>
+      <br><br><br><br>
+      <p th:insert="fragments.html :: footer-login"></p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

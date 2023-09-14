@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">HandsApp - Отправка отзыва</title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+<br>
+<br>
+
+<!-- Page Content -->
+<section class="main-post">
+    <div class="wrapper-posts">
+        <div class="left-col">
+            <form method="POST" th:action="@{/bug/new}">
+                <textarea name="bugText" class="profile-box description" rows="4" th:placeholder="#{input_describe_error}"></textarea>
+                <br>
+                    <!-- FIXME По умолчанию сделал без кафки, т.к. кафку на хостинге еще не развернул -->
+                <button type="submit" class="btn btn-outline-dark" th:text="#{button_submit_a_bug_report}"></button>
+            </form>
+
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+        </div>
+    </div>
+</section>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

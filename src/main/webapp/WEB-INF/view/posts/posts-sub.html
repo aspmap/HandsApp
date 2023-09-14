@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+    <title th:text="'HandsApp - Профиль пользователя ' + ${user_sub}" id="pageTitle"></title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main-post">
+    <div class="wrapper-posts">
+        <div class="left-col">
+            <section class="text-center">
+                <div sec:authorize="isAuthenticated()" class="info-main">
+                    <div class="user-main">
+                        <div class="profile-pic-main">
+                            <img th:if="${userinfo_sub.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                            <img th:if="${userinfo_sub.photo != null and userinfo_sub.isGoogle == false}" th:src="@{'/resources/img/users/' + ${user_sub} + '/profile/' + ${userinfo_sub.photo}}" alt="">
+                            <img th:if="${userinfo_sub.photo != null and userinfo_sub.isGoogle == true}" th:src="${userinfo_sub.photo}" alt="">
+                        </div>
+                        <div>
+                            <p th:if="${userinfo_sub.isGoogle == false}" class="username-main gradient" th:text="${user_sub}"></p>
+                            <p th:if="${userinfo_sub.isGoogle == true}" class="username-main gradient" th:text="${userinfo_sub.email}"></p>
+                            <p class="description-main" th:if="${userinfo_sub.surname != null && userinfo_sub.firstname != null}" th:text="${userinfo_sub.surname} + ' ' + ${userinfo_sub.firstname}"></p>
+                            <p th:if="${userinfo_sub.www != null}" class="description-main">
+                                <span th:text="#{label_site}"></span>
+                                <a th:href="${userinfo_sub.www}"><span th:text="${userinfo_sub.www}"></span></a>
+                            </p>
+                            <p class="description-main">
+                                <span th:text="${countPosts} + ' ' + #{label_publications}"></span>
+                                <a th:href="@{/subscribers_subuser/{user}(user = ${user_sub})}">
+                                    <span th:text="${countSubscribers} + ' ' + #{label_subscribers}"></span>
+                                </a>
+                                <a th:href="@{/subscriptions_subuser/{user}(user = ${user_sub})}">
+                                    <span th:text="${countSubscribe} + ' ' + #{label_subscriptions}"></span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <a th:href="@{/dialogs/{usernameCompanion}(usernameCompanion = ${user_sub})}" class="btn btn-outline-dark" th:text="#{button_dialog}"></a>
+                    <a th:if="${isSub == 0 && !user.equals(user_sub)}" th:href="@{/subscription/{user}(user = ${user_sub})}" class="btn btn-outline-dark" th:text="#{button_subscribe}"></a>
+                    <a th:if="${isSub != 0 && !user.equals(user_sub)}" th:href="@{/unsubscription/{user}(user = ${user_sub})}" class="btn btn-outline-danger" th:text="#{button_unsubscribe}"></a>
+                </div>
+            </section>
+            <div class="post">
+                <div class="post-content">
+                    <div class="view-source comments-view">
+                        <div class="row">
+                            <div class="no_public" th:if="${countPosts == 0}" >
+                                <img th:src="@{'/resources/img/icons/face.png'}" alt="">
+                                <h1 class="h3 mb-3 font-weight-normal no_public" th:text="#{text_no_posts_yet}"></h1>
+                            </div>
+                            <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
+                                <a th:href="@{/posts_detail_subuser/{user}#post- (user = ${user_sub})} + ${post.postId}">
+                                    <div class="card mb-4">
+                                        <img th:if="${post.extFile == 'png' || post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
+                                        <video th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" height="100%" autoplay controls loop muted>
+                                            <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}" type=video/mp4>
+                                        </video>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+<script src="../resources/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
