@@ -48,7 +48,9 @@
                                                         <span th:text="${wantedUsername}"></span>
                                                     </b>
                                                 </a>
-                                                <span th:text="#{text_handshakes_results_found2} + ' ' + ${countHandshakes} + ' ' + #{text_handshakes_results_found3}"></span>
+                                                <span th:if="${countHandshakes == 1}" th:text="#{text_handshakes_results_found2} + ' ' + ${countHandshakes} + ' ' + #{text_handshakes_results_found3}"></span>
+                                                <span th:if="${countHandshakes > 1 and countHandshakes < 5}" th:text="#{text_handshakes_results_found2} + ' ' + ${countHandshakes} + ' ' + #{text_handshakes_results_found4}"></span>
+                                                <span th:if="${countHandshakes > 4 and countHandshakes < 7}" th:text="#{text_handshakes_results_found2} + ' ' + ${countHandshakes} + ' ' + #{text_handshakes_results_found5}"></span>
                                             </b>
                                         </div>
                                     </div>
@@ -76,7 +78,11 @@
                             <tr class="header-table-handshakes">
                                 <div>
                                     <th></th>
-                                    <th th:class="header-th-handshakes" th:text="${countHandshakes} + ' ' + #{text_handshakes_results_found3}"></th>
+                                    <th th:if="${countHandshakes == 1}" th:class="header-th-handshakes" th:text="${countHandshakes} + ' ' + #{text_handshakes_results_found3}"></th>
+                                    <th th:if="${countHandshakes > 1 and countHandshakes < 5}" th:class="header-th-handshakes" th:text="${countHandshakes} + ' ' + #{text_handshakes_results_found4}"></th>
+                                    <th th:if="${countHandshakes > 4 and countHandshakes < 7}" th:class="header-th-handshakes" th:text="${countHandshakes} + ' ' + #{text_handshakes_results_found5}"></th>
+
+
                                 </div>
                                 <div>
                                     <th></th>
