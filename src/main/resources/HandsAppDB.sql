@@ -52,7 +52,7 @@ CREATE TABLE likes (
 
 CREATE TABLE post (
     post_id bigserial PRIMARY KEY,
-    photo varchar(15),
+    photo varchar(40),
     extention varchar(5),
     content text NOT NULL,
     user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,

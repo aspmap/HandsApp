@@ -1,19 +1,15 @@
 package run.itlife.utils;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class OtherUtils {
 
     public static String generateFileName() {
-        char c = 0;
-        StringBuilder sb = new StringBuilder();
+
         String fileName;
-        for (int i = 0; i < 8; i++) {
-            Random r = new Random();
-            c = (char) (r.nextInt(26) + 'a');
-            sb.append(c);
-        }
-        fileName = sb.toString();
+        UUID uuid = UUID.randomUUID();
+        fileName = uuid.toString();
         return fileName;
     }
 
