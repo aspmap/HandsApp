@@ -1,6 +1,9 @@
 package run.itlife.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +20,7 @@ import javax.servlet.ServletContext;
 import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.PostDto;
 import run.itlife.entity.User;
+import run.itlife.enums.FileTypes;
 import run.itlife.repository.UserRepository;
 import run.itlife.service.*;
 
@@ -27,6 +31,8 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import static run.itlife.enums.FileExtensions.*;
+import static run.itlife.enums.FileTypes.*;
 import static run.itlife.utils.EditImage.resizeImage;
 import static run.itlife.utils.OtherUtils.generateFileName;
 
@@ -46,6 +52,8 @@ public class PostController {
     private final SubscriptionsService subscriptionsService;
     private final UserRepository userRepository;
     private final ServletContext context;
+
+    private Logger log = LoggerFactory.getLogger(PostController.class);
 
     @Autowired
     ServletContext servletContext;
@@ -141,20 +149,20 @@ public class PostController {
     public String postNewVideo(PostDto postDto, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         setCommonParams(modelMap);
-
+//TODO вынести создание файлов в отдельный класс и объединить картинки и видео, а на странице выводить нужную в зависимости от
         if (!file.isEmpty()) {
             try {
-                if (file.getContentType().equals("video/mp4") || file.getContentType().equals("video/quicktime")) {
+                if (file.getContentType().equals(VIDEO_MP4.getType()) || file.getContentType().equals(VIDEO_QT.getType())) {
                     String extension;
                     switch (file.getContentType()) {
-                        case "video/mp4":
-                            extension = "mp4";
+                        case "video/mp4": //TODO Расширения вынести в Enum или статические переменные
+                            extension = MP4.getExtension();
                             break;
                         case "video/quicktime":
-                            extension = "mov";
+                            extension = MOV.getExtension();
                             break;
                         default:
-                            extension = "mp4";
+                            extension = MP4.getExtension();
                             break;
                     }
                     String filename = generateFileName() + "." + extension;
@@ -175,9 +183,11 @@ public class PostController {
                 }
                 return "messages-templates/error";
             } catch (Exception e) {
+                log.error("ERROR: " + e);
                 return "messages-templates/error";
             }
         } else {
+            log.error("ERROR: Error create post");
             return "messages-templates/error";
         }
     }
@@ -200,8 +210,8 @@ public class PostController {
                 String base64Image = file.split(",")[1];
                 byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
 
-                String filename = generateFileName() + ".png";
-                postDto.setExtFile("png");
+                String filename = generateFileName() + "." + PNG.getExtension();
+                postDto.setExtFile(PNG.getExtension());
                 postDto.setPhoto(filename);
                 long postId = postService.createPost(postDto);
 
@@ -218,12 +228,13 @@ public class PostController {
                 File newFileJPG = null;
                 resizeImage = resizeImage(originalImage, 500, 500);
                 newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
-                ImageIO.write(resizeImage, "png", newFileJPG);
+                ImageIO.write(resizeImage, PNG.getExtension(), newFileJPG);
 
                 stream.flush();
                 stream.close();
                 return "redirect:/post/" + postId;
             } catch (Exception e) {
+                log.error("ERROR: " + e);
                 return "messages-templates/error";
             }
         } else {
