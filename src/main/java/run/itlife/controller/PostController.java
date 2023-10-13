@@ -3,7 +3,6 @@ package run.itlife.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,27 +13,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 
 import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.PostDto;
 import run.itlife.entity.User;
-import run.itlife.enums.FileTypes;
 import run.itlife.repository.UserRepository;
 import run.itlife.service.*;
+import run.itlife.utils.SaveFile;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static run.itlife.enums.FileExtensions.*;
 import static run.itlife.enums.FileTypes.*;
-import static run.itlife.utils.EditImage.resizeImage;
-import static run.itlife.utils.OtherUtils.generateFileName;
 
 //Контроллер для постов (создание, редактирование, удаление)
 @Controller
@@ -149,41 +140,20 @@ public class PostController {
     public String postNewVideo(PostDto postDto, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         setCommonParams(modelMap);
-//TODO вынести создание файлов в отдельный класс и объединить картинки и видео, а на странице выводить нужную в зависимости от
+        long postId;
+        SaveFile sf = new SaveFile(postService);
+
         if (!file.isEmpty()) {
             try {
                 if (file.getContentType().equals(VIDEO_MP4.getType()) || file.getContentType().equals(VIDEO_QT.getType())) {
-                    String extension;
-                    switch (file.getContentType()) {
-                        case "video/mp4": //TODO Расширения вынести в Enum или статические переменные
-                            extension = MP4.getExtension();
-                            break;
-                        case "video/quicktime":
-                            extension = MOV.getExtension();
-                            break;
-                        default:
-                            extension = MP4.getExtension();
-                            break;
-                    }
-                    String filename = generateFileName() + "." + extension;
-                    postDto.setExtFile(extension);
-                    postDto.setPhoto(filename);
-                    long postId = postService.createPost(postDto);
-                    File dir = new File(context.getRealPath("/resources/video/users/" + username));
-                    if (!dir.exists()) {
-                        dir.mkdirs();
-                    }
-                    // TODO написать логику обрезки видео
-                    byte[] bytes = file.getBytes();
-                    BufferedOutputStream stream =
-                            new BufferedOutputStream(new FileOutputStream(new File(dir + "/" + filename)));
-                    stream.write(bytes);
-                    stream.close();
+                    postId = sf.saveFile(username, context, postDto, file);
                     return "redirect:/post/" + postId;
                 }
-                return "messages-templates/error";
+                else {
+                    return "messages-templates/error";
+                }
             } catch (Exception e) {
-                log.error("ERROR: " + e);
+                log.error("ERROR: " + e); // TODO Ошибка в логах не выводится
                 return "messages-templates/error";
             }
         } else {
@@ -204,34 +174,12 @@ public class PostController {
     public String postNewImage(PostDto postDto, @RequestParam("file") String file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         setCommonParams(modelMap);
+        long postId;
+        SaveFile sf = new SaveFile(postService);
 
         if (!file.isEmpty()) {
             try {
-                String base64Image = file.split(",")[1];
-                byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
-
-                String filename = generateFileName() + "." + PNG.getExtension();
-                postDto.setExtFile(PNG.getExtension());
-                postDto.setPhoto(filename);
-                long postId = postService.createPost(postDto);
-
-                File dir = new File(context.getRealPath("/resources/img/users/" + username));
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-
-                File uploadedFile = new File(dir + "/" + filename);
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-                stream.write(imageBytes);
-                BufferedImage originalImage = ImageIO.read(uploadedFile);
-                BufferedImage resizeImage = null;
-                File newFileJPG = null;
-                resizeImage = resizeImage(originalImage, 500, 500);
-                newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
-                ImageIO.write(resizeImage, PNG.getExtension(), newFileJPG);
-
-                stream.flush();
-                stream.close();
+                postId = sf.saveFile(username, context, postDto, file);
                 return "redirect:/post/" + postId;
             } catch (Exception e) {
                 log.error("ERROR: " + e);
