@@ -1,7 +1,6 @@
 package run.itlife.utils;
 
 import org.springframework.web.multipart.MultipartFile;
-import run.itlife.dto.PostDto;
 import run.itlife.service.PostService;
 
 import javax.imageio.ImageIO;
@@ -11,6 +10,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static run.itlife.enums.FileExtensions.*;
 import static run.itlife.enums.FileExtensions.PNG;
@@ -19,7 +20,6 @@ import static run.itlife.utils.OtherUtils.generateFileName;
 
 public class SaveFile {
 
-    private final PostService postService;
     private static final String PATH_VIDEO_USERS = "/resources/video/users/";
     private static final String PATH_IMAGE_USERS = "/resources/img/users/";
     private static final String SEPARATOR = "/";
@@ -28,12 +28,9 @@ public class SaveFile {
     private static final int IMAGE_WIDTH = 500;
     private static final int IMAGE_HEIGHT = 500;
 
-    public SaveFile(PostService postService) {
-        this.postService = postService;
-    }
+    public Map<String, String> saveFile(String username, ServletContext context, MultipartFile file) throws IOException {
 
-    public long saveFile(String username, ServletContext context, PostDto postDto, MultipartFile file) throws IOException {
-
+        Map<String, String> filenameMap = new HashMap<>();
         String extension;
 
         switch (file.getContentType()) {
@@ -48,9 +45,7 @@ public class SaveFile {
                 break;
         }
         String filename = generateFileName() + POINT + extension;
-        postDto.setExtFile(extension);
-        postDto.setPhoto(filename);
-        long postId = postService.createPost(postDto);
+
         File dir = new File(context.getRealPath(PATH_VIDEO_USERS + username));
         if (!dir.exists()) {
             dir.mkdirs();
@@ -60,25 +55,23 @@ public class SaveFile {
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(dir + SEPARATOR + filename)));
         stream.write(bytes);
         stream.close();
-        return postId;
+        filenameMap.put(filename, extension);
+        return filenameMap;
+
     }
 
-    public long saveFile(String username, ServletContext context, PostDto postDto, String file) throws IOException {
+    public String saveFile(String username, ServletContext context, String file) throws IOException {
 
         String base64Image = file.split(COMMA)[1];
         byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
 
         String filename = generateFileName() + POINT + PNG.getExtension();
-        postDto.setExtFile(PNG.getExtension());
-        postDto.setPhoto(filename);
-        long postId = postService.createPost(postDto);
-
-        File dir = new File(context.getRealPath(PATH_IMAGE_USERS + username));
+        File dir = new File(context.getRealPath(PATH_IMAGE_USERS + username)); // TODO PATH_VIDEO_USERS вынести в аргументы функции
         if (!dir.exists()) {
             dir.mkdirs();
         }
 
-        File uploadedFile = new File(dir + SEPARATOR + filename);
+        File uploadedFile = new File(dir + SEPARATOR + filename); // TODO PATH_VIDEO_USERS вынести в аргументы функции
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
         stream.write(imageBytes);
         BufferedImage originalImage = ImageIO.read(uploadedFile);
@@ -90,6 +83,6 @@ public class SaveFile {
 
         stream.flush();
         stream.close();
-        return postId;
+        return filename;
     }
 }

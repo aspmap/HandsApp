@@ -25,6 +25,7 @@ import run.itlife.utils.SaveFile;
 import java.util.HashMap;
 import java.util.Map;
 
+import static run.itlife.enums.FileExtensions.PNG;
 import static run.itlife.enums.FileTypes.*;
 
 //Контроллер для постов (создание, редактирование, удаление)
@@ -44,7 +45,7 @@ public class PostController {
     private final UserRepository userRepository;
     private final ServletContext context;
 
-    private Logger log = LoggerFactory.getLogger(PostController.class);
+    private static final Logger log = LoggerFactory.getLogger(PostController.class);
 
     @Autowired
     ServletContext servletContext;
@@ -141,15 +142,21 @@ public class PostController {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         setCommonParams(modelMap);
         long postId;
-        SaveFile sf = new SaveFile(postService);
+        SaveFile sf = new SaveFile();
+        Map<String, String> filenameMap = new HashMap<>();
 
         if (!file.isEmpty()) {
             try {
                 if (file.getContentType().equals(VIDEO_MP4.getType()) || file.getContentType().equals(VIDEO_QT.getType())) {
-                    postId = sf.saveFile(username, context, postDto, file);
+                    filenameMap = sf.saveFile(username, context, file);
+                    for (Map.Entry<String, String> entry : filenameMap.entrySet()) {
+                        postDto.setExtFile(entry.getValue());
+                        postDto.setPhoto(entry.getKey());
+                    }
+                    postId = postService.createPost(postDto);
+                    log.error("ERROR: Error create post");
                     return "redirect:/post/" + postId;
-                }
-                else {
+                } else {
                     return "messages-templates/error";
                 }
             } catch (Exception e) {
@@ -175,11 +182,14 @@ public class PostController {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         setCommonParams(modelMap);
         long postId;
-        SaveFile sf = new SaveFile(postService);
+        SaveFile sf = new SaveFile();
 
         if (!file.isEmpty()) {
             try {
-                postId = sf.saveFile(username, context, postDto, file);
+                String filename = sf.saveFile(username, context, file);
+                postDto.setExtFile(PNG.getExtension());
+                postDto.setPhoto(filename);
+                postId = postService.createPost(postDto);
                 return "redirect:/post/" + postId;
             } catch (Exception e) {
                 log.error("ERROR: " + e);
