@@ -10,7 +10,6 @@ src/main/gen
 target/
 src/main/webapp/resources/img/users
 src/main/webapp/resources/video
-src/main/resources/*.properties
 
 # Compiled class file
 *.class
