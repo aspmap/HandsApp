@@ -33,6 +33,12 @@ Oauth2.0 (application.properties)
 2. ${CLIENT_SECRET} - spring.security.oauth2.client.registration.google.client-secret
 3. ${SCOPE} - spring.security.oauth2.client.registration.google.scope
 
+DB:
+1. ${DB_URL} - db.postgres.url
+2. ${DB_LOGIN} - db.postgres.login
+3. ${DB_PASSWORD} - db.postgres.password
+
+
 :white_check_mark: **Что реализовано:**
 1. Регистрация пользователя
 2. Авторизация и аутентификация пользователя

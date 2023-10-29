@@ -1,6 +1,6 @@
 package run.itlife.config;
 
-import org.postgresql.Driver;							 
+import org.postgresql.Driver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -13,7 +13,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
+
 import javax.sql.DataSource;
+import java.util.Map;
 import java.util.Properties;
 
 //Работаем с Hibernate, используя спецификацию JPA
@@ -22,9 +24,11 @@ import java.util.Properties;
 @EnableJpaRepositories("run.itlife.repository")
 public class JpaConfig {
 
-    private static final String URL = "jdbc:postgresql://127.0.0.1:5432/HandsApp";
-    private static final String LOGIN = "postgres";
-    private static final String PASSWORD = "NtCn0db4";
+    private static Map<String, String> env = System.getenv();
+
+    private static final String URL = env.get("DB_URL");
+    private static final String LOGIN =  env.get("DB_LOGIN");
+    private static final String PASSWORD = env.get("DB_PASSWORD");
 
     @Bean
     public DataSource dataSource() {
