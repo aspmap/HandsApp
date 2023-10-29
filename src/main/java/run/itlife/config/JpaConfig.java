@@ -1,8 +1,10 @@
 package run.itlife.config;
 
 import org.postgresql.Driver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -15,7 +17,6 @@ import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
-import java.util.Map;
 import java.util.Properties;
 
 //Работаем с Hibernate, используя спецификацию JPA
@@ -24,19 +25,16 @@ import java.util.Properties;
 @EnableJpaRepositories("run.itlife.repository")
 public class JpaConfig {
 
-    private static Map<String, String> env = System.getenv();
-
-    private static final String URL = env.get("DB_URL");
-    private static final String LOGIN =  env.get("DB_LOGIN");
-    private static final String PASSWORD = env.get("DB_PASSWORD");
+    @Autowired
+    Environment env;
 
     @Bean
     public DataSource dataSource() {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         dataSource.setDriverClass(Driver.class);
-        dataSource.setUrl(URL);
-        dataSource.setUsername(LOGIN);
-        dataSource.setPassword(PASSWORD);
+        dataSource.setUrl(env.getProperty("db.postgres.url"));
+        dataSource.setUsername(env.getProperty("db.postgres.login"));
+        dataSource.setPassword(env.getProperty("db.postgres.password"));
         return dataSource;
     }
 
