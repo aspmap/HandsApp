@@ -17,6 +17,7 @@
 4. Java 15.0.1
 5. PostgreSQL 12
 6. Apache Kafka 3.3.1
+7. Логирование Slf4j-log4j
 
 :computer: **Разворачивание и запуск проекта:**
 1. Клонируем проект: git clone https://github.com/pavlov150/HandsApp.git
@@ -24,6 +25,13 @@
 3. Открываем проект в IntelliJ IDEA и в JpaConfig.java указываем имя и пароль от вашей БД и имя БД
 4. Настраиваем Tomcat
 5. Запускаем приложение
+
+:computer: **Переменные окружения:**
+
+Oauth2.0 (application.properties)
+1. ${CLIENT_ID} - spring.security.oauth2.client.registration.google.client-id
+2. ${CLIENT_SECRET} - spring.security.oauth2.client.registration.google.client-secret
+3. ${SCOPE} - spring.security.oauth2.client.registration.google.scope
 
 :white_check_mark: **Что реализовано:**
 1. Регистрация пользователя
