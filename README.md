@@ -29,14 +29,22 @@
 :computer: **Переменные окружения:**
 
 Oauth2.0 (application.properties)
+
 spring.security.oauth2.client.registration.google.client-id = ${CLIENT_ID}
+
 spring.security.oauth2.client.registration.google.client-secret = ${CLIENT_SECRET}
+
 spring.security.oauth2.client.registration.google.scope = ${SCOPE}
 
+
 DB (application.properties)
+
 db.postgres.url = ${DB_URL}
+
 db.postgres.login = ${DB_LOGIN}
+
 db.postgres.password = ${DB_PASSWORD}
+
 
 
 :white_check_mark: **Что реализовано:**
