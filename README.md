@@ -79,26 +79,26 @@ DB (application.properties)
 
 Используется Basic-Auth
 
-Выборка постов по ключевому слову
+> Выборка постов по ключевому слову
 
 GET http://handsapp.online/api/post?search=москва
 
 
-Выборка всех постов
+> Выборка всех постов
 
 GET http://handsapp.online/api/post
 
 
-Поиск поста по ID
+> Поиск поста по ID
 
 GET http://handsapp.online/api/post/284
 
 
-Создание поста
+> Создание поста
 
 POST http://handsapp.online/api/post/
 
-Пример запроса
+> Пример запроса
 
 ```json
 {
@@ -113,7 +113,7 @@ POST http://handsapp.online/api/post/
 }
 ```
 
-Редактирование поста
+> Редактирование поста
 
 PUT http://handsapp.online/api/post/294
 
@@ -132,77 +132,103 @@ PUT http://handsapp.online/api/post/294
 }
 ```
 
-Удаление поста
+> Удаление поста
 
 DELETE http://handsapp.online/api/post/295
 
 
 :iphone: **Внешний вид приложения на текущий момент:**
 
-Страница c результатами поиска связей
+> Страница авторизации
 
-![photo_2023-01-29_13-06-36](https://user-images.githubusercontent.com/15989675/224484659-9fd00c35-0e5f-4882-b5b9-7be9bc7aa1de.jpg)
+![2024-05-07_20-14-31](https://github.com/aspmap/HandsApp/assets/145023708/a17e3e6e-8621-4000-8fb8-e20a2876ac52)
 
-Страница пользователя без подписок
 
-![2022-12-11_16-09-23](https://user-images.githubusercontent.com/15989675/206905853-dcd85916-4795-4070-8738-f49a0cb8144f.jpg)
+> Страница регистрации
 
-![2022-12-11_16-13-47](https://user-images.githubusercontent.com/15989675/206905867-8f90f421-6bc6-4792-96fd-b0034deec64c.jpg)
+![2024-05-07_20-14-47](https://github.com/aspmap/HandsApp/assets/145023708/859609a3-05a3-4af7-9d7e-da3f4dbc7633)
 
-Редактирование профиля
 
-![2022-12-11_16-12-18](https://user-images.githubusercontent.com/15989675/206905873-f514dc47-253a-454b-9599-fd446d311a8e.jpg)
+> Страница пользователя без подписок
 
-Создание поста
+![2024-05-07_19-57-47](https://github.com/aspmap/HandsApp/assets/145023708/ac800b5e-7b6b-4004-9883-8061ed89b966)
 
-![2022-12-11_16-14-06](https://user-images.githubusercontent.com/15989675/206905885-ffe85b44-8787-46ce-9838-bfff98a3ad6e.jpg)
 
-![2022-06-11_02-17-23](https://user-images.githubusercontent.com/15989675/173162100-e1d511b5-d6eb-46e4-a581-c821376ea52c.jpg)
+> Создание и публикация поста
 
-![2022-06-11_02-17-52](https://user-images.githubusercontent.com/15989675/173162104-92728f23-4513-44bf-820a-aa80d1ba76ab.jpg)
+![2024-05-07_20-00-51](https://github.com/aspmap/HandsApp/assets/145023708/fcae4f76-6351-473e-baec-17564b3417d4)
 
-![2022-06-11_02-18-09](https://user-images.githubusercontent.com/15989675/173162139-71dc521b-af7b-4e61-ad51-15b13dd21d26.jpg)
+![2024-05-07_20-01-43](https://github.com/aspmap/HandsApp/assets/145023708/cf4f0c20-f2d2-4ab2-96be-e0dbb087013f)
 
-Страница с постами текущего пользователя
+![2024-05-07_20-02-12](https://github.com/aspmap/HandsApp/assets/145023708/8a771034-ef39-4aae-b9b0-a17611e4f1db)
 
-![2022-12-11_16-11-14](https://user-images.githubusercontent.com/15989675/206905905-f1f8a51f-8c6d-4c6b-9b44-66336cf63700.jpg)
+![2024-05-07_20-02-28](https://github.com/aspmap/HandsApp/assets/145023708/3460e893-ab1b-4e73-bb36-6ef2550614a2)
 
-Изменение поста
 
-![2022-06-11_02-18-29](https://user-images.githubusercontent.com/15989675/173162194-d93f375d-b7b9-41f9-aa32-1e3cb000c1ba.jpg)
+> Страница с постами текущего пользователя
 
-Страница с постами по подписке
+![2024-05-07_20-05-55](https://github.com/aspmap/HandsApp/assets/145023708/d5766c66-d9b3-430c-ae2e-a70e7f1f7671)
 
-![2022-12-11_16-09-23](https://user-images.githubusercontent.com/15989675/206905928-7cb3ed88-a8fc-4ac8-a67c-8ed057b3431c.jpg)
 
-Страница пользователя на которого можно подписаться или отписаться
+> Изменение поста
 
-![2022-06-11_02-19-06](https://user-images.githubusercontent.com/15989675/173162299-cf8b966c-f69a-47ad-be12-d0912da7ee66.jpg)
+![2024-05-07_20-06-56](https://github.com/aspmap/HandsApp/assets/145023708/13d988d7-0423-407e-afd3-2007dd54c100)
 
-Страница с подписчиками
 
-![2022-12-11_16-19-44](https://user-images.githubusercontent.com/15989675/206906063-94b7bfbc-e142-495d-a1dd-eaa4fb47716e.jpg)
+> Страница с постами по подписке
 
-Страница с подписками
+![2024-05-07_20-08-32](https://github.com/aspmap/HandsApp/assets/145023708/7f39a04b-979c-4c2f-9ac6-955ad003504c)
 
-![2022-12-11_16-09-55](https://user-images.githubusercontent.com/15989675/206906031-75b605de-0004-4904-b7ed-dd7dd2792818.jpg)
 
-Поиск пользователей и постов по тегам
+> Страница пользователя на которого можно подписаться или отписаться
 
-![2022-12-11_16-10-36](https://user-images.githubusercontent.com/15989675/206905966-ab7f90a1-f2ad-4189-b85c-9910fb08f8e7.jpg)
+![2024-05-07_20-09-29](https://github.com/aspmap/HandsApp/assets/145023708/43220bfc-8c77-4a24-8990-0c74b6ad8374)
 
-QR-код страницы пользователя
 
-![2022-06-11_02-20-55](https://user-images.githubusercontent.com/15989675/173162398-5de577e3-aef2-413e-9548-57ea1e6b943f.jpg)
+> Страница с подписчиками
 
-Страница авторизации
+![2024-05-07_20-11-26](https://github.com/aspmap/HandsApp/assets/145023708/2a0b199e-d111-4faa-9c20-bd0f786b32e3)
 
-![2022-12-11_16-08-54](https://user-images.githubusercontent.com/15989675/206905990-7460c7a7-1508-4504-9248-cb779fba9149.jpg)
 
-Страница регистрации
+> Страница с подписками
 
-![2022-12-11_16-18-36](https://user-images.githubusercontent.com/15989675/206906008-748b61e3-5c4f-46ac-9309-cc375f70d205.jpg)
+![2024-05-07_20-10-46](https://github.com/aspmap/HandsApp/assets/145023708/f4cbf40a-7641-4c65-b242-bc5db5127f8d)
 
-Удаление профиля
 
-![2022-12-11_16-12-36](https://user-images.githubusercontent.com/15989675/206906100-d49f3e03-48b1-49a6-9295-ec584d1de4c9.jpg)
+> Поиск пользователей и постов по тегам
+
+![2024-05-07_20-12-22](https://github.com/aspmap/HandsApp/assets/145023708/f1b79c6a-060a-4dab-abe7-7cd21aa95215)
+
+
+> Страница c результатами поиска связей
+
+![2024-05-07_19-54-36](https://github.com/aspmap/HandsApp/assets/145023708/d4e173f4-1a6e-4148-9a8c-000ce8305699)
+
+
+> Редактирование профиля
+
+![2024-05-07_19-59-19](https://github.com/aspmap/HandsApp/assets/145023708/c79413c1-6c42-4a70-acf8-842f5f2ae020)
+
+
+> Удаление профиля
+
+
+![2024-05-07_20-15-17](https://github.com/aspmap/HandsApp/assets/145023708/c9eccab4-9a3b-4404-80e9-1cd9074131fe)
+
+
+> QR-код страницы пользователя
+
+![2024-05-07_20-13-07](https://github.com/aspmap/HandsApp/assets/145023708/8fa55c30-fa5a-4d63-b1e3-3683bf07f49d)
+
+
+> Обмен сообщениями
+
+![2024-05-07_20-28-04](https://github.com/aspmap/HandsApp/assets/145023708/0e633c08-5336-4851-a624-0d07976bd769)
+
+> Раздел "Мои лайки"
+
+![2024-05-07_20-30-54](https://github.com/aspmap/HandsApp/assets/145023708/0251ac5a-587a-4ea7-a608-771cf79f78e0)
+
+
+
+
