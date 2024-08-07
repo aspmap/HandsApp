@@ -56,6 +56,7 @@ cloud.aws.credentials.secret-key = ${SECRET_KEY_S3}
 cloud.aws.region.static = ${REGION_S3}
 
 
+
 :white_check_mark: **Что реализовано:**
 1. Регистрация пользователя
 2. Авторизация и аутентификация пользователя
