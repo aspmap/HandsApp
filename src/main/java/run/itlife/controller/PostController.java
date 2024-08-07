@@ -226,7 +226,7 @@ public class PostController {
                 //service.uploadS3File(username, multipartFile);
                 postDto.setExtFile(PNG.getExtension());
                 postDto.setStorageType("S3");
-                postDto.setPhoto("https://storage.yandexcloud.net/handsapp/img/users/test.png"); //+ username + "/" + multipartFile.getName());
+                postDto.setPhoto("https://storage.yandexcloud.net/handsapp/img/users/test.png" + username);// + "/" + multipartFile.getName());
                 postId = postService.createPost(postDto);
                 return "redirect:/post/" + postId;
             } catch (Exception e) {
