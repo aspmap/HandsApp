@@ -45,6 +45,15 @@ db.postgres.login = ${DB_LOGIN}
 
 db.postgres.password = ${DB_PASSWORD}
 
+S3 (Yandex) (application.properties)
+
+application.bucket.name = ${BUCKET_NAME_S3}
+
+cloud.aws.credentials.access-key = ${ACCESS_KEY_S3}
+
+cloud.aws.credentials.secret-key = ${SECRET_KEY_S3}
+
+cloud.aws.region.static = ${REGION_S3}
 
 
 :white_check_mark: **Что реализовано:**
@@ -81,7 +90,8 @@ db.postgres.password = ${DB_PASSWORD}
 31. Просмотр постов, которым были поставлены лайки
 32. Поиск связей, основанный на теории шести рукопожатий. Осуществляется поиск пользователя и выводится наглядная визуализация связей на странице
 33. Авторизация через Google
-34. Работа приложения по протоколу https.
+34. Работа приложения по протоколу https
+35. Создание поста с использованием хранилища S3 (Yandex)
 
 :abcd: **REST-API:**
 
