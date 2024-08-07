@@ -223,12 +223,16 @@ public class PostController {
         if (!file.isEmpty()) {
             try {
                 File multipartFile = sf.saveS3File(username, context, file);
-                service.uploadS3File(username, multipartFile);
-                postDto.setExtFile(PNG.getExtension());
-                postDto.setStorageType("S3");
-                postDto.setPhoto("https://storage.yandexcloud.net/handsapp/img/users/" + username);// + "/" + multipartFile.getName());
-                postId = postService.createPost(postDto);
-                return "redirect:/post/" + postId;
+                System.out.println(multipartFile.getName());
+                if (multipartFile != null) {
+                    service.uploadS3File(username, multipartFile);
+                    postDto.setExtFile(PNG.getExtension());
+                    postDto.setStorageType("S3");
+                    postDto.setPhoto("https://storage.yandexcloud.net/handsapp/img/users/" + username + "/" + multipartFile.getName());
+                    postId = postService.createPost(postDto);
+                    return "redirect:/post/" + postId;
+                }
+                return "redirect:/post/";
             } catch (Exception e) {
                 log.error(ERROR + e);
                 return "messages-templates/error";
