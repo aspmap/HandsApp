@@ -35,7 +35,8 @@
                     </a>
                 </div>
                 <a th:href="@{/post/{postId}(postId = ${post.postId})}">
-                    <img th:if="${post.extFile == 'png' || post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
+                    <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType != 'S3'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
+                    <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType == 'S3'}" th:src="@{${post.photo}}" class="post-image" alt="">
                     <video th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" width="100%" autoplay controls loop muted>
                         <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}" type=video/mp4>
                     </video>

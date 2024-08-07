@@ -1,15 +1,11 @@
 package run.itlife.utils;
 
 import org.springframework.web.multipart.MultipartFile;
-import run.itlife.service.PostService;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,5 +80,26 @@ public class SaveFile {
         stream.flush();
         stream.close();
         return filename;
+    }
+
+    public File saveS3File(String username, ServletContext context, String file) throws IOException {
+
+        String base64Image = file.split(COMMA)[1];
+        byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+        String filename = generateFileName() + POINT + PNG.getExtension();
+
+        File uploadedFile = new File(filename);
+        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+        stream.write(imageBytes);
+        BufferedImage originalImage = ImageIO.read(uploadedFile);
+        BufferedImage resizeImage = null;
+        File newFileJPG = null;
+        resizeImage = resizeImage(originalImage, IMAGE_WIDTH, IMAGE_HEIGHT);
+        newFileJPG = new File(filename);
+        ImageIO.write(resizeImage, PNG.getExtension(), newFileJPG);
+
+        stream.flush();
+        stream.close();
+        return newFileJPG;
     }
 }

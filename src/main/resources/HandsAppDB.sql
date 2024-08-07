@@ -52,8 +52,9 @@ CREATE TABLE likes (
 
 CREATE TABLE post (
     post_id bigserial PRIMARY KEY,
-    photo varchar(40),
+    photo varchar(250),
     extention varchar(5),
+    storage_type varchar(5);
     content text NOT NULL,
     user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
     created_at timestamp without time zone NOT NULL,

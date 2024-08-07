@@ -1,5 +1,7 @@
 package run.itlife.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ResolvableType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,6 +47,8 @@ public class UserController {
     private final SubscriptionsService subscriptionsService;
     private final PostService postService;
     private final ServletContext context;
+
+    private Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     public UserController(UserService userService, ServletContext context, SubscriptionsService subscriptionsService, PostService postService) {
@@ -161,6 +165,7 @@ public class UserController {
                 stream.close();
                 return "redirect:/posts/";
             } catch (Exception e) {
+                log.error("ERROR: " + e);
                 return "messages-templates/error";
             }
         } else {

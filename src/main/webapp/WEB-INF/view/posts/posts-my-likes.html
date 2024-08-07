@@ -31,7 +31,8 @@
                             <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="${post.postId}">
                                 <a th:href="@{/post-view-sub/} + ${post.postId}">
                                     <div class="card mb-4">
-                                        <img th:if="${post.extFile == 'png' || post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
+                                        <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType != 'S3'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
+                                        <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType == 'S3'}" th:src="@{${post.photo}}">
                                         <video class="video-size" th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" height="300px" width="300px" controls loop muted>
                                             <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}">
                                         </video>

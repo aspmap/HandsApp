@@ -62,7 +62,7 @@ nav ul li a:visited:not(:only-child):after {
 }
 
 nav ul li ul li {
-    min-width: 101px;
+    min-width: 113px;
 }
 
 nav ul li ul li a {

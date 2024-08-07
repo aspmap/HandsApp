@@ -17,6 +17,7 @@ public class PostDto {
     private String extFile;
     private String content;
     private String username;
+    private String storageType;
 
     public PostDto() {}
 
@@ -91,4 +92,11 @@ public class PostDto {
         this.photo = photo;
     }
 
+    public String getStorageType() {
+        return storageType;
+    }
+
+    public void setStorageType(String storageType) {
+        this.storageType = storageType;
+    }
 }
