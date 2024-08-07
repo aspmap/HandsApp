@@ -35,6 +35,9 @@ public class Post {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "storage_type")
+    private String storageType;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -111,4 +114,11 @@ public class Post {
         this.postLike = postLike;
     }
 
+    public String getStorageType() {
+        return storageType;
+    }
+
+    public void setStorageType(String storageType) {
+        this.storageType = storageType;
+    }
 }

@@ -135,6 +135,12 @@
                             </a>
                         </li>
                         <li>
+                            <a class="icon" th:href="@{/post/newS3Image}">
+                                <img th:src="@{/resources/img/nav/photo.png}" class="icon" alt="">
+                                <span th:text="#{menu_s3_photo}"></span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="icon" th:href="@{/post/newVideo}">
                                 <img th:src="@{/resources/img/nav/video.png}" class="icon" alt="">
                                 <span th:text="#{menu_video}"></span>
@@ -208,6 +214,12 @@
                             </a>
                         </li>
                         <li>
+                            <a class="icon" th:href="@{/post/newS3Image}">
+                                <img th:src="@{/resources/img/nav/photo.png}" class="icon" alt="">
+                                <span th:text="#{menu_s3_photo}"></span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="icon" th:href="@{/post/newVideo}">
                                 <img th:src="@{/resources/img/nav/video.png}" class="icon" alt="">
                                 <span th:text="#{menu_video}"></span>
@@ -277,12 +289,12 @@
 </div>
 
 <!-- Footer -->
-<p class="text-muted" th:fragment="footer-login">© 2022-2023 <span th:text="#{application_name}"></span> (<span th:text="#{label_version_app}"></span>). <span th:text="#{text_found_an_error}"></span>? <a class="description comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
+<p class="text-muted" th:fragment="footer-login">© 2022-2024 <span th:text="#{application_name}"></span> (<span th:text="#{label_version_app}"></span>). <span th:text="#{text_found_an_error}"></span>? <a class="description comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
     <br>
     <span class="text-center" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
 </p>
 
-<footer class="text-muted" th:fragment="footer">© 2022-2023 <span th:text="#{application_name}"></span> (<span th:text="#{label_version_app}"></span>). <span th:text="#{text_found_an_error}"></span>? <a class="description comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
+<footer class="text-muted" th:fragment="footer">© 2022-2024 <span th:text="#{application_name}"></span> (<span th:text="#{label_version_app}"></span>). <span th:text="#{text_found_an_error}"></span>? <a class="description comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
     <br>
     <span class="text-center" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
 </footer>

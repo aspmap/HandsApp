@@ -22,11 +22,14 @@ import run.itlife.repository.UserRepository;
 import run.itlife.service.*;
 import run.itlife.utils.SaveFile;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import static run.itlife.enums.FileExtensions.PNG;
 import static run.itlife.enums.FileTypes.*;
+import static run.itlife.messages.ErrorMessages.ERROR;
+import static run.itlife.messages.ErrorMessages.NOT_PUBLISH_POST;
 
 //Контроллер для постов (создание, редактирование, удаление)
 @Controller
@@ -49,6 +52,8 @@ public class PostController {
 
     @Autowired
     ServletContext servletContext;
+    @Autowired
+    private S3Service service;
 
     @Autowired
     public PostController(PostService postsService, LikesService likesService, UserService userService, CommentService commentService, ServletContext context, SubscriptionsService subscriptionsService, UserRepository userRepository) {
@@ -154,17 +159,16 @@ public class PostController {
                         postDto.setPhoto(entry.getKey());
                     }
                     postId = postService.createPost(postDto);
-                    log.error("ERROR: Error create post");
                     return "redirect:/post/" + postId;
                 } else {
                     return "messages-templates/error";
                 }
             } catch (Exception e) {
-                log.error("ERROR: " + e); // TODO Ошибка в логах не выводится
+                log.error(ERROR + e);
                 return "messages-templates/error";
             }
         } else {
-            log.error("ERROR: Error create post");
+            log.error(ERROR + NOT_PUBLISH_POST);
             return "messages-templates/error";
         }
     }
@@ -192,10 +196,45 @@ public class PostController {
                 postId = postService.createPost(postDto);
                 return "redirect:/post/" + postId;
             } catch (Exception e) {
-                log.error("ERROR: " + e);
+                log.error(ERROR + e);
                 return "messages-templates/error";
             }
         } else {
+            log.error(ERROR + NOT_PUBLISH_POST);
+            return "messages-templates/error";
+        }
+    }
+
+    @GetMapping("/post/newS3Image")
+    @PreAuthorize("hasRole('USER')")
+    public String postNewS3Image(ModelMap modelMap) {
+        setCommonParams(modelMap);
+        return "posts/post-new-s3-img";
+    }
+
+    @PostMapping("/post/newS3Image")
+    @PreAuthorize("hasRole('USER')")
+    public String postNewS3Image(PostDto postDto, @RequestParam("file") String file, ModelMap modelMap) {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        setCommonParams(modelMap);
+        long postId;
+        SaveFile sf = new SaveFile();
+
+        if (!file.isEmpty()) {
+            try {
+                File multipartFile = sf.saveS3File(username, context, file);
+                service.uploadS3File(username, multipartFile);
+                postDto.setExtFile(PNG.getExtension());
+                postDto.setStorageType("S3");
+                postDto.setPhoto("https://storage.yandexcloud.net/handsapp/img/users/" + username + "/" + multipartFile.getName());
+                postId = postService.createPost(postDto);
+                return "redirect:/post/" + postId;
+            } catch (Exception e) {
+                log.error(ERROR + e);
+                return "messages-templates/error";
+            }
+        } else {
+            log.error(ERROR + NOT_PUBLISH_POST);
             return "messages-templates/error";
         }
     }

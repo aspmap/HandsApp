@@ -83,6 +83,7 @@ public class PostServiceImpl implements PostService {
         Post post = new Post();
         post.setPhoto(postDto.getPhoto());
         post.setExtFile(postDto.getExtFile());
+        post.setStorageType(postDto.getStorageType());
         post.setContent(postDto.getContent());
         post.setCreatedAt(LocalDateTime.now());
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
