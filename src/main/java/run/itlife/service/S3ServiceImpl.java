@@ -34,6 +34,7 @@ public class S3ServiceImpl implements S3Service {
             s3Client.putObject(new PutObjectRequest(bucketName, fileName, file));
             file.delete();
         }
+
         return fileName;
     }
 
