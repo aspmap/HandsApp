@@ -223,7 +223,6 @@ public class PostController {
         if (!file.isEmpty()) {
             try {
                 File multipartFile = sf.saveS3File(username, context, file);
-                System.out.println(multipartFile.getName());
                 if (multipartFile != null) {
                     service.uploadS3File(username, multipartFile);
                     postDto.setExtFile(PNG.getExtension());

@@ -22,7 +22,7 @@ public class S3ServiceImpl implements S3Service {
 
     private static final Logger log = LoggerFactory.getLogger(S3ServiceImpl.class);
 
-    @Value("handsapp")
+    @Value("${application.bucket.name}")
     private String bucketName;
 
     @Autowired
@@ -30,9 +30,9 @@ public class S3ServiceImpl implements S3Service {
 
     public String uploadS3File(String username, File file) {
         String fileName = "img/users/" + username + "/" + file.getName();
-        s3Client.putObject(new PutObjectRequest(bucketName, fileName, file));
+        //s3Client.putObject(new PutObjectRequest(bucketName, fileName, file));
         file.delete();
-        return "File uploaded : " + fileName;
+        return fileName;
     }
 
 }
