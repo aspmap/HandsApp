@@ -18,7 +18,7 @@ public class SaveFile {
 
     private static final String PATH_VIDEO_USERS = "/resources/video/users/";
     private static final String PATH_IMAGE_USERS = "/resources/img/users/";
-    private static final String SEPARATOR = "/";
+    public static final String SEPARATOR = "/";
     private static final String COMMA = ",";
     private static final String POINT = ".";
     private static final int IMAGE_WIDTH = 500;
@@ -29,31 +29,32 @@ public class SaveFile {
         Map<String, String> filenameMap = new HashMap<>();
         String extension;
 
-        switch (file.getContentType()) {
-            case "video/mp4":
-                extension = MP4.getExtension();
-                break;
-            case "video/quicktime":
-                extension = MOV.getExtension();
-                break;
-            default:
-                extension = MP4.getExtension();
-                break;
+        if(file.getContentType() != null) {
+            switch (file.getContentType()) {
+                case "video/mp4":
+                    extension = MP4.getExtension();
+                    break;
+                case "video/quicktime":
+                    extension = MOV.getExtension();
+                    break;
+                default:
+                    extension = MP4.getExtension();
+                    break;
+            }
+            String filename = generateFileName() + POINT + extension;
+            File dir = new File(context.getRealPath(PATH_VIDEO_USERS + username));
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            // TODO написать логику обрезки видео
+            byte[] bytes = file.getBytes();
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(dir + SEPARATOR + filename)));
+            stream.write(bytes);
+            stream.close();
+            filenameMap.put(filename, extension);
+            return filenameMap;
         }
-        String filename = generateFileName() + POINT + extension;
-
-        File dir = new File(context.getRealPath(PATH_VIDEO_USERS + username));
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        // TODO написать логику обрезки видео
-        byte[] bytes = file.getBytes();
-        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(dir + SEPARATOR + filename)));
-        stream.write(bytes);
-        stream.close();
-        filenameMap.put(filename, extension);
-        return filenameMap;
-
+        return null;
     }
 
     public String saveFile(String username, ServletContext context, String file) throws IOException {
@@ -71,10 +72,8 @@ public class SaveFile {
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
         stream.write(imageBytes);
         BufferedImage originalImage = ImageIO.read(uploadedFile);
-        BufferedImage resizeImage = null;
-        File newFileJPG = null;
-        resizeImage = resizeImage(originalImage, IMAGE_WIDTH, IMAGE_HEIGHT);
-        newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
+        BufferedImage resizeImage = resizeImage(originalImage, IMAGE_WIDTH, IMAGE_HEIGHT);
+        File newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
         ImageIO.write(resizeImage, PNG.getExtension(), newFileJPG);
 
         stream.flush();
@@ -82,7 +81,7 @@ public class SaveFile {
         return filename;
     }
 
-    public File saveS3File(String username, ServletContext context, String file) throws IOException {
+    public File saveS3File(String file) throws IOException {
 
         String base64Image = file.split(COMMA)[1];
         byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
@@ -92,10 +91,8 @@ public class SaveFile {
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
         stream.write(imageBytes);
         BufferedImage originalImage = ImageIO.read(uploadedFile);
-        BufferedImage resizeImage = null;
-        File newFileJPG = null;
-        resizeImage = resizeImage(originalImage, IMAGE_WIDTH, IMAGE_HEIGHT);
-        newFileJPG = new File(filename);
+        BufferedImage resizeImage = resizeImage(originalImage, IMAGE_WIDTH, IMAGE_HEIGHT);
+        File newFileJPG = new File(filename);
         ImageIO.write(resizeImage, PNG.getExtension(), newFileJPG);
 
         stream.flush();

@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -30,16 +28,11 @@ import static run.itlife.enums.FileExtensions.PNG;
 import static run.itlife.enums.FileTypes.*;
 import static run.itlife.messages.ErrorMessages.ERROR;
 import static run.itlife.messages.ErrorMessages.NOT_PUBLISH_POST;
+import static run.itlife.service.S3ServiceImpl.S3_ADDRESS;
 
 //Контроллер для постов (создание, редактирование, удаление)
 @Controller
 public class PostController {
-    private static String authorizationRequestBaseUri = "oauth2/authorization";
-    Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
-    @Autowired
-    private OAuth2AuthorizedClientService authorizedClientService;
-    @Autowired
-    private ClientRegistrationRepository clientRegistrationRepository;
     private final PostService postService;
     private final LikesService likesService;
     private final UserService userService;
@@ -80,7 +73,7 @@ public class PostController {
     @GetMapping("/main")
     public String getLoginInfo(ModelMap modelMap, OAuth2AuthenticationToken authentication) {
         String username = authentication.getPrincipal().getAttribute("sub");
-        User user = userRepository.findByUsername(username).orElseGet(() -> {
+        userRepository.findByUsername(username).orElseGet(() -> {
             User newUser = new User();
             newUser.setUsername(authentication.getPrincipal().getAttribute("sub"));
             newUser.setFirstname(authentication.getPrincipal().getAttribute("given_name"));
@@ -148,12 +141,11 @@ public class PostController {
         setCommonParams(modelMap);
         long postId;
         SaveFile sf = new SaveFile();
-        Map<String, String> filenameMap = new HashMap<>();
 
         if (!file.isEmpty()) {
             try {
                 if (file.getContentType().equals(VIDEO_MP4.getType()) || file.getContentType().equals(VIDEO_QT.getType())) {
-                    filenameMap = sf.saveFile(username, context, file);
+                    Map<String, String> filenameMap = sf.saveFile(username, context, file);
                     for (Map.Entry<String, String> entry : filenameMap.entrySet()) {
                         postDto.setExtFile(entry.getValue());
                         postDto.setPhoto(entry.getKey());
@@ -194,14 +186,14 @@ public class PostController {
                 postDto.setExtFile(PNG.getExtension());
                 postDto.setPhoto(filename);
                 postId = postService.createPost(postDto);
-                return "redirect:/post/" + postId;
+                return "redirect:" + SaveFile.SEPARATOR + "post" + SaveFile.SEPARATOR + postId;
             } catch (Exception e) {
                 log.error(ERROR + e);
-                return "messages-templates/error";
+                return "messages-templates" + SaveFile.SEPARATOR + "error";
             }
         } else {
             log.error(ERROR + NOT_PUBLISH_POST);
-            return "messages-templates/error";
+            return "messages-templates" + SaveFile.SEPARATOR + "error";
         }
     }
 
@@ -222,12 +214,12 @@ public class PostController {
 
         if (!file.isEmpty()) {
             try {
-                File multipartFile = sf.saveS3File(username, context, file);
+                File multipartFile = sf.saveS3File(file);
                 if (multipartFile != null) {
                     service.uploadS3File(username, multipartFile);
                     postDto.setExtFile(PNG.getExtension());
                     postDto.setStorageType("S3");
-                    postDto.setPhoto("https://storage.yandexcloud.net/handsapp/img/users/" + username + "/" + multipartFile.getName());
+                    postDto.setPhoto("https://" + S3_ADDRESS + SaveFile.SEPARATOR + "handsapp" + SaveFile.SEPARATOR + "img" + SaveFile.SEPARATOR + "users" + SaveFile.SEPARATOR + username + SaveFile.SEPARATOR + multipartFile.getName());
                     postId = postService.createPost(postDto);
                     return "redirect:/post/" + postId;
                 }
