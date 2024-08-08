@@ -1,5 +1,7 @@
 package run.itlife.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,13 +10,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import run.itlife.entity.Role;
-import run.itlife.entity.User;
 import run.itlife.service.HandshakeService;
 import run.itlife.service.UserService;
 
 import java.util.*;
 
+import static run.itlife.messages.ErrorMessages.ERROR;
 import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
 
 @Controller
@@ -23,6 +24,7 @@ public class HandshakeController {
     private final HandshakeService handshakeService;
     private final UserService userService;
     //final short LIMIT_SIZE_HANDSHAKE = 6;
+    private static final Logger log = LoggerFactory.getLogger(HandshakeController.class);
 
     @Autowired
     public HandshakeController(HandshakeService handshakeService, UserService userService) {
@@ -105,6 +107,7 @@ public class HandshakeController {
 
                 return "handshakes/handshakes-results";
             } catch (Exception e) {
+                log.error(ERROR + e);
                 return "messages-templates/usernotfound";
             }
         }

@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import static run.itlife.messages.ErrorMessages.ERROR;
 import static run.itlife.utils.EditImage.resizeImage;
 import static run.itlife.utils.OtherUtils.generateFileName;
 
@@ -83,6 +84,7 @@ public class UserController {
             userService.create(user);
             return "messages-templates/registration-success";
         } catch (EntityExistsException e) {
+            log.error(ERROR + e);
             return "messages-templates/exist";
         }
     }
@@ -165,7 +167,7 @@ public class UserController {
                 stream.close();
                 return "redirect:/posts/";
             } catch (Exception e) {
-                log.error("ERROR: " + e);
+                log.error(ERROR + e);
                 return "messages-templates/error";
             }
         } else {

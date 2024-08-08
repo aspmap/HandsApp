@@ -2,11 +2,12 @@ package run.itlife.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.kafka.KafkaException;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,10 +24,13 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
 
+import static run.itlife.messages.ErrorMessages.ERROR;
+
 @Controller
 public class BugsController {
     private final BugsService bugsService;
     private final UserService userService;
+    private static final Logger log = LoggerFactory.getLogger(BugsController.class);
 
     @Autowired
     public BugsController(BugsService bugsService, UserService userService) {
@@ -65,12 +69,13 @@ public class BugsController {
             context.getBean(Sender.class).sendMsg(result, keyData);
             return "messages-templates/message-send";
         } catch (KafkaException ke) {
+            log.error(ERROR + ke);
             return "messages-templates/errorkafka";
         }
     }
 
     @KafkaListener(id = "listen-feedback", topics = "feedback")
-    public void listen1(String in) throws InterruptedException, IOException {
+    public void listen1(String in) throws IOException {
         StringReader reader = new StringReader(in);
         ObjectMapper mapper = new ObjectMapper();
         BugsDto bugsDto = mapper.readValue(reader, BugsDto.class);

@@ -21,7 +21,6 @@ import run.itlife.service.*;
 import run.itlife.utils.SaveFile;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 import static run.itlife.enums.FileExtensions.PNG;
