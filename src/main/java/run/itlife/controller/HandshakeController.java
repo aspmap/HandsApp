@@ -14,9 +14,9 @@ import run.itlife.service.HandshakeService;
 import run.itlife.service.UserService;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 import static run.itlife.messages.ErrorMessages.ERROR;
-import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
 
 @Controller
 public class HandshakeController {
@@ -41,80 +41,93 @@ public class HandshakeController {
 
     @PostMapping("/handshakes_results")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String handshakes_results(ModelMap modelMap, @RequestParam(required = false) String wantedUsername) {
-        wantedUsername = wantedUsername.toLowerCase();
-        setCommonParams(modelMap);
+    public String handshakes_results(ModelMap modelMap, @RequestParam(required = false) String wantedUsername) throws ExecutionException, InterruptedException {
 
-        // Получаем Id текущего пользователя
-        Long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
-        //Long userIdNextLink = 0L;
+        // Используем Executor и Future
+        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-        if (wantedUsername == null || wantedUsername.equals("")) {
-            return "handshakes/handshakes-search";
-        } else {
-            try {
-                // Получаем Id искомого пользователя по имени пользователя
-                Long wantedUserId = userService.findByUsername(wantedUsername).getUserId().longValue();
+        Future<String> page = executorService.submit(
+                new Callable<String>() {
+                    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+                    // Получаем Id текущего пользователя
+                    Long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
 
-                // Делаем выборку левой колонки таблицы
-                List<Long> userIdLeftColumnList = new ArrayList<>();
-                userIdLeftColumnList = handshakeService.selectUsersId();
+                    @Override
+                    public String call() throws Exception {
 
-                // Делаем выборку правой колонки таблицы
-                List<Long> userIdRightColumnList = new ArrayList<>();
-                userIdRightColumnList = handshakeService.selectUsersSubId();
+                        String wantedUsernameIn = wantedUsername.toLowerCase();
+                        setCommonParamsSynchronized(modelMap, username);
 
-                //++++ Собираем в очередь связи
-                ArrayDeque<List<Long>> queue = getUsersLevels(currentUserId, userIdLeftColumnList, userIdRightColumnList);
+                        if (wantedUsernameIn == null || wantedUsernameIn.equals("")) {
+                            return "handshakes/handshakes-search";
+                        } else {
+                            try {
+                                // Получаем Id искомого пользователя по имени пользователя
+                                Long wantedUserId = userService.findByUsername(wantedUsernameIn).getUserId().longValue();
+                                // Делаем выборку левой колонки таблицы
+                                List<Long> userIdLeftColumnList = new ArrayList<>();
+                                userIdLeftColumnList = handshakeService.selectUsersId();
 
-                //++++ Выводим число рукопожатий
-                int countHandshakes = countLinks(queue, wantedUserId);
+                                // Делаем выборку правой колонки таблицы
+                                List<Long> userIdRightColumnList = new ArrayList<>();
+                                userIdRightColumnList = handshakeService.selectUsersSubId();
+                                //++++ Собираем в очередь связи
+                                ArrayDeque<List<Long>> queue = getUsersLevels(currentUserId, userIdLeftColumnList, userIdRightColumnList);
 
-                // Поиск связей
-                //Map<Long, List<Long>> countHandshakesResult = searchWantedUser(countHandshakes, currentUserId, wantedUserId, userIdLeftColumnList, userIdRightColumnList);
+                                //++++ Выводим число рукопожатий
+                                int countHandshakes = countLinks(queue, wantedUserId);
 
-                // В полученной мапе ищем кратчайшую связь и записываем в minEntry
-                //Map.Entry<Long, List<Long>> minEntry = null;
-                //minEntry = searchMinRelation(countHandshakesResult);
+                                // Поиск связей
+                                //Map<Long, List<Long>> countHandshakesResult = searchWantedUser(countHandshakes, currentUserId, wantedUserId, userIdLeftColumnList, userIdRightColumnList);
 
-                // Собираем цепочку связей для визуализации на странице в виде иконок
-                //Map<String, String> resultLinkUsers = new HashMap<>();
+                                // В полученной мапе ищем кратчайшую связь и записываем в minEntry
+                                //Map.Entry<Long, List<Long>> minEntry = null;
+                                //minEntry = searchMinRelation(countHandshakesResult);
 
-                //resultLinkUsers = createLinksVisual(currentUserId, minEntry);
+                                // Собираем цепочку связей для визуализации на странице в виде иконок
+                                //Map<String, String> resultLinkUsers = new HashMap<>();
 
-                // Выводим число рукопожатий - преобразуем в Long. -1 - минусуем текущего пользователя
-                //Long resultLinkUsersLong = Long.valueOf(resultLinkUsers.size() - 1);
+                                //resultLinkUsers = createLinksVisual(currentUserId, minEntry);
 
-                // Выводим номер рукопожатия для корректной работы условий на странице с результатами
-                //List<Integer> viewNumberOfHandshake = viewNumberOfHandshakes(resultLinkUsers);
-                //List<Integer> viewNumberOfHandshake = viewNumberOfHandshakesNew(countHandshakes);
+                                // Выводим число рукопожатий - преобразуем в Long. -1 - минусуем текущего пользователя
+                                //Long resultLinkUsersLong = Long.valueOf(resultLinkUsers.size() - 1);
 
-                // Выводим число рукопожатий
-                modelMap.put("countHandshakes", countHandshakes);
+                                // Выводим номер рукопожатия для корректной работы условий на странице с результатами
+                                //List<Integer> viewNumberOfHandshake = viewNumberOfHandshakes(resultLinkUsers);
+                                //List<Integer> viewNumberOfHandshake = viewNumberOfHandshakesNew(countHandshakes);
+                                // Выводим число рукопожатий
+                                modelMap.put("countHandshakes", countHandshakes);
 
-                // Выводим данные искомого пользователя
-                String username = SecurityContextHolder.getContext().getAuthentication().getName();
-                modelMap.put("wantedUsername", wantedUsername);
-                modelMap.put("wantedUserinfo", userService.findByUsername(wantedUsername));
-                modelMap.put("userinfo_check", checkUsername(username));
+                                // Выводим данные искомого пользователя
+                                //String username = SecurityContextHolder.getContext().getAuthentication().getName();
+                                modelMap.put("wantedUsername", wantedUsernameIn);
+                                modelMap.put("wantedUserinfo", userService.findByUsername(wantedUsernameIn));
+                                modelMap.put("userinfo_check", checkUsername(username));
 
+                                // Собираем цепочку связей для визуализации на странице в виде иконок
+                                //modelMap.put("LinkUsersTree", resultLinkUsers);
 
-                // Собираем цепочку связей для визуализации на странице в виде иконок
-                //modelMap.put("LinkUsersTree", resultLinkUsers);
+                                // Выводим номер рукопожатия
+                                //modelMap.put("viewNumberOfHandshake", viewNumberOfHandshake);
 
-                // Выводим номер рукопожатия
-                //modelMap.put("viewNumberOfHandshake", viewNumberOfHandshake);
+                                return "handshakes/handshakes-results";
+                            } catch (Exception e) {
+                                log.error(ERROR + e);
+                                return "messages-templates/usernotfound";
+                            }
+                        }
+                    }
+                });
 
-                return "handshakes/handshakes-results";
-            } catch (Exception e) {
-                log.error(ERROR + e);
-                return "messages-templates/usernotfound";
-            }
-        }
+        executorService.shutdown();
+
+        return page.get();
+
     }
 
     /**
      * Метод, собирающий связи исходного пользователя с подписчиками до шестого уровня
+     *
      * @param initialUser
      * @param userIdLeftColumnList
      * @param userIdRightColumnList
@@ -176,6 +189,7 @@ public class HandshakeController {
 
     /**
      * Метод, считающий количество рукопожатий
+     *
      * @param queue      массив данных всех шести уровней
      * @param wantedUser искомый пользователь
      * @return возвращается число рукопожатий
@@ -194,6 +208,7 @@ public class HandshakeController {
 
     /**
      * Помещает в очередь все уровни (Метод пока не используется, находится в разработке на перспективу, для вывода полной цепочки на странице)
+     *
      * @param initialUser
      * @param userIdLeftColumnList
      * @param userIdRightColumnList
@@ -313,6 +328,7 @@ public class HandshakeController {
 
     /**
      * Метод, возвращающий индекс последнего элемента
+     *
      * @param object объект типа List
      * @return возвращается индекс последнего элемента
      */
@@ -322,6 +338,7 @@ public class HandshakeController {
 
     /**
      * Метод, считающий количество подписок у текущего пользователя
+     *
      * @param initialUser          текущий пользователь
      * @param userIdLeftColumnList список пользователей
      * @return возвращается количество подписок у текущего пользователя
@@ -338,6 +355,7 @@ public class HandshakeController {
 
     /**
      * Метод, собирающий цепочку связей для визуализации на странице в виде иконок
+     *
      * @param currentUserId
      * @param minEntry
      * @return
@@ -358,6 +376,7 @@ public class HandshakeController {
 
     /**
      * Метод, собирающий цепочку связей для визуализации на странице в виде иконок
+     *
      * @param linkUsersResult
      * @return
      */
@@ -378,6 +397,7 @@ public class HandshakeController {
 
     /**
      * Метод, выводящий номер связи
+     *
      * @param resultLinkUsers
      * @return
      */
@@ -391,6 +411,7 @@ public class HandshakeController {
 
     /**
      * Метод, выводящий номер связи
+     *
      * @param countHandshakes
      * @return
      */
@@ -404,6 +425,7 @@ public class HandshakeController {
 
     /**
      * Метод, в котором ищем кратчайшую связь и записываем в minEntry
+     *
      * @param countHandshakesResult
      * @return возвращается минимальная связь
      */
@@ -419,6 +441,7 @@ public class HandshakeController {
 
     /**
      * Общие методы для отображения информации на странице
+     *
      * @param modelMap
      */
     private void setCommonParams(ModelMap modelMap) {
@@ -431,8 +454,17 @@ public class HandshakeController {
         modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
     }
 
+    private void setCommonParamsSynchronized(ModelMap modelMap, String username) {
+        modelMap.put("users", userService.findAll());
+        modelMap.put("userslist", userService.findAll());
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userOnlyList", userService.getUsersOnly());
+        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
+    }
+
     private String checkUsername(String username) {
-        if(userService.findByUsername(username).getIsGoogle() == true) {
+        if (userService.findByUsername(username).getIsGoogle() == true) {
             username = userService.findByUsername(username).getEmail();
         }
         return username;
