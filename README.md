@@ -1,7 +1,7 @@
 # HandsApp
 Социальная сеть для размещения фото, видео (веб-версия)
 
-Адрес в сети интернет: http://handsapp.online
+Адрес в сети интернет: http://handsapp.top (веремнно отключен)
 
 **Старт проекта:** 15 марта 2022 г.
 
@@ -101,22 +101,22 @@ cloud.aws.region.static = ${REGION_S3}
 
 > Выборка постов по ключевому слову
 
-GET http://handsapp.online/api/post?search=москва
+GET http://handsapp.top/api/post?search=москва
 
 
 > Выборка всех постов
 
-GET http://handsapp.online/api/post
+GET http://handsapp.top/api/post
 
 
 > Поиск поста по ID
 
-GET http://handsapp.online/api/post/284
+GET http://handsapp.top/api/post/284
 
 
 > Создание поста
 
-POST http://handsapp.online/api/post/
+POST http://handsapp.top/api/post/
 
 > Пример запроса
 
@@ -135,7 +135,7 @@ POST http://handsapp.online/api/post/
 
 > Редактирование поста
 
-PUT http://handsapp.online/api/post/294
+PUT http://handsapp.top/api/post/294
 
 Пример запроса
 
@@ -154,7 +154,7 @@ PUT http://handsapp.online/api/post/294
 
 > Удаление поста
 
-DELETE http://handsapp.online/api/post/295
+DELETE http://handsapp.top/api/post/295
 
 
 :abcd: **CI/CD:**
