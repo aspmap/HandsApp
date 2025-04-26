@@ -247,7 +247,7 @@ body {
     /*text-align: center;*/
     font-size: 12px;
     margin-top: 5px;
-    color: rgba(0, 0, 0, 0.5)
+    /*color: rgba(0, 0, 0, 0.5)*/
 }
 
 .username-comments {
@@ -326,7 +326,7 @@ body {
 .info .username {
     width: auto;
     font-weight: bold;
-    color: #000;
+    /*color: #000;*/
     font-size: 14px;
     margin-left: 10px;
 }
@@ -481,7 +481,7 @@ a:hover {
 }
 
 a {
-    color: #606060;
+    color: #212529;
     text-decoration: dotted !important;
 }
 
@@ -647,7 +647,7 @@ a {
 .profile-card .username {
     font-weight: 500;
     font-size: 14px;
-    color: #000;
+    /*color: #000;*/
 }
 
 .sub-text {

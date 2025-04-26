@@ -38,8 +38,10 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <b th:if="${subs.subUserId.isGoogle == false}" class="description-comments-user"><span th:text="${subs.subUserId.username}"></span></b>
-                                                <b th:if="${subs.subUserId.isGoogle == true}" class="description-comments-user"><span th:text="${subs.subUserId.email}"></span></b>
+                                                <a th:href="@{/sub-posts/{user}(user = ${subs.subUserId.username})}">
+                                                    <b th:if="${subs.subUserId.isGoogle == false}" class="description-comments-user"><span th:text="${subs.subUserId.username}"></span></b>
+                                                    <b th:if="${subs.subUserId.isGoogle == true}" class="description-comments-user"><span th:text="${subs.subUserId.email}"></span></b>
+                                                </a>
                                                 <div>
                                                     <p th:if="${subs.subUserId.surname != null && subs.subUserId.firstname != null}" class="post-time-comments" th:text="${subs.subUserId.surname} + ' ' + ${subs.subUserId.firstname}"></p>
                                                 </div>
@@ -80,8 +82,10 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <b th:if="${users.isGoogle == false}" class="description-comments-user"><span th:text="${users.username}"></span></b>
-                                                <b th:if="${users.isGoogle == true}" class="description-comments-user"><span th:text="${users.email}"></span></b>
+                                                <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
+                                                    <b th:if="${users.isGoogle == false}" class="description-comments-user"><span th:text="${users.username}"></span></b>
+                                                    <b th:if="${users.isGoogle == true}" class="description-comments-user"><span th:text="${users.email}"></span></b>
+                                                </a>
                                                 <div>
                                                     <p th:if="${users.surname != null && users.firstname != null}" class="post-time-comments" th:text="${users.surname} + ' ' + ${users.firstname}" ></p>
                                                 </div>
