@@ -11,6 +11,7 @@ target/
 src/main/webapp/resources/img/users
 src/main/webapp/resources/video
 src/main/webapp/resources/access
+src/main/webapp/resources/handsapp1.cer
 
 # Compiled class file
 *.class
