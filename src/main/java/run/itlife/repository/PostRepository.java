@@ -67,7 +67,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select * from post p " +
             "left join likes l on p.post_id = l.post_id " +
             "left join users u on u.user_id = l.user_id " +
-            "where u.username = ? ", nativeQuery = true)
+            "where u.username = ? " +
+            "order by p.created_at desc; ", nativeQuery = true)
     List<Post> selectMyLikesPosts(String username);
 
     @Query(value = "select count(p.post_id) from post p " +

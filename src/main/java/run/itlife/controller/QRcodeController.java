@@ -15,7 +15,7 @@ public class QRcodeController {
     @PreAuthorize("hasRole('USER')")
     public void qrcode(HttpServletResponse response) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        String path = "handsapp.online/" + "sub-posts" + '/' + username;
+        String path = "handsapp.top/" + "sub-posts" + '/' + username;
         response.setContentType("image/png");
         OutputStream outputStream = response.getOutputStream();
         outputStream.write(ZXingQR.getQRCodeImage(path, 400, 400));

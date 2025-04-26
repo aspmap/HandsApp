@@ -78,6 +78,11 @@ public class UserController {
         return "register";
     }
 
+    @GetMapping("/confidentiality")
+    public String confidentiality(ModelMap modelMap){
+        return "confidentiality";
+    }
+
     @PostMapping("/register")
     public String register(User user) {
         try {
