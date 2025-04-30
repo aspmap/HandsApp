@@ -72,6 +72,7 @@ CREATE TABLE bugs (
     bug_id bigserial PRIMARY KEY,
     user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
     bug_text text,
+    username text,
     created_at timestamp without time zone);
 
 CREATE TABLE dialogs (

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:include="fragments.html :: header">
-    <title id="pageTitle">HandsApp - Просмотр поста</title>
+<head>
+    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{text_comments}"></title>
+    <th:block th:include="fragments.html :: header"/>
 </head>
 
 <script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:include="fragments.html :: header">
-  <title th:text="'HandsApp - QR-code '" id="pageTitle"></title>
+<head>
+  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_qr_code}"></title>
+  <th:block th:include="fragments.html :: header"/>
 </head>
 
 <!-- Navigation -->

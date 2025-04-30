@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="fragments.html :: header-login">
-  <title id="pageTitle">HandsApp - Регистрация прошла успешно</title>
+<head>
+  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_registration_was_successful}"></title>
+  <th:block th:include="fragments.html :: header-login"/>
 </head>
 
 <!-- Navigation -->

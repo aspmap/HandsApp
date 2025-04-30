@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:include="fragments.html :: header">
-    <title id="pageTitle">HandsApp - Просмотр поста</title>
+<head>
+    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_view_post}"></title>
+    <th:block th:include="fragments.html :: header"/>
 </head>
 
 <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>

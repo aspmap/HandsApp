@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="fragments.html :: header-login">
-    <title id="pageTitle">HandsApp - Пользователь существует</title>
+<head>
+    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_the_user_exists}"></title>
+    <th:block th:include="fragments.html :: header-login"/>
 </head>
 
 <!-- Navigation -->
