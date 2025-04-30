@@ -2,8 +2,9 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 
-<head th:include="fragments.html :: header">
+<head>
     <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_my_posts}"></title>
+    <th:block th:include="fragments.html :: header"/>
 </head>
 
 <!-- Navigation -->
