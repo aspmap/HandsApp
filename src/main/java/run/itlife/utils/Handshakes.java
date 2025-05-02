@@ -48,7 +48,7 @@ public class Handshakes {
             person = this.searchDeque.pollFirst();
             if (!this.searched.contains(person)) {
                 if (person.equals(searchPerson)) {
-                    path = buildPath(searchPerson);
+                    return buildPath(searchPerson);
                 } else {
                     childs = new ArrayList<>();
                     childs = addChilds(person, this.graph);
@@ -88,6 +88,17 @@ public class Handshakes {
         ArrayList<Integer> path = new ArrayList<>();
         AtomicInteger ai = new AtomicInteger();
         Integer par = null;
+
+        for (Map.Entry<Integer, ArrayList<Integer>> entry4 : this.parents.entrySet()) {
+            if (entry4.getKey().equals(this.startPerson)) {
+                for (int i = 0; i < entry4.getValue().size(); i++) {
+                    if (entry4.getValue().get(i).equals(search_person)) {
+                        path.add(entry4.getKey());
+                        return path;
+                    }
+                }
+            }
+        }
 
         for (Map.Entry<Integer, ArrayList<Integer>> entry : this.parents.entrySet()) {
             if (entry.getKey().equals(this.startPerson)) {

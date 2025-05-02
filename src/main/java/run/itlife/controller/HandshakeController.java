@@ -78,7 +78,7 @@ public class HandshakeController {
                                 modelMap.put("countHandshakes", countHandshakes);
                                 modelMap.put("pathOfUsers", path);
                                 modelMap.put("searchUsername", searchUsernameLowerCase);
-                                modelMap.put("wantedUserinfo", userService.findByUsername(searchUsernameLowerCase));
+                                modelMap.put("searchUserinfo", userService.findByUsername(searchUsernameLowerCase));
                                 modelMap.put("pathOfUsersVisual", visualView);
 
                                 return "handshakes/handshakes-results";
