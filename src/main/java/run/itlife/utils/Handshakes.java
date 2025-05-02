@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Поиск в ширину (BFS - Breadth-First Search)
  */
-@Service
 public class Handshakes {
     /**
      * Граф
