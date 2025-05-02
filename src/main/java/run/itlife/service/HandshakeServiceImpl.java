@@ -26,6 +26,13 @@ public class HandshakeServiceImpl implements HandshakeService {
     }
 
     @Override
+    public ArrayList<Integer> selectUsersId(Integer userId) {
+        ArrayList<Integer> userIdList = new ArrayList<>();
+        userIdList = handshakeRepository.selectUsersId(userId);
+        return userIdList;
+    }
+
+    @Override
     public List<Long> selectUsersSubId() {
         List<Long> userSubIdList = new ArrayList<>();
         userSubIdList = handshakeRepository.selectUsersSubId();
@@ -33,7 +40,7 @@ public class HandshakeServiceImpl implements HandshakeService {
     }
 
     @Override
-    public List<String> findUsersById(Long userId) {
+    public List<String> findUsersById(Integer userId) {
         return handshakeRepository.findUsersById(userId);
     }
 
