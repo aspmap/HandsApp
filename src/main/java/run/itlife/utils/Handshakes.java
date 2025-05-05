@@ -1,7 +1,5 @@
 package run.itlife.utils;
 
-import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
