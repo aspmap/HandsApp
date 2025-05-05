@@ -26,6 +26,7 @@ public class HandshakeController {
     private final HandshakeService handshakeService;
     private final UserService userService;
     private static final Logger log = LoggerFactory.getLogger(HandshakeController.class);
+    private static final Byte START_LEVEL = 1;
 
     @Autowired
     public HandshakeController(HandshakeService handshakeService, UserService userService) {
@@ -47,16 +48,16 @@ public class HandshakeController {
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
         Future<String> page = executorService.submit(
-                new Callable<String>() {
-                    String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-                    Integer currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().intValue();
+                new Callable<>() {
+                    final String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+                    final Integer currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().intValue();
 
                     @Override
-                    public String call() throws Exception {
+                    public String call() {
                         String searchUsernameLowerCase = searchUsername.toLowerCase();
                         setCommonParamsSynchronized(modelMap, currentUsername);
 
-                        if (searchUsernameLowerCase == null || searchUsernameLowerCase.equals("")) {
+                        if (searchUsernameLowerCase.equals("")) {
                             return "handshakes/handshakes-search";
                         } else {
                             try {
@@ -66,13 +67,13 @@ public class HandshakeController {
                                 ArrayList<Integer> usersIdFirstLevel = handshakeService.selectUsersId(currentUserId);
                                 usersGraph.put(currentUserId, usersIdFirstLevel);
                                 Handshakes handshakes = new Handshakes();
-                                Integer level = 1;
+                                Byte level = START_LEVEL;
                                 usersGraph = buildGraph(usersIdFirstLevel, usersGraph, searched, level);
-                                handshakes.startPerson = currentUserId;
-                                handshakes.graph = usersGraph;
+                                handshakes.setStartPerson(currentUserId);
+                                handshakes.setGraph(usersGraph);
 
                                 ArrayList<Integer> path = handshakes.search(searchUserId);
-                                Integer countHandshakes = handshakes.sizePath;
+                                Integer countHandshakes = handshakes.getSizePath();
                                 ArrayList<User> visualView = createVisualView(path);
 
                                 modelMap.put("countHandshakes", countHandshakes);
@@ -93,7 +94,7 @@ public class HandshakeController {
         return page.get();
     }
 
-    private Map<Integer, ArrayList<Integer>> buildGraph(ArrayList<Integer> usersIdLevel, Map<Integer, ArrayList<Integer>> usersGraph, ArrayList<Integer> searched, int level) {
+    private Map<Integer, ArrayList<Integer>> buildGraph(ArrayList<Integer> usersIdLevel, Map<Integer, ArrayList<Integer>> usersGraph, ArrayList<Integer> searched, Byte level) {
         if (level > Handshakes.LIMIT_SIZE_HANDSHAKE) {
             return usersGraph;
         }
@@ -114,7 +115,7 @@ public class HandshakeController {
     }
 
     private ArrayList<User> createVisualView(ArrayList<Integer> path) {
-        List<String> usersId = null;
+        List<String> usersId;
         ArrayList<User> view = new ArrayList<>();
 
         if (path != null) {

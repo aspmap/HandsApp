@@ -12,28 +12,76 @@ public class Handshakes {
     /**
      * Граф
      */
-    public Map<Integer, ArrayList<Integer>> graph = new HashMap<>();
+    private Map<Integer, ArrayList<Integer>> graph = new HashMap<>();
     /**
      * Очередь
      */
-    public ArrayDeque<Integer> searchDeque = new ArrayDeque<>();
+    private ArrayDeque<Integer> searchDeque = new ArrayDeque<>();
     /**
      * Найденные вершины
      */
-    public ArrayList<Integer> searched = new ArrayList<>();
+    private ArrayList<Integer> searched = new ArrayList<>();
     /**
      * Таблица с родителями
      */
-    public Map<Integer, ArrayList<Integer>> parents = new HashMap<>();
+    private Map<Integer, ArrayList<Integer>> parents = new HashMap<>();
     /**
      * Размер пути
      */
-    public int sizePath = 0;
+    private int sizePath = 0;
     /**
      * Начальный узел
      */
-    public Integer startPerson;
+    private Integer startPerson;
     public static final Byte LIMIT_SIZE_HANDSHAKE = 6;
+
+    public Map<Integer, ArrayList<Integer>> getGraph() {
+        return graph;
+    }
+
+    public void setGraph(Map<Integer, ArrayList<Integer>> graph) {
+        this.graph = graph;
+    }
+
+    public ArrayDeque<Integer> getSearchDeque() {
+        return searchDeque;
+    }
+
+    public void setSearchDeque(ArrayDeque<Integer> searchDeque) {
+        this.searchDeque = searchDeque;
+    }
+
+    public ArrayList<Integer> getSearched() {
+        return searched;
+    }
+
+    public void setSearched(ArrayList<Integer> searched) {
+        this.searched = searched;
+    }
+
+    public Map<Integer, ArrayList<Integer>> getParents() {
+        return parents;
+    }
+
+    public void setParents(Map<Integer, ArrayList<Integer>> parents) {
+        this.parents = parents;
+    }
+
+    public int getSizePath() {
+        return sizePath;
+    }
+
+    public void setSizePath(int sizePath) {
+        this.sizePath = sizePath;
+    }
+
+    public Integer getStartPerson() {
+        return startPerson;
+    }
+
+    public void setStartPerson(Integer startPerson) {
+        this.startPerson = startPerson;
+    }
 
     public ArrayList<Integer> search(Integer searchPerson) {
         Integer person = null;
