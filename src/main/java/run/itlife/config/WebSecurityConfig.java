@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan("run.itlife")
 public class WebSecurityConfig {
-    private static List<String> clients = Arrays.asList("google");
+    private static List<String> clients = Arrays.asList("google", "vk");
     private static String CLIENT_PROPERTY_KEY = "spring.security.oauth2.client.registration.";
     @Autowired
     private UserService userService;
@@ -62,6 +62,10 @@ public class WebSecurityConfig {
         }
         if (client.equals("facebook")) {
             return CommonOAuth2Provider.FACEBOOK.getBuilder(client)
+                    .clientId(clientId).clientSecret(clientSecret).build();
+        }
+        if (client.equals("vk")) {
+            return CustomOAuth2Provider.VK.getBuilder(client)
                     .clientId(clientId).clientSecret(clientSecret).build();
         }
         return null;

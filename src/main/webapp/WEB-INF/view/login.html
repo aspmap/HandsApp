@@ -59,6 +59,7 @@
                         <div class="fb" th:each="url : ${urls}">
                             <a th:href="${url.value}">
                                 <img th:if="${url.key} == 'Google'" th:src="@{/resources/img/login/google.png}" alt="">
+                                <img th:if="${url.key} == 'vk'" th:src="@{/resources/img/login/vk.png}" alt="">
                                 <span th:text="#{text_log_in}"></span>
                                 <!--<img th:if="${url.key} == 'Facebook'" th:src="@{/resources/img/login/vk.png}" alt="">-->
                             </a>
