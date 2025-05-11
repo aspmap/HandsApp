@@ -409,6 +409,7 @@ body {
     width: 40px;
     padding: 0;
     background: none;
+    margin-left: 10px;
 }
 
 .info-main .profile-pic-main {
@@ -526,10 +527,12 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .comment-wrapper .icon {
-    height: 30px;
+    height: 40px;
+    margin-left: 10px;
 }
 
 .comment-box {
