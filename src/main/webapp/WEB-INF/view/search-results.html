@@ -33,15 +33,13 @@
                                             <div class="profile-pic-comments">
                                                 <a th:href="@{/sub-posts/{user}(user = ${results.username})}">
                                                     <img th:if="${results.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                    <img th:if="${results.photo != null and results.isGoogle == false}" th:src="@{'/resources/img/users/' + ${results.username} + '/profile/' + ${results.photo}}" alt="">
-                                                    <img th:if="${results.photo != null and results.isGoogle == true}" th:src="${results.photo}" alt="">
+                                                    <img th:if="${results.photo != null}" th:src="@{'/resources/img/users/' + ${results.username} + '/profile/' + ${results.photo}}" alt="">
                                                 </a>
                                             </div>
                                             <div>
                                                 <a th:href="@{/sub-posts/{user}(user = ${results.username})}">
                                                     <b class="description-comments-user">
-                                                        <span th:if="${results.isGoogle == false}" th:text="${results.username}"></span>
-                                                        <span th:if="${results.isGoogle == true}" th:text="${results.email}"></span>
+                                                        <span th:text="${results.username}"></span>
                                                     </b>
                                                 </a>
                                                 <div>
@@ -53,7 +51,34 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="usersNotFound" th:if="${countSearchUsers == 0}" th:text="#{text_users_not_found}"></p>
+
+                        <div th:each="results: ${findGoogleUsers}">
+                            <div class="media-body">
+                                <div class="info-comments">
+                                    <div class="user-comments">
+                                        <div  class="profile-card">
+                                            <div class="profile-pic-comments">
+                                                <a th:href="@{/sub-posts/{user}(user = ${results.username})}">
+                                                    <img th:if="${results.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                    <img th:if="${results.photo != null}" th:src="${results.photo}" alt="">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a th:href="@{/sub-posts/{user}(user = ${results.username})}">
+                                                    <b class="description-comments-user">
+                                                        <span th:text="${results.email}"></span>
+                                                    </b>
+                                                </a>
+                                                <div>
+                                                    <p th:if="${results.surname != null && results.firstname != null}" class="post-time-comments" th:text="${results.surname} + ' ' + ${results.firstname}"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="usersNotFound" th:if="${countSearchUsers == 0 && countSearchGoogleUsers == 0}" th:text="#{text_users_not_found}"></p>
                     </div>
                 </div>
             </div>

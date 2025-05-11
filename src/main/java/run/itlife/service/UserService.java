@@ -18,7 +18,9 @@ public interface UserService extends UserDetailsService {
     List<User> getUsersOnly();
     ArrayList<UserDto> getUsersOnlyKey(String currentUsername);
     List<User> searchUsers(String substring);
+    List<User> searchGoogleUsers(String substring);
     int countSearchUsers(String substring);
+    int countSearchGoogleUsers(String substring);
     void delete_profile(String user);
 
 }

@@ -158,8 +158,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> searchGoogleUsers(String substring) {
+        return userRepository.searchGoogleUsers("%" + substring +"%");
+    }
+
+    @Override
     public int countSearchUsers(String substring) {
         return userRepository.countSearchUsers("%" + substring +"%");
+    }
+
+    @Override
+    public int countSearchGoogleUsers(String substring) {
+        return userRepository.countSearchGoogleUsers("%" + substring +"%");
     }
 
 }

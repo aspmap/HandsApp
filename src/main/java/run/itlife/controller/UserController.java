@@ -222,10 +222,12 @@ public class UserController {
         search = search.toLowerCase();
         setCommonParams(modelMap);
         modelMap.put("countSearchUsers", userService.countSearchUsers(search));
+        modelMap.put("countSearchGoogleUsers", userService.countSearchGoogleUsers(search));
         modelMap.put("countSearchTags", postService.countSearchTags(search));
         modelMap.put("tagUserName", search);
         if (search != null) {
             modelMap.put("findUsers", userService.searchUsers(search));
+            modelMap.put("findGoogleUsers", userService.searchGoogleUsers(search));
             modelMap.put("findTags", postService.searchTags(search));
             return "search-results";
         } else {
