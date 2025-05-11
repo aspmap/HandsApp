@@ -73,6 +73,11 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/error")
+    public String loginError(ModelMap modelMap){
+        return "messages-templates/loginError";
+    }
+
     @GetMapping("/register")
     public String register(ModelMap modelMap){
         return "register";
