@@ -30,7 +30,7 @@ import java.util.Locale;
 public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
 
     private ApplicationContext applicationContext;
-    private int maxUploadSizeInMb = 100 * 1024 * 1024; // 100 МБ
+    //private int maxUploadSizeInMb = 1000 * 1024 * 1024; // 1000 МБ
 
     @Override
     //Контекст приложений (application contexts) основан на понятии фабрик компонентов и реализует прикладные
@@ -84,8 +84,8 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver cmr = new CommonsMultipartResolver();
-        cmr.setMaxUploadSize(maxUploadSizeInMb * 2);
-        cmr.setMaxUploadSizePerFile(maxUploadSizeInMb); // байты
+        //cmr.setMaxUploadSize(maxUploadSizeInMb * 2);
+        //cmr.setMaxUploadSizePerFile(maxUploadSizeInMb); // байты
         return cmr;
     }
     // -----------------------

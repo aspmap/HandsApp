@@ -39,7 +39,7 @@ public class PostController {
     private final SubscriptionsService subscriptionsService;
     private final UserRepository userRepository;
     private final ServletContext context;
-
+    private static final int MAX_UPLOAD_VIDEO_FILE_SIZE_IN_MB = 100 * 1024 * 1024; // 100 МБ
     private static final Logger log = LoggerFactory.getLogger(PostController.class);
 
     @Autowired
@@ -138,6 +138,9 @@ public class PostController {
     public String postNewVideo(PostDto postDto, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         setCommonParams(modelMap);
+        if (file.getSize() > MAX_UPLOAD_VIDEO_FILE_SIZE_IN_MB) {
+            return "messages-templates" + SaveFile.SEPARATOR + "errorVideoSize";
+        }
         long postId;
         SaveFile sf = new SaveFile();
 
@@ -182,17 +185,20 @@ public class PostController {
         if (!file.isEmpty()) {
             try {
                 String filename = sf.saveFile(username, context, file);
+                if (filename == null) {
+                    return "messages-templates" + SaveFile.SEPARATOR + "errorFileSize";
+                }
                 postDto.setExtFile(PNG.getExtension());
                 postDto.setPhoto(filename);
                 postId = postService.createPost(postDto);
                 return "redirect:" + SaveFile.SEPARATOR + "post" + SaveFile.SEPARATOR + postId;
             } catch (Exception e) {
                 log.error(ERROR + e);
-                return "messages-templates" + SaveFile.SEPARATOR + "error";
+                return "messages-templates" + SaveFile.SEPARATOR + "errorFileSize";
             }
         } else {
             log.error(ERROR + NOT_PUBLISH_POST);
-            return "messages-templates" + SaveFile.SEPARATOR + "error";
+            return "messages-templates" + SaveFile.SEPARATOR + "errorFileSize";
         }
     }
 
@@ -214,6 +220,9 @@ public class PostController {
         if (!file.isEmpty()) {
             try {
                 File multipartFile = sf.saveS3File(file);
+                if (!multipartFile.exists()) {
+                    return "messages-templates" + SaveFile.SEPARATOR + "errorS3FileSize";
+                }
                 if (multipartFile != null) {
                     service.uploadS3File(username, multipartFile);
                     postDto.setExtFile(PNG.getExtension());

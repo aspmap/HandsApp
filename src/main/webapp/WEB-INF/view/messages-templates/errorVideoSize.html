@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:include="fragments.html :: header-login">
-    <title id="pageTitle">HandsApp - Ошибка авторизации</title>
+<head th:include="fragments.html :: header-add-img">
+    <title id="pageTitle">HandsApp - Файл превышает допустимый размер</title>
 </head>
 
 <!-- Navigation -->
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation-add-img"></nav>
 
 <!-- Page Content -->
 <section class="main-post">
     <div class="wrapper-posts">
         <div class="left-col">
             <br><br><br><br><br><br>
-            <h1 class="h3 mb-3 font-weight-normal text-center" th:text="#{text_login_error}"></h1>
+            <h1 class="h3 mb-3 font-weight-normal text-center" th:text="#{text_error_video_file_size}"></h1>
             <br><br><br><br>
             <p class="text-center">
-                <a th:href="@{/handshakes_search}" th:text="#{text_back_to_login_page}"></a>
+                <a th:href="@{/post/newVideo}" th:text="#{text_back_to_add_file}"></a>
             </p>
             <br><br><br><br>
             <p class="text-center" th:insert="fragments.html :: footer-login"></p>

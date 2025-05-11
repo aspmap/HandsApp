@@ -15,7 +15,6 @@ import static run.itlife.utils.EditImage.resizeImage;
 import static run.itlife.utils.OtherUtils.generateFileName;
 
 public class SaveFile {
-
     private static final String PATH_VIDEO_USERS = "/resources/video/users/";
     private static final String PATH_IMAGE_USERS = "/resources/img/users/";
     public static final String SEPARATOR = "/";
@@ -23,9 +22,10 @@ public class SaveFile {
     private static final String POINT = ".";
     private static final int IMAGE_WIDTH = 500;
     private static final int IMAGE_HEIGHT = 500;
+    private static final int MAX_UPLOAD_FILE_SIZE_IN_MB = 20 * 1024 * 1024; // 20 МБ
+
 
     public Map<String, String> saveFile(String username, ServletContext context, MultipartFile file) throws IOException {
-
         Map<String, String> filenameMap = new HashMap<>();
         String extension;
 
@@ -58,16 +58,17 @@ public class SaveFile {
     }
 
     public String saveFile(String username, ServletContext context, String file) throws IOException {
-
         String base64Image = file.split(COMMA)[1];
         byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
 
+        if (imageBytes.length > MAX_UPLOAD_FILE_SIZE_IN_MB) {
+            return null;
+        }
         String filename = generateFileName() + POINT + PNG.getExtension();
         File dir = new File(context.getRealPath(PATH_IMAGE_USERS + username)); // TODO PATH_VIDEO_USERS вынести в аргументы функции
         if (!dir.exists()) {
             dir.mkdirs();
         }
-
         File uploadedFile = new File(dir + SEPARATOR + filename); // TODO PATH_VIDEO_USERS вынести в аргументы функции
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
         stream.write(imageBytes);
@@ -75,26 +76,27 @@ public class SaveFile {
         BufferedImage resizeImage = resizeImage(originalImage, IMAGE_WIDTH, IMAGE_HEIGHT);
         File newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
         ImageIO.write(resizeImage, PNG.getExtension(), newFileJPG);
-
         stream.flush();
         stream.close();
         return filename;
     }
 
     public File saveS3File(String file) throws IOException {
-
         String base64Image = file.split(COMMA)[1];
         byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
         String filename = generateFileName() + POINT + PNG.getExtension();
 
         File uploadedFile = new File(filename);
+        if (imageBytes.length > MAX_UPLOAD_FILE_SIZE_IN_MB) {
+            uploadedFile.delete();
+            return uploadedFile;
+        }
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
         stream.write(imageBytes);
         BufferedImage originalImage = ImageIO.read(uploadedFile);
         BufferedImage resizeImage = resizeImage(originalImage, IMAGE_WIDTH, IMAGE_HEIGHT);
         File newFileJPG = new File(filename);
         ImageIO.write(resizeImage, PNG.getExtension(), newFileJPG);
-
         stream.flush();
         stream.close();
         return newFileJPG;
