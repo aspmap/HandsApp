@@ -6,23 +6,26 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import run.itlife.repository.UserRepository;
+import run.itlife.dto.UserDto;
+import run.itlife.service.UserService;
 
 import java.util.ArrayList;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
     @Mock
-    UserRepository mockUserRepository;
+    UserService mockUserService;
 
     @Test
     public void getUsersOnlyKey() {
-        ArrayList<String> expectedData = new ArrayList<>();
-        expectedData.add("1");
-        expectedData.add("2");
-        Mockito.when(mockUserRepository.getUsersOnlyKey("robocop")).thenReturn(expectedData);
-        ArrayList<String> resultData = mockUserRepository.getUsersOnlyKey("robocop");
+        UserDto userDto = new UserDto();
+        userDto.setUsername("terminator");
+        userDto.setPassword("terminatorpassword");
+        ArrayList<UserDto> expectedData = new ArrayList<>();
+        expectedData.add(userDto);
+        Mockito.when(mockUserService.getUsersOnlyKey("robocop")).thenReturn(expectedData);
+        ArrayList<UserDto> resultData = mockUserService.getUsersOnlyKey("robocop");
         Assert.assertEquals(expectedData, resultData);
-        Mockito.verify(mockUserRepository).getUsersOnlyKey("robocop");
+        Mockito.verify(mockUserService).getUsersOnlyKey("robocop");
     }
 }
