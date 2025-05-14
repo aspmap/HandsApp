@@ -14,10 +14,6 @@ public interface DialogsRepository extends JpaRepository<Dialogs, Long> {
             "order by d.created_at desc ", nativeQuery = true)
     List<Dialogs> findDialogsByUsername(String username);
 
-    @Query(value = "select * from dialogs d " +
-            "order by d.created_at desc ", nativeQuery = true)
-    List<Dialogs> sortedDialogsByDate();
-
     @Query(value = "select count(*) from users u " +
             "left join user_dialog ud on u.user_id = ud.user_id " +
             "left join dialogs d on ud.dialog_id = d.dialog_id " +
