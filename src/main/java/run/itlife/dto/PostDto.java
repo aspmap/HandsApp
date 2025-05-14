@@ -1,6 +1,7 @@
 package run.itlife.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,10 @@ public class PostDto {
     private String storageType;
 
     public PostDto() {}
+
+    public PostDto(Long postId) {
+        this.postId = postId;
+    }
 
     public String getExtFile() {
         return extFile;

@@ -45,6 +45,10 @@
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <jjwt.version>0.9.1</jjwt.version>
         <mockito-junit-jupiter.version>4.11.0</mockito-junit-jupiter.version>
+        <spring-security-test.version>5.8.1</spring-security-test.version>
+        <spring-test.version>5.3.39</spring-test.version>
+        <json-path.version>2.9.0</json-path.version>
+
     </properties>
 
     <dependencies>
@@ -195,6 +199,24 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>${mockito-junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>${spring-security-test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${json-path.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

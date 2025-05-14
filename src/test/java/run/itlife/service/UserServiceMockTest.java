@@ -1,4 +1,4 @@
-package run.itlife;
+package run.itlife.service;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import run.itlife.service.UserService;
 import java.util.ArrayList;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserServiceTest {
+public class UserServiceMockTest {
     @Mock
     UserService mockUserService;
 

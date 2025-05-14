@@ -19,24 +19,10 @@ public class HandshakeServiceImpl implements HandshakeService {
     }
 
     @Override
-    public List<Long> selectUsersId() {
-        List<Long> userIdList = new ArrayList<>();
-        userIdList = handshakeRepository.selectUsersId();
-        return userIdList;
-    }
-
-    @Override
     public ArrayList<Integer> selectUsersId(Integer userId) {
         ArrayList<Integer> userIdList = new ArrayList<>();
         userIdList = handshakeRepository.selectUsersId(userId);
         return userIdList;
-    }
-
-    @Override
-    public List<Long> selectUsersSubId() {
-        List<Long> userSubIdList = new ArrayList<>();
-        userSubIdList = handshakeRepository.selectUsersSubId();
-        return userSubIdList;
     }
 
     @Override

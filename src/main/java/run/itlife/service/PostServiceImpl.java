@@ -10,7 +10,6 @@ import org.springframework.util.StringUtils;
 import run.itlife.dto.CommentDto;
 import run.itlife.dto.PostDto;
 import run.itlife.entity.Comment;
-import run.itlife.entity.Likes;
 import run.itlife.entity.Post;
 import run.itlife.repository.PostRepository;
 import run.itlife.repository.UserRepository;

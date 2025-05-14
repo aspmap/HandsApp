@@ -1,4 +1,4 @@
-package run.itlife;
+package run.itlife.service;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import run.itlife.service.PostService;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PostServiceTest {
+public class PostServiceMockTest {
     @Mock
     PostService mockPostService;
 
