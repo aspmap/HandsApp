@@ -11,7 +11,6 @@ import run.itlife.service.UserService;
 
 @Controller
 public class MyWorldController {
-
     private final UserService userService;
     private final PostService postService;
 

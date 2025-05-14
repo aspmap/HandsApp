@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/post")
 public class PostApiController {
-
     private final PostService postService;
 
     @Autowired
@@ -49,5 +48,4 @@ public class PostApiController {
     public void delete(@PathVariable long id){
         postService.delete(id);
     }
-    
 }

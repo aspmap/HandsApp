@@ -10,7 +10,6 @@ import run.itlife.service.SubscriptionsService;
 @RestController
 @RequestMapping("/api/user")
 public class UserApiController {
-
     private final SubscriptionsService subscriptionsService;
 
     @Autowired
@@ -22,5 +21,4 @@ public class UserApiController {
     public int findSubscribers(@PathVariable String username) {
         return subscriptionsService.countSubscribe(username);
     }
-
 }

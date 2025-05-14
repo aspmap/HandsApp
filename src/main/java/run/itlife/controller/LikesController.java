@@ -9,11 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import run.itlife.service.LikesService;
 import run.itlife.service.UserService;
 
-import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
-
 @Controller
 public class LikesController {
-
     private final LikesService likesService;
     private final UserService userService;
 

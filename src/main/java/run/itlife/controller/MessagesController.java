@@ -16,7 +16,6 @@ import java.util.List;
 
 @Controller
 public class MessagesController {
-
     private final UserService userService;
     private final MessagesService messagesService;
     private final DialogsService dialogsService;
@@ -85,5 +84,4 @@ public class MessagesController {
         modelMap.put("userOnlyList", userService.getUsersOnly());
         modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
     }
-
 }

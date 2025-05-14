@@ -10,7 +10,6 @@ import java.io.OutputStream;
 
 @Controller
 public class QRcodeController {
-
     @GetMapping("qrcode/")
     @PreAuthorize("hasRole('USER')")
     public void qrcode(HttpServletResponse response) throws Exception {
@@ -22,5 +21,4 @@ public class QRcodeController {
         outputStream.flush();
         outputStream.close();
     }
-
 }

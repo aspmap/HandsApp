@@ -48,7 +48,6 @@ public class UserController {
     private final SubscriptionsService subscriptionsService;
     private final PostService postService;
     private final ServletContext context;
-
     private Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
@@ -267,5 +266,4 @@ public class UserController {
         }
         file.delete();
     }
-
 }

@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import run.itlife.service.PostService;
 import run.itlife.service.SubscriptionsService;
 import run.itlife.service.UserService;
-import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
 
 @Controller
 public class SubscriptionsController {
-
     private final UserService userService;
     private final PostService postService;
     private final SubscriptionsService subscriptionsService;
@@ -80,5 +78,4 @@ public class SubscriptionsController {
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
     }
-
 }
