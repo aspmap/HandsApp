@@ -7,12 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import run.itlife.entity.Likes;
 import run.itlife.repository.LikesRepository;
 
-import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
-
 @Service
 @Transactional
 public class LikesServiceImpl implements LikesService {
-
     private final LikesRepository likesRepository;
     private final PostService postService;
     private final UserService userService;

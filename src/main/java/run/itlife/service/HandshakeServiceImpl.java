@@ -6,12 +6,10 @@ import run.itlife.repository.HandshakeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
 public class HandshakeServiceImpl implements HandshakeService {
-
     private final HandshakeRepository handshakeRepository;
 
     public HandshakeServiceImpl(HandshakeRepository handshakeRepository) {

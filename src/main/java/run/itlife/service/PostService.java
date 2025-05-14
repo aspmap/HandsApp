@@ -1,13 +1,12 @@
 package run.itlife.service;
 
 import run.itlife.dto.PostDto;
-import run.itlife.entity.Likes;
 import run.itlife.entity.Post;
+
 import java.util.List;
 
 //Интерфейс, отвечающий за логику создания постов, валидацию, изменение и т.д.
 public interface PostService {
-
     List<Post> listAllPosts();
     List<PostDto> listAllPostsAsDto();
     List<PostDto> searchDtos(String search);
@@ -30,5 +29,4 @@ public interface PostService {
     List<Long> isLikePost(String username);
     List<Post> selectMyLikesPosts(String username);
     Long countMyLikesPosts(String username);
-
 }

@@ -1,7 +1,6 @@
 package run.itlife.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,16 +9,17 @@ import run.itlife.entity.Dialogs;
 import run.itlife.entity.User;
 import run.itlife.repository.DialogsRepository;
 import run.itlife.repository.UserRepository;
-import run.itlife.utils.SecurityUtils;
+
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
 public class DialogsServiceImpl implements DialogsService {
-
     private final DialogsRepository dialogsRepository;
     private final UserRepository userRepository;
 

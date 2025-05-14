@@ -11,12 +11,9 @@ import java.io.File;
 
 @Service
 public class S3ServiceImpl implements S3Service {
-
     @Value("${application.bucket.name}")
     private String bucketName;
-
     public static final String S3_ADDRESS = "storage.yandexcloud.net";
-
     @Autowired
     private AmazonS3 s3Client;
 
@@ -26,5 +23,4 @@ public class S3ServiceImpl implements S3Service {
         file.delete();
         return fileName;
     }
-
 }

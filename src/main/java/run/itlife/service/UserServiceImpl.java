@@ -24,7 +24,6 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-
     // сервисы в свою очередь включают репозиторий
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder cryptPasswordEncoder;

@@ -11,14 +11,13 @@ import run.itlife.entity.Bugs;
 import run.itlife.entity.User;
 import run.itlife.repository.BugsRepository;
 import run.itlife.repository.UserRepository;
-import run.itlife.utils.SecurityUtils;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @Transactional
 public class BugsServiceImpl implements BugsService {
-
     private final BugsRepository bugsRepository;
     private final UserRepository userRepository;
 

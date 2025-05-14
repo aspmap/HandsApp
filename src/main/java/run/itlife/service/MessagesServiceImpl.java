@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 @Transactional
 public class MessagesServiceImpl implements MessagesService {
-
     private final MessagesRepository messagesRepository;
     private final UserService userService;
     private final DialogsService dialogsService;
@@ -61,11 +60,6 @@ public class MessagesServiceImpl implements MessagesService {
     @Override
     public List<String> findUsersInDialog(Long dialogId) {
         return messagesRepository.findUsersInDialog(dialogId);
-    }
-
-    @Override
-    public List<String> getDialogIdByUsersOwner(String username1, String username2) {
-        return messagesRepository.getDialogIdByUsersOwner(username1, username2);
     }
 
     @Override

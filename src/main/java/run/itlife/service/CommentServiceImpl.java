@@ -18,7 +18,6 @@ import static run.itlife.utils.SecurityUtils.ACCESS_DENIED;
 @Service
 @Transactional
 public class CommentServiceImpl implements CommentService {
-
     // сервисы в свою очередь включают репозиторий
     private final CommentRepository commentRepository;
     private final PostService postService;

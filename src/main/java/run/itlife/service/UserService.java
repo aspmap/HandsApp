@@ -8,7 +8,6 @@ import java.util.List;
 
 //Интерфейс, отвечающий за логику создания пользователей, поиск пользователей
 public interface UserService extends UserDetailsService {
-
     User findByUsername(String username);
     List<User> findAll();
     void create(User user);
@@ -22,5 +21,4 @@ public interface UserService extends UserDetailsService {
     int countSearchUsers(String substring);
     int countSearchGoogleUsers(String substring);
     void delete_profile(String user);
-
 }

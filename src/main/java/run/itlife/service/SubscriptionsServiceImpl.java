@@ -4,18 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import run.itlife.entity.Post;
 import run.itlife.entity.Subscriptions;
 import run.itlife.repository.SubscriptionsRepository;
 
 import java.util.List;
 
-import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
-
 @Service
 @Transactional
 public class SubscriptionsServiceImpl implements SubscriptionsService {
-
     private final SubscriptionsRepository subscriptionsRepository;
     private final UserService userService;
 

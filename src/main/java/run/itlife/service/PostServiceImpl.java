@@ -27,7 +27,6 @@ import static run.itlife.utils.SecurityUtils.*;
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
-
     // сервисы в свою очередь включают репозиторий
     private final PostRepository postRepository;
     private final UserRepository userRepository;
