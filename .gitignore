@@ -26,7 +26,7 @@ src/main/resources/handsapp1.cer
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar
 *.war
 *.nar
 *.ear
