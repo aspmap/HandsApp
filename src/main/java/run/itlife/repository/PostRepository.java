@@ -25,6 +25,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     "where u.username = ? ", nativeQuery = true)
     int countPosts(String username);
 
+    @Query(value = "select u.is_closed from users u " +
+            " where u.username = ? ", nativeQuery = true)
+    boolean isClosedProfile(String username);
+
     @Query(value = "select count(c.post_id), p.post_id from post p " +
             "join comment c on c.post_id = p.post_id where c.post_id = ? " +
             "GROUP BY p.post_id ", nativeQuery = true)
@@ -77,4 +81,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "where u.username = ? ", nativeQuery = true)
     Long countMyLikesPosts(String username);
 
+    @Query(value = "select u.is_closed from post p " +
+            "join users u on p.user_id = u.user_id " +
+            "where p.post_id = ? ", nativeQuery = true)
+    boolean isClosedProfilebyPostId(long id);
 }

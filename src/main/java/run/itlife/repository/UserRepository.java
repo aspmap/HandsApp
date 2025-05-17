@@ -18,10 +18,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(User user); // Возвращает юзера
 
+    @Query(value = "select u.is_closed from post p " +
+            "    join users u on p.user_id = u.user_id " +
+            "    where u.username = ? " +
+            "LIMIT 1 ", nativeQuery = true)
+    boolean isClosedProfile(String username);
+
     @Query(value = "select * from users u " +
             "join user_role ur on ur.user_id = u.user_id " +
             "join role r on r.role_id = ur.role_id " +
-            "where r.name = 'USER' " +
+            "where r.name = 'USER' AND u.is_closed = 'false' " +
             "order by u.created_at desc " +
             "LIMIT 5 ", nativeQuery = true)
     List<User> getUsersOnly();
@@ -47,7 +53,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "from users u " +
             "join user_role ur on ur.user_id = u.user_id " +
             "join role r on r.role_id = ur.role_id " +
-            "where r.name = 'USER' " +
+            "where r.name = 'USER' AND u.is_closed = 'false'  " +
             "order by u.created_at desc " +
             "LIMIT 5 ; ", nativeQuery = true)
     ArrayList<String> getUsersOnlyKey(String currentUsername);
@@ -56,20 +62,20 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u.* from users u " +
             "left join user_role ur on u.user_id = ur.user_id " +
             "left join role r on ur.role_id = r.role_id " +
-    "where u.username LIKE ? AND r.name LIKE 'USER' AND u.is_google = 'false'", nativeQuery = true)
+    "where u.username LIKE ? AND r.name LIKE 'USER' AND u.is_google = 'false' AND u.is_closed = 'false' ", nativeQuery = true)
     List<User> searchUsers(String substring);
 
     @Query(value = "select u.* from users u " +
             "left join user_role ur on u.user_id = ur.user_id " +
             "left join role r on ur.role_id = r.role_id " +
-            "where u.email LIKE ? AND r.name LIKE 'USER' AND u.is_google = 'true'", nativeQuery = true)
+            "where u.email LIKE ? AND r.name LIKE 'USER' AND u.is_google = 'true' AND u.is_closed = 'false' ", nativeQuery = true)
     List<User> searchGoogleUsers(String substring);
 
     @Query(value = "select count(u.username) from users u " +
-            "where u.username LIKE ? ", nativeQuery = true)
+            "where u.username LIKE ? AND u.is_closed = 'false' ", nativeQuery = true)
     int countSearchUsers(String substring);
 
     @Query(value = "select count(u.username) from users u " +
-            "where u.email LIKE ? ", nativeQuery = true)
+            "where u.email LIKE ? AND u.is_closed = 'false' ", nativeQuery = true)
     int countSearchGoogleUsers(String substring);
 }

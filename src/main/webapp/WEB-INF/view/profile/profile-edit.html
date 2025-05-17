@@ -87,13 +87,14 @@
                         <option th:value="${sex_female}" th:text="#{input_female}"></option>
                     </select>
                 </div>
-                <div>
-                    <span th:text="#{input_enter_is_hidden}"></span>
-                    <input  th:field="*{isHidden}" type="checkbox">
-                </div>
+                <br/>
                 <div>
                     <span th:text="#{input_enter_is_closed}"></span>
                     <input th:field="*{isClosed}" type="checkbox">
+                </div>
+                <div>
+                    <span th:text="#{input_enter_is_active}"></span>
+                    <input th:field="*{isActive}" type="checkbox">
                 </div>
                 <br>
                 <button type="submit" class="btn btn-outline-dark"><span th:text="#{button_edit_profile_information}"></span></button>

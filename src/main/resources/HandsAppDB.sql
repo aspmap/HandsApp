@@ -29,7 +29,8 @@ CREATE TABLE users (
     is_google boolean,
     is_hidden boolean,
     is_closed boolean,
-    last_visit timestamp without time zone);
+    last_visit timestamp without time zone,
+    previous_visit timestamp without time zone);
 
 CREATE TABLE role (
     role_id int PRIMARY KEY,

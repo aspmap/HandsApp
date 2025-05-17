@@ -69,6 +69,7 @@ public class SubscriptionsController {
         modelMap.put("user_sub", user);
         modelMap.put("posts", postService.sortedPostsByDate(user));
         modelMap.put("countPosts", postService.countPosts(user));
+        modelMap.put("isClosedProfile", postService.isClosedProfile(user));
         modelMap.put("countSubscribe", subscriptionsService.countSubscribe(user));
         modelMap.put("countSubscribers", subscriptionsService.countSubscribers(user));
     }

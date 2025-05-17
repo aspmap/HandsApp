@@ -59,6 +59,9 @@ public class User implements UserDetails {
     @Column(name = "last_visit")
     private LocalDateTime lastVisit;
 
+    @Column(name = "previous_visit")
+    private LocalDateTime previousVisit;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -317,4 +320,35 @@ public class User implements UserDetails {
         return username;
     }
 
+    public boolean isGoogle() {
+        return isGoogle;
+    }
+
+    public void setGoogle(boolean google) {
+        isGoogle = google;
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
+    }
+
+    public boolean isClosed() {
+        return isClosed;
+    }
+
+    public void setClosed(boolean closed) {
+        isClosed = closed;
+    }
+
+    public LocalDateTime getPreviousVisit() {
+        return previousVisit;
+    }
+
+    public void setPreviousVisit(LocalDateTime previousVisit) {
+        this.previousVisit = previousVisit;
+    }
 }

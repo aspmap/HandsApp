@@ -119,6 +119,7 @@ public class PostController {
     public String posts_detail_subuser(ModelMap modelMap, @PathVariable String user) {
         setCommonParams(modelMap);
         modelMap.put("posts", postService.sortedPostsByDate(user));
+        modelMap.put("isClosedProfile", userService.isClosedProfile(user));
         modelMap.put("user_sub", user);
         modelMap.put("userinfo_sub", userService.findByUsername(user));
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -266,6 +267,7 @@ public class PostController {
     public String post_view_sub(@PathVariable long id, ModelMap modelMap) {
         setCommonParams(modelMap);
         modelMap.put("post", postService.findById(id));
+        modelMap.put("isClosedProfilebyPostId", postService.isClosedProfilebyPostId(id));
         modelMap.put("comments", commentService.sortCommentsByDate(id));
         modelMap.put("countComments", postService.countComments(id));
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

@@ -1,7 +1,9 @@
 package run.itlife.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import run.itlife.entity.Dialogs;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class UserDto {
@@ -19,8 +21,14 @@ public class UserDto {
     private String sex;
     private Set<Dialogs> dialogs;
     private String isSub;
-
     private String isGoogle;
+    private boolean isHidden;
+    private boolean isClosed;
+    private boolean isActive;
+    @JsonIgnore
+    private LocalDateTime lastVisit;
+    @JsonIgnore
+    private LocalDateTime previousVisit;
 
     public String getIsGoogle() {
         return isGoogle;
@@ -134,4 +142,43 @@ public class UserDto {
         this.sex = sex;
     }
 
+    public boolean getIsHidden() {
+        return isHidden;
+    }
+
+    public void setIsHidden(boolean isHidden) {
+        this.isHidden = isHidden;
+    }
+
+    public boolean getIsClosed() {
+        return isClosed;
+    }
+
+    public void setIsClosed(boolean isClosed) {
+        this.isClosed = isClosed;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public LocalDateTime getLastVisit() {
+        return lastVisit;
+    }
+
+    public void setLastVisit(LocalDateTime lastVisit) {
+        this.lastVisit = lastVisit;
+    }
+
+    public LocalDateTime getPreviousVisit() {
+        return previousVisit;
+    }
+
+    public void setPreviousVisit(LocalDateTime previousVisit) {
+        this.previousVisit = previousVisit;
+    }
 }

@@ -21,4 +21,5 @@ public interface UserService extends UserDetailsService {
     int countSearchUsers(String substring);
     int countSearchGoogleUsers(String substring);
     void delete_profile(String user);
+    boolean isClosedProfile(String username);
 }

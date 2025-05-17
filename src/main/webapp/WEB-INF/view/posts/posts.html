@@ -32,6 +32,10 @@
                                 <span th:text="#{label_site}"></span>
                                 <a th:href="${userinfo.www}"><span th:text="${userinfo.www}"></span></a>
                             </p>
+                            <p th:if="${userinfo.previousVisit != null}" class="description-main">
+                                <span th:text="#{label_previous_visit}"></span>
+                                <span th:text="${#temporals.format(userinfo.previousVisit, 'dd.MM.yyyy')} + ' ' + #{text_date_year} + ' ' + ${#temporals.format(userinfo.previousVisit, 'hh:mm')}"></span>
+                            </p>
                             <p class="description-main">
                                 <span th:text="${countPosts} + ' ' + #{label_publications}"></span>
                                 <a th:href="@{/subscribers}"><span th:text="${countSubscribers} + ' ' + #{label_subscribers}"></span></a>

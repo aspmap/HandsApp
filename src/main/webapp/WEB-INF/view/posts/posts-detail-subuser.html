@@ -17,7 +17,11 @@
 <section class="main">
     <div class="wrapper">
         <div class="left-col">
-            <div class="post" th:each="post: ${posts}" th:id="'post-' + ${post.postId}"
+            <div class="no_public" th:if="${isClosedProfile == true}">
+                <img th:src="@{'/resources/img/icons/close.png'}" alt="">
+                <h1 class="h3 mb-3 font-weight-normal no_public" th:text="#{text_closed_profile}"></h1>
+            </div>
+            <div class="post" th:if="${isClosedProfile == false}" th:each="post: ${posts}" th:id="'post-' + ${post.postId}"
                  th:name="'post-' + ${post.postId}">
                 <div class="info">
                     <div class="user">

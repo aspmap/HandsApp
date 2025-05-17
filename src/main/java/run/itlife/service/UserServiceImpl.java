@@ -96,6 +96,12 @@ public class UserServiceImpl implements UserService {
             user.setSex(userDto.getSex());
         if (!StringUtils.isEmpty(userDto.getWww()))
             user.setWww(userDto.getWww());
+        if (!StringUtils.isEmpty(userDto.getIsClosed()))
+            user.setIsClosed(userDto.getIsClosed());
+        if (!StringUtils.isEmpty(userDto.getIsHidden()))
+            user.setIsHidden(userDto.getIsHidden());
+        if (!StringUtils.isEmpty(userDto.getIsActive()))
+            user.setIsActive(userDto.getIsActive());
         userRepository.save(user);
     }
 
@@ -108,6 +114,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isClosedProfile(String username) {
+        if (username != null) {
+            return userRepository.isClosedProfile(username);
+        }
+        return false;
+    }
+
+    @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
@@ -115,6 +129,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (!StringUtils.isEmpty(user)) {
+            if (user.get().getLastVisit() != null) {
+                user.get().setPreviousVisit(user.get().getLastVisit());
+            }
+            user.get().setLastVisit(LocalDateTime.now());
+        }
         return findByUsername(username);
     }
 

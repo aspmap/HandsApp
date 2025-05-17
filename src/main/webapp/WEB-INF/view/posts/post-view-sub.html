@@ -18,7 +18,11 @@
 <section class="main">
     <div class="wrapper">
         <div class="left-col">
-            <div class="post" th:object="${post}">
+            <div class="no_public" th:if="${isClosedProfilebyPostId == true}">
+                <img th:src="@{'/resources/img/icons/close.png'}" alt="">
+                <h1 class="h3 mb-3 font-weight-normal no_public" th:text="#{text_closed_profile}"></h1>
+            </div>
+            <div class="post" th:if="${isClosedProfilebyPostId == false}" th:object="${post}">
                 <input type="hidden" th:field="*{postId}"/>
                 <div class="info">
                     <div class="user">

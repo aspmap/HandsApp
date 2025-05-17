@@ -152,6 +152,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public boolean isClosedProfile(String username) {
+        if (username != null) {
+            return postRepository.isClosedProfile(username);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isClosedProfilebyPostId(long id) {
+        if (id > 0) {
+            return postRepository.isClosedProfilebyPostId(id);
+        }
+        return false;
+    }
+
+    @Override
     public Long countComments(Long id) {
         Long countComments = postRepository.countComments(id);
         if(countComments == null) countComments = 0L;
