@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_qr_code}"></title>
@@ -11,24 +11,31 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
 <!-- Page Content -->
-<section class="main-post">
-  <div class="wrapper-posts">
+<section class="main">
+  <div class="wrapper">
     <div class="left-col">
-      <section class="text-center">
-
-      </section>
       <div class="post">
-        <div class="post-content">
-          <div class="view-source comments-view">
-            <div class="row">
-              QR-code
-            </div>
+        <div class="info">
+          <div class="user">
+            <p class="comments-logo" th:text="#{menu_qrcode}"></p>
+          </div>
+        </div>
+      </div>
+      <div class="post">
+        <div class="post-content qrcode-position">
+          <div class="view-source comments-view qrcode-view">
+              <img th:src="*{'data:image/png;base64,'+ qrQode}" alt="" />
           </div>
         </div>
       </div>
 
       <!-- Footer -->
       <footer th:insert="fragments.html :: footer"></footer>
+
+    </div>
+
+    <!-- Right Column -->
+    <div th:insert="fragments.html :: right-column"></div>
 
     </div>
   </div>

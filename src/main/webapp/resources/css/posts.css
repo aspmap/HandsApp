@@ -599,6 +599,14 @@ a {
     margin-bottom: 5px;
 }
 
+.qrcode-view {
+    text-align: center;
+}
+
+.qrcode-position {
+    padding: 0;
+}
+
 .reaction-wrapper {
     width: 100%;
     height: 50px;
