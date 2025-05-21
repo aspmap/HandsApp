@@ -255,7 +255,7 @@ public class UserController {
         modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
     }
 
-    public static void recursiveDelete(File file) {
+    public static void recursiveDelete(File file) { // TODO Вынести в утилиты
         if (!file.exists())
             return;
 

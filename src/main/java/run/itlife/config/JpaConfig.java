@@ -4,7 +4,6 @@ import org.postgresql.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -33,12 +32,9 @@ public class JpaConfig {
     public DataSource dataSource() {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         dataSource.setDriverClass(Driver.class);
-/*        dataSource.setUrl(env.getProperty("db.postgres.url"));
+        dataSource.setUrl(env.getProperty("db.postgres.url"));
         dataSource.setUsername(env.getProperty("db.postgres.login"));
-        dataSource.setPassword(env.getProperty("db.postgres.password"));*/
-        dataSource.setUrl("jdbc:postgresql://127.0.0.1:5432/HandsApp");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("NtCn0db4");
+        dataSource.setPassword(env.getProperty("db.postgres.password"));
         return dataSource;
     }
 
@@ -71,5 +67,4 @@ public class JpaConfig {
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL10Dialect");
         return hibernateProperties;
     }
-
 }

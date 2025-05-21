@@ -10,9 +10,6 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.ServletContext;
-
 import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.PostDto;
 import run.itlife.entity.User;
@@ -20,11 +17,13 @@ import run.itlife.repository.UserRepository;
 import run.itlife.service.*;
 import run.itlife.utils.SaveFile;
 
+import javax.servlet.ServletContext;
 import java.io.File;
 import java.util.Map;
 
 import static run.itlife.enums.FileExtensions.PNG;
-import static run.itlife.enums.FileTypes.*;
+import static run.itlife.enums.FileTypes.VIDEO_MP4;
+import static run.itlife.enums.FileTypes.VIDEO_QT;
 import static run.itlife.messages.ErrorMessages.ERROR;
 import static run.itlife.messages.ErrorMessages.NOT_PUBLISH_POST;
 import static run.itlife.service.S3ServiceImpl.S3_ADDRESS;

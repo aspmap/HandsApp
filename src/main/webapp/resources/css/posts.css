@@ -452,6 +452,13 @@ body {
     line-height: 20px;
 }
 
+.description_ms {
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 20px;
+    margin-right: 5px;
+}
+
 .description-comments {
     margin: 5px 0;
     font-size: 14px;

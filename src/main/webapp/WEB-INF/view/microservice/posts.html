@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_my_posts_ms}"></title>
+  <th:block th:include="fragments.html :: header"/>
+
+  <!-- partial -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <script th:inline="javascript">
+    var msServiceUrl = [[${msServiceUrl}]];
+    var contextPath = [[${contextPath}]];
+    var userPhoto = [[${userPhoto}]];
+    var user = [[${user}]];
+    var bToken = [[${bToken}]];
+  </script>
+  <script type="text/javascript" th:src="@{/resources/js/posts.js}"></script>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+
+<script>
+  posts();
+</script>
+
+<!-- Page Content -->
+<section class="main">
+  <div class="wrapper">
+    <div class="left-col">
+      <div id="posts"></div>
+      <br id="br">
+      <h1 id="error"></h1>
+      <br id="br2">
+
+      <!-- Footer -->
+      <footer th:insert="fragments.html :: footer"></footer>
+
+    </div>
+
+    <!-- Right Column -->
+    <div th:insert="fragments.html :: right-column"></div>
+
+  </div>
+</section>
+
+</body>
+</html>
