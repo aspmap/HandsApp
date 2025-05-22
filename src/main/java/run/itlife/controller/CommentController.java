@@ -18,6 +18,7 @@ import run.itlife.service.UserService;
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
+
     private final CommentService commentService;
     private final PostService postService;
     private final UserService userService;
