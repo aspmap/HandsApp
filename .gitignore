@@ -5,6 +5,7 @@
 .idea/
 !.idea/icon*.png
 *.iml
+.run/
 build/
 src/main/gen
 target/
