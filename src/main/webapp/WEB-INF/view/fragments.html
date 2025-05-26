@@ -13,6 +13,7 @@
     <link th:href="@{/resources/css/messages.css}" rel="stylesheet">
     <link th:href="@{/resources/css/menu.css}" rel="stylesheet">
     <link th:href="@{/resources/css/handshakes.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/pagination.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
@@ -168,14 +169,14 @@
                             <li>
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
                             </li>
-                            <!--<li>
-                                <a th:href="@{/my_world}"><span th:text="#{menu_my_world}"></span></a>
-                            </li>-->
                             <li>
                                 <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/posts_ms/}"><span th:text="#{menu_my_posts_ms}"></span></a>
+                            </li>
+                            <li>
+                                <a th:href="@{/pagination}"><span th:text="#{menu_my_pagination}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
@@ -250,14 +251,14 @@
                             <li>
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
                             </li>
-                            <!--<li>
-                                <a th:href="@{/my_world}"><span th:text="#{menu_my_world}"></span></a>
-                            </li>-->
                             <li>
                                 <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/posts_ms/}"><span th:text="#{menu_my_posts_ms}"></span></a>
+                            </li>
+                            <li>
+                                <a th:href="@{/pagination}"><span th:text="#{menu_my_pagination}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>

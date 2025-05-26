@@ -1,5 +1,7 @@
 package run.itlife.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,14 +11,12 @@ import java.util.List;
 //Маппинг сущностей с БД
 @Entity
 public class Role {
-
     @Id
     @Column(name = "role_id")
     private Integer roleId;
-
     private String name;
-
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     private List<User> users;
 
     public Integer getRoleId() {
@@ -42,5 +42,4 @@ public class Role {
     public void setUsers(List<User> users) {
         this.users = users;
     }
-
 }

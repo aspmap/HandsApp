@@ -57,17 +57,6 @@ public class PostController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/")
-    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String index(ModelMap modelMap, @RequestParam(required = false) String search) {
-        setCommonParams(modelMap);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("posts_sub", postService.findSubscribesPosts(username));
-        modelMap.put("countPosts", postService.countSubscribesPosts(username));
-        modelMap.put("isYourLike", postService.isLikePost(username)); // TODO как выдернуть id поста??
-        return "posts/posts-detail-sub";
-    }
-
     @GetMapping("/main")
     public String getLoginInfo(ModelMap modelMap, OAuth2AuthenticationToken authentication) {
         String username = authentication.getPrincipal().getAttribute("sub");

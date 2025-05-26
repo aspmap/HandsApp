@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_subscriptions}"></title>
+    <th:block th:include="fragments.html :: header"/>
+
+    <!-- partial -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script th:inline="javascript">
+        var data = [[${posts_sub}]];
+        var contextPath = [[${contextPath}]];
+        var totalPages = [[${totalPages}]];
+        var usernameCurrent = [[${user}]];
+        var userPhotoCurrent = [[${userPhotoCurrent}]];
+        var userInfo = [[${userinfo}]];
+        var isYourLike = [[${isYourLike}]];
+        var size = [[${size}]];
+    </script>
+    <script type="text/javascript" th:src="@{/resources/js/infinite_scroll.js}"></script>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+            <div id="posts"></div>
+            <img id="next-page" class="hidden loading-ico" th:src="@{/resources/img/icons/loading.gif}" width="80px" />
+
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+        </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
+    </div>
+</section>
+
+<script>
+    posts_pagination();
+</script>
+
+</body>
+</html>

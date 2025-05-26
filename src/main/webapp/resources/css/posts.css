@@ -45,6 +45,14 @@ body {
     width: 150px;
 }
 
+.hidden {
+    display: none;
+}
+
+.loading-ico {
+    align-self: anchor-center;
+}
+
 .search-box {
     position: absolute;
     left: 50%;

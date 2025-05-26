@@ -1,22 +1,22 @@
 package run.itlife.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="likes")
 public class Likes {
-
     @Id
     @Column(name = "like_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long likeId;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userLikeId;
-
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @JsonIgnore
     private Post postLikeId;
 
     public Long getLikeId() {

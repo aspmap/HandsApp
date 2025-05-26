@@ -1,5 +1,6 @@
 package run.itlife.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,12 +16,10 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name="users")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
@@ -28,63 +27,49 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
-
     @ManyToMany(mappedBy = "users")
+    @JsonIgnore
     private Set<Dialogs> dialogs; //TODO Здесь List заменил на Set (жертвуя производительностью), т.к. приложение не запускалось и выдывало ошибку MultipleBagFetchException. В будущем доработать
-
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Post> posts;
-
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Messages> messages;
-
     @OneToMany(mappedBy = "userId")
+    @JsonIgnore
     private List<Bugs> bugs;
-
     @OneToMany(mappedBy = "userLikeId")
+    @JsonIgnore
     private List<Likes> userLike;
-
     @Column(name = "is_active")
     private boolean isActive;
-
     @Column(name = "is_google")
     private boolean isGoogle;
-
     @Column(name = "is_hidden")
     private boolean isHidden;
-
     @Column(name = "is_closed")
     private boolean isClosed;
-
     @Column(name = "last_visit")
+    @JsonIgnore
     private LocalDateTime lastVisit;
-
     @Column(name = "previous_visit")
+    @JsonIgnore
     private LocalDateTime previousVisit;
-
     @Column(name = "created_at")
+    @JsonIgnore
     private LocalDateTime createdAt;
-
     private String username;
-
+    @JsonIgnore
     private String password;
-
     private String surname;
-
     private String firstname;
-
     private String photo;
-
     private String info;
-
     private String www;
-
     private String email;
-
     private String phone;
-
     private String sex;
-
 
     public boolean getIsGoogle() {
         return isGoogle;
