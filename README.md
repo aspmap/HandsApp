@@ -255,7 +255,7 @@ DELETE http://handsapp.top/api/post/295
 
 > QR-код страницы пользователя
 
-![2024-05-07_20-13-07](https://github.com/aspmap/HandsApp/assets/145023708/8fa55c30-fa5a-4d63-b1e3-3683bf07f49d)
+![qr_code](https://github.com/user-attachments/assets/7bd9624c-54bd-4467-8d14-f542631ad93c)
 
 
 > Обмен сообщениями
@@ -264,8 +264,8 @@ DELETE http://handsapp.top/api/post/295
 
 > Раздел "Мои лайки"
 
-![2024-05-07_20-30-54](https://github.com/aspmap/HandsApp/assets/145023708/0251ac5a-587a-4ea7-a608-771cf79f78e0)
+![my_likes](https://github.com/user-attachments/assets/8f6ab092-9a08-4e0c-8a7d-546bce7ad582)
 
+> Пагинация постов
 
-
-
+![pagination](https://github.com/user-attachments/assets/5b38ea8d-2afb-4af1-aa87-fc35e3094234)
