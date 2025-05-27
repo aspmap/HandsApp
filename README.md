@@ -193,28 +193,33 @@ DELETE http://handsapp.top/api/post/295
 
 > Создание и публикация поста
 
-![2024-05-07_20-00-51](https://github.com/aspmap/HandsApp/assets/145023708/fcae4f76-6351-473e-baec-17564b3417d4)
+![create_post_1](https://github.com/user-attachments/assets/7bdcfdf3-71e2-4ceb-8066-865b4ece9c23)
 
-![2024-05-07_20-01-43](https://github.com/aspmap/HandsApp/assets/145023708/cf4f0c20-f2d2-4ab2-96be-e0dbb087013f)
+![create_post_2](https://github.com/user-attachments/assets/b63ddff5-1dd1-405d-bf89-ac72b5120d2b)
 
-![2024-05-07_20-02-12](https://github.com/aspmap/HandsApp/assets/145023708/8a771034-ef39-4aae-b9b0-a17611e4f1db)
+![create_post_3](https://github.com/user-attachments/assets/0814cf73-40ed-419a-93af-92a7fc3f266c)
 
-![2024-05-07_20-02-28](https://github.com/aspmap/HandsApp/assets/145023708/3460e893-ab1b-4e73-bb36-6ef2550614a2)
+![create_post_4](https://github.com/user-attachments/assets/53de6770-c56e-4da0-b659-125a1bb505c8)
+
+![create_post_5](https://github.com/user-attachments/assets/794c8b3a-0cf4-4666-8f50-ede4d6451b6c)
 
 
 > Страница с постами текущего пользователя
 
-![2024-05-07_20-05-55](https://github.com/aspmap/HandsApp/assets/145023708/d5766c66-d9b3-430c-ae2e-a70e7f1f7671)
+![my_posts](https://github.com/user-attachments/assets/ed533b1f-ed99-4e37-bdeb-dcfb675d878b)
+
 
 
 > Изменение поста
 
-![2024-05-07_20-06-56](https://github.com/aspmap/HandsApp/assets/145023708/13d988d7-0423-407e-afd3-2007dd54c100)
+![edit_post](https://github.com/user-attachments/assets/d981dbe2-999e-4d93-aca0-8ec9752ffc79)
+
 
 
 > Страница с постами по подписке
 
-![2024-05-07_20-08-32](https://github.com/aspmap/HandsApp/assets/145023708/7f39a04b-979c-4c2f-9ac6-955ad003504c)
+![subs](https://github.com/user-attachments/assets/cf0ec229-aaea-4259-8c40-0b1ce2cf4d1e)
+
 
 
 > Страница пользователя на которого можно подписаться или отписаться
@@ -249,8 +254,10 @@ DELETE http://handsapp.top/api/post/295
 
 > Удаление профиля
 
+![delete_profile_1](https://github.com/user-attachments/assets/d3ecd69f-536b-406f-9fb2-15cea81cbbb0)
 
-![2024-05-07_20-15-17](https://github.com/aspmap/HandsApp/assets/145023708/c9eccab4-9a3b-4404-80e9-1cd9074131fe)
+![delete_profile_2](https://github.com/user-attachments/assets/5bd50894-ad67-4ec9-b7e4-c9d1e81d4f72)
+
 
 
 > QR-код страницы пользователя
@@ -260,7 +267,8 @@ DELETE http://handsapp.top/api/post/295
 
 > Обмен сообщениями
 
-![2024-05-07_20-28-04](https://github.com/aspmap/HandsApp/assets/145023708/0e633c08-5336-4851-a624-0d07976bd769)
+![chat](https://github.com/user-attachments/assets/4eb584eb-8376-4511-9285-517b075ec167)
+
 
 > Раздел "Мои лайки"
 
