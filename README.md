@@ -309,5 +309,6 @@ DELETE http://handsapp.top/api/post/295
 
 ![info_3](https://github.com/user-attachments/assets/3858d79e-efe8-480c-9b3b-5eecaafb724d)
 
+![info_4](https://github.com/user-attachments/assets/f19cf7f0-8d7d-489e-a3fe-2e7ae83b1193)
 
-
+![info_5](https://github.com/user-attachments/assets/29ca0bea-8d40-404e-923e-a9d5d43c64aa)
