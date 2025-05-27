@@ -224,32 +224,46 @@ DELETE http://handsapp.top/api/post/295
 
 > Страница пользователя на которого можно подписаться или отписаться
 
-![2024-05-07_20-09-29](https://github.com/aspmap/HandsApp/assets/145023708/43220bfc-8c77-4a24-8990-0c74b6ad8374)
+![sub_1](https://github.com/user-attachments/assets/18dcd297-a563-47ea-aeb4-aca62e7c672a)
+
+![sub_2](https://github.com/user-attachments/assets/37ae082d-b361-4118-97ea-05179121ca6f)
+
 
 
 > Страница с подписчиками
 
-![2024-05-07_20-11-26](https://github.com/aspmap/HandsApp/assets/145023708/2a0b199e-d111-4faa-9c20-bd0f786b32e3)
+![subs_page_1](https://github.com/user-attachments/assets/a9497b4c-6e6f-4b6a-9303-af08051f7775)
+
 
 
 > Страница с подписками
 
-![2024-05-07_20-10-46](https://github.com/aspmap/HandsApp/assets/145023708/f4cbf40a-7641-4c65-b242-bc5db5127f8d)
+![subs_page_2](https://github.com/user-attachments/assets/7004c859-7a31-4a01-b324-eb3b4ea1605d)
+
 
 
 > Поиск пользователей и постов по тегам
 
-![2024-05-07_20-12-22](https://github.com/aspmap/HandsApp/assets/145023708/f1b79c6a-060a-4dab-abe7-7cd21aa95215)
+![search_tags](https://github.com/user-attachments/assets/445d8cb6-e553-496a-8ff1-89bb462c40cf)
+
+![search_users](https://github.com/user-attachments/assets/f563ecec-914c-4426-82cb-4b691e532838)
+
+
 
 
 > Страница c результатами поиска связей
 
-![2024-05-07_19-54-36](https://github.com/aspmap/HandsApp/assets/145023708/d4e173f4-1a6e-4148-9a8c-000ce8305699)
+![handshakes](https://github.com/user-attachments/assets/d1abc6dc-7f8e-489e-8060-d499e1409310)
+
 
 
 > Редактирование профиля
 
-![2024-05-07_19-59-19](https://github.com/aspmap/HandsApp/assets/145023708/c79413c1-6c42-4a70-acf8-842f5f2ae020)
+![edit_profile_1](https://github.com/user-attachments/assets/76752882-4160-44bd-8bca-43c697169089)
+
+![edit_profile_2](https://github.com/user-attachments/assets/c56f2771-72de-41d5-bfdf-42f11765be53)
+
+
 
 
 > Удаление профиля
@@ -274,6 +288,26 @@ DELETE http://handsapp.top/api/post/295
 
 ![my_likes](https://github.com/user-attachments/assets/8f6ab092-9a08-4e0c-8a7d-546bce7ad582)
 
+
+> Закрытый профиль
+
+![close_profile](https://github.com/user-attachments/assets/555f51b1-a712-4bc3-b693-188d9371cd8e)
+
+
+
+
 > Пагинация постов
 
 ![pagination](https://github.com/user-attachments/assets/5b38ea8d-2afb-4af1-aa87-fc35e3094234)
+
+
+> Информационные страницы
+
+![info_1](https://github.com/user-attachments/assets/10146796-92f4-4667-90e3-2e5c46d7d17a)
+
+![info_2](https://github.com/user-attachments/assets/0bd93fc5-90e5-4241-9597-96b0056e72db)
+
+![info_3](https://github.com/user-attachments/assets/3858d79e-efe8-480c-9b3b-5eecaafb724d)
+
+
+
