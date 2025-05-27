@@ -13,7 +13,6 @@ import java.util.Optional;
 //В репозиториях мы объявляем метод, не реализуя его и он по неймингу (если его правильно называем)
 //автоматически понимает какой запрос нужно сделать.
 public interface UserRepository extends JpaRepository<User, Long> {
-
     Optional<User> findByUsername(String username); // Возвращает юзера
 
     User findByUsername(User user); // Возвращает юзера
@@ -24,26 +23,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "LIMIT 1 ", nativeQuery = true)
     boolean isClosedProfile(String username);
 
-    @Query(value = "select * from users u " +
-            "join user_role ur on ur.user_id = u.user_id " +
-            "join role r on r.role_id = ur.role_id " +
-            "where r.name = 'USER' AND u.is_closed = 'false' " +
-            "order by u.created_at desc " +
-            "LIMIT 5 ", nativeQuery = true)
+    @Query(value = "select * from recommendations ", nativeQuery = true)
     List<User> getUsersOnly();
-
-  /*  @Query(value = "select u.user_id, u.username, u.photo, u.surname, u.firstname, u.created_at, u.email, u.info, u.is_active, u.www, u.phone, u.sex, u.password, " +
-            "(select count(s.sub_id) from subscriptions s " +
-            "join users u2 on u2.user_id = s.user_sub_id " +
-            "join users u1 on u1.user_id = s.user_id " +
-            "where u1.username = ? and u2.username = u.username) isSub " +
-            "from users u " +
-            "join user_role ur on ur.user_id = u.user_id " +
-            "join role r on r.role_id = ur.role_id " +
-            "where r.name = 'USER' " +
-            "order by u.created_at desc " +
-            "LIMIT 5 ; ", nativeQuery = true)
-    List<User> getUsersOnly(String currentUsername);*/
 
     @Query(value = "select " +
             "(select count(s.sub_id) from subscriptions s " +
@@ -57,7 +38,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "order by u.created_at desc " +
             "LIMIT 5 ; ", nativeQuery = true)
     ArrayList<String> getUsersOnlyKey(String currentUsername);
-
 
     @Query(value = "select u.* from users u " +
             "left join user_role ur on u.user_id = ur.user_id " +
