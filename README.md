@@ -177,7 +177,9 @@ DELETE http://handsapp.top/api/post/295
 
 > Страница авторизации
 
+<div style="border: 1px solid black; padding: 5px; text-align: center;">
 ![2024-05-07_20-14-31](https://github.com/aspmap/HandsApp/assets/145023708/a17e3e6e-8621-4000-8fb8-e20a2876ac52)
+</div>
 
 
 > Страница регистрации
