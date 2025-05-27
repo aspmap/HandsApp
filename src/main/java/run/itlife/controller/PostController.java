@@ -15,6 +15,7 @@ import run.itlife.dto.PostDto;
 import run.itlife.entity.User;
 import run.itlife.repository.UserRepository;
 import run.itlife.service.*;
+import run.itlife.utils.CommonsParams;
 import run.itlife.utils.SaveFile;
 
 import javax.servlet.ServletContext;
@@ -38,6 +39,8 @@ public class PostController {
     private final SubscriptionsService subscriptionsService;
     private final UserRepository userRepository;
     private final ServletContext context;
+    @Autowired
+    CommonsParams commonsParams;
     private static final int MAX_UPLOAD_VIDEO_FILE_SIZE_IN_MB = 100 * 1024 * 1024; // 100 МБ
     private static final Logger log = LoggerFactory.getLogger(PostController.class);
 
@@ -72,7 +75,7 @@ public class PostController {
             return newUser;
         });
 
-        setCommonParams(modelMap, username);
+        commonsParams.setCommonParams(modelMap, username);
         modelMap.put("posts_sub", postService.findSubscribesPosts(username));
         modelMap.put("countPosts", postService.countSubscribesPosts(username));
         modelMap.put("isYourLike", postService.isLikePost(username));
@@ -83,7 +86,7 @@ public class PostController {
     @GetMapping("/posts_detail") // такая же запись как и выше, но в другом виде, более современная
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String posts_detail(ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("posts", postService.sortedPostsByDate(username));
         modelMap.put("countLikes", likesService.countLikesByUsername(username));
@@ -93,7 +96,7 @@ public class PostController {
     @GetMapping("/posts")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String posts(ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("posts", postService.sortedPostsByDate(username));
         modelMap.put("countPosts", postService.countPosts(username));
@@ -105,7 +108,7 @@ public class PostController {
     @GetMapping("/posts_detail_subuser/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String posts_detail_subuser(ModelMap modelMap, @PathVariable String user) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         modelMap.put("posts", postService.sortedPostsByDate(user));
         modelMap.put("isClosedProfile", userService.isClosedProfile(user));
         modelMap.put("user_sub", user);
@@ -118,7 +121,7 @@ public class PostController {
     @GetMapping("/post/newVideo")
     @PreAuthorize("hasRole('USER')")
     public String postNewVideo(ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         return "posts/post-new-video";
     }
 
@@ -126,7 +129,7 @@ public class PostController {
     @PreAuthorize("hasRole('USER')")
     public String postNewVideo(PostDto postDto, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         if (file.getSize() > MAX_UPLOAD_VIDEO_FILE_SIZE_IN_MB) {
             return "messages-templates" + SaveFile.SEPARATOR + "errorVideoSize";
         }
@@ -159,7 +162,7 @@ public class PostController {
     @GetMapping("/post/newImage")
     @PreAuthorize("hasRole('USER')")
     public String postNewImage(ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         return "posts/post-new-img";
     }
 
@@ -167,7 +170,7 @@ public class PostController {
     @PreAuthorize("hasRole('USER')")
     public String postNewImage(PostDto postDto, @RequestParam("file") String file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         long postId;
         SaveFile sf = new SaveFile();
 
@@ -194,7 +197,7 @@ public class PostController {
     @GetMapping("/post/newS3Image")
     @PreAuthorize("hasRole('USER')")
     public String postNewS3Image(ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         return "posts/post-new-s3-img";
     }
 
@@ -202,7 +205,7 @@ public class PostController {
     @PreAuthorize("hasRole('USER')")
     public String postNewS3Image(PostDto postDto, @RequestParam("file") String file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         long postId;
         SaveFile sf = new SaveFile();
 
@@ -234,7 +237,7 @@ public class PostController {
     @GetMapping("/post/{postId}/edit")
     @PreAuthorize("hasRole('USER')")
     public String postEdit(ModelMap modelMap, @PathVariable long postId) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         postService.checkAuthority(postId);
         modelMap.put("post", postService.getAsDto(postId));
         return "posts/post-edit";
@@ -244,7 +247,7 @@ public class PostController {
     @PreAuthorize("hasRole('USER')")
     public String postEdit(PostDto postDto, ModelMap modelMap) {
         // получаем имя юзера для формирования пути сохранения фото
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         postService.checkAuthority(postDto.getPostId());
         postService.update(postDto);
         return "redirect:/post/" + postDto.getPostId();
@@ -253,7 +256,7 @@ public class PostController {
     @GetMapping("/post-view-sub/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String post_view_sub(@PathVariable long id, ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         modelMap.put("post", postService.findById(id));
         modelMap.put("isClosedProfilebyPostId", postService.isClosedProfilebyPostId(id));
         modelMap.put("comments", commentService.sortCommentsByDate(id));
@@ -267,7 +270,7 @@ public class PostController {
     @GetMapping("/post/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String post(@PathVariable long id, ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         modelMap.put("post", postService.findById(id));
         modelMap.put("comments", commentService.sortCommentsByDate(id));
         modelMap.put("countComments", postService.countComments(id));
@@ -294,32 +297,10 @@ public class PostController {
     @GetMapping("/posts_my_likes")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String posts_my_likes(ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("posts", postService.selectMyLikesPosts(username));
         modelMap.put("countPosts", postService.countMyLikesPosts(username));
         return "posts/posts-my-likes";
     }
-
-    private void setCommonParams(ModelMap modelMap) {
-        modelMap.put("users", userService.findAll());
-        modelMap.put("userslist", userService.findAll());
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
-        modelMap.put("contextPath", context.getContextPath());
-    }
-
-    private void setCommonParams(ModelMap modelMap, String username) {
-        modelMap.put("users", userService.findAll());
-        modelMap.put("userslist", userService.findAll());
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
-        modelMap.put("contextPath", context.getContextPath());
-    }
-
 }

@@ -4,11 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import run.itlife.service.UserService;
+import run.itlife.utils.CommonsParams;
 import run.itlife.utils.ZXingQR;
 
 import javax.servlet.ServletContext;
@@ -21,6 +21,8 @@ public class QRcodeController {
     private final ServletContext context;
     @Autowired
     ServletContext servletContext;
+    @Autowired
+    CommonsParams commonsParams;
     private static final Logger log = LoggerFactory.getLogger(QRcodeController.class);
 
     @Autowired
@@ -32,21 +34,10 @@ public class QRcodeController {
     @GetMapping("qrcode/")
     @PreAuthorize("hasRole('USER')")
     public String getQrCode(HttpServletResponse response, ModelMap modelMap) throws Exception {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         byte[] qrImage = ZXingQR.qrcode(response);
         String resultQrImage = Base64.getEncoder().encodeToString(qrImage);
         modelMap.put("qrQode", resultQrImage);
         return "profile/qrcode";
-    }
-
-    private void setCommonParams(ModelMap modelMap) {
-        modelMap.put("users", userService.findAll());
-        modelMap.put("userslist", userService.findAll());
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
-        modelMap.put("contextPath", context.getContextPath());
     }
 }

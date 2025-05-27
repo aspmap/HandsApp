@@ -18,6 +18,9 @@ import run.itlife.enums.Sex;
 import run.itlife.service.PostService;
 import run.itlife.service.SubscriptionsService;
 import run.itlife.service.UserService;
+import run.itlife.utils.CommonsParams;
+import run.itlife.utils.Profile;
+
 import javax.imageio.ImageIO;
 import javax.persistence.EntityExistsException;
 import javax.servlet.ServletContext;
@@ -48,6 +51,8 @@ public class UserController {
     private final SubscriptionsService subscriptionsService;
     private final PostService postService;
     private final ServletContext context;
+    @Autowired
+    CommonsParams commonsParams;
     private Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
@@ -69,6 +74,7 @@ public class UserController {
         }
         clientRegistrations.forEach(registration -> oauth2AuthenticationUrls.put(registration.getClientName(), authorizationRequestBaseUri + "/" + registration.getRegistrationId()));
         model.addAttribute("urls", oauth2AuthenticationUrls);
+        commonsParams.setCommonConstParams(model);
         return "login";
     }
 
@@ -79,6 +85,7 @@ public class UserController {
 
     @GetMapping("/register")
     public String register(ModelMap modelMap){
+        commonsParams.setCommonConstParams(modelMap);
         return "register";
     }
 
@@ -103,10 +110,10 @@ public class UserController {
     public String profile_delete(ModelMap modelMap, @PathVariable String user){
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!username.equals(user)) {
-            setCommonParams(modelMap);
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates/404";
         }
-        setCommonParams(modelMap, user);
+        commonsParams.setCommonParams(modelMap, user);
         return "profile/profile-delete";
     }
 
@@ -117,8 +124,8 @@ public class UserController {
         //удаляем папки и файлы пользователя
         File dir_img = new File(context.getRealPath("/resources/img/users/" + user));
         File dir_video = new File(context.getRealPath("/resources/video/users/" + user));
-        recursiveDelete(dir_img);
-        recursiveDelete(dir_video);
+        Profile.recursiveFilesDelete(dir_img);
+        Profile.recursiveFilesDelete(dir_video);
         return "redirect:/";
     }
 
@@ -127,10 +134,10 @@ public class UserController {
     public String profile_edit(ModelMap modelMap, @PathVariable String user){
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!username.equals(user)) {
-            setCommonParams(modelMap);
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates/404";
         }
-        setCommonParams(modelMap, user);
+        commonsParams.setCommonParams(modelMap, user);
         modelMap.put("sex_male", Sex.MALE);
         modelMap.put("sex_female", Sex.FEMALE);
         return "profile/profile-edit";
@@ -139,7 +146,7 @@ public class UserController {
     @PostMapping("/profile_edit")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String profile_edit(UserDto userDto, @RequestParam("file") String file, ModelMap modelMap) {
-        setCommonParams(modelMap);
+       commonsParams.setCommonParams(modelMap);
 
        if (!file.isEmpty()) {
             try {
@@ -189,7 +196,7 @@ public class UserController {
     @GetMapping("/subscriptions")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String find_Subscribes(ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("sub", subscriptionsService.findSubscribes(username));
         return "subs/subscriptions";
@@ -198,7 +205,7 @@ public class UserController {
     @GetMapping("/subscribers")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String find_Subscribers(ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("sub", subscriptionsService.findSubscribers(username));
         return "subs/subscribers";
@@ -207,7 +214,7 @@ public class UserController {
     @GetMapping("/subscriptions_subuser/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String find_Subscribes_subuser(ModelMap modelMap, @PathVariable String user) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         modelMap.put("sub", subscriptionsService.findSubscribes(user));
         return "subs/subscriptions-subuser";
     }
@@ -215,7 +222,7 @@ public class UserController {
     @GetMapping("/subscribers_subuser/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String find_Subscribers_subuser(ModelMap modelMap, @PathVariable String user) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         modelMap.put("sub", subscriptionsService.findSubscribers(user));
         return "subs/subscribers-subuser";
     }
@@ -224,7 +231,7 @@ public class UserController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String search(ModelMap modelMap, @RequestParam(required = false) String search) {
         search = search.toLowerCase();
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         modelMap.put("countSearchUsers", userService.countSearchUsers(search));
         modelMap.put("countSearchGoogleUsers", userService.countSearchGoogleUsers(search));
         modelMap.put("countSearchTags", postService.countSearchTags(search));
@@ -238,32 +245,5 @@ public class UserController {
             modelMap.put("findUsers", userService.findAll());
             return "search-results";
         }
-    }
-
-    private void setCommonParams(ModelMap modelMap, String user) {
-        modelMap.put("user", user);
-        modelMap.put("userinfo", userService.findByUsername(user));
-    }
-
-    private void setCommonParams(ModelMap modelMap) {
-        //setCommonParams(modelMap); //TODO зачем это?
-        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userslist", userService.findAll());
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
-    }
-
-    public static void recursiveDelete(File file) { // TODO Вынести в утилиты
-        if (!file.exists())
-            return;
-
-        if (file.isDirectory()) {
-            for (File f : file.listFiles()) {
-                recursiveDelete(f);
-            }
-        }
-        file.delete();
     }
 }

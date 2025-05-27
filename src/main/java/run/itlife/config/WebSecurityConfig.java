@@ -30,7 +30,9 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import run.itlife.service.UserService;
+import run.itlife.utils.VersionProject;
 
+import java.io.IOException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
@@ -144,5 +146,12 @@ public class WebSecurityConfig {
         JWK jwk = new RSAKey.Builder(this.key).privateKey(this.priv).build();
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);
+    }
+
+    @Bean
+    VersionProject versionProject() throws IOException {
+        VersionProject versionProject = new VersionProject();
+        versionProject.getVersionProject();
+        return versionProject;
     }
 }

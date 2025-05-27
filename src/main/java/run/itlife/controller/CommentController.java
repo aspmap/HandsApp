@@ -2,7 +2,6 @@ package run.itlife.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,23 +10,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import run.itlife.dto.CommentDto;
 import run.itlife.service.CommentService;
-import run.itlife.service.PostService;
-import run.itlife.service.UserService;
+import run.itlife.utils.CommonsParams;
 
 //Контроллер для комментариев (создание)
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
-
     private final CommentService commentService;
-    private final PostService postService;
-    private final UserService userService;
+    @Autowired
+    CommonsParams commonsParams;
 
     @Autowired
-    public CommentController(CommentService commentService, PostService postService, UserService userService) {
+    public CommentController(CommentService commentService) {
         this.commentService = commentService;
-        this.postService = postService;
-        this.userService = userService;
     }
 
     @PostMapping("/create")
@@ -98,26 +93,14 @@ public class CommentController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
     public String comments(@PathVariable long id, ModelMap modelMap){
-        setCommonParams(id, modelMap);
+        commonsParams.setCommonParams(id, modelMap);
         return "comments/comments";
     }
 
     @GetMapping("/sub/{id}")
     @PreAuthorize("hasRole('USER')")
     public String comments_sub(@PathVariable long id, ModelMap modelMap){
-        setCommonParams(id, modelMap);
+        commonsParams.setCommonParams(id, modelMap);
         return "comments/comments-sub";
-    }
-
-    private void setCommonParams(long id, ModelMap modelMap) {
-        modelMap.put("post", postService.findById(id));
-        modelMap.put("comments", commentService.sortCommentsByDate(id));
-        modelMap.put("countComments", postService.countComments(id));
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userslist", userService.findAll());
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
     }
 }

@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import run.itlife.entity.User;
 import run.itlife.service.HandshakeService;
 import run.itlife.service.UserService;
+import run.itlife.utils.CommonsParams;
 import run.itlife.utils.Handshakes;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 
 import static run.itlife.messages.ErrorMessages.ERROR;
@@ -25,6 +29,8 @@ import static run.itlife.messages.ErrorMessages.ERROR;
 public class HandshakeController {
     private final HandshakeService handshakeService;
     private final UserService userService;
+    @Autowired
+    CommonsParams commonsParams;
     private static final Logger log = LoggerFactory.getLogger(HandshakeController.class);
     private static final Byte START_LEVEL = 1;
 
@@ -37,7 +43,7 @@ public class HandshakeController {
     @GetMapping("/handshakes_search")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String handshakes_search(ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         return "handshakes/handshakes-search";
     }
 
@@ -131,21 +137,6 @@ public class HandshakeController {
             view.clear();
         }
         return view;
-    }
-
-    /**
-     * Общие методы для отображения информации на странице
-     *
-     * @param modelMap
-     */
-    private void setCommonParams(ModelMap modelMap) {
-        modelMap.put("users", userService.findAll());
-        modelMap.put("userslist", userService.findAll());
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
     }
 
     private void setCommonParamsSynchronized(ModelMap modelMap, String username) {

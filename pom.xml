@@ -14,6 +14,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.major.version>1</project.major.version>
+        <project.minor.version>11</project.minor.version>
+        <project.micro.version>42</project.micro.version>
+        <project.stage.version>Pre-Alpha</project.stage.version>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
         <junit.version>4.13.1</junit.version>
@@ -48,7 +52,6 @@
         <spring-security-test.version>5.8.1</spring-security-test.version>
         <spring-test.version>5.3.39</spring-test.version>
         <json-path.version>2.9.0</json-path.version>
-
     </properties>
 
     <dependencies>
@@ -235,6 +238,12 @@
 
     <build>
         <finalName>HandsApp</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <plugin>

@@ -10,20 +10,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import run.itlife.entity.Dialogs;
 import run.itlife.service.DialogsService;
 import run.itlife.service.MessagesService;
-import run.itlife.service.UserService;
+import run.itlife.utils.CommonsParams;
 
 import java.util.List;
 
 @Controller
 public class DialogsController {
-
-    private final UserService userService;
     private final DialogsService dialogsService;
     private final MessagesService messagesService;
+    @Autowired
+    CommonsParams commonsParams;
 
     @Autowired
-    public DialogsController(UserService userService, DialogsService dialogsService, MessagesService messagesService) {
-        this.userService = userService;
+    public DialogsController(DialogsService dialogsService, MessagesService messagesService) {
         this.dialogsService = dialogsService;
         this.messagesService = messagesService;
     }
@@ -33,14 +32,14 @@ public class DialogsController {
     public String index(ModelMap modelMap) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("dialogs", dialogsService.findDialogsByUsername(username));
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         return "dialogs/dialogs";
     }
 
     @GetMapping("/dialogs/{usernameCompanion}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String create_dialog(Dialogs dialogs, ModelMap modelMap, @PathVariable String usernameCompanion) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         byte countDublicatesDialog = dialogsService.checkDuplicateDialogues(username, usernameCompanion);
         if (countDublicatesDialog == 0) {
@@ -74,13 +73,4 @@ public class DialogsController {
         modelMap.put("dialog", dialogsService.findById(dialogIdByUsers));
         return "dialogs/messages";
     }
-
-    private void setCommonParams(ModelMap modelMap) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
-    }
-
 }

@@ -7,20 +7,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import run.itlife.service.PostService;
 import run.itlife.service.SubscriptionsService;
 import run.itlife.service.UserService;
+import run.itlife.utils.CommonsParams;
 
 @Controller
 public class SubscriptionsController {
     private final UserService userService;
-    private final PostService postService;
     private final SubscriptionsService subscriptionsService;
+    @Autowired
+    CommonsParams commonsParams;
 
     @Autowired
-    public SubscriptionsController(UserService userService, PostService postService, SubscriptionsService subscriptionsService) {
+    public SubscriptionsController(UserService userService, SubscriptionsService subscriptionsService) {
         this.userService = userService;
-        this.postService = postService;
         this.subscriptionsService = subscriptionsService;
     }
 
@@ -28,8 +28,8 @@ public class SubscriptionsController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String index(ModelMap modelMap, @PathVariable String user) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        setCommonParams(modelMap, user);
-        setCommonParams(modelMap);
+        commonsParams.setCommonSubParams(modelMap, user);
+        commonsParams.setCommonParams(modelMap);
         modelMap.put("isSub", subscriptionsService.isSubscribe(username, user));
         return "posts/posts-sub";
     }
@@ -62,21 +62,5 @@ public class SubscriptionsController {
         long subUserId = userService.findByUsername(user).getUserId().longValue();
         subscriptionsService.deleteSubscribeLong(currentUserId, subUserId);
         return "redirect:/sub-posts/{user}";
-    }
-
-    private void setCommonParams(ModelMap modelMap, String user) {
-        modelMap.put("userinfo_sub", userService.findByUsername(user));
-        modelMap.put("user_sub", user);
-        modelMap.put("posts", postService.sortedPostsByDate(user));
-        modelMap.put("countPosts", postService.countPosts(user));
-        modelMap.put("isClosedProfile", postService.isClosedProfile(user));
-        modelMap.put("countSubscribe", subscriptionsService.countSubscribe(user));
-        modelMap.put("countSubscribers", subscriptionsService.countSubscribers(user));
-    }
-
-    private void setCommonParams(ModelMap modelMap) {
-        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
     }
 }

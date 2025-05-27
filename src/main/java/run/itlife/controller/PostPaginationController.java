@@ -1,6 +1,5 @@
 package run.itlife.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,11 @@ import run.itlife.entity.Post;
 import run.itlife.service.PostPaginationService;
 import run.itlife.service.PostService;
 import run.itlife.service.UserService;
+import run.itlife.utils.CommonsParams;
+import run.itlife.utils.VersionProject;
 
 import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.util.ArrayList;
 
 @Controller
@@ -26,17 +28,20 @@ public class PostPaginationController {
     private final UserService userService;
     private final PostService postService;
     private final PostPaginationService postPaginationService;
-    private final ServletContext context;
     @Autowired
     ServletContext servletContext;
+    @Autowired
+    VersionProject versionProject;
+    @Autowired
+    CommonsParams commonsParams;
+
     private static final Logger log = LoggerFactory.getLogger(PostPaginationController.class);
 
     @Autowired
-    public PostPaginationController(UserService userService, PostService postService, PostPaginationService postPaginationService, ServletContext context) {
+    public PostPaginationController(UserService userService, PostService postService, PostPaginationService postPaginationService) {
         this.userService = userService;
         this.postService = postService;
         this.postPaginationService = postPaginationService;
-        this.context = context;
     }
 
     @GetMapping("/pagination")
@@ -55,13 +60,14 @@ public class PostPaginationController {
         modelMap.put("countPosts", postService.countSubscribesPosts(username));
         modelMap.put("isYourLike", postService.isLikePost(username)); // TODO как выдернуть id поста??
         modelMap.put("posts_sub", myDataPage);
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
+
         return "posts/pagination_posts";
     }
 
     @GetMapping("/")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String getSubscribesPostsScroll(ModelMap modelMap, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size, String sortBy) throws JsonProcessingException {
+    public String getSubscribesPostsScroll(ModelMap modelMap, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size, String sortBy) throws IOException {
         ArrayList<Integer> pages = new ArrayList<>();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Pageable pageable = PageRequest.of(page, size);
@@ -74,18 +80,7 @@ public class PostPaginationController {
         modelMap.put("totalPages", myDataPage.getTotalPages());
         modelMap.put("isYourLike", postService.isLikePost(username)); // TODO как выдернуть id поста??
         modelMap.put("userPhotoCurrent", userService.findByUsername(username).getPhoto());
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         return "posts/infinite_scroll_posts";
-    }
-
-    private void setCommonParams(ModelMap modelMap) {
-        modelMap.put("users", userService.findAll());
-        modelMap.put("userslist", userService.findAll());
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
-        modelMap.put("contextPath", context.getContextPath());
     }
 }

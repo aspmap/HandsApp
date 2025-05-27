@@ -1,5 +1,6 @@
 package run.itlife.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -10,18 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import run.itlife.entity.Messages;
 import run.itlife.service.DialogsService;
 import run.itlife.service.MessagesService;
-import run.itlife.service.UserService;
+import run.itlife.utils.CommonsParams;
 
 import java.util.List;
 
 @Controller
 public class MessagesController {
-    private final UserService userService;
     private final MessagesService messagesService;
     private final DialogsService dialogsService;
+    @Autowired
+    CommonsParams commonsParams;
 
-    public MessagesController(UserService userService, MessagesService messagesService, DialogsService dialogsService) {
-        this.userService = userService;
+    public MessagesController(MessagesService messagesService, DialogsService dialogsService) {
         this.messagesService = messagesService;
         this.dialogsService = dialogsService;
     }
@@ -38,7 +39,7 @@ public class MessagesController {
         if (usersOwner.contains(username)) {
             modelMap.put("messages", messagesService.findMessagesByDialogId(dialogId));
         } else {
-            setCommonParams(modelMap);
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates/404";
         }
 
@@ -56,7 +57,7 @@ public class MessagesController {
                 }
             }
         } else {
-            setCommonParams(modelMap);
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates/404";
         }
 
@@ -66,7 +67,7 @@ public class MessagesController {
         //получаем ID текущего диалога для отправки комментария
         modelMap.put("dialog", dialogsService.findById(dialogId));
 
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         return "dialogs/messages";
     }
 
@@ -75,13 +76,5 @@ public class MessagesController {
     public String create(Messages messages, @PathVariable Long dialogId) {
         messagesService.create(messages, dialogId);
         return "redirect:/messages/" + dialogId;
-    }
-
-    private void setCommonParams(ModelMap modelMap) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
     }
 }

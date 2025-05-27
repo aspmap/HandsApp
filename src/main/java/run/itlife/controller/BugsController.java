@@ -19,6 +19,8 @@ import run.itlife.dto.BugsDto;
 import run.itlife.entity.User;
 import run.itlife.service.BugsService;
 import run.itlife.service.UserService;
+import run.itlife.utils.CommonsParams;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -30,6 +32,8 @@ import static run.itlife.messages.ErrorMessages.ERROR;
 public class BugsController {
     private final BugsService bugsService;
     private final UserService userService;
+    @Autowired
+    CommonsParams commonsParams;
     private static final Logger log = LoggerFactory.getLogger(BugsController.class);
 
     @Autowired
@@ -43,7 +47,7 @@ public class BugsController {
     public String postNewBugKafka(BugsDto bugsDto, ModelMap modelMap) throws IOException {
 
         //Подготавливаем данные для отправки в Кафку
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User userId = userService.findByUsername(username);
         bugsDto.setBugText(bugsDto.getBugText());
@@ -85,14 +89,14 @@ public class BugsController {
     @GetMapping("/bug/new")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String bugNew(ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         return "bugs/bugs-add";
     }
 
     @PostMapping("/bug/new")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String postNewBug(BugsDto bugsDto, ModelMap modelMap) {
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         bugsService.create(bugsDto);
         return "messages-templates/message-send";
     }
@@ -102,16 +106,7 @@ public class BugsController {
     public String index(ModelMap modelMap) {
         modelMap.put("bugs", bugsService.listAllBugs());
         modelMap.put("userslist", userService.findAll());
-        setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
         return "bugs/bugs";
     }
-
-    private void setCommonParams(ModelMap modelMap) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
-    }
-
 }

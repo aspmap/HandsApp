@@ -5,7 +5,6 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.springframework.security.core.context.SecurityContextHolder;
-import run.itlife.CheckObjectsForNull;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
@@ -16,12 +15,12 @@ public class ZXingQR {
 
     public static byte[] qrcode(HttpServletResponse response) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!CheckObjectsForNull.isNull(username)) {
+        //if (!CheckObjectsForNull.isNull(username)) {
             String path = "handsapp.top/" + "sub-posts" + '/' + username;
             response.setContentType("image/png");
             return ZXingQR.getQRCodeImage(path, WIDTH_QR_CODE, HEIGHT_QR_CODE);
-        }
-        return null;
+        //}
+        //return null;
     }
 
     public static byte[] getQRCodeImage(String text, int width, int height) {
