@@ -177,22 +177,18 @@ DELETE http://handsapp.top/api/post/295
 
 > Страница авторизации
 
-<div style="border: 1px solid black; padding: 5px; text-align: center;">
-![2025-05-27_03-29-22](https://github.com/user-attachments/assets/930b9970-934e-4b82-92ba-42d5167e3996)
-</div>
-
-
-
+![login](https://github.com/user-attachments/assets/e58f27a7-f437-4003-b78a-37d799b87b65)
 
 
 > Страница регистрации
 
-![2024-05-07_20-14-47](https://github.com/aspmap/HandsApp/assets/145023708/859609a3-05a3-4af7-9d7e-da3f4dbc7633)
+![register](https://github.com/user-attachments/assets/9029b4bc-5931-4f2a-ba93-ddd5f7762bf8)
 
 
 > Страница пользователя без подписок
 
-![2024-05-07_19-57-47](https://github.com/aspmap/HandsApp/assets/145023708/ac800b5e-7b6b-4004-9883-8061ed89b966)
+![without_sub](https://github.com/user-attachments/assets/c3597719-be1d-4167-9162-1adaa7c26c1f)
+
 
 
 > Создание и публикация поста
