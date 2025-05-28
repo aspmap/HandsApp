@@ -3,17 +3,10 @@ package run.itlife.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import run.itlife.entity.Dialogs;
-import java.util.List;
+
+import java.util.ArrayList;
 
 public interface DialogsRepository extends JpaRepository<Dialogs, Long> {
-
-    @Query(value = "select * from dialogs d " +
-            "left join user_dialog ud on d.dialog_id = ud.dialog_id " +
-            "left join users u on u.user_id = ud.user_id " +
-            "where u.username = ? " +
-            "order by d.created_at desc ", nativeQuery = true)
-    List<Dialogs> findDialogsByUsername(String username);
-
     @Query(value = "select count(*) from users u " +
             "left join user_dialog ud on u.user_id = ud.user_id " +
             "left join dialogs d on ud.dialog_id = d.dialog_id " +
@@ -32,4 +25,17 @@ public interface DialogsRepository extends JpaRepository<Dialogs, Long> {
             "where u.username = ? and u2.username = ? ", nativeQuery = true)
     Long getDialogIdByUsers(String username1, String username2);
 
+
+    @Query(value = "select d.dialog_id from dialogs d " +
+            "left join user_dialog ud on d.dialog_id = ud.dialog_id " +
+            "left join users u on u.user_id = ud.user_id " +
+            "where u.username = ? " +
+            "order by d.created_at desc ", nativeQuery = true)
+    ArrayList<Long> findDialogsIdByUsername(String username);
+
+    @Query(value = "select count(m.dialog_id) from dialogs d " +
+            "left join messages m on d.dialog_id = m.dialog_id " +
+            "left join users u on u.user_id = m.user_id " +
+            "where u.username = ? and d.dialog_id = ? ", nativeQuery = true)
+    Integer showDialog(String username, Long dialogId);
 }

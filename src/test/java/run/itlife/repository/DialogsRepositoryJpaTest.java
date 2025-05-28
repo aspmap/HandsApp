@@ -21,12 +21,6 @@ public class DialogsRepositoryJpaTest {
     private DialogsRepository dialogsRepository;
 
     @Test
-    public void findDialogsByUsername() {
-        List<Dialogs> dialogsByUsername = this.dialogsRepository.findDialogsByUsername("terminator");
-        Assert.assertEquals(1, dialogsByUsername.size());
-    }
-
-    @Test
     public void checkDuplicateDialogues() {
         byte duplicateDialogues = this.dialogsRepository.checkDuplicateDialogues("terminator", "phantasm");
         Assert.assertEquals(1, duplicateDialogues);

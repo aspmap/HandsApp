@@ -58,4 +58,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select count(u.username) from users u " +
             "where u.email LIKE ? AND u.is_closed = 'false' ", nativeQuery = true)
     int countSearchGoogleUsers(String substring);
+
+    @Query(value = "SELECT u.* FROM user_dialog ud " +
+            "left join users u on u.user_id = ud.user_id " +
+            "where ud.dialog_id = ? ", nativeQuery = true)
+    ArrayList<User> findUsersByDialogId(Long dialogId);
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import run.itlife.entity.Dialogs;
 import run.itlife.service.DialogsService;
 import run.itlife.service.MessagesService;
+import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
 
 import java.util.List;
@@ -18,20 +19,22 @@ import java.util.List;
 public class DialogsController {
     private final DialogsService dialogsService;
     private final MessagesService messagesService;
+    private final UserService userService;
     @Autowired
     CommonsParams commonsParams;
 
     @Autowired
-    public DialogsController(DialogsService dialogsService, MessagesService messagesService) {
+    public DialogsController(DialogsService dialogsService, MessagesService messagesService, UserService userService) {
         this.dialogsService = dialogsService;
         this.messagesService = messagesService;
+        this.userService = userService;
     }
 
     @GetMapping("/dialogs")
     @PreAuthorize("hasRole('USER')")
     public String index(ModelMap modelMap) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("dialogs", dialogsService.findDialogsByUsername(username));
+        modelMap.put("dialogs", dialogsService.findDialogs(username));
         commonsParams.setCommonParams(modelMap);
         return "dialogs/dialogs";
     }

@@ -17,22 +17,6 @@ public class DialogsServiceMockTest {
     DialogsService dialogsService;
 
     @Test
-    public void findDialogsByUsername() {
-        ArrayList<Dialogs> expectedData = new ArrayList<>();
-        for (long i = 1; i < 3; i++) {
-            Dialogs dialogs = new Dialogs();
-            dialogs.setDialogId(i);
-            dialogs.setNameDialog("Dialog name");
-            dialogs.setImgDialog("picture.jpg");
-            expectedData.add(dialogs);
-        }
-        Mockito.when(dialogsService.findDialogsByUsername("terminator")).thenReturn(expectedData);
-        List<Dialogs> dialogsByUsername = dialogsService.findDialogsByUsername("terminator");
-        Assert.assertEquals(expectedData, dialogsByUsername);
-        Mockito.verify(dialogsService).findDialogsByUsername("terminator");
-    }
-
-    @Test
     public void findById() {
         Dialogs dialogs = new Dialogs();
         dialogs.setDialogId(4L);

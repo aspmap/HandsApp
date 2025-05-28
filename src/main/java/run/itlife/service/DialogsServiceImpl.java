@@ -12,21 +12,20 @@ import run.itlife.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
 public class DialogsServiceImpl implements DialogsService {
     private final DialogsRepository dialogsRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public DialogsServiceImpl(DialogsRepository dialogsRepository, UserRepository userRepository) {
+    public DialogsServiceImpl(DialogsRepository dialogsRepository, UserRepository userRepository, UserService userService) {
         this.dialogsRepository = dialogsRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -51,29 +50,26 @@ public class DialogsServiceImpl implements DialogsService {
     }
 
     @Override
-    public List<Dialogs> findDialogsByUsername(String username) {
-        List<Dialogs> dialogs = new ArrayList<>();
-        dialogs = dialogsRepository.findDialogsByUsername(username);
-        /*for (Dialogs d : dialogs) { //TODO Попробовать выдернуть username, photo и ФИО собеседника и вывод его в Диалогах
-            d.getUsers();
-            System.out.println("Users: " + d.getUsers());
-            for (User d1: d.getUsers()) {
-                String username1 = d1.getUsername(); //выводится текущий и собеседник
-                String userPhoto = d1.getPhoto();
-                System.out.println(d1.getUsername());
-                System.out.println(d1.getPhoto());
+    public Map<Long, User> findDialogs(String username) {
+        Map<Long, User> dialogs = new HashMap<>();
+        ArrayList<Long> dialogsId = findDialogsIdByUsername(username);
 
+        for (int i = 0; i < dialogsId.size(); i++) {
+            ArrayList<User> usernames = new ArrayList<>();
+            usernames = userService.findUsersByDialogId(dialogsId.get(i));
+            for (int j = 0; j < usernames.size(); j++) {
+                Integer isShowDialog = showDialog(username, dialogsId.get(i));
+                if (!usernames.get(j).getUsername().equals(username) && isShowDialog > 0) {
+                    dialogs.put(dialogsId.get(i), usernames.get(j));
+                }
             }
-        }*/
-        /////////////////////////////////////////// TODO Допилить вывод фото и логинов
-        /*Long dialogIdByUsers = dialogsService.getDialogIdByUsers(username,usernameCompanion);
-        List<String> usersOwner = messagesService.findUsersByDialogId(dialogIdByUsers);
-        // выводим в заголовке фото и имя собеседника
-        String userDialogPhoto = messagesService.getUserPhotoByUsername(u);
-        modelMap.put("userDialogName", u);
-        modelMap.put("userDialogPhoto", userDialogPhoto);*/
-        /////////////////////////////////////////////
+        }
         return dialogs;
+    }
+
+    @Override
+    public Integer showDialog(String username, Long dialogId) {
+        return dialogsRepository.showDialog(username, dialogId);
     }
 
     @Override
@@ -92,6 +88,11 @@ public class DialogsServiceImpl implements DialogsService {
     @Override
     public Long getDialogIdByUsers(String username1, String username2) {
         return dialogsRepository.getDialogIdByUsers(username1, username2);
+    }
+
+    @Override
+    public ArrayList<Long> findDialogsIdByUsername(String username) {
+        return dialogsRepository.findDialogsIdByUsername(username);
     }
 
 }

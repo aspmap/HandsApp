@@ -1,12 +1,17 @@
 package run.itlife.service;
 
 import run.itlife.entity.Dialogs;
-import java.util.List;
+import run.itlife.entity.User;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public interface DialogsService {
     void create(Dialogs dialogs, String usernameCompanion);
-    List<Dialogs> findDialogsByUsername(String username);
     Dialogs findById(long id);
     byte checkDuplicateDialogues(String username1, String username2);
     Long getDialogIdByUsers(String username1, String username2);
+    ArrayList<Long> findDialogsIdByUsername(String username);
+    Map<Long, User> findDialogs(String username);
+    Integer showDialog(String username, Long dialogId);
 }

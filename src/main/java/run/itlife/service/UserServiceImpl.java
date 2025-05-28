@@ -122,6 +122,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ArrayList<User> findUsersByDialogId(Long dialogId) {
+        return userRepository.findUsersByDialogId(dialogId);
+    }
+
+    @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
