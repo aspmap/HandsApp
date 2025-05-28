@@ -8,11 +8,8 @@ function posts_pagination() {
         success: function (data) {
             var dataString = JSON.stringify(data);
             var dataParse = JSON.parse(dataString);
-            if (typeof (dataParse) === "string") {
-                dataParse = JSON.parse(dataParse);
-            }
 
-            if (dataParse.content.length == 0) {
+            if (dataParse.content.length == 0 && page == 0) {
                 var post = $('<div class="post"></div>');
                 var noPublic = $('<div class="no_public"></div>');
                 var defaulImg = $('<img src="' + contextPath + '/resources/img/icons/face.png" alt="" /><h1 class="h3 mb-3 font-weight-normal no_public">Пока нет подписок</h1>');
@@ -32,13 +29,10 @@ function posts_pagination() {
                     user.append(pic);
                     var imgLink;
                     if (el.user.isGoogle == true && el.user.photo != null) {
-                        console.log('1' + el.user.photo);
                         imgLink = $('<a href="' + contextPath + '/sub-posts/' + el.user.username + '"><img src="' + el.user.photo + '" alt="" /></a>');
                     } else if (el.user.isGoogle == false && el.user.photo != null) {
-                        console.log('2' + el.user.photo);
                         imgLink = $('<a href="' + contextPath + '/sub-posts/' + el.user.username + '"><img src="' + contextPath + "/resources/img/users/" + el.user.username + "/profile/" + el.user.photo + '" alt="" /></a>');
                     } else if (el.user.photo == null) {
-                        console.log('3' + el.user.photo);
                         imgLink = $('<a href="' + contextPath + '/sub-posts/' + el.user.username + '"><img src="' + contextPath + "/resources/img/icons/avatar.jpg" + '"alt="" /></a>');
                     }
                     var usernameLink;
