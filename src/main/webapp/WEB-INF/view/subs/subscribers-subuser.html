@@ -70,7 +70,7 @@
             <div class="post">
                 <div class="post-content">
                     <div class="view-source comments-view">
-                        <div th:each="users: ${userOnlyList}">
+                        <div th:each="users: ${userOnlyList}" th:if="${!users.username.equals(user)}">
                             <div class="media-body">
                                 <div class="info-comments">
                                     <div class="user-comments">

@@ -280,7 +280,7 @@
 
     <!-- Recomendations -->
     <p class="suggestion-text"><span th:text="#{text_recommendations_for_you}"></span></p>
-    <div class="profile-card" th:each="users: ${usersOnlyKey}">
+    <div class="profile-card" th:each="users: ${usersOnlyKey}" th:if="${!users.username.equals(user)}">
         <div class="profile-pic">
             <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
                 <img th:if="${users.photo == ''}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
