@@ -281,9 +281,24 @@ DELETE http://handsapp.top/api/post/295
 ![qr_code](https://github.com/user-attachments/assets/7bd9624c-54bd-4467-8d14-f542631ad93c)
 
 
+
 > Обмен сообщениями
 
 ![chat](https://github.com/user-attachments/assets/4eb584eb-8376-4511-9285-517b075ec167)
+
+
+
+> Галочка о прочтении
+
+![chat_01](https://github.com/user-attachments/assets/197e4840-8d15-4709-9501-f988e87b1d96)
+
+
+
+
+> Уведомление о непрочтенных сообщениях и чатах
+
+![chat_02](https://github.com/user-attachments/assets/2eeb241f-60ae-443e-b0a0-00c6af978e54)
+
 
 
 > Раздел "Мои лайки"
