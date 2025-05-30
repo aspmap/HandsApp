@@ -94,7 +94,6 @@
                 <!-- Messages Form -->
                 <div sec:authorize="hasAnyRole('USER')" th:object="${messages}">
                     <form class="comment-wrapper" method="POST" th:action="@{/messages/create/{dialogId} (dialogId = ${dialog.dialogId})}">
-                    <form class="comment-wrapper" method="POST">
                         <input type="hidden" name="dialogId" th:value="${dialog.dialogId}" />
                         <div class="info-view">
                             <div class="user">

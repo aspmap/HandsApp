@@ -57,7 +57,7 @@ public class DialogsServiceImpl implements DialogsService {
             ArrayList<User> usernames = new ArrayList<>();
             usernames = userService.findUsersByDialogId(dialogsId.get(i));
             for (int j = 0; j < usernames.size(); j++) {
-                Integer isShowDialog = showDialog(dialogsId.get(i));
+                Integer isShowDialog = showCountDialog(dialogsId.get(i));
                 if (!usernames.get(j).getUsername().equals(username) && isShowDialog > 0) {
                     dialogs.put(dialogsId.get(i), usernames.get(j));
                 }
@@ -94,8 +94,8 @@ public class DialogsServiceImpl implements DialogsService {
     }
 
     @Override
-    public Integer showDialog(Long dialogId) {
-        return dialogsRepository.showDialog(dialogId);
+    public Integer showCountDialog(Long dialogId) {
+        return dialogsRepository.showCountDialog(dialogId);
     }
 
     @Override
@@ -125,5 +125,4 @@ public class DialogsServiceImpl implements DialogsService {
     public Map<String, Integer> countUnreadMessagesInDialog(Long dialogId, String username) {
         return dialogsRepository.countUnreadMessagesInDialog(dialogId, username);
     }
-
 }

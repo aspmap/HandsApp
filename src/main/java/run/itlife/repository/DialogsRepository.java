@@ -36,7 +36,7 @@ public interface DialogsRepository extends JpaRepository<Dialogs, Long> {
     @Query(value = "select count(m.dialog_id) from dialogs d " +
             "left join messages m on d.dialog_id = m.dialog_id " +
             "where d.dialog_id = ? ", nativeQuery = true)
-    Integer showDialog(Long dialogId);
+    Integer showCountDialog(Long dialogId);
 
     @Query(value = "select cast(d.dialog_id as INTEGER) as dialog_id, cast(count(*) as INTEGER) as count_messages from messages m " +
             "left join dialogs d on d.dialog_id = m.dialog_id " +
