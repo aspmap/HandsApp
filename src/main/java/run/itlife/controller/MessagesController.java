@@ -54,6 +54,7 @@ public class MessagesController {
                     modelMap.put("userDialogPhoto", userDialogPhoto);
                     modelMap.put("userDialogEmail", userDialogEmail);
                     modelMap.put("userDialogGoogle", userDialogGoogle);
+                    messagesService.isReadingMessage(dialogId, u);
                 }
             }
         } else {

@@ -29,22 +29,33 @@
                         <div th:if="${dialogs.size() > 0}" th:each="dialogs_view: ${dialogs}">
                             <div class="media-body">
                                 <div class="info-comments">
-                                    <div class="user-comments">
-                                        <div class="profile-card">
-                                            <div class="profile-pic-comments">
-                                                <a th:href="@{/messages/{dialogId}(dialogId = ${dialogs_view.getKey()})}">
-                                                    <img th:src="@{'/resources/img/users/' + ${dialogs_view.getValue().username} + '/profile/' + ${dialogs_view.getValue().photo}}"
-                                                         alt="">
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a th:href="@{/messages/{dialogId}(dialogId = ${dialogs_view.getKey()})}">
-                                                    <p th:text="${dialogs_view.getValue().username}"
-                                                       class="username"></p>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <table class="dialogs-table">
+                                        <tr>
+                                            <td class="dialog-userimg-column">
+                                                <div class="profile-pic-comments">
+                                                    <a th:href="@{/messages/{dialogId}(dialogId = ${dialogs_view.getKey()})}">
+                                                        <img th:if="${dialogs_view.getValue().photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                        <img th:if="${dialogs_view.getValue().photo != null and dialogs_view.getValue().isGoogle == false}" th:src="@{'/resources/img/users/' + ${dialogs_view.getValue().username} + '/profile/' + ${dialogs_view.getValue().photo}}" alt="">
+                                                        <img th:if="${dialogs_view.getValue().photo != null and dialogs_view.getValue().isGoogle == true}" th:src="${dialogs_view.getValue().photo}" alt="">
+                                                    </a>
+
+                                                </div>
+                                            </td>
+                                            <td class="dialog-username-column user-comments profile-card">
+                                                <div>
+                                                    <a th:href="@{/messages/{dialogId}(dialogId = ${dialogs_view.getKey()})}">
+                                                        <span th:if="${dialogs_view.getValue().isGoogle == false}" th:text="${dialogs_view.getValue().username}" class="username"></span>
+                                                        <span th:if="${dialogs_view.getValue().isGoogle == true}" th:text="${dialogs_view.getValue().email}" class="username"></span>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td class="dialog-count-column">
+                                                <span th:each="count_messages: ${unreadMessages}">
+                                                    <span th:if="${dialogs_view.getKey() == count_messages.getKey()}" th:text="'    ' + ${count_messages.getValue()}" class="username circle"></span>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>

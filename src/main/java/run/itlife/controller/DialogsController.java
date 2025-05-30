@@ -35,6 +35,7 @@ public class DialogsController {
     public String index(ModelMap modelMap) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("dialogs", dialogsService.findDialogs(username));
+        modelMap.put("unreadMessages", dialogsService.findUnreadDialogs(username));
         commonsParams.setCommonParams(modelMap);
         return "dialogs/dialogs";
     }

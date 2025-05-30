@@ -15,7 +15,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.major.version>1</project.major.version>
-        <project.minor.version>11</project.minor.version>
+        <project.minor.version>12</project.minor.version>
         <project.micro.version>43</project.micro.version>
         <project.stage.version>Pre-Alpha</project.stage.version>
         <maven.compiler.source>15</maven.compiler.source>

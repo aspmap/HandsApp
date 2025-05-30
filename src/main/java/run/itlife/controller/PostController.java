@@ -38,6 +38,7 @@ public class PostController {
     private final CommentService commentService;
     private final SubscriptionsService subscriptionsService;
     private final UserRepository userRepository;
+    private final DialogsService dialogsService;
     private final ServletContext context;
     @Autowired
     CommonsParams commonsParams;
@@ -50,7 +51,7 @@ public class PostController {
     private S3Service service;
 
     @Autowired
-    public PostController(PostService postsService, LikesService likesService, UserService userService, CommentService commentService, ServletContext context, SubscriptionsService subscriptionsService, UserRepository userRepository) {
+    public PostController(PostService postsService, LikesService likesService, UserService userService, CommentService commentService, ServletContext context, SubscriptionsService subscriptionsService, UserRepository userRepository, DialogsService dialogsService) {
         this.postService = postsService;
         this.likesService = likesService;
         this.userService = userService;
@@ -58,6 +59,7 @@ public class PostController {
         this.subscriptionsService = subscriptionsService;
         this.context = context;
         this.userRepository = userRepository;
+        this.dialogsService = dialogsService;
     }
 
     @GetMapping("/main")
@@ -76,6 +78,7 @@ public class PostController {
         });
 
         commonsParams.setCommonParams(modelMap, username);
+        modelMap.put("unreadMessagesTotal", dialogsService.findUnreadDialogs(username).size());
         modelMap.put("posts_sub", postService.findSubscribesPosts(username));
         modelMap.put("countPosts", postService.countSubscribesPosts(username));
         modelMap.put("isYourLike", postService.isLikePost(username));

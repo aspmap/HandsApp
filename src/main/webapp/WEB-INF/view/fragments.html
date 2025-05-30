@@ -123,7 +123,9 @@
                 <img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
             </a>
             <a class="icon" sec:authorize="isAuthenticated()" th:href="@{/dialogs}">
-                <img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
+                <img th:if="${unreadMessagesTotal == 0}" th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
+                <img th:if="${unreadMessagesTotal > 0}" th:src="@{/resources/img/nav/messenger_unread.png}" class="icon" alt="">
+                <span th:if="${unreadMessagesTotal > 0}" th:text="${unreadMessagesTotal}"></span>
             </a>
             <a class="icon" sec:authorize="isAuthenticated()" th:href="@{/handshakes_search}">
                 <img th:src="@{/resources/img/nav/handshakes.png}" class="icon" alt="">
@@ -205,7 +207,9 @@
                 <img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
             </a>
             <a class="icon" sec:authorize="isAuthenticated()" th:href="@{/dialogs}">
-                <img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
+                <img th:if="${unreadMessagesTotal == 0}" th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
+                <img th:if="${unreadMessagesTotal > 0}" th:src="@{/resources/img/nav/messenger_unread.png}" class="icon" alt="">
+                <span th:if="${unreadMessagesTotal > 0}" th:text="${unreadMessagesTotal}"></span>
             </a>
             <a class="icon" sec:authorize="isAuthenticated()" th:href="@{/handshakes_search}">
                 <img th:src="@{/resources/img/nav/handshakes.png}" class="icon" alt="">

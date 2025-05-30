@@ -35,10 +35,9 @@ public class DialogsServiceImpl implements DialogsService {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
         User userCompanion = userRepository.findByUsername(usernameCompanion).orElseThrow(() -> new UsernameNotFoundException(usernameCompanion));
         dialogs.setCreatedAt(LocalDateTime.now());
-        if(user.getIsGoogle() == true) {
+        if (user.getIsGoogle() == true) {
             dialogs.setNameDialog("Диалог " + user.getEmail() + " и " + userCompanion);
-        }
-        else {
+        } else {
             dialogs.setNameDialog("Диалог " + username + " и " + userCompanion);
         }
         dialogsRepository.save(dialogs);
@@ -58,7 +57,7 @@ public class DialogsServiceImpl implements DialogsService {
             ArrayList<User> usernames = new ArrayList<>();
             usernames = userService.findUsersByDialogId(dialogsId.get(i));
             for (int j = 0; j < usernames.size(); j++) {
-                Integer isShowDialog = showDialog(username, dialogsId.get(i));
+                Integer isShowDialog = showDialog(dialogsId.get(i));
                 if (!usernames.get(j).getUsername().equals(username) && isShowDialog > 0) {
                     dialogs.put(dialogsId.get(i), usernames.get(j));
                 }
@@ -68,8 +67,35 @@ public class DialogsServiceImpl implements DialogsService {
     }
 
     @Override
-    public Integer showDialog(String username, Long dialogId) {
-        return dialogsRepository.showDialog(username, dialogId);
+    public Map<Integer, Integer> findUnreadDialogs(String username) {
+        Map<Long, User> dialogs = findDialogs(username);
+        Map<Integer, Integer> unreadDialogs = new HashMap<>();
+
+        for (Map.Entry<Long, User> entry : dialogs.entrySet()) {
+            Map<String, Integer> unreadDialog = countUnreadMessagesInDialog(entry.getKey(), entry.getValue().getUsername());
+
+            if (!unreadDialog.isEmpty()) {
+                Integer dialogId = 0;
+                Integer countMessages = 0;
+                for (Map.Entry<String, Integer> entryDialog : unreadDialog.entrySet()) {
+                    if (entryDialog.getKey().equals("dialog_id")) {
+                        dialogId = entryDialog.getValue().intValue();
+                    }
+                    if (entryDialog.getKey().equals("count_messages")) {
+                        countMessages = entryDialog.getValue().intValue();
+                    }
+                }
+                if (countMessages != 0) {
+                    unreadDialogs.put(dialogId, countMessages);
+                }
+            }
+        }
+        return unreadDialogs;
+    }
+
+    @Override
+    public Integer showDialog(Long dialogId) {
+        return dialogsRepository.showDialog(dialogId);
     }
 
     @Override
@@ -93,6 +119,11 @@ public class DialogsServiceImpl implements DialogsService {
     @Override
     public ArrayList<Long> findDialogsIdByUsername(String username) {
         return dialogsRepository.findDialogsIdByUsername(username);
+    }
+
+    @Override
+    public Map<String, Integer> countUnreadMessagesInDialog(Long dialogId, String username) {
+        return dialogsRepository.countUnreadMessagesInDialog(dialogId, username);
     }
 
 }

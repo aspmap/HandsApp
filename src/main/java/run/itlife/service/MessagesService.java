@@ -1,6 +1,7 @@
 package run.itlife.service;
 
 import run.itlife.entity.Messages;
+
 import java.util.List;
 
 public interface MessagesService {
@@ -13,4 +14,5 @@ public interface MessagesService {
     String getUserEmailByUsername(String username);
     String getUserGoogleByUsername(String username);
     List<String> findUsersByDialogId(Long dialogId);
+    void isReadingMessage(long dialogId, String username);
 }

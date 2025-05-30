@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
-import run.itlife.service.CommentService;
-import run.itlife.service.PostService;
-import run.itlife.service.SubscriptionsService;
-import run.itlife.service.UserService;
+import run.itlife.service.*;
 
 import javax.servlet.ServletContext;
 import java.time.LocalDateTime;
@@ -18,15 +15,17 @@ public class CommonsParams {
     private final PostService postService;
     private final CommentService commentService;
     private final SubscriptionsService subscriptionsService;
+    private final DialogsService dialogsService;
     private final ServletContext context;
     private final VersionProject versionProject;
 
     @Autowired
-    public CommonsParams(UserService userService, PostService postService, CommentService commentService, SubscriptionsService subscriptionsService, ServletContext context, VersionProject versionProject) {
+    public CommonsParams(UserService userService, PostService postService, CommentService commentService, SubscriptionsService subscriptionsService, DialogsService dialogsService, ServletContext context, VersionProject versionProject) {
         this.userService = userService;
         this.postService = postService;
         this.commentService = commentService;
         this.subscriptionsService = subscriptionsService;
+        this.dialogsService = dialogsService;
         this.context = context;
         this.versionProject = versionProject;
     }
@@ -67,6 +66,7 @@ public class CommonsParams {
         modelMap.put("userOnlyList", userService.getUsersOnly());
         modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
         modelMap.put("userPhoto", userService.findByUsername(username).getPhoto());
+        modelMap.put("unreadMessagesTotal", dialogsService.findUnreadDialogs(username).size());
         modelMap.put("contextPath", context.getContextPath());
         this.setCommonConstParams(modelMap);
     }

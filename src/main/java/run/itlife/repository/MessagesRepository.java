@@ -1,8 +1,11 @@
 package run.itlife.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import run.itlife.entity.Messages;
+
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface MessagesRepository extends JpaRepository<Messages, Long> {
@@ -54,4 +57,12 @@ public interface MessagesRepository extends JpaRepository<Messages, Long> {
     @Query(value = "select u.is_google from users u " +
             "where u.username = ? ", nativeQuery = true)
     String getUserGoogleByUsername(String username);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE messages m " +
+            "SET is_read = true " +
+            "FROM users u " +
+            "where u.user_id = m.user_id and m.is_read = false and m.dialog_id = ? and u.username = ? ", nativeQuery = true)
+    void isReadingMessage(long dialogId, String username);
 }

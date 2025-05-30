@@ -18,9 +18,9 @@
                 <input type="hidden" th:field="*{userId}"/>
                 <textarea id="blob-img" name="file" class="form-control" rows="4" placeholder="" style="display:none;"></textarea>
                 <div>
-                    <img th:if="${userinfo.photo == null}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/icons/avatar.jpg'}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
-                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
-                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" class="profile-pic-edit" id="profilePicture" th:src="${userinfo.photo}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
+                    <img th:if="${userinfo.photo == null}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="" data-target="#profileImageModal" data-toggle="modal">
+                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="" data-target="#profileImageModal" data-toggle="modal">
+                    <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" class="profile-pic-edit" id="profilePicture" th:src="${userinfo.photo}" alt="" data-target="#profileImageModal" data-toggle="modal">
                 </div>
 
                 <!-- Modal Window -->

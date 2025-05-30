@@ -13,5 +13,7 @@ public interface DialogsService {
     Long getDialogIdByUsers(String username1, String username2);
     ArrayList<Long> findDialogsIdByUsername(String username);
     Map<Long, User> findDialogs(String username);
-    Integer showDialog(String username, Long dialogId);
+    Integer showDialog(Long dialogId);
+    Map<Integer, Integer> findUnreadDialogs(String username);
+    Map<String, Integer> countUnreadMessagesInDialog(Long dialogId, String username);
 }

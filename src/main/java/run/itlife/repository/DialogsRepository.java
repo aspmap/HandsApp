@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import run.itlife.entity.Dialogs;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface DialogsRepository extends JpaRepository<Dialogs, Long> {
     @Query(value = "select count(*) from users u " +
@@ -25,7 +26,6 @@ public interface DialogsRepository extends JpaRepository<Dialogs, Long> {
             "where u.username = ? and u2.username = ? ", nativeQuery = true)
     Long getDialogIdByUsers(String username1, String username2);
 
-
     @Query(value = "select d.dialog_id from dialogs d " +
             "left join user_dialog ud on d.dialog_id = ud.dialog_id " +
             "left join users u on u.user_id = ud.user_id " +
@@ -35,7 +35,13 @@ public interface DialogsRepository extends JpaRepository<Dialogs, Long> {
 
     @Query(value = "select count(m.dialog_id) from dialogs d " +
             "left join messages m on d.dialog_id = m.dialog_id " +
+            "where d.dialog_id = ? ", nativeQuery = true)
+    Integer showDialog(Long dialogId);
+
+    @Query(value = "select cast(d.dialog_id as INTEGER) as dialog_id, cast(count(*) as INTEGER) as count_messages from messages m " +
+            "left join dialogs d on d.dialog_id = m.dialog_id " +
             "left join users u on u.user_id = m.user_id " +
-            "where u.username = ? and d.dialog_id = ? ", nativeQuery = true)
-    Integer showDialog(String username, Long dialogId);
+            "where d.dialog_id = ? and m.is_read = false and u.username = ? " +
+            "group by d.dialog_id ", nativeQuery = true)
+    Map<String, Integer> countUnreadMessagesInDialog(Long dialogId, String username);
 }

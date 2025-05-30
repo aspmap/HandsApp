@@ -9,6 +9,7 @@ import run.itlife.entity.Dialogs;
 import run.itlife.entity.Messages;
 import run.itlife.entity.User;
 import run.itlife.repository.MessagesRepository;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -81,5 +82,11 @@ public class MessagesServiceImpl implements MessagesService {
     public List<String> findUsersByDialogId(Long dialogId) {
         return messagesRepository.findUsersByDialogId(dialogId);
     }
+
+    @Override
+    public void isReadingMessage(long dialogId, String username) {
+        messagesRepository.isReadingMessage(dialogId, username);
+    }
+
 
 }
