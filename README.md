@@ -108,6 +108,7 @@ cloud.aws.region.static = ${REGION_S3}
 47. Бесконечная прокрутка постов
 48. Представление (View) в БД для списка рекомендаций 
 49. Галочка о прочтении в чате, количество непрочитанных сообщений и чатов
+50. Карта смайлов
 
 :abcd: **REST-API:**
 
@@ -316,6 +317,12 @@ DELETE http://handsapp.top/api/post/295
 > Пагинация постов
 
 ![pagination](https://github.com/user-attachments/assets/5b38ea8d-2afb-4af1-aa87-fc35e3094234)
+
+
+> Карта смайлов
+
+![smiles](https://github.com/user-attachments/assets/ae81362c-1c96-4932-a14f-06fab8868a81)
+
 
 
 > Информационные страницы
