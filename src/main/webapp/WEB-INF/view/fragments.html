@@ -302,6 +302,46 @@
     </div>
 </div>
 
+<!-- Smiles -->
+<div th:fragment="smiles">
+    <button class="smiles" onclick='fn(this)'>&#128512;</button>
+    <button class="smiles" onclick='fn(this)'>&#128513;</button>
+    <button class="smiles" onclick='fn(this)'>&#129315;</button>
+    <button class="smiles" onclick='fn(this)'>&#128578;</button>
+    <button class="smiles" onclick='fn(this)'>&#129395;</button>
+    <button class="smiles" onclick='fn(this)'>&#128521;</button>
+    <button class="smiles" onclick='fn(this)'>&#129392;</button>
+    <button class="smiles" onclick='fn(this)'>&#128536;</button>
+    <button class="smiles" onclick='fn(this)'>&#129322;</button>
+    <button class="smiles" onclick='fn(this)'>&#129325;</button>
+    <button class="smiles" onclick='fn(this)'>&#129314;</button>
+    <button class="smiles" onclick='fn(this)'>&#128558;</button>
+    <button class="smiles" onclick='fn(this)'>&#129402;</button>
+    <button class="smiles" onclick='fn(this)'>&#128557;</button>
+    <button class="smiles" onclick='fn(this)'>&#128544;</button>
+    <button class="smiles" onclick='fn(this)'>&#128169;</button>
+    <button class="smiles" onclick='fn(this)'>&#128139;</button>
+    <button class="smiles" onclick='fn(this)'>&#128152;</button>
+    <button class="smiles" onclick='fn(this)'>&#128175;</button>
+    <button class="smiles" onclick='fn(this)'>&#128076;</button>
+    <button class="smiles" onclick='fn(this)'>&#129311;</button>
+    <button class="smiles" onclick='fn(this)'>&#128077;</button>
+    <button class="smiles" onclick='fn(this)'>&#129318;</button>
+    <button class="smiles" onclick='fn(this)'>&#129335;</button>
+    <button class="smiles" onclick='fn(this)'>&#128075;</button>
+    <button class="smiles" onclick='fn(this)'>&#128048;</button>
+    <button class="smiles" onclick='fn(this)'>&#128134;</button>
+    <button class="smiles" onclick='fn(this)'>&#127939;</button>
+    <button class="smiles" onclick='fn(this)'>&#128378;</button>
+    <button class="smiles" onclick='fn(this)'>&#128131;</button>
+    <button class="smiles" onclick='fn(this)'>&#128144;</button>
+    <button class="smiles" onclick='fn(this)'>&#127751;</button>
+    <button class="smiles" onclick='fn(this)'>&#128181;</button>
+    <button class="smiles" onclick='fn(this)'>&#128293;</button>
+    <button class="smiles" onclick='fn(this)'>&#127881;</button>
+</div>
+
+
 <!-- Footer -->
 <p class="text-muted" th:fragment="footer-login">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a class="comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
     <br>

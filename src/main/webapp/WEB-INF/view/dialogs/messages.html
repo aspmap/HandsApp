@@ -9,6 +9,7 @@
 <script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
 <script type="text/javascript" th:src="@{/resources/js/jquery.scrollTo.js}"></script>
 <script type="text/javascript" th:src="@{/resources/js/test.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
 
 <!-- Navigation -->
 <body>
@@ -93,15 +94,11 @@
 
                 <!-- Messages Form -->
                 <div sec:authorize="hasAnyRole('USER')" th:object="${messages}">
+                    <div class="div-smiles" th:insert="fragments.html :: smiles"></div>
                     <form class="comment-wrapper" method="POST" th:action="@{/messages/create/{dialogId} (dialogId = ${dialog.dialogId})}">
                         <input type="hidden" name="dialogId" th:value="${dialog.dialogId}" />
-                        <div class="info-view">
-                            <div class="user">
-                                <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
-                            </div>
-                        </div>
-                        <input th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.username} + '...'">
-                        <input th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.email} + '...'">
+                        <input id="smile" th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.username} + '...'">
+                        <input id="smile" th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.email} + '...'">
                         <br>
                         <button class="comment-btn" th:text="#{button_send_message}"></button>
                     </form>

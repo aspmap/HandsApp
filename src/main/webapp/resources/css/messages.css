@@ -121,3 +121,12 @@
 .reading-message-img {
     width: 13px;
 }
+
+.smiles {
+    border: 0px;
+    background: white;
+}
+
+.div-smiles {
+    margin-left: 15px;
+}

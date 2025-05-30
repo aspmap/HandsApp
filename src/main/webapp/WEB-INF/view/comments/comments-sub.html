@@ -7,6 +7,7 @@
 </head>
 
 <script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
 
 <!-- Navigation -->
 <body>
@@ -75,15 +76,11 @@
 
                 <!-- Comments Form -->
                 <div sec:authorize="hasAnyRole('USER')">
+                    <div class="div-smiles" th:insert="fragments.html :: smiles"></div>
                     <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment_subuser}">
                         <input type="hidden" name="postId" th:value="${post.postId}" />
-                        <div class="info-view">
-                            <div class="user">
-                                <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
-                            </div>
-                        </div>
-                        <input th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'">
-                        <input th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'">
+                        <input id="smile" th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'">
+                        <input id="smile" th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'">
                         <br>
                         <button class="comment-btn" th:text="#{button_publish}"></button>
                     </form>

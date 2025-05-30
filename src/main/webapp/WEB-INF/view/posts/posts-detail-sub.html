@@ -7,6 +7,8 @@
     <th:block th:include="fragments.html :: header"/>
 </head>
 
+<script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
+
 <!-- Navigation -->
 <body>
 <nav class="navbar" th:insert="fragments.html :: navigation"></nav>
@@ -100,6 +102,7 @@
 
                 <!-- Comments Form -->
                 <div sec:authorize="hasAnyRole('USER')">
+                    <div class="div-smiles" th:insert="fragments.html :: smiles"></div>
                     <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment_detail_sub}">
                         <input type="hidden" name="postId" th:value="${post_sub.postId}"/>
                         <div class="info-view">
@@ -115,7 +118,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="text" class="comment-box description" name="commentText"
+                        <input id="smile" type="text" class="comment-box description" name="commentText"
                                th:placeholder="#{input_add_a_comment} + '...'">
                         <br>
                         <button class="comment-btn" th:text="#{button_publish}"></button>

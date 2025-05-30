@@ -6,6 +6,8 @@
     <th:block th:include="fragments.html :: header"/>
 </head>
 
+<script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
+
 <!-- Navigation -->
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
@@ -15,9 +17,10 @@
 <section class="main-post">
     <div class="wrapper-posts">
         <div class="left-col">
+            <div class="div-smiles" th:insert="fragments.html :: smiles"></div>
             <form method="POST" th:action="@{/post/edit}" th:object="${post}" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{postId}"/>
-                <textarea th:field="*{content}" class="profile-box description" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>
+                <textarea id="smile" th:field="*{content}" class="profile-box description" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>
                 <br>
                 <button type="submit" class="btn btn-outline-dark" th:text="#{button_edit_post}"></button>
             </form>

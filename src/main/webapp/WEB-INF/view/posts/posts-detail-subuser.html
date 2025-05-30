@@ -8,6 +8,7 @@
 
 <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
 <script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
 
 <!-- Navigation -->
 <body>
@@ -105,17 +106,13 @@
 
                 <!-- Comments Form -->
                 <div sec:authorize="hasAnyRole('USER')">
+                    <div class="div-smiles" th:insert="fragments.html :: smiles"></div>
                     <form class="comment-wrapper" method="GET"
                           th:action="@{/comment/create_comment_detail_subuser/{user}(user = ${user_sub})}">
                         <input type="hidden" name="postId" th:value="${post.postId}"/>
-                        <div class="info-view">
-                            <div class="user">
-                                <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
-                            </div>
-                        </div>
-                        <input th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description"
+                        <input id="smile" th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description"
                                name="commentText" th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'">
-                        <input th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description"
+                        <input id="smile" th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description"
                                name="commentText"
                                th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'">
                         <br>

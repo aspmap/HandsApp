@@ -6,6 +6,8 @@
     <th:block th:include="fragments.html :: header"/>
 </head>
 
+<script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
+
 <!-- Navigation -->
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
@@ -21,10 +23,12 @@
                     <img id="profilePicture" th:src="@{/resources/img/icons/upload.png}">
                 </label>
                 <br>
-                <textarea name="content" class="profile-box description" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>
+                <textarea id="smile" name="content" class="profile-box description" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>
                 <br>
                 <button type="submit" class="btn btn-outline-dark" th:text="#{button_publish_a_post}"></button>
             </form>
+            <br/>
+            <div class="div-smiles" th:insert="fragments.html :: smiles"></div>
 
             <!-- Footer -->
             <footer th:insert="fragments.html :: footer"></footer>

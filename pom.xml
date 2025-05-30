@@ -3,7 +3,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>run.itlife</groupId>
     <artifactId>HandsApp</artifactId>
     <version>1.1-SNAPSHOT</version>
@@ -16,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.major.version>1</project.major.version>
         <project.minor.version>12</project.minor.version>
-        <project.micro.version>45</project.micro.version>
+        <project.micro.version>46</project.micro.version>
         <project.stage.version>Pre-Alpha</project.stage.version>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
