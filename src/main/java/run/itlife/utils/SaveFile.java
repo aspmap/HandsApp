@@ -19,7 +19,7 @@ public class SaveFile {
     private static final String PATH_IMAGE_USERS = "/resources/img/users/";
     public static final String SEPARATOR = "/";
     private static final String COMMA = ",";
-    private static final String POINT = ".";
+    public static final String POINT = ".";
     private static final int IMAGE_WIDTH = 500;
     private static final int IMAGE_HEIGHT = 500;
     private static final int MAX_UPLOAD_FILE_SIZE_IN_MB = 20 * 1024 * 1024; // 20 МБ

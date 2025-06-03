@@ -11,7 +11,10 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import run.itlife.dto.UserDto;
 import run.itlife.entity.User;
 import run.itlife.enums.Sex;
@@ -20,6 +23,10 @@ import run.itlife.service.SubscriptionsService;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
 import run.itlife.utils.Profile;
+import run.itlife.utils.info.InformationGathering;
+import run.itlife.utils.info.InformationGatheringArchive;
+import run.itlife.utils.info.InformationGatheringInfo;
+import run.itlife.utils.info.InformationGatheringMedia;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityExistsException;
@@ -28,12 +35,14 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import static run.itlife.messages.ErrorMessages.ERROR;
 import static run.itlife.utils.EditImage.resizeImage;
 import static run.itlife.utils.OtherUtils.generateFileName;
+import static run.itlife.utils.SaveFile.SEPARATOR;
 
 //UserController, отвечающий за логин юзеров и т.д.
 //Создаем в папке view страницу register.html. Далее необходимо сделать, чтобы мы пересылали данные в контроллер.
@@ -51,6 +60,9 @@ public class UserController {
     private final SubscriptionsService subscriptionsService;
     private final PostService postService;
     private final ServletContext context;
+    private static final String PATH_VIDEO_USERS = "/resources/video/users/";
+    private static final String PATH_IMAGE_USERS = "/resources/img/users/";
+    private static final String PATH_FILES = "/resources/users_archive/users/";
     @Autowired
     CommonsParams commonsParams;
     private Logger log = LoggerFactory.getLogger(UserController.class);
@@ -245,5 +257,53 @@ public class UserController {
             modelMap.put("findUsers", userService.findAll());
             return "search-results";
         }
+    }
+
+    @GetMapping("/get_profile_archive")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String getProfileArchive(ModelMap modelMap) {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        boolean isAvailableArchive = false;
+        File dirOriginPhoto = new File(context.getRealPath(PATH_IMAGE_USERS + username));
+        File dirOriginVideo = new File(context.getRealPath(PATH_VIDEO_USERS + username));
+        File dirOriginProfilePhoto = new File(context.getRealPath(PATH_IMAGE_USERS + username + SEPARATOR + "profile"));
+        File dirDestinationPhoto = new File(context.getRealPath(PATH_FILES + username) + SEPARATOR + "img");
+        File dirDestinationVideo = new File(context.getRealPath(PATH_FILES + username) + SEPARATOR + "video");
+        File dirDestinationProfilePhoto = new File(context.getRealPath(PATH_FILES + username) + SEPARATOR + "img/profile");
+        File dirDestinationInfo = new File(context.getRealPath(PATH_FILES + username));
+        File dirOriginArchive = new File(context.getRealPath(PATH_FILES + username));
+
+        InformationGathering informationGatheringPhoto = new InformationGatheringMedia();
+        informationGatheringPhoto.copyUserInfo(username, dirOriginPhoto, dirDestinationPhoto);
+        informationGatheringPhoto.copyUserInfo(username, dirOriginProfilePhoto, dirDestinationProfilePhoto);
+        informationGatheringPhoto.copyUserInfo(username, dirOriginVideo, dirDestinationVideo);
+
+        InformationGathering informationGatheringInfo = new InformationGatheringInfo(userService, postService);
+        informationGatheringInfo.copyUserInfo(username, null, dirDestinationInfo);
+
+        InformationGathering informationGatheringArchive = new InformationGatheringArchive();
+        informationGatheringArchive.copyUserInfo(username, dirOriginArchive, null);
+
+        File dirOriginArchiveZip = new File(dirOriginArchive + ".zip");
+        if (dirOriginArchiveZip.exists()) {
+            isAvailableArchive = true;
+        }
+        commonsParams.setCommonParams(modelMap);
+        modelMap.put("isAvailableArchive", isAvailableArchive);
+        return "messages-templates/download-archive";
+    }
+
+    @GetMapping("/profile_archive")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String profileArchive(ModelMap modelMap) {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        boolean isAvailableArchive = false;
+        File dirOriginArchiveZip = new File(context.getRealPath(PATH_FILES + username) + ".zip");
+        if (dirOriginArchiveZip.exists()) {
+            isAvailableArchive = true;
+        }
+        commonsParams.setCommonParams(modelMap);
+        modelMap.put("isAvailableArchive", isAvailableArchive);
+        return "messages-templates/download-archive";
     }
 }

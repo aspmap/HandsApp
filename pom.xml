@@ -14,7 +14,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.major.version>1</project.major.version>
-        <project.minor.version>12</project.minor.version>
+        <project.minor.version>13</project.minor.version>
         <project.micro.version>46</project.micro.version>
         <project.stage.version>Pre-Alpha</project.stage.version>
         <maven.compiler.source>15</maven.compiler.source>
@@ -281,8 +281,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>10</source>
-                    <target>10</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
         </plugins>

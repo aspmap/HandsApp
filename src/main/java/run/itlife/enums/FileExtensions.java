@@ -5,7 +5,9 @@ public enum FileExtensions {
     MP4 ("mp4"),
     MOV ("mov"),
     JPG ("jpg"),
-    PNG ("png");
+    PNG ("png"),
+    TXT ("txt"),
+    ZIP ("zip");
 
     private String extension;
 

@@ -1,0 +1,43 @@
+package run.itlife.utils.info;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+
+import static run.itlife.messages.ErrorMessages.ERROR;
+import static run.itlife.utils.SaveFile.SEPARATOR;
+
+@Component
+public class InformationGatheringMedia implements InformationGathering {
+    private Logger log = LoggerFactory.getLogger(InformationGatheringMedia.class);
+
+    @Override
+    public void copyUserInfo(String username, File dirOrigin, File dirDestination) {
+        ArrayList<File> files = new ArrayList<>();
+        if (dirOrigin.isDirectory()) {
+            for (File d : dirOrigin.listFiles()) {
+                files.add(d);
+            }
+        }
+        if (!dirDestination.exists()) {
+            dirDestination.mkdirs();
+        }
+        for (int i = 0; i < files.size(); i++) {
+            Path sourcePath = Paths.get(files.get(i).getPath());
+            Path destPath = Paths.get(dirDestination + SEPARATOR + files.get(i).getName());
+            try {
+                Files.copy(sourcePath, destPath, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                log.error(ERROR + e);
+            }
+        }
+    }
+}

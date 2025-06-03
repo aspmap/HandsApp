@@ -98,6 +98,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-outline-dark"><span th:text="#{button_edit_profile_information}"></span></button>
+                <a th:href="@{/get_profile_archive}" class="btn btn-outline-dark" th:text="#{button_download_user_archive}"></a>
                 <a th:href="@{/profile_delete/{user}(user = ${user})}" class="btn btn-outline-danger" th:text="#{button_delete_profile}"></a>
             </form>
 
