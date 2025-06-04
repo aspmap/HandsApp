@@ -2,7 +2,6 @@ package run.itlife.utils.info;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import static run.itlife.messages.ErrorMessages.ERROR;
 import static run.itlife.utils.SaveFile.SEPARATOR;
 
-@Component
 public class InformationGatheringMedia implements InformationGathering {
     private Logger log = LoggerFactory.getLogger(InformationGatheringMedia.class);
 

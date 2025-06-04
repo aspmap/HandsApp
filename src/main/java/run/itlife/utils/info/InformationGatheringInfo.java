@@ -30,7 +30,7 @@ public class InformationGatheringInfo implements InformationGathering {
     }
 
     @Override
-    public void copyUserInfo(String username, File dirOrigin, File dirDestination) { // TODO Применить паттерн Стратегия
+    public void copyUserInfo(String username, File dirOrigin, File dirDestination) {
         User user = userService.findByUsername(username);
         String filenameUser = "user_" + generateFileName() + POINT + TXT.getExtension();
 

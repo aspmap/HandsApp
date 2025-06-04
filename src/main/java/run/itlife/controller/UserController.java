@@ -35,9 +35,9 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.*;
 
 import static run.itlife.messages.ErrorMessages.ERROR;
 import static run.itlife.utils.EditImage.resizeImage;
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(ModelMap model){
+    public String login(ModelMap model) {
         Iterable<ClientRegistration> clientRegistrations = null;
         ResolvableType type = ResolvableType.forInstance(clientRegistrationRepository)
                 .as(Iterable.class);
@@ -91,18 +91,18 @@ public class UserController {
     }
 
     @GetMapping("/error")
-    public String loginError(ModelMap modelMap){
+    public String loginError(ModelMap modelMap) {
         return "messages-templates/loginError";
     }
 
     @GetMapping("/register")
-    public String register(ModelMap modelMap){
+    public String register(ModelMap modelMap) {
         commonsParams.setCommonConstParams(modelMap);
         return "register";
     }
 
     @GetMapping("/confidentiality")
-    public String confidentiality(ModelMap modelMap){
+    public String confidentiality(ModelMap modelMap) {
         return "confidentiality";
     }
 
@@ -119,7 +119,7 @@ public class UserController {
 
     @GetMapping("/profile_delete/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String profile_delete(ModelMap modelMap, @PathVariable String user){
+    public String profile_delete(ModelMap modelMap, @PathVariable String user) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!username.equals(user)) {
             commonsParams.setCommonParams(modelMap);
@@ -131,7 +131,7 @@ public class UserController {
 
     @PostMapping("/profile_delete/{user}")
     @PreAuthorize("hasRole('USER')")
-    public String delete_profile(ModelMap modelMap, @PathVariable String user){
+    public String delete_profile(ModelMap modelMap, @PathVariable String user) {
         userService.delete_profile(user);
         //удаляем папки и файлы пользователя
         File dir_img = new File(context.getRealPath("/resources/img/users/" + user));
@@ -143,7 +143,7 @@ public class UserController {
 
     @GetMapping("/profile_edit/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String profile_edit(ModelMap modelMap, @PathVariable String user){
+    public String profile_edit(ModelMap modelMap, @PathVariable String user) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!username.equals(user)) {
             commonsParams.setCommonParams(modelMap);
@@ -158,9 +158,9 @@ public class UserController {
     @PostMapping("/profile_edit")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String profile_edit(UserDto userDto, @RequestParam("file") String file, ModelMap modelMap) {
-       commonsParams.setCommonParams(modelMap);
+        commonsParams.setCommonParams(modelMap);
 
-       if (!file.isEmpty()) {
+        if (!file.isEmpty()) {
             try {
                 // изменение и генерация ноового имени файла
                 String filename = generateFileName() + ".jpg";
@@ -199,9 +199,9 @@ public class UserController {
                 return "messages-templates/error";
             }
         } else {
-           userService.checkAuthority(userDto.getUserId());
-           userService.update(userDto);
-           return "redirect:/";
+            userService.checkAuthority(userDto.getUserId());
+            userService.update(userDto);
+            return "redirect:/";
         }
     }
 
@@ -261,36 +261,44 @@ public class UserController {
 
     @GetMapping("/get_profile_archive")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String getProfileArchive(ModelMap modelMap) {
-        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        boolean isAvailableArchive = false;
-        File dirOriginPhoto = new File(context.getRealPath(PATH_IMAGE_USERS + username));
-        File dirOriginVideo = new File(context.getRealPath(PATH_VIDEO_USERS + username));
-        File dirOriginProfilePhoto = new File(context.getRealPath(PATH_IMAGE_USERS + username + SEPARATOR + "profile"));
-        File dirDestinationPhoto = new File(context.getRealPath(PATH_FILES + username) + SEPARATOR + "img");
-        File dirDestinationVideo = new File(context.getRealPath(PATH_FILES + username) + SEPARATOR + "video");
-        File dirDestinationProfilePhoto = new File(context.getRealPath(PATH_FILES + username) + SEPARATOR + "img/profile");
-        File dirDestinationInfo = new File(context.getRealPath(PATH_FILES + username));
-        File dirOriginArchive = new File(context.getRealPath(PATH_FILES + username));
+    public String getProfileArchive(ModelMap modelMap) throws ExecutionException, InterruptedException {
+        // Используем Executor и Future
+        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-        InformationGathering informationGatheringPhoto = new InformationGatheringMedia();
-        informationGatheringPhoto.copyUserInfo(username, dirOriginPhoto, dirDestinationPhoto);
-        informationGatheringPhoto.copyUserInfo(username, dirOriginProfilePhoto, dirDestinationProfilePhoto);
-        informationGatheringPhoto.copyUserInfo(username, dirOriginVideo, dirDestinationVideo);
+        Future<String> page = executorService.submit(
+                new Callable<>() {
+                    boolean isAvailableArchive = false;
+                    final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+                    @Override
+                    public String call() {
+                        File dirOriginPhoto = new File(context.getRealPath(PATH_IMAGE_USERS + username));
+                        File dirOriginVideo = new File(context.getRealPath(PATH_VIDEO_USERS + username));
+                        File dirOriginProfilePhoto = new File(context.getRealPath(PATH_IMAGE_USERS + username + SEPARATOR + "profile"));
+                        File dirDestinationPhoto = new File(context.getRealPath(PATH_FILES + username) + SEPARATOR + "img");
+                        File dirDestinationVideo = new File(context.getRealPath(PATH_FILES + username) + SEPARATOR + "video");
+                        File dirDestinationProfilePhoto = new File(context.getRealPath(PATH_FILES + username) + SEPARATOR + "img/profile");
+                        File dirDestinationInfo = new File(context.getRealPath(PATH_FILES + username));
+                        File dirOriginArchive = new File(context.getRealPath(PATH_FILES + username));
 
-        InformationGathering informationGatheringInfo = new InformationGatheringInfo(userService, postService);
-        informationGatheringInfo.copyUserInfo(username, null, dirDestinationInfo);
-
-        InformationGathering informationGatheringArchive = new InformationGatheringArchive();
-        informationGatheringArchive.copyUserInfo(username, dirOriginArchive, null);
-
-        File dirOriginArchiveZip = new File(dirOriginArchive + ".zip");
-        if (dirOriginArchiveZip.exists()) {
-            isAvailableArchive = true;
-        }
-        commonsParams.setCommonParams(modelMap);
-        modelMap.put("isAvailableArchive", isAvailableArchive);
-        return "messages-templates/download-archive";
+                        InformationGathering informationGatheringPhoto = new InformationGatheringMedia();
+                        informationGatheringPhoto.copyUserInfo(username, dirOriginPhoto, dirDestinationPhoto);
+                        informationGatheringPhoto.copyUserInfo(username, dirOriginProfilePhoto, dirDestinationProfilePhoto);
+                        informationGatheringPhoto.copyUserInfo(username, dirOriginVideo, dirDestinationVideo);
+                        InformationGathering informationGatheringInfo = new InformationGatheringInfo(userService, postService);
+                        informationGatheringInfo.copyUserInfo(username, null, dirDestinationInfo);
+                        InformationGathering informationGatheringArchive = new InformationGatheringArchive();
+                        informationGatheringArchive.copyUserInfo(username, dirOriginArchive, null);
+                        File dirOriginArchiveZip = new File(dirOriginArchive + ".zip");
+                        if (dirOriginArchiveZip.exists()) {
+                            isAvailableArchive = true;
+                        }
+                        setCommonParamsSynchronized(modelMap, username);
+                        modelMap.put("isAvailableArchive", isAvailableArchive);
+                        return "messages-templates/download-archive";
+                    }
+                });
+        executorService.shutdown();
+        return profileArchiveGenerate(modelMap);
     }
 
     @GetMapping("/profile_archive")
@@ -305,5 +313,28 @@ public class UserController {
         commonsParams.setCommonParams(modelMap);
         modelMap.put("isAvailableArchive", isAvailableArchive);
         return "messages-templates/download-archive";
+    }
+
+    @GetMapping("/profile_archive_generate")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String profileArchiveGenerate(ModelMap modelMap) {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        boolean isAvailableArchive = false;
+        File dirOriginArchiveZip = new File(context.getRealPath(PATH_FILES + username) + ".zip");
+        if (dirOriginArchiveZip.exists()) {
+            isAvailableArchive = true;
+        }
+        commonsParams.setCommonParams(modelMap);
+        modelMap.put("isAvailableArchive", isAvailableArchive);
+        return "messages-templates/formation-archive";
+    }
+
+    private void setCommonParamsSynchronized(ModelMap modelMap, String username) {
+        modelMap.put("users", userService.findAll());
+        modelMap.put("userslist", userService.findAll());
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userOnlyList", userService.getUsersOnly());
+        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
     }
 }
