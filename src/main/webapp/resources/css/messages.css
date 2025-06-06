@@ -39,6 +39,8 @@
     font-size: 14px;
     line-height: 20px;
     margin-left: 0px;
+    width: 350px;
+    position: sticky;
 }
 
 .dialog-message-right {
@@ -46,6 +48,8 @@
     font-size: 14px;
     line-height: 20px;
     margin-left: 0px;
+    width: 350px;
+    position: sticky;
 }
 
 .dialogs-right {

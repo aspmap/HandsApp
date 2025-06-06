@@ -3,7 +3,7 @@
 
 <head>
     <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_messages}"></title>
-    <th:block th:include="fragments.html :: header"/>
+    <th:block th:include="fragments.html :: header-messages"/>
 </head>
 
 <script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
@@ -56,6 +56,9 @@
                                     <div th:if="${countMessagesInDialog > 0}" class="user-comments dialogs-right">
                                         <div class="alert alert-primary" role="alert" style="border-radius: 0.50rem; margin-bottom: 0rem">
                                             <span class="dialog-message-right" th:text="${messages_view.messageText}"></span>
+                                            <a th:href="@{'/resources/img/users/' + ${userinfo.username} + '/dialogs/' + ${messages_view.messageFile}}" class="highslide" onclick="return hs.expand(this)">
+                                                <img th:if="${messages_view.messageFile != null}" class="dialog-message-right" th:src="@{'/resources/img/users/' + ${userinfo.username} + '/dialogs/' + ${messages_view.messageFile}}">
+                                            </a>
                                             <p th:if="${messages_view.isRead() == true}" class="reading-message">
                                             <img class="reading-message-img" th:src="@{'/resources/img/icons/read.png'}" th:title="#{text_read_message}">
                                             </p>
@@ -73,6 +76,9 @@
                                     <div th:if="${countMessagesInDialog > 0}" class="user-comments dialogs-left">
                                         <div class="alert alert-secondary" role="alert" style="border-radius: 0.50rem; margin-bottom: 0rem">
                                             <span class="dialog-message-left" th:text="${messages_view.messageText}"></span>
+                                            <a th:href="@{'/resources/img/users/' + ${userDialogName} + '/dialogs/' + ${messages_view.messageFile}}" class="highslide" onclick="return hs.expand(this)">
+                                                <img th:if="${messages_view.messageFile != null}" class="dialog-message-left" th:src="@{'/resources/img/users/' + ${userDialogName} + '/dialogs/' + ${messages_view.messageFile}}">
+                                            </a>
                                         </div>
                                         <span class="time-message-left" th:text="${#temporals.format(messages_view.createdAt, 'dd.MM.yyyy HH:mm')}"></span>
                                     </div>
@@ -95,11 +101,49 @@
                 <!-- Messages Form -->
                 <div sec:authorize="hasAnyRole('USER')" th:object="${messages}">
                     <div class="div-smiles" th:insert="fragments.html :: smiles"></div>
-                    <form class="comment-wrapper" method="POST" th:action="@{/messages/create/{dialogId} (dialogId = ${dialog.dialogId})}">
+                    <form class="comment-wrapper" method="POST" th:action="@{/messages/create/{dialogId} (dialogId = ${dialog.dialogId})}" enctype="multipart/form-data">
                         <input type="hidden" name="dialogId" th:value="${dialog.dialogId}" />
+                        <textarea id="blob-img" name="file" class="form-control" rows="4" placeholder="" style="display:none;"></textarea>
+                        <div>
+                            <img id="profilePicture" th:src="@{/resources/img/icons/staple.png}" alt="" data-target="#profileImageModal" data-toggle="modal">
+                        </div>
                         <input id="smile" th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.username} + '...'">
                         <input id="smile" th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.email} + '...'">
-                        <br>
+
+                        <!-- Modal Window -->
+                        <div class="modal fade" id="profileImageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-md" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalLabel" th:text="#{text_image_upload}"></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <div class="thumbimg ">
+                                                <input type="file" name="image" id="image" style="display:none;" accept="image/png, image/gif, image/jpeg">
+                                                <button type="button" onclick="image.click();" class="btn st-cropper-select-btn btn-secondary btn-md" th:text="#{button_choose_an_image}"></button>
+                                                <div class="showimg  d-flex justify-content-center pt-3" >
+                                                    <div class="row imgdiv" id="imgdiv" style="" >
+                                                        <img id="imagecan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-center">
+                                        <button type="button" onclick="onClickUpload()" class="btn btn-primary st-cropper-upload-btn btn-md" th:text="#{button_download}">
+                                            <i class="fa fa-spinner fa-spin showloading" style="color:white; font-size:12px; display:none;  position:absolute; margin-left: 3px; margin-top: 4px;"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-md st-cropper-close-btn" data-dismiss="modal" th:text="#{button_close}"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal Window End -->
+
                         <button class="comment-btn" th:text="#{button_send_message}"></button>
                     </form>
                 </div>
@@ -116,8 +160,16 @@
 </section>
 
 <!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!--<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
+
+<!-- partial -->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.js"></script>
+<script type="text/javascript" th:src="@{/resources/js/crop.js}"></script>
 
 </body>
 </html>

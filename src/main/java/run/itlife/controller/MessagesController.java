@@ -1,5 +1,7 @@
 package run.itlife.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,23 +10,31 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import run.itlife.entity.Messages;
 import run.itlife.service.DialogsService;
 import run.itlife.service.MessagesService;
 import run.itlife.utils.CommonsParams;
+import run.itlife.utils.SaveFile;
 
+import javax.servlet.ServletContext;
 import java.util.List;
+
+import static run.itlife.messages.ErrorMessages.ERROR;
 
 @Controller
 public class MessagesController {
     private final MessagesService messagesService;
     private final DialogsService dialogsService;
+    private final ServletContext context;
     @Autowired
     CommonsParams commonsParams;
+    private static final Logger log = LoggerFactory.getLogger(MessagesController.class);
 
-    public MessagesController(MessagesService messagesService, DialogsService dialogsService) {
+    public MessagesController(MessagesService messagesService, DialogsService dialogsService, ServletContext context) {
         this.messagesService = messagesService;
         this.dialogsService = dialogsService;
+        this.context = context;
     }
 
     @GetMapping("/messages/{dialogId}")
@@ -74,8 +84,24 @@ public class MessagesController {
 
     @PostMapping("messages/create/{dialogId}")
     @PreAuthorize("hasRole('USER')")
-    public String create(Messages messages, @PathVariable Long dialogId) {
-        messagesService.create(messages, dialogId);
-        return "redirect:/messages/" + dialogId;
+    public String create(ModelMap modelMap, Messages messages, @PathVariable Long dialogId, @RequestParam("file") String file) {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        SaveFile sf = new SaveFile();
+        String filename = "1";
+        try {
+            if (file != null && !file.equals("")) {
+                filename = sf.saveFileInDialog(username, context, file);
+            }
+            if (filename.equals("0")) {
+                commonsParams.setCommonParams(modelMap);
+                modelMap.put("dialogId", dialogId);
+                return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMessages";
+            }
+            messagesService.create(messages, dialogId, filename);
+            return "redirect:/messages/" + dialogId;
+        } catch (Exception e) {
+            log.error(ERROR + e);
+            return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMessages";
+        }
     }
 }

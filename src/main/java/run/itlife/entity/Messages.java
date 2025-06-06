@@ -32,6 +32,16 @@ public class Messages {
     @JoinColumn(name = "dialog_id")
     private Dialogs dialogs;
 
+    @Column(name="extention")
+    private String extFile;
+
+    public String getExtFile() {
+        return extFile;
+    }
+
+    public void setExtFile(String extFile) {
+        this.extFile = extFile;
+    }
 
     public User getUser() {
         return user;

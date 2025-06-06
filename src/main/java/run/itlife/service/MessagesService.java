@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MessagesService {
     List<Messages> listAllMessages();
-    void create(Messages messages, Long dialogId);
+    void create(Messages messages, Long dialogId, String file);
     List<Messages> findMessagesByDialogId(Long dialogId);
     Long countMessagesInDialog(Long dialogId);
     List<String> findUsersInDialog(Long dialogId);

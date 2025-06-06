@@ -13,6 +13,8 @@ import run.itlife.repository.MessagesRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static run.itlife.enums.FileExtensions.PNG;
+
 @Service
 @Transactional
 public class MessagesServiceImpl implements MessagesService {
@@ -37,13 +39,17 @@ public class MessagesServiceImpl implements MessagesService {
     }
 
     @Override
-    public void create(Messages messages, Long dialogId) {
+    public void create(Messages messages, Long dialogId, String file) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User userId = userService.findByUsername(username);
         Dialogs dialogIdCurrent = dialogsService.findById(dialogId);
         messages.setCreatedAt(LocalDateTime.now());
         messages.setUser(userId);
         messages.setDialogs(dialogIdCurrent);
+        if (file != null && !file.equals("") && !file.equals("1")) {
+            messages.setMessageFile(file);
+            messages.setExtFile(PNG.getExtension());
+        }
         messagesRepository.save(messages);
     }
 

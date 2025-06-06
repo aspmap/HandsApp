@@ -95,6 +95,7 @@ CREATE TABLE messages (
     user_id bigint REFERENCES users(user_id),
     message_text text NOT NULL,
     message_file text,
+    extention varchar(5),
     is_read boolean,
     created_at timestamp without time zone);
 

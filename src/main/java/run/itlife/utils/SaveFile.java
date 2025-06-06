@@ -29,7 +29,7 @@ public class SaveFile {
         Map<String, String> filenameMap = new HashMap<>();
         String extension;
 
-        if(file.getContentType() != null) {
+        if (file.getContentType() != null) {
             switch (file.getContentType()) {
                 case "video/mp4":
                     extension = MP4.getExtension();
@@ -66,6 +66,34 @@ public class SaveFile {
         }
         String filename = generateFileName() + POINT + PNG.getExtension();
         File dir = new File(context.getRealPath(PATH_IMAGE_USERS + username)); // TODO PATH_VIDEO_USERS вынести в аргументы функции
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File uploadedFile = new File(dir + SEPARATOR + filename); // TODO PATH_VIDEO_USERS вынести в аргументы функции
+        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+        stream.write(imageBytes);
+        BufferedImage originalImage = ImageIO.read(uploadedFile);
+        BufferedImage resizeImage = resizeImage(originalImage, IMAGE_WIDTH, IMAGE_HEIGHT);
+        File newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
+        ImageIO.write(resizeImage, PNG.getExtension(), newFileJPG);
+        stream.flush();
+        stream.close();
+        return filename;
+    }
+
+    public String saveFileInDialog(String username, ServletContext context, String file) throws IOException {
+        if (file.isEmpty()) {
+            return "1";
+        }
+
+        String base64Image = file.split(COMMA)[1];
+        byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+
+        if (imageBytes.length > MAX_UPLOAD_FILE_SIZE_IN_MB) {
+            return "0";
+        }
+        String filename = generateFileName() + POINT + PNG.getExtension();
+        File dir = new File(context.getRealPath(PATH_IMAGE_USERS + username + "/dialogs")); // TODO PATH_VIDEO_USERS вынести в аргументы функции
         if (!dir.exists()) {
             dir.mkdirs();
         }
