@@ -60,6 +60,9 @@ public class UserController {
     private final SubscriptionsService subscriptionsService;
     private final PostService postService;
     private final ServletContext context;
+    private final InformationGatheringMedia informationGatheringMedia;
+    private final InformationGatheringInfo informationGatheringInfo;
+    private final InformationGatheringArchive informationGatheringArchive;
     private static final String PATH_VIDEO_USERS = "/resources/video/users/";
     private static final String PATH_IMAGE_USERS = "/resources/img/users/";
     private static final String PATH_FILES = "/resources/users_archive/users/";
@@ -68,11 +71,14 @@ public class UserController {
     private Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    public UserController(UserService userService, ServletContext context, SubscriptionsService subscriptionsService, PostService postService) {
+    public UserController(UserService userService, ServletContext context, SubscriptionsService subscriptionsService, PostService postService, InformationGatheringMedia informationGatheringMedia, InformationGatheringInfo informationGatheringInfo, InformationGatheringArchive informationGatheringArchive) {
         this.userService = userService;
         this.context = context;
         this.subscriptionsService = subscriptionsService;
         this.postService = postService;
+        this.informationGatheringMedia = informationGatheringMedia;
+        this.informationGatheringInfo = informationGatheringInfo;
+        this.informationGatheringArchive = informationGatheringArchive;
     }
 
     @GetMapping("/login")
@@ -280,13 +286,10 @@ public class UserController {
                         File dirDestinationInfo = new File(context.getRealPath(PATH_FILES + username));
                         File dirOriginArchive = new File(context.getRealPath(PATH_FILES + username));
 
-                        InformationGathering informationGatheringPhoto = new InformationGatheringMedia();
-                        informationGatheringPhoto.copyUserInfo(username, dirOriginPhoto, dirDestinationPhoto);
-                        informationGatheringPhoto.copyUserInfo(username, dirOriginProfilePhoto, dirDestinationProfilePhoto);
-                        informationGatheringPhoto.copyUserInfo(username, dirOriginVideo, dirDestinationVideo);
-                        InformationGathering informationGatheringInfo = new InformationGatheringInfo(userService, postService);
+                        informationGatheringMedia.copyUserInfo(username, dirOriginPhoto, dirDestinationPhoto);
+                        informationGatheringMedia.copyUserInfo(username, dirOriginProfilePhoto, dirDestinationProfilePhoto);
+                        informationGatheringMedia.copyUserInfo(username, dirOriginVideo, dirDestinationVideo);
                         informationGatheringInfo.copyUserInfo(username, null, dirDestinationInfo);
-                        InformationGathering informationGatheringArchive = new InformationGatheringArchive();
                         informationGatheringArchive.copyUserInfo(username, dirOriginArchive, null);
                         File dirOriginArchiveZip = new File(dirOriginArchive + ".zip");
                         if (dirOriginArchiveZip.exists()) {

@@ -2,6 +2,7 @@ package run.itlife.utils.info;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +13,7 @@ import java.util.zip.ZipOutputStream;
 
 import static run.itlife.messages.ErrorMessages.ERROR;
 
+@Service
 public class InformationGatheringArchive implements InformationGathering {
     private Logger log = LoggerFactory.getLogger(InformationGatheringArchive.class);
     @Override

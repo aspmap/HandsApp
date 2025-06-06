@@ -2,6 +2,7 @@ package run.itlife.utils.info;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import run.itlife.entity.Post;
 import run.itlife.entity.User;
 import run.itlife.service.PostService;
@@ -13,12 +14,14 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static run.itlife.enums.FileExtensions.TXT;
 import static run.itlife.messages.ErrorMessages.ERROR;
 import static run.itlife.utils.OtherUtils.generateFileName;
 import static run.itlife.utils.SaveFile.POINT;
 
+@Service
 public class InformationGatheringInfo implements InformationGathering {
     private final UserService userService;
     private final PostService postService;
@@ -61,13 +64,14 @@ public class InformationGatheringInfo implements InformationGathering {
             dirDestination.mkdirs();
         }
         File txtFilePosts = new File(dirDestination, filenamePosts);
+        AtomicInteger ai = new AtomicInteger();
         try(Writer wrPosts = new FileWriter(txtFilePosts, Charset.forName("cp1251"));) {
-            for (int i = 0; i < posts.size(); i++) {
-                wrPosts.write("Post ID: " + posts.get(i).getPostId() + "\n");
-                wrPosts.write("Content: " + posts.get(i).getContent() + "\n");
-                wrPosts.write("Photo: " + posts.get(i).getPhoto() + "\n");
-                wrPosts.write("User: " + posts.get(i).getUser().getUsername() + "\n");
-                wrPosts.write("Content: " + posts.get(i).getCreatedAt() + "\n");
+            for (ai.get(); ai.get() < posts.size(); ai.incrementAndGet()) {
+                wrPosts.write("Post ID: " + posts.get(ai.get()).getPostId() + "\n");
+                wrPosts.write("Content: " + posts.get(ai.get()).getContent() + "\n");
+                wrPosts.write("Photo: " + posts.get(ai.get()).getPhoto() + "\n");
+                wrPosts.write("User: " + posts.get(ai.get()).getUser().getUsername() + "\n");
+                wrPosts.write("Content: " + posts.get(ai.get()).getCreatedAt() + "\n");
                 wrPosts.write("--------------------------------\n");
             }
         } catch (IOException e) {
