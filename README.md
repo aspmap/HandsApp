@@ -303,6 +303,11 @@ DELETE http://handsapp.top/api/post/295
 ![chat_02](https://github.com/user-attachments/assets/2eeb241f-60ae-443e-b0a0-00c6af978e54)
 
 
+> Отправка фото в чате
+
+![send_photo](https://github.com/user-attachments/assets/c82dfaec-aaef-4612-b8d1-a8c735710159)
+
+
 
 > Раздел "Мои лайки"
 
