@@ -77,4 +77,12 @@ public class DialogsController {
         modelMap.put("dialog", dialogsService.findById(dialogIdByUsers));
         return "dialogs/messages";
     }
+
+    @GetMapping("/update_count_dialogs")
+    @PreAuthorize("hasRole('USER')")
+    public String update_count_dialogs(ModelMap modelMap) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("unreadMessagesTotal", dialogsService.findUnreadDialogs(username).size());
+        return "fragments/unread-dialogs-count";
+    }
 }

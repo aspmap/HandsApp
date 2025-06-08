@@ -38,7 +38,6 @@
                                                         <img th:if="${dialogs_view.getValue().photo != null and dialogs_view.getValue().isGoogle == false}" th:src="@{'/resources/img/users/' + ${dialogs_view.getValue().username} + '/profile/' + ${dialogs_view.getValue().photo}}" alt="">
                                                         <img th:if="${dialogs_view.getValue().photo != null and dialogs_view.getValue().isGoogle == true}" th:src="${dialogs_view.getValue().photo}" alt="">
                                                     </a>
-
                                                 </div>
                                             </td>
                                             <td class="dialog-username-column user-comments profile-card">
@@ -84,8 +83,8 @@
 </section>
 
 <!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!--<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
 
 </body>
 </html>
