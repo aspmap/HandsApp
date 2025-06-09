@@ -100,6 +100,14 @@ CREATE TABLE messages (
     is_read boolean,
     created_at timestamp without time zone);
 
+CREATE TABLE music (
+    music_id bigserial PRIMARY KEY,
+    user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
+    file_name varchar(250),
+    project_name varchar(250),
+    song_name varchar(250),
+    song_year varchar(4));
+
 insert into dialogs (created_at) values ('2020-12-12 16:10:23'::timestamp);
 insert into dialogs (created_at) values ('2021-12-12 16:10:23'::timestamp);
 insert into dialogs (created_at) values ('2019-12-12 16:10:23'::timestamp);

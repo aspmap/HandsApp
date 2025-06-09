@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_music}"></title>
+  <th:block th:include="fragments.html :: header"/>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main">
+  <div class="wrapper">
+    <div class="left-col">
+
+      <!-- Music -->
+      <div class="post">
+        <div class="info">
+          <div class="user">
+            <p class="comments-logo" th:text="#{text_music}"></p>
+          </div>
+          <a class="audio-add" th:href="@{/music/add}"><span th:text="#{button_add_song}"></span></a>
+        </div>
+      </div>
+      <div class="post">
+        <div class="post-content">
+          <div class="view-source comments-view">
+            <div th:if="${!musicAll.isEmpty()}" th:each="musicAll_view: ${musicAll}">
+              <div class="media-body">
+                <div class="info-comments">
+                  <table class="dialogs-table">
+                    <tr>
+                      <td class="audio-controls">
+                          <audio controls>
+                            <source th:src="@{'/resources/music/users/' + ${user} + '/' + ${musicAll_view.getFileName()}}" type="audio/mpeg" />
+                            <p>
+                              Ваш браузер не поддерживает HTML5 аудио. Вот взамен
+                              <a th:href="@{'/resources/music/users/' + ${user} + '/' + ${musicAll_view.getFileName()}}">Ссылка на аудио</a>
+                            </p>
+                          </audio>
+                      </td>
+                      <td class="audio-text">
+                        <p th:text="${musicAll_view.songName +' ('+ musicAll_view.songYear} + ')'"></p>
+                        <b th:text="${musicAll_view.projectName}"></b>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div th:if="${musicAll.isEmpty()}">
+              <div class="media-body">
+                <div class="view-source comments-view">
+                  <br><br><br>
+                  <h1 class="h3 mb-3 font-weight-normal text-center"
+                      th:text="#{text_no_music}"></h1>
+                  <br><br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer th:insert="fragments.html :: footer"></footer>
+
+    </div>
+
+    <!-- Right Column -->
+    <div th:insert="fragments.html :: right-column"></div>
+  </div>
+</section>
+
+</body>
+</html>
