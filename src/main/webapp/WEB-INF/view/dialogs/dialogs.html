@@ -49,6 +49,9 @@
                                                 </div>
                                             </td>
                                             <td class="dialog-count-column">
+                                                <p th:each="lastDate: ${lastDateMessageOfDialog}">
+                                                    <span th:if="${dialogs_view.getKey().equals(lastDate.getDialogId()) && lastDate.getUpdatedAt() != null}" th:text="${lastDate.getUpdatedAt().dayOfMonth + '.' + lastDate.getUpdatedAt().monthValue + '.' + lastDate.getUpdatedAt().year + ' г.'}" class="username"></span>
+                                                </p>
                                                 <span th:each="count_messages: ${unreadMessages}">
                                                     <span th:if="${dialogs_view.getKey() == count_messages.getKey()}" th:text="'    ' + ${count_messages.getValue()}" class="username circle"></span>
                                                 </span>

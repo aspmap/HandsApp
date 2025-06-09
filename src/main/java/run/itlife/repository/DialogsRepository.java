@@ -30,8 +30,15 @@ public interface DialogsRepository extends JpaRepository<Dialogs, Long> {
             "left join user_dialog ud on d.dialog_id = ud.dialog_id " +
             "left join users u on u.user_id = ud.user_id " +
             "where u.username = ? " +
-            "order by d.created_at desc ", nativeQuery = true)
+            "order by d.updated_at desc ", nativeQuery = true)
     ArrayList<Long> findDialogsIdByUsername(String username);
+
+    @Query(value = "select * from dialogs d " +
+            "left join user_dialog ud on d.dialog_id = ud.dialog_id " +
+            "left join users u on u.user_id = ud.user_id " +
+            "where u.username = ? " +
+            "order by d.updated_at desc ", nativeQuery = true)
+    ArrayList<Dialogs> findDialogsByUsername(String username);
 
     @Query(value = "select count(m.dialog_id) from dialogs d " +
             "left join messages m on d.dialog_id = m.dialog_id " +

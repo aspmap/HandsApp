@@ -80,7 +80,8 @@ CREATE TABLE dialogs (
     dialog_id bigserial PRIMARY KEY,
     name_dialog varchar(150),
     img_dialog  varchar(150),
-    created_at timestamp without time zone);
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone);
 
 CREATE TABLE user_dialog (
     ud_id bigserial PRIMARY KEY,

@@ -50,7 +50,7 @@ public class DialogsServiceImpl implements DialogsService {
 
     @Override
     public Map<Long, User> findDialogs(String username) {
-        Map<Long, User> dialogs = new HashMap<>();
+        Map<Long, User> dialogs = new LinkedHashMap<>();
         ArrayList<Long> dialogsId = findDialogsIdByUsername(username);
 
         for (int i = 0; i < dialogsId.size(); i++) {
@@ -124,5 +124,10 @@ public class DialogsServiceImpl implements DialogsService {
     @Override
     public Map<String, Integer> countUnreadMessagesInDialog(Long dialogId, String username) {
         return dialogsRepository.countUnreadMessagesInDialog(dialogId, username);
+    }
+
+    @Override
+    public ArrayList<Dialogs> findDialogsByUsername(String username) {
+        return dialogsRepository.findDialogsByUsername(username);
     }
 }

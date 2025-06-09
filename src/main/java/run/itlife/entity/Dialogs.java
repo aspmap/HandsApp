@@ -9,21 +9,18 @@ import java.util.Set;
 @Entity
 @Table
 public class Dialogs implements Serializable {
-
     @Id
     @Column(name="dialog_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dialogId;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
     @Column(name = "name_dialog")
     private String nameDialog;
-
     @Column(name = "img_dialog")
     private String imgDialog;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_dialog",
@@ -31,9 +28,16 @@ public class Dialogs implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> users;
-
     @OneToMany(mappedBy = "dialogs")
     private List<Messages> messages;
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     public List<Messages> getMessages() {
         return messages;

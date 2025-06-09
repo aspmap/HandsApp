@@ -43,6 +43,7 @@ public class MessagesServiceImpl implements MessagesService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User userId = userService.findByUsername(username);
         Dialogs dialogIdCurrent = dialogsService.findById(dialogId);
+        dialogIdCurrent.setUpdatedAt(LocalDateTime.now());
         messages.setCreatedAt(LocalDateTime.now());
         messages.setUser(userId);
         messages.setDialogs(dialogIdCurrent);
@@ -93,6 +94,4 @@ public class MessagesServiceImpl implements MessagesService {
     public void isReadingMessage(long dialogId, String username) {
         messagesRepository.isReadingMessage(dialogId, username);
     }
-
-
 }
