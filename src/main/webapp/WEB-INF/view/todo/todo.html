@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_todo}"></title>
+  <th:block th:include="fragments.html :: header"/>
+</head>
+
+<script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
+<script type="text/javascript" th:src="@{/resources/js/complete-task.js}"></script>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main">
+  <div class="wrapper">
+    <div class="left-col">
+
+      <!-- TODO -->
+      <div class="post">
+        <div class="info">
+          <div class="user">
+            <p class="comments-logo" th:text="#{text_todo}"></p>
+          </div>
+          <a class="audio-add" th:href="@{/todo/add}"><span th:text="#{button_add_todo}"></span></a>
+        </div>
+      </div>
+      <div class="post">
+        <div class="post-content">
+          <div class="view-source comments-view">
+            <div th:if="${!toDoAll.isEmpty()}" th:each="toDoAll_view: ${toDoAll}" th:id="'todo-' + ${toDoAll_view.todoId}" th:name="'todo-' + ${toDoAll_view.todoId}">
+              <div class="media-body">
+                <div class="info-comments">
+                  <table class="dialogs-table">
+                    <tr>
+                      <td class="checkbox_complete">
+                        <input th:if="${toDoAll_view.getComplete() == false}" th:type="checkbox" name="is_complete" th:value="${toDoAll_view.getComplete()}" th:onclick="'completeTask(\'' + ${toDoAll_view.todoId} + '\');'"/>
+                        <input th:if="${toDoAll_view.getComplete() == true}" th:type="checkbox" checked name="is_complete" th:value="${toDoAll_view.getComplete()}"/>
+                      </td>
+                      <td class="todo-text">
+                        <p th:if="${toDoAll_view.getComplete() == false}" th:text="${toDoAll_view.getTodoText()} + ' (' + #{text_deadline} + ': ' + ${#temporals.format(toDoAll_view.getDeadlineAt(), 'dd.MM.yyyy г. HH:mm)')}"></p>
+                        <s th:if="${toDoAll_view.getComplete() == true}" th:text="${toDoAll_view.getTodoText()} + ' (' + #{text_deadline} + ': ' + ${#temporals.format(toDoAll_view.getDeadlineAt(), 'dd.MM.yyyy г. HH:mm)')}"></s>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div th:if="${toDoAll.isEmpty()}">
+              <div class="media-body">
+                <div class="view-source comments-view">
+                  <br><br><br>
+                  <h1 class="h3 mb-3 font-weight-normal text-center"
+                      th:text="#{text_no_todo_tasks}"></h1>
+                  <br><br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer th:insert="fragments.html :: footer"></footer>
+
+    </div>
+
+    <!-- Right Column -->
+    <div th:insert="fragments.html :: right-column"></div>
+  </div>
+</section>
+
+</body>
+</html>

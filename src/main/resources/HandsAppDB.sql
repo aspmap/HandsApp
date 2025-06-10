@@ -108,6 +108,13 @@ CREATE TABLE music (
     song_name varchar(250),
     song_year varchar(4));
 
+CREATE TABLE todo (
+    todo_id bigserial PRIMARY KEY,
+    user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
+    todo_text varchar(250),
+    is_complete boolean,
+    deadline_at timestamp without time zone));
+
 insert into dialogs (created_at) values ('2020-12-12 16:10:23'::timestamp);
 insert into dialogs (created_at) values ('2021-12-12 16:10:23'::timestamp);
 insert into dialogs (created_at) values ('2019-12-12 16:10:23'::timestamp);
