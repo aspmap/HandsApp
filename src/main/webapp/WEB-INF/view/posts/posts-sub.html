@@ -43,6 +43,11 @@
                                     <span th:text="${countSubscribe} + ' ' + #{label_subscriptions}"></span>
                                 </a>
                             </p>
+                            <p class="description-main">
+                                <a th:href="@{/wishlist_sub/{user}(user = ${user_sub})}">
+                                    <span th:text="#{text_wishlist_sub}"></span>
+                                </a>
+                            </p>
                         </div>
                     </div>
                     <a th:href="@{/dialogs/{usernameCompanion}(usernameCompanion = ${user_sub})}" th:if="${!user_sub.equals(user) && isClosedProfile == false}" class="btn btn-outline-dark" th:text="#{button_dialog}"></a>

@@ -16,6 +16,7 @@
     <link th:href="@{/resources/css/pagination.css}" rel="stylesheet">
     <link th:href="@{/resources/css/media.css}" rel="stylesheet">
     <link th:href="@{/resources/css/todo.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/wishlist.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
@@ -234,6 +235,9 @@
                                 <a th:href="@{/todo}"><span th:text="#{menu_my_todo_list}"></span></a>
                             </li>
                             <li>
+                                <a th:href="@{/wishlist}"><span th:text="#{menu_my_wishlist}"></span></a>
+                            </li>
+                            <li>
                                 <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
                             </li>
                             <li>
@@ -325,6 +329,9 @@
                             </li>
                             <li>
                                 <a th:href="@{/todo}"><span th:text="#{menu_my_todo_list}"></span></a>
+                            </li>
+                            <li>
+                                <a th:href="@{/wishlist}"><span th:text="#{menu_my_wishlist}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>

@@ -3,10 +3,9 @@ package run.itlife.dto;
 import org.springframework.format.annotation.DateTimeFormat;
 import run.itlife.entity.User;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class ToDoDto implements Serializable {
+public class ToDoDto {
     private Long todoId;
     private String todoText;
     private Boolean isComplete;

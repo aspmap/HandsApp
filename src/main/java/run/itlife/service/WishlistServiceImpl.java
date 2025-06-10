@@ -1,0 +1,53 @@
+package run.itlife.service;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import run.itlife.dto.WishlistDto;
+import run.itlife.entity.User;
+import run.itlife.entity.Wishlist;
+import run.itlife.repository.UserRepository;
+import run.itlife.repository.WishlistRepository;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+@Service
+@Transactional
+public class WishlistServiceImpl implements WishlistService {
+    private final WishlistRepository wishlistRepository;
+    private final UserRepository userRepository;
+
+    public WishlistServiceImpl(WishlistRepository wishlistRepository, UserRepository userRepository) {
+        this.wishlistRepository = wishlistRepository;
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public ArrayList<Wishlist> findAllByUserOrderByCreatedAt(User user) {
+        return wishlistRepository.findAllByUserOrderByCreatedAt(user);
+    }
+
+    @Override
+    public Long createElementOfWishlist(WishlistDto wishlistDto) {
+        Wishlist wishlist = new Wishlist();
+        wishlist.setNameWish(wishlistDto.getNameWish());
+        wishlist.setDescription(wishlistDto.getDescription());
+        wishlist.setPrice(wishlistDto.getPrice());
+        wishlist.setCreatedAt(LocalDateTime.now());
+        wishlist.setLink(wishlistDto.getLink());
+        wishlist.setPhoto(wishlistDto.getPhoto());
+        wishlist.setSecret(wishlistDto.getSecret());
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        wishlist.setUser(userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username)));
+        wishlistRepository.save(wishlist);
+        return wishlist.getWishlistId();
+    }
+
+    @Override
+    public ArrayList<Wishlist> findAllByUserAndSecretIsFalse(User user) {
+        return wishlistRepository.findAllByUserAndSecretIsFalse(user);
+    }
+}

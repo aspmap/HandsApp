@@ -1,12 +1,11 @@
 package run.itlife.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Table
 @Entity
-public class ToDo implements Serializable {
+public class ToDo {
     @Id
     @Column(name="todo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

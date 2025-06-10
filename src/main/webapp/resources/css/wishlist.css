@@ -1,0 +1,28 @@
+.wishlist-photo {
+    width: 150px;
+    max-width: 150px;
+}
+
+.td-wishlist-photo {
+    width: 30%;
+    align-content: start;
+}
+
+.wishlist-text-logo {
+    text-align: left;
+    font-size: 24px;
+}
+
+.wishlist-text {
+    text-align: left;
+    font-size: 14px;
+}
+
+.td-wishlist-text {
+    width: 70%;
+    align-content: start;
+}
+
+.img-icon {
+    height: 10px;
+}
