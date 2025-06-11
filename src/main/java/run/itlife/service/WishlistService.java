@@ -13,4 +13,6 @@ public interface WishlistService {
     ArrayList<Wishlist> findAllByUserAndSecretIsFalse(User user);
     void bookingWish(String user_sub, Long id);
     void unBookingWish(String user_sub, Long id);
+    Long countAllByUserAndIsBookingTrue(Long userId);
+    Long countAllByUser(Long userId);
 }

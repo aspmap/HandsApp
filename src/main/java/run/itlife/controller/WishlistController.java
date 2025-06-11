@@ -46,6 +46,8 @@ public class WishlistController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
         modelMap.put("wishlistAll", wishlistService.findAllByUserOrderByCreatedAt(user));
+        modelMap.put("countAllWishesByUser", wishlistService.countAllByUser(user.getUserId()));
+        modelMap.put("countAllWishesByUserAndIsBookingTrue", wishlistService.countAllByUserAndIsBookingTrue(user.getUserId()));
         return "wishlist/wishlist";
     }
 

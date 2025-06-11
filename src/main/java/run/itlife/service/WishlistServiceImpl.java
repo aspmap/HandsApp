@@ -73,4 +73,14 @@ public class WishlistServiceImpl implements WishlistService {
         wishlist.setBookingUser(null);
         wishlistRepository.save(wishlist);
     }
+
+    @Override
+    public Long countAllByUserAndIsBookingTrue(Long userId) {
+        return wishlistRepository.countAllByUserAndIsBookingTrue(userId);
+    }
+
+    @Override
+    public Long countAllByUser(Long userId) {
+        return wishlistRepository.countAllByUser(userId);
+    }
 }

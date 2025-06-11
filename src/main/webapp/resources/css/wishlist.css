@@ -18,6 +18,13 @@
     font-size: 14px;
 }
 
+.wishlist-count {
+    text-align: left;
+    font-size: 14px;
+    margin-left: 25px;
+    margin-top: 20px;
+}
+
 .td-wishlist-text {
     width: 70%;
     align-content: start;

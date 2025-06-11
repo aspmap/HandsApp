@@ -11,6 +11,12 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
     ArrayList<Wishlist> findAllByUserOrderByCreatedAt(User user);
     ArrayList<Wishlist> findAllByBookingUser(Long bookingUserId);
 
+    @Query(value = "select count(w.wishlist_id) from wishlist w where w.is_booking = 'true' and w.user_id = ? ", nativeQuery = true)
+    Long countAllByUserAndIsBookingTrue(Long userId);
+
+    @Query(value = "select count(w.wishlist_id) from wishlist w where w.user_id = ? ", nativeQuery = true)
+    Long countAllByUser(Long userId);
+
     @Query(value = "select * from wishlist w " +
             "where w.is_secret = 'false' and w.user_id = ? " +
             "order by w.created_at ", nativeQuery = true)

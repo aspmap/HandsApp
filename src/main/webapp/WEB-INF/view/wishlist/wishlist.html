@@ -22,9 +22,10 @@
             <p class="comments-logo" th:text="#{text_wishlist}"></p>
           </div>
           <a class="audio-add" th:href="@{/wishlist/add}"><span th:text="#{button_add_wishlist}"></span></a>
-          <a class="audio-add" th:href="@{/wishlist_my_booking}"><span th:text="'Мои брони'"></span></a>
+          <a class="audio-add" th:href="@{/wishlist_my_booking}"><span th:text="#{text_wishlist_reservations}"></span></a>
         </div>
       </div>
+      <p class="wishlist-count" th:text="#{text_reservations_1} + ' ' + ${countAllWishesByUserAndIsBookingTrue} + ' ' + #{text_reservations_2} + ' ' + ${countAllWishesByUser} + ' ' + #{text_reservations_3}"></p>
       <div class="post">
         <div class="post-content">
           <div class="view-source comments-view">

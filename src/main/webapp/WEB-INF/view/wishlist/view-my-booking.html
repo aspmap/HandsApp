@@ -34,7 +34,9 @@
                                     <table class="dialogs-table">
                                         <tr>
                                             <td class="td-wishlist-photo">
-                                                <img th:src="@{'/resources/img/users/' + ${wishlistAll_view.user} + '/wishlist/' + ${wishlistAll_view.photo}}" class="wishlist-photo" />
+                                                <a th:href="@{/wishlist_sub/} + ${wishlistAll_view.user}">
+                                                    <img th:src="@{'/resources/img/users/' + ${wishlistAll_view.user} + '/wishlist/' + ${wishlistAll_view.photo}}" class="wishlist-photo" />
+                                                </a>
                                                 <div>
                                                     <img class="img-icon" th:if="${wishlistAll_view.secret == true}" th:src="@{'/resources/img/icons/private.png'}" />
                                                     <span th:if="${wishlistAll_view.secret == true}" class="wishlist-text" th:text="#{text_wishlist_private}"></span>
