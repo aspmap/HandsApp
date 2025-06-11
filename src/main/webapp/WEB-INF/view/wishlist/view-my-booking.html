@@ -19,45 +19,38 @@
             <div class="post">
                 <div class="info">
                     <div class="user">
-                        <p class="comments-logo" th:text="#{text_wishlist_sub} + ' ' +  ${user_sub}"></p>
+                        <p class="comments-logo" th:text="#{text_wishlist_reservations}"></p>
                     </div>
+                    <a class="audio-add" th:href="@{/wishlist/add}"><span th:text="#{button_add_wishlist}"></span></a>
+                    <a class="audio-add" th:href="@{/wishlist}"><span th:text="#{text_wishlist}"></span></a>
                 </div>
             </div>
             <div class="post">
                 <div class="post-content">
                     <div class="view-source comments-view">
-                        <div th:if="${!wishlistAll.isEmpty()}" th:each="wishlistAll_view: ${wishlistAll}" th:id="'wishlist-' + ${wishlistAll_view.wishlistId}" th:name="'wishlist-' + ${wishlistAll_view.wishlistId}">
+                        <div th:if="${!bookingWishlists.isEmpty()}" th:each="wishlistAll_view: ${bookingWishlists}" th:id="'wishlist-' + ${wishlistAll_view.wishlistId}" th:name="'wishlist-' + ${wishlistAll_view.wishlistId}">
                             <div class="media-body">
                                 <div class="info-comments">
                                     <table class="dialogs-table">
                                         <tr>
                                             <td class="td-wishlist-photo">
-                                                <div th:if="${wishlistAll_view.isBooking() == true}" class="container-wish">
-                                                    <img th:src="@{'/resources/img/users/' + ${user_sub} + '/wishlist/' + ${wishlistAll_view.photo}}" class="wishlist-photo image image2" />
-                                                    <img th:src="@{'/resources/img/icons/booking.png'}" class="image image1" />
-                                                </div>
-                                                <img th:if="${wishlistAll_view.isBooking() == false || wishlistAll_view.isBooking() == null}" class="wishlist-photo" th:src="@{'/resources/img/users/' + ${user_sub} + '/wishlist/' + ${wishlistAll_view.photo}}">
+                                                <img th:src="@{'/resources/img/users/' + ${wishlistAll_view.user} + '/wishlist/' + ${wishlistAll_view.photo}}" class="wishlist-photo" />
                                                 <div>
                                                     <img class="img-icon" th:if="${wishlistAll_view.secret == true}" th:src="@{'/resources/img/icons/private.png'}" />
                                                     <span th:if="${wishlistAll_view.secret == true}" class="wishlist-text" th:text="#{text_wishlist_private}"></span>
                                                 </div>
                                                 <div>
-                                                    <img class="img-icon" th:if="${wishlistAll_view.secret == false || wishlistAll_view.secret == null}" th:src="@{'/resources/img/icons/public.png'}" />
+                                                    <img class="img-icon" th:if="${wishlistAll_view.secret == false}" th:src="@{'/resources/img/icons/public.png'}" />
                                                     <span th:if="${wishlistAll_view.secret == false}" class="wishlist-text" th:text="#{text_wishlist_public}"></span>
                                                 </div>
-                                                <div th:if="${wishlistAll_view.isBooking() == true}">
-                                                    <img class="img-icon" th:src="@{'/resources/img/icons/private.png'}" />
-                                                    <span class="wishlist-text" th:text="#{button_block_wish}"></span>
-                                                </div>
-
                                                 <div th:if="${wishlistAll_view.isBooking() == false || wishlistAll_view.isBooking() == null}">
                                                     <img class="img-icon" th:src="@{'/resources/img/icons/ok.png'}" />
-                                                    <a class="wishlist-add" th:href="@{/wishlist_sub/booking/} + ${user_sub} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_book_wish}"></span></a>
+                                                    <a class="wishlist-add" th:href="@{/booking_wishlist/booking/} + ${wishlistAll_view.user} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_book_wish}"></span></a>
                                                 </div>
 
                                                 <div th:if="${wishlistAll_view.isBooking() == true && wishlistAll_view.bookingUser.equals(userinfo.userId)}">
                                                     <img class="img-icon" th:src="@{'/resources/img/icons/delete.png'}" />
-                                                    <a class="wishlist-add" th:href="@{/wishlist_sub/unbooking/} + ${user_sub} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_unbook_wish}"></span></a>
+                                                    <a class="wishlist-add" th:href="@{/booking_wishlist/unbooking/} + ${wishlistAll_view.user} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_unbook_wish}"></span></a>
                                                 </div>
                                             </td>
                                             <td class="td-wishlist-text">
@@ -71,12 +64,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div th:if="${wishlistAll.isEmpty()}">
+                        <div th:if="${bookingWishlists.isEmpty()}">
                             <div class="media-body">
                                 <div class="view-source comments-view">
                                     <br><br><br>
                                     <h1 class="h3 mb-3 font-weight-normal text-center"
-                                        th:text="#{text_no_wishlist_sub}"></h1>
+                                        th:text="#{text_no_wishlist_reservations}"></h1>
                                     <br><br><br>
                                 </div>
                             </div>

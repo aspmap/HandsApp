@@ -49,12 +49,54 @@ public class WishlistController {
         return "wishlist/wishlist";
     }
 
-    @GetMapping("/wishlist_sub/{username}")
+    @GetMapping("/wishlist_my_booking")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String wishlist_sub(ModelMap modelMap, @PathVariable String username) {
+    public String wishlistMyBooking(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
-        modelMap.put("user_sub", username);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
+        modelMap.put("bookingWishlists", wishlistService.findAllByBookingUser(user.getUserId()));
+        return "wishlist/view-my-booking";
+    }
+
+    @GetMapping("/wishlist_sub/booking/{user_sub}/{id}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String wishlistBooking(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+        commonsParams.setCommonParams(modelMap);
+        wishlistService.bookingWish(user_sub, id);
+        return "redirect:" + SaveFile.SEPARATOR + "wishlist_sub" + SaveFile.SEPARATOR + user_sub;
+    }
+
+    @GetMapping("/wishlist_sub/unbooking/{user_sub}/{id}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String wishlistUnBooking(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+        commonsParams.setCommonParams(modelMap);
+        wishlistService.unBookingWish(user_sub, id);
+        return "redirect:" + SaveFile.SEPARATOR + "wishlist_sub" + SaveFile.SEPARATOR + user_sub;
+    }
+
+    @GetMapping("/booking_wishlist/booking/{user_sub}/{id}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String myWishlistBooking(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+        commonsParams.setCommonParams(modelMap);
+        wishlistService.bookingWish(user_sub, id);
+        return "redirect:" + SaveFile.SEPARATOR + "wishlist_my_booking";
+    }
+
+    @GetMapping("/booking_wishlist/unbooking/{user_sub}/{id}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String myWishlistUnBooking(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+        commonsParams.setCommonParams(modelMap);
+        wishlistService.unBookingWish(user_sub, id);
+        return "redirect:" + SaveFile.SEPARATOR + "wishlist_my_booking";
+    }
+
+    @GetMapping("/wishlist_sub/{user_sub}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String wishlist_sub(ModelMap modelMap, @PathVariable String user_sub) {
+        commonsParams.setCommonParams(modelMap);
+        modelMap.put("user_sub", user_sub);
+        User user = userService.findByUsername(user_sub);
         modelMap.put("wishlistAll", wishlistService.findAllByUserAndSecretIsFalse(user));
         return "wishlist/wishlist-sub";
     }

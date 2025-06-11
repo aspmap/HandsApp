@@ -124,6 +124,8 @@ CREATE TABLE wishlist (
     description varchar(500),
     price varchar(15),
     is_secret boolean,
+    is_booking boolean,
+    booking_user bigint,
     created_at timestamp without time zone);
 
 insert into dialogs (created_at) values ('2020-12-12 16:10:23'::timestamp);

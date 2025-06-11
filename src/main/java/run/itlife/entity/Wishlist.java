@@ -27,6 +27,34 @@ public class Wishlist {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @Column(name = "is_booking")
+    private Boolean isBooking;
+    @Column(name = "booking_user")
+    private Long bookingUser;
+
+    public boolean isSecret() {
+        return isSecret;
+    }
+
+    public void setSecret(boolean secret) {
+        isSecret = secret;
+    }
+
+    public Boolean isBooking() {
+        return isBooking;
+    }
+
+    public void setBooking(Boolean booking) {
+        isBooking = booking;
+    }
+
+    public Long getBookingUser() {
+        return bookingUser;
+    }
+
+    public void setBookingUser(Long bookingUser) {
+        this.bookingUser = bookingUser;
+    }
 
     public String getNameWish() {
         return nameWish;

@@ -14,6 +14,24 @@ public class WishlistDto {
     private Boolean isSecret;
     private LocalDateTime createdAt;
     private User user;
+    private Boolean isBooking;
+    private Long bookingUser;
+
+    public Boolean isBooking() {
+        return isBooking;
+    }
+
+    public void setBooking(Boolean booking) {
+        isBooking = booking;
+    }
+
+    public Long getBookingUser() {
+        return bookingUser;
+    }
+
+    public void setBookingUser(Long bookingUser) {
+        this.bookingUser = bookingUser;
+    }
 
     public Long getWishlistId() {
         return wishlistId;

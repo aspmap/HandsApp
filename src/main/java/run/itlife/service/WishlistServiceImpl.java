@@ -30,6 +30,11 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
+    public ArrayList<Wishlist> findAllByBookingUser(Long bookingUserId) {
+        return wishlistRepository.findAllByBookingUser(bookingUserId);
+    }
+
+    @Override
     public Long createElementOfWishlist(WishlistDto wishlistDto) {
         Wishlist wishlist = new Wishlist();
         wishlist.setNameWish(wishlistDto.getNameWish());
@@ -49,5 +54,23 @@ public class WishlistServiceImpl implements WishlistService {
     @Override
     public ArrayList<Wishlist> findAllByUserAndSecretIsFalse(User user) {
         return wishlistRepository.findAllByUserAndSecretIsFalse(user);
+    }
+
+    @Override
+    public void bookingWish(String user_sub, Long id) {
+        Wishlist wishlist = wishlistRepository.findById(id).orElseThrow();
+        wishlist.setBooking(true);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        wishlist.setBookingUser(userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username)).getUserId());
+        wishlistRepository.save(wishlist);
+    }
+
+    @Override
+    public void unBookingWish(String user_sub, Long id) {
+        Wishlist wishlist = wishlistRepository.findById(id).orElseThrow();
+        wishlist.setBooking(false);
+        wishlist.setBookingUser(null);
+        wishlistRepository.save(wishlist);
     }
 }
