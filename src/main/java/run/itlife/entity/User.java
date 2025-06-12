@@ -51,6 +51,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Wishlist> wishlist;
+    @OneToMany(mappedBy = "userWishlistPrivate")
+    @JsonIgnore
+    private List<WishlistPrivate> wishlistPrivate;
     @Column(name = "is_active")
     private boolean isActive;
     @Column(name = "is_google")
@@ -79,6 +82,38 @@ public class User implements UserDetails {
     private String email;
     private String phone;
     private String sex;
+
+    public List<Music> getMusic() {
+        return music;
+    }
+
+    public void setMusic(List<Music> music) {
+        this.music = music;
+    }
+
+    public List<ToDo> getTodo() {
+        return todo;
+    }
+
+    public void setTodo(List<ToDo> todo) {
+        this.todo = todo;
+    }
+
+    public List<Wishlist> getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(List<Wishlist> wishlist) {
+        this.wishlist = wishlist;
+    }
+
+    public List<WishlistPrivate> getWishlistPrivate() {
+        return wishlistPrivate;
+    }
+
+    public void setWishlistPrivate(List<WishlistPrivate> wishlistPrivate) {
+        this.wishlistPrivate = wishlistPrivate;
+    }
 
     public boolean getIsGoogle() {
         return isGoogle;

@@ -43,7 +43,7 @@
                                     <span th:text="${countSubscribe} + ' ' + #{label_subscriptions}"></span>
                                 </a>
                             </p>
-                            <p class="description-main">
+                            <p class="description-main" th:if="${!user_sub.equals(user)}">
                                 <a th:href="@{/wishlist_sub/{user}(user = ${user_sub})}">
                                     <span th:text="#{text_wishlist_sub}"></span>
                                 </a>

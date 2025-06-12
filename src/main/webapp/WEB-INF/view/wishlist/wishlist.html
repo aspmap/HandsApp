@@ -54,8 +54,26 @@
                         </div>
                         <div>
                           <img th:if="${wishlistAll_view.done != true}" class="img-icon" th:src="@{'/resources/img/icons/ok.png'}" />
-                          <a class="wishlist-add" th:href="@{/wishlist/complete/} + ${wishlistAll_view.wishlistId}"><span th:text="'Отметить исполненным'"></span></a>
+                          <a class="wishlist-add" th:href="@{/wishlist/complete/} + ${wishlistAll_view.wishlistId}"><span th:text="#{text_check_done}"></span></a>
                         </div>
+                        <span th:if="${wishlistAll_view.secret == true}" class="wishlist-text" th:text="#{text_who_sees_wishlist} + ' '"></span>
+                        <table>
+                          <tr>
+                            <div th:if="${!whoSeesSecretWishes.isEmpty()}" th:each="whoSeesSecretWishes_view: ${whoSeesSecretWishes}">
+                              <div th:if="${wishlistAll_view.wishlistId.equals(whoSeesSecretWishes_view.key)}" th:each="whoSeesSecretWishes_viewInner: ${whoSeesSecretWishes_view.value}">
+                                <td>
+                                  <div class="profile-pic-comments">
+                                    <a th:href="@{/sub-posts/} + ${whoSeesSecretWishes_viewInner.userWishlistPrivate.username}">
+                                      <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                      <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo != null and whoSeesSecretWishes_viewInner.userWishlistPrivate.isGoogle == false}" th:src="@{'/resources/img/users/' + ${whoSeesSecretWishes_viewInner.userWishlistPrivate.username} + '/profile/' + ${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo}}" alt="">
+                                      <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo != null and whoSeesSecretWishes_viewInner.userWishlistPrivate.isGoogle == true}" th:src="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo}" alt="">
+                                    </a>
+                                  </div>
+                                </td>
+                              </div>
+                            </div>
+                          </tr>
+                        </table>
                       </td>
                       <td class="td-wishlist-text">
                         <p class="wishlist-text-logo" th:text="${wishlistAll_view.nameWish}"></p>

@@ -1,7 +1,11 @@
 package run.itlife.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Table
 @Entity
@@ -33,6 +37,17 @@ public class Wishlist {
     private Boolean isDone;
     @Column(name = "booking_user")
     private Long bookingUser;
+    @OneToMany(mappedBy = "wishlistIdWishlistPrivate", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<WishlistPrivate> wishlistPrivate;
+
+    public Set<WishlistPrivate> getWishlistPrivate() {
+        return wishlistPrivate;
+    }
+
+    public void setWishlistPrivate(Set<WishlistPrivate> wishlistPrivate) {
+        this.wishlistPrivate = wishlistPrivate;
+    }
 
     public Boolean getBooking() {
         return isBooking;

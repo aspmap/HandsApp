@@ -17,6 +17,11 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
 
     ArrayList<Wishlist> findAllByUserAndIsDoneTrue(User user);
 
+    @Query(value = "select * from wishlist w " +
+            "left join wishlist_private wp on w.wishlist_id = wp.wishlist_id " +
+            "where wp.user_id = ? and w.user_id = ? ", nativeQuery = true)
+    ArrayList<Wishlist> findPrivateWishesByUser(Long userIdPrivate, Long userIdSub);
+
     @Query(value = "select count(w.wishlist_id) from wishlist w where w.is_booking = 'true' and w.user_id = ? and (w.is_done = 'false' or w.is_done is null) ", nativeQuery = true)
     Long countAllByUserAndIsBookingTrue(Long userId);
 
@@ -24,7 +29,13 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
     Long countAllByUser(Long userId);
 
     @Query(value = "select * from wishlist w " +
-            "where w.is_secret = 'false' and w.user_id = ? " +
+            "where (w.is_secret = 'false' or w.is_secret is null) and (w.is_done = 'false' or w.is_done is null) and w.user_id = ? " +
             "order by w.created_at ", nativeQuery = true)
     ArrayList<Wishlist> findAllByUserAndSecretIsFalse(User user);
+
+    @Query(value = "select * from wishlist w " +
+            "left join wishlist_private wp on w.wishlist_id = wp.wishlist_id " +
+            "where w.user_id = ? and w.is_secret = true ", nativeQuery = true)
+    ArrayList<Wishlist> whoSeesSecretWishes(Long userId);
+
 }

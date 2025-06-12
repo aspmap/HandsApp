@@ -7,11 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 import run.itlife.dto.WishlistDto;
 import run.itlife.entity.User;
 import run.itlife.entity.Wishlist;
+import run.itlife.entity.WishlistPrivate;
 import run.itlife.repository.UserRepository;
 import run.itlife.repository.WishlistRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -100,5 +103,23 @@ public class WishlistServiceImpl implements WishlistService {
         wishlist.setBooking(false);
         wishlist.setDone(true);
         wishlistRepository.save(wishlist);
+    }
+
+    @Override
+    public ArrayList<Wishlist> findPrivateWishesByUser(Long userIdPrivate, Long userIdSub) {
+        return wishlistRepository.findPrivateWishesByUser(userIdPrivate, userIdSub);
+    }
+
+    @Override
+    public Map<Long, ArrayList<WishlistPrivate>> whoSeesSecretWishes(Long userId) {
+        Map<Long, ArrayList<WishlistPrivate>> listOfPermissions = new HashMap<>();
+
+        ArrayList<Wishlist> whoSeesSecretWishes = wishlistRepository.whoSeesSecretWishes(userId);
+        for (int i = 0; i < whoSeesSecretWishes.size(); i++) {
+            ArrayList<WishlistPrivate> setToList = new ArrayList<>();
+            setToList.addAll(whoSeesSecretWishes.get(i).getWishlistPrivate());
+            listOfPermissions.put(whoSeesSecretWishes.get(i).getWishlistId(), setToList);
+        }
+        return listOfPermissions;
     }
 }

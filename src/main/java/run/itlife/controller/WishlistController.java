@@ -46,6 +46,7 @@ public class WishlistController {
         modelMap.put("wishlistAll", wishlistService.findAllByUserOrderByCreatedAt(user.getUserId()));
         modelMap.put("countAllWishesByUser", wishlistService.countAllByUser(user.getUserId()));
         modelMap.put("countAllWishesByUserAndIsBookingTrue", wishlistService.countAllByUserAndIsBookingTrue(user.getUserId()));
+        modelMap.put("whoSeesSecretWishes", wishlistService.whoSeesSecretWishes(user.getUserId()));
         return "wishlist/wishlist";
     }
 
@@ -98,6 +99,9 @@ public class WishlistController {
         modelMap.put("user_sub", user_sub);
         User user = userService.findByUsername(user_sub);
         modelMap.put("wishlistAll", wishlistService.findAllByUserAndSecretIsFalse(user));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userCurrent = userService.findByUsername(username);
+        modelMap.put("wishlistPrivate", wishlistService.findPrivateWishesByUser(userCurrent.getUserId(), user.getUserId()));
         return "wishlist/wishlist-sub";
     }
 
