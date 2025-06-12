@@ -124,9 +124,15 @@ CREATE TABLE wishlist (
     description varchar(500),
     price varchar(15),
     is_secret boolean,
+    is_done boolean,
     is_booking boolean,
     booking_user bigint,
     created_at timestamp without time zone);
+
+CREATE TABLE wishlist_private (
+    private_id bigserial PRIMARY KEY,
+    wishlist_id bigint REFERENCES wishlist(wishlist_id) ON DELETE CASCADE,
+    user_id bigint REFERENCES users(user_id) ON DELETE CASCADE);
 
 insert into dialogs (created_at) values ('2020-12-12 16:10:23'::timestamp);
 insert into dialogs (created_at) values ('2021-12-12 16:10:23'::timestamp);

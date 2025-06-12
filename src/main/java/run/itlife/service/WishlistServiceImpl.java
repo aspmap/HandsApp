@@ -25,13 +25,18 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public ArrayList<Wishlist> findAllByUserOrderByCreatedAt(User user) {
-        return wishlistRepository.findAllByUserOrderByCreatedAt(user);
+    public ArrayList<Wishlist> findAllByUserOrderByCreatedAt(Long userId) {
+        return wishlistRepository.findAllByUserOrderByCreatedAt(userId);
     }
 
     @Override
     public ArrayList<Wishlist> findAllByBookingUser(Long bookingUserId) {
         return wishlistRepository.findAllByBookingUser(bookingUserId);
+    }
+
+    @Override
+    public ArrayList<Wishlist> findAllByUserAndIsDoneTrue(User user) {
+        return wishlistRepository.findAllByUserAndIsDoneTrue(user);
     }
 
     @Override
@@ -82,5 +87,18 @@ public class WishlistServiceImpl implements WishlistService {
     @Override
     public Long countAllByUser(Long userId) {
         return wishlistRepository.countAllByUser(userId);
+    }
+
+    @Override
+    public void deleteWish(Long id) {
+        wishlistRepository.deleteById(id);
+    }
+
+    @Override
+    public void checkCompleteWish(Long wishId) {
+        Wishlist wishlist = wishlistRepository.findById(wishId).orElseThrow();
+        wishlist.setBooking(false);
+        wishlist.setDone(true);
+        wishlistRepository.save(wishlist);
     }
 }

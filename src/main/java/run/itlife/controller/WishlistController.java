@@ -3,14 +3,12 @@ package run.itlife.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import run.itlife.dto.WishlistDto;
 import run.itlife.entity.User;
 import run.itlife.service.UserService;
@@ -45,7 +43,7 @@ public class WishlistController {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
-        modelMap.put("wishlistAll", wishlistService.findAllByUserOrderByCreatedAt(user));
+        modelMap.put("wishlistAll", wishlistService.findAllByUserOrderByCreatedAt(user.getUserId()));
         modelMap.put("countAllWishesByUser", wishlistService.countAllByUser(user.getUserId()));
         modelMap.put("countAllWishesByUserAndIsBookingTrue", wishlistService.countAllByUserAndIsBookingTrue(user.getUserId()));
         return "wishlist/wishlist";
@@ -135,5 +133,35 @@ public class WishlistController {
             log.error(ERROR + NOT_PUBLISH_POST);
             return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeWishlist";
         }
+    }
+
+    @PostMapping("/wishlist/delete/{id}")
+    @PreAuthorize("hasRole('USER')")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteWish(@PathVariable Long id) {
+        wishlistService.deleteWish(id);
+    }
+
+    @GetMapping("/wishlist/done")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String wishlistDone(ModelMap modelMap) {
+        commonsParams.setCommonParams(modelMap);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        modelMap.put("wishlistIsdone", wishlistService.findAllByUserAndIsDoneTrue(user));
+        return "wishlist/wishlist-done";
+    }
+
+    @GetMapping("/wishlist/complete/{wishId}")
+    @PreAuthorize("hasRole('USER')")
+    public String completeWishlist(ModelMap modelMap, @PathVariable Long wishId) {
+        commonsParams.setCommonParams(modelMap);
+        wishlistService.checkCompleteWish(wishId);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        modelMap.put("wishlistAll", wishlistService.findAllByUserOrderByCreatedAt(user.getUserId()));
+        modelMap.put("countAllWishesByUser", wishlistService.countAllByUser(user.getUserId()));
+        modelMap.put("countAllWishesByUserAndIsBookingTrue", wishlistService.countAllByUserAndIsBookingTrue(user.getUserId()));
+        return "wishlist/wishlist";
     }
 }

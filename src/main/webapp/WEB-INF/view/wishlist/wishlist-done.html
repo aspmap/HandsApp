@@ -2,12 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_wishlist}"></title>
+  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_wishlist_done}"></title>
   <th:block th:include="fragments.html :: header"/>
 </head>
-
-<script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
-<script type="text/javascript" th:src="@{/resources/js/delete-wish.js}"></script>
 
 <!-- Navigation -->
 <body>
@@ -22,18 +19,17 @@
       <div class="post">
         <div class="info">
           <div class="user">
-            <p class="comments-logo" th:text="#{text_wishlist}"></p>
+            <p class="comments-logo" th:text="#{page_label_wishlist_done}"></p>
           </div>
           <a class="audio-add" th:href="@{/wishlist/add}"><span th:text="#{button_add_wishlist}"></span></a>
+          <a class="audio-add" th:href="@{/wishlist}"><span th:text="#{text_wishlist}"></span></a>
           <a class="audio-add" th:href="@{/wishlist_my_booking}"><span th:text="#{text_wishlist_reservations}"></span></a>
-          <a class="audio-add" th:href="@{/wishlist/done}"><span th:text="#{page_label_wishlist_done}"></span></a>
         </div>
       </div>
-      <p class="wishlist-count" th:text="#{text_reservations_1} + ' ' + ${countAllWishesByUserAndIsBookingTrue} + ' ' + #{text_reservations_2} + ' ' + ${countAllWishesByUser} + ' ' + #{text_reservations_3}"></p>
       <div class="post">
         <div class="post-content">
           <div class="view-source comments-view">
-            <div th:if="${!wishlistAll.isEmpty()}" th:each="wishlistAll_view: ${wishlistAll}" th:id="'wishlist-' + ${wishlistAll_view.wishlistId}" th:name="'wishlist-' + ${wishlistAll_view.wishlistId}">
+            <div th:if="${!wishlistIsdone.isEmpty()}" th:each="wishlistAll_view: ${wishlistIsdone}" th:id="'wishlist-' + ${wishlistAll_view.wishlistId}" th:name="'wishlist-' + ${wishlistAll_view.wishlistId}">
               <div class="media-body">
                 <div class="info-comments">
                   <table class="dialogs-table">
@@ -52,10 +48,6 @@
                           <img class="img-icon" th:src="@{'/resources/img/icons/delete.png'}" />
                           <a class="wishlist-add"  th:onclick="'deleteWish(\'' + ${wishlistAll_view.wishlistId} + '\');'"><span th:text="#{text_delete}"></span></a>
                         </div>
-                        <div>
-                          <img th:if="${wishlistAll_view.done != true}" class="img-icon" th:src="@{'/resources/img/icons/ok.png'}" />
-                          <a class="wishlist-add" th:href="@{/wishlist/complete/} + ${wishlistAll_view.wishlistId}"><span th:text="'Отметить исполненным'"></span></a>
-                        </div>
                       </td>
                       <td class="td-wishlist-text">
                         <p class="wishlist-text-logo" th:text="${wishlistAll_view.nameWish}"></p>
@@ -68,12 +60,12 @@
                 </div>
               </div>
             </div>
-            <div th:if="${wishlistAll.isEmpty()}">
+            <div th:if="${wishlistIsdone.isEmpty()}">
               <div class="media-body">
                 <div class="view-source comments-view">
                   <br><br><br>
                   <h1 class="h3 mb-3 font-weight-normal text-center"
-                      th:text="#{text_no_wishlist}"></h1>
+                      th:text="#{text_no_wishlist_done}"></h1>
                   <br><br><br>
                 </div>
               </div>

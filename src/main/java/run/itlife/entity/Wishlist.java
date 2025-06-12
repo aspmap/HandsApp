@@ -29,8 +29,22 @@ public class Wishlist {
     private User user;
     @Column(name = "is_booking")
     private Boolean isBooking;
+    @Column(name = "is_done")
+    private Boolean isDone;
     @Column(name = "booking_user")
     private Long bookingUser;
+
+    public Boolean getBooking() {
+        return isBooking;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
+    }
 
     public boolean isSecret() {
         return isSecret;

@@ -16,6 +16,19 @@ public class WishlistDto {
     private User user;
     private Boolean isBooking;
     private Long bookingUser;
+    private Boolean isDone;
+
+    public Boolean getBooking() {
+        return isBooking;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
+    }
 
     public Boolean isBooking() {
         return isBooking;
