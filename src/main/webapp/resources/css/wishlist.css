@@ -40,6 +40,12 @@
     margin-top: 5px;
 }
 
+.wishlist-add-done {
+    text-align: left;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
 .container-wish {
     position: relative;
 }
@@ -59,4 +65,13 @@
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.permission-table {
+    margin-bottom: 20px;
+}
+
+.td-wishlist-photo-permission {
+    width: 30%;
+    align-content: start;
 }

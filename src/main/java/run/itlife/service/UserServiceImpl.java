@@ -183,6 +183,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> searchUsersForPermission(String substring) {
+        return userRepository.searchUsersForPermission("%" + substring +"%");
+    }
+
+    @Override
     public List<User> searchGoogleUsers(String substring) {
         return userRepository.searchGoogleUsers("%" + substring +"%");
     }

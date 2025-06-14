@@ -190,6 +190,7 @@ public class WishlistController {
         Integer countAlreadyPermission;
         User user = new User();
         commonsParams.setCommonParams(modelMap);
+        String usernameCurrent = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
             user = userService.findByUsername(username);
             countAlreadyPermission = wishlistPrivateService.searchAlreadyPermissions(id, user.getUserId());
@@ -198,7 +199,7 @@ public class WishlistController {
             return "messages-templates" + SaveFile.SEPARATOR + "existPermission";
         }
 
-        if (countAlreadyPermission == 0) {
+        if (countAlreadyPermission == 0 && !username.equals(usernameCurrent)) {
             Wishlist wishlist = new Wishlist();
             wishlist.setWishlistId(id);
             wishlistPrivateDto.setWishlistIdWishlistPrivate(wishlist);
@@ -212,7 +213,6 @@ public class WishlistController {
 
     @GetMapping("/wishlist/permissions/delete/{id}")
     @PreAuthorize("hasRole('USER')")
-    @ResponseStatus(HttpStatus.OK)
     public String deletePermissions(ModelMap modelMap, @PathVariable Long id) {
         wishlistPrivateService.deletePermissions(id);
         commonsParams.setCommonParams(modelMap);
@@ -223,5 +223,13 @@ public class WishlistController {
         modelMap.put("countAllWishesByUserAndIsBookingTrue", wishlistService.countAllByUserAndIsBookingTrue(user.getUserId()));
         modelMap.put("whoSeesSecretWishes", wishlistService.whoSeesSecretWishes(user.getUserId()));
         return "wishlist/wishlist";
+    }
+
+    @PostMapping("/results/{username}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String getResults(ModelMap modelMap, @PathVariable String username) {
+        commonsParams.setCommonParams(modelMap);
+        modelMap.put("findUsers", userService.searchUsersForPermission(username));
+        return "wishlist/results";
     }
 }
