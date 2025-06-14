@@ -24,7 +24,7 @@
     border-radius: 2px;
     color: rgba(0, 0, 0, 0.5);
     text-align: center;
-    text-transform: capitalize;
+   /* text-transform: capitalize;*/
 }
 
 .search-box-handshakes::placeholder {

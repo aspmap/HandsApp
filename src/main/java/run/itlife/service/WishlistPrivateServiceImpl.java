@@ -15,6 +15,7 @@ public class WishlistPrivateServiceImpl implements WishlistPrivateService {
 
     @Override
     public void deletePermissions(Long id) {
+        wishlistPrivateRepository.deleteBooking(id);
         wishlistPrivateRepository.deleteById(id);
     }
 

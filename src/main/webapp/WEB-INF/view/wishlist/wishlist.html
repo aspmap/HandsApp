@@ -35,7 +35,7 @@
           <div class="view-source comments-view">
             <div th:if="${!wishlistAll.isEmpty()}" th:each="wishlistAll_view: ${wishlistAll}" th:id="'wishlist-' + ${wishlistAll_view.wishlistId}" th:name="'wishlist-' + ${wishlistAll_view.wishlistId}">
               <div class="media-body">
-                <div class="info-comments">
+                <div class="info-comments-permission">
                   <table class="dialogs-table">
                     <tr>
                       <td class="td-wishlist-photo">
@@ -72,7 +72,7 @@
                   </table>
                 </div>
                 <div class="info-comments">
-                  <table th:if="${whoSeesSecretWishes.size() > 0}" class="permission-table">
+                  <table th:if="${!whoSeesSecretWishes.isEmpty()}" class="permission-table">
                     <tr th:each="whoSeesSecretWishes_view: ${whoSeesSecretWishes}">
                           <td th:if="${wishlistAll_view.wishlistId.equals(whoSeesSecretWishes_view.key)}" th:each="whoSeesSecretWishes_viewInner: ${whoSeesSecretWishes_view.value}" class="td-wishlist-photo-permission">
                             <div class="profile-pic-comments container-wish">

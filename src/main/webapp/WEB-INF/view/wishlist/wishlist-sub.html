@@ -118,10 +118,7 @@
                             </div>
                         </div>
 
-
-
-
-                        <div th:if="${wishlistAll.isEmpty()}">
+                        <div th:if="${wishlistAll.isEmpty() && wishlistPrivate.isEmpty()}">
                             <div class="media-body">
                                 <div class="view-source comments-view">
                                     <br><br><br>

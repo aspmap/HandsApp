@@ -19,7 +19,7 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
 
     @Query(value = "select * from wishlist w " +
             "left join wishlist_private wp on w.wishlist_id = wp.wishlist_id " +
-            "where wp.user_id = ? and w.user_id = ? ", nativeQuery = true)
+            "where (w.is_done = 'false' or w.is_done is null) and wp.user_id = ? and w.user_id = ? ", nativeQuery = true)
     ArrayList<Wishlist> findPrivateWishesByUser(Long userIdPrivate, Long userIdSub);
 
     @Query(value = "select count(w.wishlist_id) from wishlist w where w.is_booking = 'true' and w.user_id = ? and (w.is_done = 'false' or w.is_done is null) ", nativeQuery = true)

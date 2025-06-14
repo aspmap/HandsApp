@@ -173,6 +173,7 @@ public class WishlistController {
         modelMap.put("wishlistAll", wishlistService.findAllByUserOrderByCreatedAt(user.getUserId()));
         modelMap.put("countAllWishesByUser", wishlistService.countAllByUser(user.getUserId()));
         modelMap.put("countAllWishesByUserAndIsBookingTrue", wishlistService.countAllByUserAndIsBookingTrue(user.getUserId()));
+        modelMap.put("whoSeesSecretWishes", wishlistService.whoSeesSecretWishes(user.getUserId()));
         return "wishlist/wishlist";
     }
 

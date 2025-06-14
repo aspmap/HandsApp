@@ -14,25 +14,46 @@
      th:insert="fragments.html :: navigation-add-img"></nav>
 
 <!-- Page Content -->
-<section class="main-post">
-    <div class="wrapper-posts">
+<section class="main">
+    <div class="wrapper">
         <div class="left-col">
-            <div class="search_box">
-                <br/>
-                <br/>
-                <br/>
-                <form method="POST" th:action="@{/wishlist/permissions/add}">
-                    <input type="hidden" name="wishlistIdWishlistPrivate" th:value="${id}"/>
-                    <input name="userWishlistPrivate" id="search" class="profile-box description" th:placeholder="#{input_enter_username_wish}"/>
-                    <div id="search_box-result"></div>
-                    <button type="submit" class="btn btn-outline-dark" th:text="#{button_add_permission}"></button>
-                </form>
+            <div class="post">
+                <div class="info">
+                    <div class="user">
+                        <p class="comments-logo" th:text="#{page_label_add_permission}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-content">
+                    <div class="view-source comments-view">
+                        <div class="media-body">
+                            <div class="info-comments">
+                                <div class="user-comments">
+                                    <div class="profile-card">
+                                        <div class="search_box">
+                                            <form method="POST" th:action="@{/wishlist/permissions/add}">
+                                                <input type="hidden" name="wishlistIdWishlistPrivate" th:value="${id}"/>
+                                                <input name="userWishlistPrivate" id="search" class="profile-box-permission description" th:placeholder="#{input_enter_username_wish}"/>
+                                                <div id="search_box-result"></div>
+                                                <button type="submit" class="btn btn-outline-dark" th:text="#{button_add_permission}"></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Footer -->
             <footer th:insert="fragments.html :: footer"></footer>
-
         </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
     </div>
 </section>
 
