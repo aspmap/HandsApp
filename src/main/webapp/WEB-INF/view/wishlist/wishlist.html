@@ -56,17 +56,22 @@
                           <img th:if="${wishlistAll_view.done != true}" class="img-icon" th:src="@{'/resources/img/icons/ok.png'}" />
                           <a class="wishlist-add" th:href="@{/wishlist/complete/} + ${wishlistAll_view.wishlistId}"><span th:text="#{text_check_done}"></span></a>
                         </div>
-                        <span th:if="${wishlistAll_view.secret == true}" class="wishlist-text" th:text="#{text_who_sees_wishlist} + ' '"></span>
+                        <div th:if="${wishlistAll_view.secret == true}">
+                          <img class="img-icon" th:src="@{'/resources/img/icons/private.png'}" />
+                          <a class="wishlist-add" th:href="@{/wishlist/permissions/add/} + ${wishlistAll_view.wishlistId}"><span th:text="#{text_add_permission}"></span></a>
+                        </div>
+                        <span th:if="${wishlistAll_view.secret == true}" class="wishlist-text" th:text="#{text_who_sees_wishlist}"></span>
                         <table>
                           <tr>
                             <div th:if="${!whoSeesSecretWishes.isEmpty()}" th:each="whoSeesSecretWishes_view: ${whoSeesSecretWishes}">
                               <div th:if="${wishlistAll_view.wishlistId.equals(whoSeesSecretWishes_view.key)}" th:each="whoSeesSecretWishes_viewInner: ${whoSeesSecretWishes_view.value}">
                                 <td>
-                                  <div class="profile-pic-comments">
-                                    <a th:href="@{/sub-posts/} + ${whoSeesSecretWishes_viewInner.userWishlistPrivate.username}">
-                                      <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                      <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo != null and whoSeesSecretWishes_viewInner.userWishlistPrivate.isGoogle == false}" th:src="@{'/resources/img/users/' + ${whoSeesSecretWishes_viewInner.userWishlistPrivate.username} + '/profile/' + ${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo}}" alt="">
-                                      <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo != null and whoSeesSecretWishes_viewInner.userWishlistPrivate.isGoogle == true}" th:src="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo}" alt="">
+                                  <div class="profile-pic-comments container-wish">
+                                    <a th:href="@{/wishlist/permissions/delete/} + ${whoSeesSecretWishes_viewInner.privateIdWishlistPrivate}">
+                                      <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" class="image image2">
+                                      <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo != null and whoSeesSecretWishes_viewInner.userWishlistPrivate.isGoogle == false}" th:src="@{'/resources/img/users/' + ${whoSeesSecretWishes_viewInner.userWishlistPrivate.username} + '/profile/' + ${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo}}" class="image image2">
+                                      <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo != null and whoSeesSecretWishes_viewInner.userWishlistPrivate.isGoogle == true}" th:src="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo}" class="image image2">
+                                      <img th:src="@{'/resources/img/icons/delete_perm.png'}" class="image image1" />
                                     </a>
                                   </div>
                                 </td>

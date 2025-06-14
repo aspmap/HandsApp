@@ -1,17 +1,22 @@
 package run.itlife.controller;
 
+import org.apache.kafka.common.protocol.types.Field;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import run.itlife.dto.WishlistDto;
+import run.itlife.dto.WishlistPrivateDto;
 import run.itlife.entity.User;
+import run.itlife.entity.Wishlist;
 import run.itlife.service.UserService;
+import run.itlife.service.WishlistPrivateService;
 import run.itlife.service.WishlistService;
 import run.itlife.utils.CommonsParams;
 import run.itlife.utils.SaveFile;
@@ -27,13 +32,15 @@ public class WishlistController {
     CommonsParams commonsParams;
     private final UserService userService;
     private final WishlistService wishlistService;
+    private final WishlistPrivateService wishlistPrivateService;
     private final ServletContext context;
     private static final Logger log = LoggerFactory.getLogger(WishlistController.class);
 
     @Autowired
-    public WishlistController(UserService userService, WishlistService wishlistService, ServletContext context) {
+    public WishlistController(UserService userService, WishlistService wishlistService, WishlistPrivateService wishlistPrivateService, ServletContext context) {
         this.userService = userService;
         this.wishlistService = wishlistService;
+        this.wishlistPrivateService = wishlistPrivateService;
         this.context = context;
     }
 
@@ -166,6 +173,55 @@ public class WishlistController {
         modelMap.put("wishlistAll", wishlistService.findAllByUserOrderByCreatedAt(user.getUserId()));
         modelMap.put("countAllWishesByUser", wishlistService.countAllByUser(user.getUserId()));
         modelMap.put("countAllWishesByUserAndIsBookingTrue", wishlistService.countAllByUserAndIsBookingTrue(user.getUserId()));
+        return "wishlist/wishlist";
+    }
+
+    @GetMapping("/wishlist/permissions/add/{id}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String addPermissions(ModelMap modelMap, @PathVariable Long id) {
+        commonsParams.setCommonParams(modelMap);
+        return "wishlist/add-permission";
+    }
+
+    @PostMapping("/wishlist/permissions/add")
+    @PreAuthorize("hasRole('USER')")
+    public String addPermissionsPost(ModelMap modelMap, @RequestParam("userWishlistPrivate") String username, @RequestParam("wishlistIdWishlistPrivate") Long id) {
+        WishlistPrivateDto  wishlistPrivateDto = new WishlistPrivateDto();
+        Integer countAlreadyPermission;
+        User user = new User();
+        commonsParams.setCommonParams(modelMap);
+        try {
+            user = userService.findByUsername(username);
+            countAlreadyPermission = wishlistPrivateService.searchAlreadyPermissions(id, user.getUserId());
+        } catch (UsernameNotFoundException e) {
+            log.error(ERROR + e);
+            return "messages-templates" + SaveFile.SEPARATOR + "existPermission";
+        }
+
+        if (countAlreadyPermission == 0) {
+            Wishlist wishlist = new Wishlist();
+            wishlist.setWishlistId(id);
+            wishlistPrivateDto.setWishlistIdWishlistPrivate(wishlist);
+            wishlistPrivateDto.setUserWishlistPrivate(user);
+            wishlistService.addPermission(wishlistPrivateDto);
+            return "redirect:" + SaveFile.SEPARATOR + "wishlist";
+        }
+        return "messages-templates" + SaveFile.SEPARATOR + "existPermission";
+
+    }
+
+    @GetMapping("/wishlist/permissions/delete/{id}")
+    @PreAuthorize("hasRole('USER')")
+    @ResponseStatus(HttpStatus.OK)
+    public String deletePermissions(ModelMap modelMap, @PathVariable Long id) {
+        wishlistPrivateService.deletePermissions(id);
+        commonsParams.setCommonParams(modelMap);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        modelMap.put("wishlistAll", wishlistService.findAllByUserOrderByCreatedAt(user.getUserId()));
+        modelMap.put("countAllWishesByUser", wishlistService.countAllByUser(user.getUserId()));
+        modelMap.put("countAllWishesByUserAndIsBookingTrue", wishlistService.countAllByUserAndIsBookingTrue(user.getUserId()));
+        modelMap.put("whoSeesSecretWishes", wishlistService.whoSeesSecretWishes(user.getUserId()));
         return "wishlist/wishlist";
     }
 }

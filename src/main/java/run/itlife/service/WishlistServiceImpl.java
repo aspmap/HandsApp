@@ -5,10 +5,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import run.itlife.dto.WishlistDto;
+import run.itlife.dto.WishlistPrivateDto;
 import run.itlife.entity.User;
 import run.itlife.entity.Wishlist;
 import run.itlife.entity.WishlistPrivate;
 import run.itlife.repository.UserRepository;
+import run.itlife.repository.WishlistPrivateRepository;
 import run.itlife.repository.WishlistRepository;
 
 import java.time.LocalDateTime;
@@ -21,10 +23,12 @@ import java.util.Map;
 public class WishlistServiceImpl implements WishlistService {
     private final WishlistRepository wishlistRepository;
     private final UserRepository userRepository;
+    private final WishlistPrivateRepository wishlistPrivateRepository;
 
-    public WishlistServiceImpl(WishlistRepository wishlistRepository, UserRepository userRepository) {
+    public WishlistServiceImpl(WishlistRepository wishlistRepository, UserRepository userRepository, WishlistPrivateRepository wishlistPrivateRepository) {
         this.wishlistRepository = wishlistRepository;
         this.userRepository = userRepository;
+        this.wishlistPrivateRepository = wishlistPrivateRepository;
     }
 
     @Override
@@ -113,7 +117,6 @@ public class WishlistServiceImpl implements WishlistService {
     @Override
     public Map<Long, ArrayList<WishlistPrivate>> whoSeesSecretWishes(Long userId) {
         Map<Long, ArrayList<WishlistPrivate>> listOfPermissions = new HashMap<>();
-
         ArrayList<Wishlist> whoSeesSecretWishes = wishlistRepository.whoSeesSecretWishes(userId);
         for (int i = 0; i < whoSeesSecretWishes.size(); i++) {
             ArrayList<WishlistPrivate> setToList = new ArrayList<>();
@@ -121,5 +124,13 @@ public class WishlistServiceImpl implements WishlistService {
             listOfPermissions.put(whoSeesSecretWishes.get(i).getWishlistId(), setToList);
         }
         return listOfPermissions;
+    }
+
+    @Override
+    public void addPermission(WishlistPrivateDto wishlistPrivateDto) {
+        WishlistPrivate wishlistPrivate = new WishlistPrivate();
+        wishlistPrivate.setWishlistIdWishlistPrivate(wishlistPrivateDto.getWishlistIdWishlistPrivate());
+        wishlistPrivate.setUserWishlistPrivate(wishlistPrivateDto.getUserWishlistPrivate());
+        wishlistPrivateRepository.save(wishlistPrivate);
     }
 }

@@ -1,6 +1,7 @@
 package run.itlife.service;
 
 import run.itlife.dto.WishlistDto;
+import run.itlife.dto.WishlistPrivateDto;
 import run.itlife.entity.User;
 import run.itlife.entity.Wishlist;
 import run.itlife.entity.WishlistPrivate;
@@ -22,4 +23,5 @@ public interface WishlistService {
     void checkCompleteWish(Long wishId);
     ArrayList<Wishlist> findPrivateWishesByUser(Long userIdPrivate, Long userIdSub);
     Map<Long, ArrayList<WishlistPrivate>> whoSeesSecretWishes(Long userId);
+    void addPermission(WishlistPrivateDto wishlistPrivateDto);
 }

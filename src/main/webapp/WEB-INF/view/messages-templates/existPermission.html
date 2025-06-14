@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_add_permissoin}"></title>
+  <th:block th:include="fragments.html :: header-login"/>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main-post">
+  <div class="wrapper-posts">
+    <div class="left-col">
+      <br><br><br><br>
+      <h1 class="h3 mb-3 font-weight-normal text-center" th:text="#{text_error_add_permission}"></h1>
+      <div class="signup">
+        <br><br><br><br>
+        <p class="text-center">
+          <a th:href="@{/wishlist}" th:text="#{text_back_to_add_permission}"></a>
+        </p>
+      </div>
+      <br><br><br><br>
+      <p th:insert="fragments.html :: footer-login"></p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

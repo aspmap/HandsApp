@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_add_permission}"></title>
+    <th:block th:include="fragments.html :: header-add-img"/>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation-add-img"></nav>
+
+<!-- Page Content -->
+<section class="main-post">
+    <div class="wrapper-posts">
+        <div class="left-col">
+            <br/>
+            <br/>
+            <br/>
+            <form method="POST" th:action="@{/wishlist/permissions/add}">
+                <input type="hidden" name="wishlistIdWishlistPrivate" th:value="${id}" />
+                <input name="userWishlistPrivate" class="profile-box description" th:placeholder="#{input_enter_username_wish}" />
+                <br/>
+                <br/>
+                <button type="submit" class="btn btn-outline-dark" th:text="#{button_add_permission}"></button>
+            </form>
+            <br/>
+
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+
+        </div>
+    </div>
+</section>
+
+<!-- partial -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.js"></script>
+<script type="text/javascript" th:src="@{/resources/js/crop.js}"></script>
+
+</body>
+</html>
