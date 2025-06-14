@@ -8,6 +8,7 @@
 
 <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
 <script type="text/javascript" th:src="@{/resources/js/complete-task.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/delete-todo.js}"></script>
 
 <!-- Navigation -->
 <body>
@@ -42,6 +43,11 @@
                       <td class="todo-text">
                         <p th:if="${toDoAll_view.getComplete() == false}" th:text="${toDoAll_view.getTodoText()} + ' (' + #{text_deadline} + ': ' + ${#temporals.format(toDoAll_view.getDeadlineAt(), 'dd.MM.yyyy г. HH:mm)')}"></p>
                         <s th:if="${toDoAll_view.getComplete() == true}" th:text="${toDoAll_view.getTodoText()} + ' (' + #{text_deadline} + ': ' + ${#temporals.format(toDoAll_view.getDeadlineAt(), 'dd.MM.yyyy г. HH:mm)')}"></s>
+                      </td>
+                      <td class="todo-text">
+                        <a class="wishlist-add"  th:onclick="'deleteTodo(\'' + ${toDoAll_view.todoId} + '\');'">
+                          <img class="img-icon" th:src="@{'/resources/img/icons/delete.png'}" />
+                        </a>
                       </td>
                     </tr>
                   </table>

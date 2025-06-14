@@ -10,4 +10,5 @@ public interface ToDoService {
     ArrayList<ToDo> findAllByUser(User user);
     Long createToDoTask(ToDoDto toDoDto);
     void completeTask(Long toDoId);
+    void deleteTodo(Long id);
 }

@@ -47,4 +47,9 @@ public class ToDoServiceImpl implements ToDoService {
         todo.setComplete(true);
         toDoRepository.save(todo);
     }
+
+    @Override
+    public void deleteTodo(Long id) {
+        toDoRepository.deleteById(id);
+    }
 }

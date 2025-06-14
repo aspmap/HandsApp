@@ -66,4 +66,11 @@ public class ToDoController {
     public void completeTask(@PathVariable Long toDoId) {
         toDoService.completeTask(toDoId);
     }
+
+    @PostMapping("/todo/delete/{id}")
+    @PreAuthorize("hasRole('USER')")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteToDo(@PathVariable Long id) {
+        toDoService.deleteTodo(id);
+    }
 }
