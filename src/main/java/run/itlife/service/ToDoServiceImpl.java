@@ -52,4 +52,14 @@ public class ToDoServiceImpl implements ToDoService {
     public void deleteTodo(Long id) {
         toDoRepository.deleteById(id);
     }
+
+    @Override
+    public ArrayList<ToDo> findCompletedTasks(Long userId) {
+        return toDoRepository.findCompletedTasks(userId);
+    }
+
+    @Override
+    public ArrayList<ToDo> findUnCompletedTasks(Long userId) {
+        return toDoRepository.findUnCompletedTasks(userId);
+    }
 }

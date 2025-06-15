@@ -39,8 +39,18 @@ public class ToDoController {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
-        modelMap.put("toDoAll", toDoService.findAllByUser(user));
+        modelMap.put("toDoAll", toDoService.findUnCompletedTasks(user.getUserId()));
         return "todo/todo";
+    }
+
+    @GetMapping("/todo/completed")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String todosCompleted(ModelMap modelMap) {
+        commonsParams.setCommonParams(modelMap);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        modelMap.put("toDoAll", toDoService.findCompletedTasks(user.getUserId()));
+        return "todo/todo-completed";
     }
 
     @GetMapping("/todo/add")

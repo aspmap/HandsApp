@@ -11,4 +11,6 @@ public interface ToDoService {
     Long createToDoTask(ToDoDto toDoDto);
     void completeTask(Long toDoId);
     void deleteTodo(Long id);
+    ArrayList<ToDo> findCompletedTasks(Long userId);
+    ArrayList<ToDo> findUnCompletedTasks(Long userId);
 }
