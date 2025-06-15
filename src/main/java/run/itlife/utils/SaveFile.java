@@ -17,7 +17,7 @@ import static run.itlife.utils.OtherUtils.generateFileName;
 public class SaveFile {
     private static final String PATH_VIDEO_USERS = "/resources/video/users/";
     private static final String PATH_IMAGE_USERS = "/resources/img/users/";
-    private static final String PATH_MUSIC_USERS = "/resources/music/users/";
+    public static final String PATH_MUSIC_USERS = "/resources/music/users/";
     public static final String SEPARATOR = "/";
     private static final String COMMA = ",";
     public static final String POINT = ".";
@@ -116,6 +116,20 @@ public class SaveFile {
         byte[] bytes = file.getBytes();
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(dir + SEPARATOR + filename)));
         stream.write(bytes);
+        stream.close();
+        filenameMap.put(filename, MP3.getExtension());
+        return filenameMap;
+    }
+
+    public Map<String, String> saveMusicFile(String username, ServletContext context, byte[] file) throws IOException {
+        Map<String, String> filenameMap = new HashMap<>();
+        String filename = generateFileName() + POINT + MP3.getExtension();
+        File dir = new File(context.getRealPath(PATH_MUSIC_USERS + username));
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(dir + SEPARATOR + filename)));
+        stream.write(file);
         stream.close();
         filenameMap.put(filename, MP3.getExtension());
         return filenameMap;

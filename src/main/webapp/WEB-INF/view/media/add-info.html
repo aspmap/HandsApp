@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_new_song}"></title>
+    <th:block th:include="fragments.html :: header"/>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+<br><br>
+
+<!-- Page Content -->
+<section class="main-post">
+    <div class="wrapper-posts">
+        <div class="left-col">
+            <form method="POST" th:action="@{/music/save}">
+                <br>
+                <input name="projectName" class="profile-box description" th:value="${projectName}" th:placeholder="#{input_enter_project_name_text}" />
+                <input name="songName" class="profile-box description" th:value="${songName}" th:placeholder="#{input_enter_song_name_text}" />
+                <input name="songYear" class="profile-box description" th:value="${songYear}" th:placeholder="#{input_enter_release_year_text}" />
+                <br>
+                <button type="submit" class="btn btn-outline-dark" th:text="#{button_download}"></button>
+            </form>
+            <br/>
+
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+
+        </div>
+    </div>
+</section>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

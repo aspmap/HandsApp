@@ -6,6 +6,9 @@
   <th:block th:include="fragments.html :: header"/>
 </head>
 
+<script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
+<script type="text/javascript" th:src="@{/resources/js/delete-music.js}"></script>
+
 <!-- Navigation -->
 <body>
 <nav class="navbar" th:insert="fragments.html :: navigation"></nav>
@@ -21,13 +24,13 @@
           <div class="user">
             <p class="comments-logo" th:text="#{text_music}"></p>
           </div>
-          <a class="audio-add" th:href="@{/music/add}"><span th:text="#{button_add_song}"></span></a>
+          <a class="audio-add" th:href="@{/music/addfile}"><span th:text="#{button_add_song}"></span></a>
         </div>
       </div>
       <div class="post">
         <div class="post-content">
           <div class="view-source comments-view">
-            <div th:if="${!musicAll.isEmpty()}" th:each="musicAll_view: ${musicAll}">
+            <div th:if="${!musicAll.isEmpty()}" th:each="musicAll_view: ${musicAll}" th:id="'music-' + ${musicAll_view.musicId}" th:name="'music-' + ${musicAll_view.musicId}">
               <div class="media-body">
                 <div class="info-comments">
                   <table class="dialogs-table">
@@ -44,6 +47,11 @@
                       <td class="audio-text">
                         <p th:text="${musicAll_view.songName +' ('+ musicAll_view.songYear} + ')'"></p>
                         <b th:text="${musicAll_view.projectName}"></b>
+                      </td>
+                      <td class="audio-text">
+                        <a class="wishlist-add"  th:onclick="'deleteMusic(\'' + ${musicAll_view.musicId} + '\');'">
+                          <img class="img-icon" th:src="@{'/resources/img/icons/delete.png'}" />
+                        </a>
                       </td>
                     </tr>
                   </table>

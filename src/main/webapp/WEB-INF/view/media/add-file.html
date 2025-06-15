@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_new_post}"></title>
+    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_new_song}"></title>
     <th:block th:include="fragments.html :: header"/>
 </head>
 
@@ -15,17 +15,13 @@
 <section class="main-post">
     <div class="wrapper-posts">
         <div class="left-col">
-            <form method="POST" th:action="@{/music/add}" enctype="multipart/form-data">
+            <form method="POST" th:action="@{/music/addinfo}" enctype="multipart/form-data">
                 <label>
                     <input type="file" name="file" accept="audio/mpeg" style="display: none;">
                     <img id="profilePicture" th:src="@{/resources/img/icons/upload.png}">
                 </label>
                 <br>
-                <input name="projectName" class="profile-box description" th:placeholder="#{input_enter_project_name_text}" />
-                <input name="songName" class="profile-box description" th:placeholder="#{input_enter_song_name_text}" />
-                <input name="songYear" class="profile-box description" th:placeholder="#{input_enter_release_year_text}" />
-                <br>
-                <button type="submit" class="btn btn-outline-dark" th:text="#{button_download}"></button>
+                <button type="submit" class="btn btn-outline-dark" th:text="#{button_next}"></button>
             </form>
             <br/>
 

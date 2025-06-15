@@ -43,4 +43,9 @@ public class MusicServiceImpl implements MusicService {
         musicRepository.save(music);
         return music.getMusicId();
     }
+
+    @Override
+    public void deleteMusic(Long id) {
+        musicRepository.deleteById(id);
+    }
 }
