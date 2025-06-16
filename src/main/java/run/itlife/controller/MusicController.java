@@ -77,33 +77,38 @@ public class MusicController {
     @PostMapping("/music/addinfo")
     @PreAuthorize("hasRole('USER')")
     public String confirmMusic(MusicDto musicDto, ModelMap modelMap, @RequestParam("file") MultipartFile file) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException {
-        musicFile = file.getBytes();
-        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        String filename = generateFileName() + SaveFile.POINT + MP3.getExtension();
-        File dir = new File(context.getRealPath(SaveFile.PATH_MUSIC_USERS + username + "/temp"));
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        byte[] bytes = file.getBytes();
-        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(dir + SaveFile.SEPARATOR + filename)));
-        stream.write(bytes);
-        stream.close();
-        File tempfile = new File(dir + SaveFile.SEPARATOR + filename);
-        MP3File mp3file = (MP3File) AudioFileIO.read(tempfile);
-        ID3v1Tag tagv1 = mp3file.getID3v1Tag();
-        if (tagv1 != null) {
-            musicDto.setProjectName(tagv1.getArtist().get(0).toString());
-            musicDto.setSongName(tagv1.getFirstTitle());
-            musicDto.setSongYear(tagv1.getFirstYear());
-            modelMap.put("projectName", musicDto.getProjectName());
-            modelMap.put("songName", musicDto.getSongName());
-            modelMap.put("songYear", musicDto.getSongYear());
-        }
-        if (tempfile.exists()) {
-            tempfile.delete();
-        }
         commonsParams.setCommonParams(modelMap);
-        return "media/add-info";
+        if (!file.isEmpty()) {
+            musicFile = file.getBytes();
+            final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            String filename = generateFileName() + SaveFile.POINT + MP3.getExtension();
+            File dir = new File(context.getRealPath(SaveFile.PATH_MUSIC_USERS + username + "/temp"));
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            byte[] bytes = file.getBytes();
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(dir + SaveFile.SEPARATOR + filename)));
+            stream.write(bytes);
+            stream.close();
+            File tempfile = new File(dir + SaveFile.SEPARATOR + filename);
+            MP3File mp3file = (MP3File) AudioFileIO.read(tempfile);
+            ID3v1Tag tagv1 = mp3file.getID3v1Tag();
+            if (tagv1 != null) {
+                musicDto.setProjectName(tagv1.getArtist().get(0).toString());
+                musicDto.setSongName(tagv1.getFirstTitle());
+                musicDto.setSongYear(tagv1.getFirstYear());
+                modelMap.put("projectName", musicDto.getProjectName());
+                modelMap.put("songName", musicDto.getSongName());
+                modelMap.put("songYear", musicDto.getSongYear());
+            }
+            if (tempfile.exists()) {
+                tempfile.delete();
+            }
+            return "media/add-info";
+        } else {
+            log.error(ERROR);
+            return "messages-templates/error";
+        }
     }
 
     @PostMapping("/music/save")
