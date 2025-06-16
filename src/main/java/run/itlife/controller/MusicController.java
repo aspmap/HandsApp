@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.MusicDto;
 import run.itlife.entity.User;
 import run.itlife.service.MusicService;
+import run.itlife.service.PlaylistService;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
 import run.itlife.utils.SaveFile;
@@ -40,6 +41,7 @@ import static run.itlife.utils.OtherUtils.generateFileName;
 public class MusicController {
     private final MusicService musicService;
     private final UserService userService;
+    private final PlaylistService playlistService;
     private final ServletContext context;
     private static byte[] musicFile;
     @Autowired
@@ -48,9 +50,10 @@ public class MusicController {
     private static final Logger log = LoggerFactory.getLogger(MusicController.class);
 
     @Autowired
-    public MusicController(MusicService musicService, UserService userService, ServletContext context) {
+    public MusicController(MusicService musicService, UserService userService, PlaylistService playlistService, ServletContext context) {
         this.musicService = musicService;
         this.userService = userService;
+        this.playlistService = playlistService;
         this.context = context;
     }
 
@@ -140,5 +143,15 @@ public class MusicController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteMusic(@PathVariable Long id) {
         musicService.deleteMusic(id);
+    }
+
+    @PostMapping("/music/results/{playlistName}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String getResults(ModelMap modelMap, @PathVariable String playlistName) {
+        commonsParams.setCommonParams(modelMap);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        modelMap.put("findPlaylists", playlistService.searchPlaylists(playlistName, user.getUserId()));
+        return "media/results";
     }
 }

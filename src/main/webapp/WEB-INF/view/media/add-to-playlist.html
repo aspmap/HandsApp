@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_add_to_playlist}"></title>
+  <th:block th:include="fragments.html :: header-add-img"/>
+  <link th:href="@{/resources/css/add-permission.css}" rel="stylesheet">
+  <script type="text/javascript" th:src="@{/resources/js/add-to-playlist.js}"></script>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"
+     th:insert="fragments.html :: navigation-add-img"></nav>
+
+<!-- Page Content -->
+<section class="main">
+  <div class="wrapper">
+    <div class="left-col">
+      <div class="post">
+        <div class="info">
+          <div class="user">
+            <p class="comments-logo" th:text="#{page_label_add_to_playlist}"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="post-content">
+          <div class="view-source comments-view">
+            <div class="media-body">
+              <div class="info-comments">
+                <div class="user-comments">
+                  <div class="profile-card">
+                    <div class="search_box">
+                      <form method="POST" th:action="@{/music/addToPlaylist}">
+                        <input type="hidden" name="musicId" th:value="${musicId}"/>
+                        <input name="playlistName" id="search" class="profile-box-permission description" th:placeholder="#{input_enter_playlist_name}"/>
+                        <div id="search_box-result"></div>
+                        <button type="submit" class="btn btn-outline-dark" th:text="#{button_add_song_to_playlist}"></button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer th:insert="fragments.html :: footer"></footer>
+    </div>
+
+    <!-- Right Column -->
+    <div th:insert="fragments.html :: right-column"></div>
+  </div>
+</section>
+
+</body>
+</html>

@@ -77,6 +77,10 @@ nav ul li ul li a {
     z-index: 1;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
 }
+.nalumes-nucludem-menu {
+    z-index: 1;
+    list-style-type: disclosure-closed;
+}
 
 .nav-mobile {
     display: none;

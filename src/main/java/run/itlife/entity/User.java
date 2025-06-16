@@ -54,6 +54,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "userWishlistPrivate")
     @JsonIgnore
     private List<WishlistPrivate> wishlistPrivate;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Playlist> playlist;
     @Column(name = "is_active")
     private boolean isActive;
     @Column(name = "is_google")

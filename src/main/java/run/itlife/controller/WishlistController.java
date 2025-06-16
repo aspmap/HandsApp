@@ -209,7 +209,6 @@ public class WishlistController {
             return "redirect:" + SaveFile.SEPARATOR + "wishlist";
         }
         return "messages-templates" + SaveFile.SEPARATOR + "existPermission";
-
     }
 
     @GetMapping("/wishlist/permissions/delete/{id}")

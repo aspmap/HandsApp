@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_music}"></title>
+  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_playlists}"></title>
   <th:block th:include="fragments.html :: header"/>
 </head>
 
 <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
-<script type="text/javascript" th:src="@{/resources/js/delete-music.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/delete-playlist.js}"></script>
 
 <!-- Navigation -->
 <body>
@@ -22,37 +22,26 @@
       <div class="post">
         <div class="info">
           <div class="user">
-            <p class="comments-logo" th:text="#{text_music}"></p>
+            <p class="comments-logo" th:text="#{page_label_playlists}"></p>
           </div>
           <a class="audio-add" th:href="@{/music/addfile}"><span th:text="#{button_add_song}"></span></a>
-          <a class="audio-add" th:href="@{/music/playlist/create}"><span th:text="#{page_label_create_playlist}"></span></a>
-          <a class="audio-add" th:href="@{/music/playlists}"><span th:text="#{page_label_playlists}"></span></a>
+          <a class="audio-add" th:href="@{/music/playlist/create}"><span th:text="#{button_create_playlist}"></span></a>
+          <a class="audio-add" th:href="@{/music}"><span th:text="#{menu_my_music}"></span></a>
         </div>
       </div>
       <div class="post">
         <div class="post-content">
           <div class="view-source comments-view">
-            <div th:if="${!musicAll.isEmpty()}" th:each="musicAll_view: ${musicAll}" th:id="'music-' + ${musicAll_view.musicId}" th:name="'music-' + ${musicAll_view.musicId}">
+            <div th:if="${!playlistAll.isEmpty()}" th:each="playlistAll_view: ${playlistAll}" th:id="'playlist-' + ${playlistAll_view.playlistId}" th:name="'playlist-' + ${playlistAll_view.playlistId}">
               <div class="media-body">
                 <div class="info-comments">
                   <table class="dialogs-table">
                     <tr>
-                      <td class="audio-controls">
-                          <audio controls>
-                            <source th:src="@{'/resources/music/users/' + ${user} + '/' + ${musicAll_view.getFileName()}}" type="audio/mpeg" />
-                            <p>
-                              Ваш браузер не поддерживает HTML5 аудио. Вот взамен
-                              <a th:href="@{'/resources/music/users/' + ${user} + '/' + ${musicAll_view.getFileName()}}">Ссылка на аудио</a>
-                            </p>
-                          </audio>
-                        <a class="audio-add" th:href="@{music/addToPlaylist/} + ${musicAll_view.getMusicId()}" th:text="#{page_label_add_to_playlist}"></a>
+                      <td class="audio-text-icons">
+                        <a th:href="@{/music/playlist/} + ${playlistAll_view.playlistId}" th:text="${playlistAll_view.playlistName}"></a>
                       </td>
-                      <td class="audio-text">
-                        <p th:text="${musicAll_view.songName +' ('+ musicAll_view.songYear} + ')'"></p>
-                        <b th:text="${musicAll_view.projectName}"></b>
-                      </td>
-                      <td class="audio-text">
-                        <a class="wishlist-add"  th:onclick="'deleteMusic(\'' + ${musicAll_view.musicId} + '\');'">
+                      <td class="audio-text-icons">
+                        <a class="wishlist-add"  th:onclick="'deletePlaylist(\'' + ${playlistAll_view.playlistId} + '\');'">
                           <img class="img-icon" th:src="@{'/resources/img/icons/delete.png'}" />
                         </a>
                       </td>
@@ -61,7 +50,7 @@
                 </div>
               </div>
             </div>
-            <div th:if="${musicAll.isEmpty()}">
+            <div th:if="${playlistAll.isEmpty()}">
               <div class="media-body">
                 <div class="view-source comments-view">
                   <br><br><br>

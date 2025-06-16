@@ -134,6 +134,16 @@ CREATE TABLE wishlist_private (
     wishlist_id bigint REFERENCES wishlist(wishlist_id) ON DELETE CASCADE,
     user_id bigint REFERENCES users(user_id) ON DELETE CASCADE);
 
+CREATE TABLE playlist (
+    playlist_id bigserial PRIMARY KEY,
+    user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
+    playlist_name varchar(100));
+
+CREATE TABLE playlist_music (
+    playlist_music_id bigserial PRIMARY KEY,
+    music_id bigint REFERENCES music(music_id) ON DELETE CASCADE,
+    playlist_id bigint REFERENCES playlist(playlist_id) ON DELETE CASCADE);
+
 insert into dialogs (created_at) values ('2020-12-12 16:10:23'::timestamp);
 insert into dialogs (created_at) values ('2021-12-12 16:10:23'::timestamp);
 insert into dialogs (created_at) values ('2019-12-12 16:10:23'::timestamp);
