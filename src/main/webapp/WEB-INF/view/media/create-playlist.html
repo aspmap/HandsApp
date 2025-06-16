@@ -2,37 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-  <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_create_playlist}"></title>
+  <title id="pageTitle" th:text="#{page_label_create_playlist} + ' - ' + #{application_name}"></title>
   <th:block th:include="fragments.html :: header"/>
 </head>
 
 <!-- Navigation -->
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
-<br><br>
 
 <!-- Page Content -->
-<section class="main-post">
-  <div class="wrapper-posts">
+<section class="main">
+  <div sec:authorize="isAuthenticated()" class="wrapper">
     <div class="left-col">
-      <form method="POST" th:action="@{/music/playlist/create}">
-        <br>
-        <input name="playlistName" class="profile-box description" th:value="${projectName}" th:placeholder="#{input_enter_playlist_name}" />
-        <br>
-        <button type="submit" class="btn btn-outline-dark" th:text="#{button_create_playlist}"></button>
-      </form>
-      <br/>
+      <div class="frame-title-create-form">
+        <p class="logo-title-text-create-form" th:text="#{page_label_create_playlist}"></p>
+      </div>
+      <div class="frame-content-create-form">
+        <div class="form-create">
+          <form method="POST" th:action="@{/music/playlist/create}">
+            <input name="playlistName" class="input-fields" th:value="${projectName}" th:placeholder="#{input_enter_playlist_name}" />
+            <button type="submit" class="btn-create" th:text="#{button_create_playlist}"></button>
+          </form>
+        </div>
+      </div>
 
       <!-- Footer -->
       <footer th:insert="fragments.html :: footer"></footer>
-
     </div>
+
+    <!-- Right Column -->
+    <div th:insert="fragments.html :: right-column"></div>
   </div>
 </section>
-
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

@@ -681,6 +681,7 @@ a {
 
 .right-col {
     padding: 20px;
+    padding-top: 0px;
 }
 
 .profile-card {

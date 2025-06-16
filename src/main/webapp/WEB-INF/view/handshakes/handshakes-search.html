@@ -2,8 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <title id="pageTitle">HandsApp - Рукопожатия</title>
-    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_handshakes}"></title>
+    <title id="pageTitle" th:text="#{page_label_handshakes} + ' - ' + #{application_name}"></title>
     <th:block th:include="fragments.html :: header"/>
     <link th:href="@{/resources/css/add-permission.css}" rel="stylesheet">
     <script type="text/javascript" th:src="@{/resources/js/add-permission.js}"></script>
@@ -11,71 +10,30 @@
 
 <!-- Navigation -->
 <body>
-<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
 <!-- Page Content -->
 <section class="main">
-    <div class="wrapper">
+    <div sec:authorize="isAuthenticated()" class="wrapper">
         <div class="left-col">
-
-            <!-- Results -->
-            <div class="post">
-                <div class="info">
-                    <div class="user">
-                        <p class="comments-logo" th:text="#{text_handshakes}"></p>
-                    </div>
-                </div>
+            <div class="frame-title-create-form">
+                <p class="logo-title-text-create-form" th:text="#{text_handshakes}"></p>
             </div>
-            <div class="post">
-                <div class="post-content">
-                    <div class="view-source comments-view">
-                        <div class="media-body">
-                            <div class="handshakes-text">
-                                <div class="user-comments">
-                                    <div class="profile-card">
-                                        <div>
-                                            <p class="handshakes-desc" th:text="#{text_handshakes_description1}"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="handshakes-content">
-                    <div class="view-source comments-view">
-                        <div class="media-body">
-                            <div class="info-comments">
-                                <div class="user-comments">
-                                    <div class="profile-card">
-                                        <b class="description-comments-user"><span th:text="#{text_handshakes_description2}"></span></b>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="frame-content-create-form">
+                <div class="form-create">
+                    <p class="main-text" th:text="#{text_handshakes_description1}"></p>
+                    <p class="main-text-bold"><span th:text="#{text_handshakes_description2}"></span></p>
                 </div>
             </div>
 
-            <div class="post">
-                <div class="post-content">
-                    <div class="view-source comments-view">
-                        <div class="media-body">
-                            <div class="info-comments">
-                                <div class="user-comments">
-                                    <div class="profile-card">
-                                        <div class="search_box">
-                                            <form class="search-form-handshakes" method="POST" th:action="@{/handshakes_results}">
-                                                <input type="text" class="search-box-handshakes" id="search" name="searchUsername" th:placeholder="#{input_find_handshakes}">
-                                                <div id="search_box-result"></div>
-                                                <!--<button type="submit" class="btn btn-outline-dark" th:text="#{button_search}"></button>-->
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="frame-content-create-form">
+                <div class="form-create">
+                    <div class="search_box">
+                        <form method="POST" th:action="@{/handshakes_results}">
+                            <input type="text" class="input-fields" id="search" name="searchUsername" th:placeholder="#{input_find_handshakes}">
+                            <div id="search_box-result"></div>
+                            <button type="submit" class="btn-create" th:text="#{button_search}"></button>
+                        </form>
                     </div>
                 </div>
             </div>
