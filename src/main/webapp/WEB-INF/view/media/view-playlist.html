@@ -33,13 +33,13 @@
       <div class="post">
         <div class="post-content">
           <div class="view-source comments-view">
-            <div th:if="${!viewPlaylist.isEmpty()}" th:each="viewPlaylist_view: ${viewPlaylist}" th:id="'playlist-' + ${playlistId} + '/' + ${viewPlaylist_view.musicId}" th:name="'playlist-' + ${playlistId} + '/' + ${viewPlaylist_view.musicId}">
+            <div th:if="${!viewPlaylist.isEmpty()}" th:each="viewPlaylist_view, stat: ${viewPlaylist}" th:id="'playlist-' + ${playlistId} + '/' + ${viewPlaylist_view.musicId}" th:name="'playlist-' + ${playlistId} + '/' + ${viewPlaylist_view.musicId}">
               <div class="media-body">
                 <div class="info-comments">
                   <table class="dialogs-table">
                     <tr>
                       <td class="audio-controls">
-                        <audio controls>
+                        <audio controls th:onplay="'other_pause(\'' + ${stat.index} + '\');'">
                           <source th:src="@{'/resources/music/users/' + ${user} + '/' + ${viewPlaylist_view.fileName}}" type="audio/mpeg" />
                           <p>
                             Ваш браузер не поддерживает HTML5 аудио. Вот взамен
@@ -86,6 +86,7 @@
 </section>
 
 <script type="text/javascript" th:src="@{/resources/js/music-play.js}"></script>
+<script type="text/javascript" th:src="@{/resources/js/switch-track.js}"></script>
 
 </body>
 </html>
