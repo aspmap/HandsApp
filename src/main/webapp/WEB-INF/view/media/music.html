@@ -38,7 +38,7 @@
                   <table class="dialogs-table">
                     <tr>
                       <td class="audio-controls">
-                          <audio controls th:onplay="'other_pause(\'' + ${stat.index} + '\');'">
+                          <audio controls th:onplay="'other_pause(\'' + ${stat.index} + '\');'" th:onpause="'repeat();'">
                             <source th:src="@{'/resources/music/users/' + ${user} + '/' + ${musicAll_view.getFileName()}}" type="audio/mpeg" />
                             <p>
                               Ваш браузер не поддерживает HTML5 аудио. Вот взамен
