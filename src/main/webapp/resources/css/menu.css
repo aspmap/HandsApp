@@ -78,8 +78,9 @@ nav ul li ul li a {
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
 }
 .nalumes-nucludem-menu {
-    z-index: 1;
-    list-style-type: disclosure-closed;
+    font-size: 14px;
+/*    z-index: 1;
+    list-style-type: disclosure-closed;*/
 }
 
 .nav-mobile {
