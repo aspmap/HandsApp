@@ -100,7 +100,7 @@
 
                 <!-- Messages Form -->
                 <div sec:authorize="hasAnyRole('USER')" th:object="${messages}">
-                    <div class="div-smiles" th:insert="fragments.html :: smiles"></div>
+                    <div class="div-smiles-messages" th:insert="fragments.html :: smiles-in-comments"></div>
                     <form class="comment-wrapper" method="POST" th:action="@{/messages/create/{dialogId} (dialogId = ${dialog.dialogId})}" enctype="multipart/form-data">
                         <input type="hidden" name="dialogId" th:value="${dialog.dialogId}" />
                         <textarea id="blob-img" name="file" class="form-control" rows="4" placeholder="" style="display:none;"></textarea>

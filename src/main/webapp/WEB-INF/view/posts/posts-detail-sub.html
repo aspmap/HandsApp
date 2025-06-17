@@ -102,7 +102,7 @@
 
                 <!-- Comments Form -->
                 <div sec:authorize="hasAnyRole('USER')">
-                    <div class="div-smiles" th:insert="fragments.html :: smiles"></div>
+                    <div class="div-smiles-messages" th:insert="fragments.html :: smiles-in-comments"></div>
                     <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment_detail_sub}">
                         <input type="hidden" name="postId" th:value="${post_sub.postId}"/>
                         <div class="info-view">

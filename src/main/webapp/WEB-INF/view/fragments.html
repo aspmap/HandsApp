@@ -18,27 +18,14 @@
     <link th:href="@{/resources/css/todo.css}" rel="stylesheet">
     <link th:href="@{/resources/css/create-forms.css}" rel="stylesheet">
     <link th:href="@{/resources/css/wishlist.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/placeholder.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
-    <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+    <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/update_count_dialogs.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
     <title th:include=":: #pageTitle"></title>
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
     <style>
         .round {
             border-radius: 50px; /* Радиус скругления */
@@ -58,25 +45,11 @@
     <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
     <link th:href="@{/resources/css/menu.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/placeholder.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/update_count_dialogs.js}"></script>
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
 </head>
 
 <head th:fragment="header-messages">
@@ -100,25 +73,11 @@
     <link th:href="@{/resources/css/menu.css}" rel="stylesheet">
     <link th:href="@{/resources/css/pagination.css}" rel="stylesheet">
     <link th:href="@{/resources/css/highslide.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/placeholder.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/highslide.js}"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
     <style>
         .round {
             border-radius: 50px; /* Радиус скругления */
@@ -141,27 +100,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.css">
     <link th:href="@{/resources/css/crop.css}" rel="stylesheet">
     <link th:href="@{/resources/css/handshakes.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/create-forms.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/crop-img-buttons.css}" rel="stylesheet">
     <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
     <link th:href="@{/resources/css/menu.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/placeholder.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/update_count_dialogs.js}"></script>
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
+    <script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/crop.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.js"></script>
 </head>
 
 <body>
@@ -418,45 +369,117 @@
     </div>
 </div>
 
-<!-- Smiles -->
-<div th:fragment="smiles" class="smiles-posts">
-    <button class="smiles" onclick='fn(this)'>&#128512;</button>
-    <button class="smiles" onclick='fn(this)'>&#128513;</button>
-    <button class="smiles" onclick='fn(this)'>&#129315;</button>
-    <button class="smiles" onclick='fn(this)'>&#128578;</button>
-    <button class="smiles" onclick='fn(this)'>&#129395;</button>
-    <button class="smiles" onclick='fn(this)'>&#128521;</button>
-    <button class="smiles" onclick='fn(this)'>&#129392;</button>
-    <button class="smiles" onclick='fn(this)'>&#128536;</button>
-    <button class="smiles" onclick='fn(this)'>&#129322;</button>
-    <button class="smiles" onclick='fn(this)'>&#129325;</button>
-    <button class="smiles" onclick='fn(this)'>&#129314;</button>
-    <button class="smiles" onclick='fn(this)'>&#128558;</button>
-    <button class="smiles" onclick='fn(this)'>&#129402;</button>
-    <button class="smiles" onclick='fn(this)'>&#128557;</button>
-    <button class="smiles" onclick='fn(this)'>&#128544;</button>
-    <button class="smiles" onclick='fn(this)'>&#128169;</button>
-    <button class="smiles" onclick='fn(this)'>&#128139;</button>
-    <button class="smiles" onclick='fn(this)'>&#128152;</button>
-    <button class="smiles" onclick='fn(this)'>&#128175;</button>
-    <button class="smiles" onclick='fn(this)'>&#128076;</button>
-    <button class="smiles" onclick='fn(this)'>&#129311;</button>
-    <button class="smiles" onclick='fn(this)'>&#128077;</button>
-    <button class="smiles" onclick='fn(this)'>&#129318;</button>
-    <button class="smiles" onclick='fn(this)'>&#129335;</button>
-    <button class="smiles" onclick='fn(this)'>&#128075;</button>
-    <button class="smiles" onclick='fn(this)'>&#128048;</button>
-    <button class="smiles" onclick='fn(this)'>&#128134;</button>
-    <button class="smiles" onclick='fn(this)'>&#127939;</button>
-    <button class="smiles" onclick='fn(this)'>&#128378;</button>
-    <button class="smiles" onclick='fn(this)'>&#128131;</button>
-    <button class="smiles" onclick='fn(this)'>&#128144;</button>
-    <button class="smiles" onclick='fn(this)'>&#127751;</button>
-    <button class="smiles" onclick='fn(this)'>&#128181;</button>
-    <button class="smiles" onclick='fn(this)'>&#128293;</button>
-    <button class="smiles" onclick='fn(this)'>&#127881;</button>
+<!-- Smiles in post -->
+<div th:fragment="smiles-in-post" class="smiles-posts">
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128512;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128513;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#129315;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128578;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#129395;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128521;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#129392;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128536;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#129322;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#129325;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#129314;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128558;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#129402;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128557;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128544;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128169;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128139;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128152;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128175;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128076;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#129311;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128077;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#129318;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#129335;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128075;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128048;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128134;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#127939;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128378;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128131;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128144;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#127751;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128181;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#128293;</span>
+    <span class="smiles-posts-button" onclick='fn(this)'>&#127881;</span>
 </div>
 
+<!-- Smiles in comments -->
+<div th:fragment="smiles-in-comments" class="smiles-messages">
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128512;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128513;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#129315;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128578;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#129395;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128521;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#129392;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128536;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#129322;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#129325;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#129314;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128558;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#129402;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128557;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128544;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128169;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128139;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128152;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128175;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128076;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#129311;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128077;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#129318;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#129335;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128075;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128048;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128134;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#127939;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128378;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128131;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128144;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#127751;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128181;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#128293;</button>
+    <button class="smiles-messages-button" onclick='fn(this)'>&#127881;</button>
+</div>
+
+<!-- Modal Window -->
+<div th:fragment="modal-window" class="modal fade" id="profileImageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel" th:text="#{text_image_upload}"></h5>
+                <button type="button" class="btn-close-x" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="thumbimg ">
+                        <input type="file" name="image" id="image" style="display:none;" accept="image/png, image/gif, image/jpeg">
+                        <button type="button" onclick="image.click();" class="btn-choose" th:text="#{button_choose_an_image}"></button>
+                        <div class="showimg  d-flex justify-content-center pt-3" >
+                            <div class="row imgdiv" id="imgdiv" style="" >
+                                <img id="imagecan">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" onclick="onClickUpload()" class="btn-upload" th:text="#{button_download}">
+                    <i class="fa fa-spinner fa-spin showloading" style="color:white; font-size:12px; display:none;  position:absolute; margin-left: 3px; margin-top: 4px;"></i>
+                </button>
+                <button type="button" class="btn-close" data-dismiss="modal" th:text="#{button_close}"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Window End -->
 
 <!-- Footer -->
 <p class="text-muted" th:fragment="footer-login">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a class="comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>

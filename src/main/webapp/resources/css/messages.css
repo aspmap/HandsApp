@@ -126,11 +126,15 @@
     width: 13px;
 }
 
-.smiles {
-    border: 0px;
-    background: white;
+.smiles-messages {
+    margin-top: 0px;
 }
 
-.div-smiles {
+.div-smiles-messages {
     margin-left: 15px;
+}
+
+.smiles-messages-button {
+    background: white;
+    border: 0px; !important;
 }

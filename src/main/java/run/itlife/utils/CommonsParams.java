@@ -45,6 +45,7 @@ public class CommonsParams {
         modelMap.put("userOnlyList", userService.getUsersOnly());
         modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
         modelMap.put("contextPath", context.getContextPath());
+        this.setCommonConstParams(modelMap);
     }
 
     public void setCommonSubParams(ModelMap modelMap, String username) {
@@ -55,6 +56,7 @@ public class CommonsParams {
         modelMap.put("isClosedProfile", postService.isClosedProfile(username));
         modelMap.put("countSubscribe", subscriptionsService.countSubscribe(username));
         modelMap.put("countSubscribers", subscriptionsService.countSubscribers(username));
+        this.setCommonConstParams(modelMap);
     }
 
     public void setCommonParams(ModelMap modelMap) {

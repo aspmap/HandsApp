@@ -2,81 +2,48 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_new_post}"></title>
+    <title id="pageTitle" th:text="#{page_label_new_post} + ' - ' + #{application_name}"></title>
     <th:block th:include="fragments.html :: header-add-img"/>
 </head>
-
-<script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
 
 <!-- Navigation -->
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation-add-img"></nav>
 
 <!-- Page Content -->
-<section class="main-post">
-    <div class="wrapper-posts">
+<section class="main">
+    <div sec:authorize="isAuthenticated()" class="wrapper">
         <div class="left-col">
-            <form method="POST" th:action="@{/post/newImage}" enctype="multipart/form-data">
-                <textarea id="blob-img" name="file" class="form-control" rows="4" placeholder="" style="display:none;"></textarea>
-                <div>
-                    <img id="profilePicture" th:src="@{/resources/img/icons/upload.png}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
-                </div>
-
-                <!-- Modal Window -->
-                <div class="modal fade" id="profileImageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-md" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel" th:text="#{text_image_upload}"></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <div class="thumbimg ">
-                                        <input type="file" name="image" id="image" style="display:none;" accept="image/png, image/gif, image/jpeg">
-                                        <button type="button" onclick="image.click();" class="btn st-cropper-select-btn btn-secondary btn-md" th:text="#{button_choose_an_image}"></button>
-                                        <div class="showimg  d-flex justify-content-center pt-3" >
-                                            <div class="row imgdiv" id="imgdiv" style="" >
-                                                <img id="imagecan">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer d-flex justify-content-center">
-                                <button type="button" onclick="onClickUpload()" class="btn btn-primary st-cropper-upload-btn btn-md" th:text="#{button_download}">
-                                    <i class="fa fa-spinner fa-spin showloading" style="color:white; font-size:12px; display:none;  position:absolute; margin-left: 3px; margin-top: 4px;"></i>
-                                </button>
-                                <button type="button" class="btn btn-secondary btn-md st-cropper-close-btn" data-dismiss="modal" th:text="#{button_close}"></button>
-                            </div>
+            <div class="frame-title-create-form">
+                <p class="logo-title-text-create-form" th:text="#{page_label_new_post}"></p>
+            </div>
+            <div class="frame-content-create-form">
+                <div class="form-create">
+                    <form method="POST" th:action="@{/post/newImage}" enctype="multipart/form-data">
+                        <textarea id="blob-img" name="file" class="input-fields" rows="4" placeholder="" style="display:none;"></textarea>
+                        <div>
+                            <img class="image-upload-file" id="profilePicture" th:src="@{/resources/img/icons/upload.png}" data-target="#profileImageModal" data-toggle="modal">
                         </div>
-                    </div>
-                </div>
-                <!-- Modal Window End -->
 
-                <textarea id="smile" name="content" class="profile-box description" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>
-                <br>
-                <button type="submit" class="btn btn-outline-dark" th:text="#{button_publish_a_post}"></button>
-            </form>
-            <br/>
-            <div class="div-smiles" th:insert="fragments.html :: smiles"></div>
+                        <!-- Modal Window -->
+                        <div th:insert="fragments.html :: modal-window"></div>
+                        <!-- Modal Window End -->
+
+                        <textarea id="smile" name="content" class="input-fields" rows="4" th:placeholder="#{input_enter_post_text}" required></textarea>
+                        <div class="smiles-create-form" th:insert="fragments.html :: smiles-in-post"></div>
+                        <button type="submit" class="btn-create" th:text="#{button_publish_a_post}"></button>
+                    </form>
+                </div>
+            </div>
 
             <!-- Footer -->
             <footer th:insert="fragments.html :: footer"></footer>
-
         </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
     </div>
 </section>
-
-<!-- partial -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.js"></script>
-<script type="text/javascript" th:src="@{/resources/js/crop.js}"></script>
 
 </body>
 </html>
