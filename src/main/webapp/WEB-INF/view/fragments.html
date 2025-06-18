@@ -19,6 +19,7 @@
     <link th:href="@{/resources/css/create-forms.css}" rel="stylesheet">
     <link th:href="@{/resources/css/wishlist.css}" rel="stylesheet">
     <link th:href="@{/resources/css/placeholder.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/footer.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
@@ -46,6 +47,7 @@
     <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
     <link th:href="@{/resources/css/menu.css}" rel="stylesheet">
     <link th:href="@{/resources/css/placeholder.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/footer.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
@@ -74,6 +76,7 @@
     <link th:href="@{/resources/css/pagination.css}" rel="stylesheet">
     <link th:href="@{/resources/css/highslide.css}" rel="stylesheet">
     <link th:href="@{/resources/css/placeholder.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/footer.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/highslide.js}"></script>
@@ -105,6 +108,7 @@
     <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
     <link th:href="@{/resources/css/menu.css}" rel="stylesheet">
     <link th:href="@{/resources/css/placeholder.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/footer.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
@@ -306,7 +310,7 @@
 </nav>
 
 <!-- Right Column -->
-<div class="right-col" th:fragment="right-column">
+<div sec:authorize="isAuthenticated()" class="right-col" th:fragment="right-column">
 
     <!-- Menu -->
     <p class="suggestion-text"><span th:text="#{text_menu}"></span></p>
@@ -482,14 +486,14 @@
 <!-- Modal Window End -->
 
 <!-- Footer -->
-<p class="text-muted" th:fragment="footer-login">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a class="comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
+<p class="main-text-footer" th:fragment="footer-login">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
     <br>
-    <span class="text-center" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
+    <span class="text-lang" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
 </p>
 
-<footer class="text-muted" th:fragment="footer">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a class="comments" th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
+<footer class="main-text-footer" th:fragment="footer">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
     <br>
-    <span class="text-center" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
+    <span class="text-lang" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
 </footer>
 
 </body>

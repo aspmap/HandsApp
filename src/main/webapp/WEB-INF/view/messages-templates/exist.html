@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_the_user_exists}"></title>
-    <th:block th:include="fragments.html :: header-login"/>
+    <title id="pageTitle" th:text="#{page_label_the_user_exists} + ' - ' + #{application_name}"></title>
+    <th:block th:include="fragments.html :: header"/>
 </head>
 
 <!-- Navigation -->
@@ -11,20 +11,27 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
 <!-- Page Content -->
-<section class="main-post">
-    <div class="wrapper-posts">
+<section class="main">
+    <div class="wrapper">
         <div class="left-col">
-            <br><br><br><br>
-            <h1 class="h3 mb-3 font-weight-normal text-center" th:text="#{text_the_user_exists}"></h1>
-            <div class="signup">
-                <br><br><br><br>
-                <p class="text-center">
-                    <a th:href="@{/register}" th:text="#{text_back_to_registration_page}"></a>
-                </p>
+            <div class="frame-title-create-form">
+                <p class="logo-title-text-create-form" th:text="#{text_error}"></p>
             </div>
-            <br><br><br><br>
-            <p th:insert="fragments.html :: footer-login"></p>
+            <div class="frame-content-create-form">
+                <div class="form-create">
+                    <p class="main-text" th:text="#{text_the_user_exists}"></p>
+                    <p class="back-link-text">
+                        <a th:href="@{/register}" th:text="#{text_back_to_registration_page}"></a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer-login"></footer>
         </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
     </div>
 </section>
 

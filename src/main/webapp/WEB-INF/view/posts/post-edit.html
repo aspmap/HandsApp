@@ -17,7 +17,7 @@
 <section class="main-post">
     <div class="wrapper-posts">
         <div class="left-col">
-            <div class="div-smiles" th:insert="fragments.html :: smiles"></div>
+            <div class="div-smiles" th:insert="fragments.html :: smiles-in-post"></div>
             <form method="POST" th:action="@{/post/edit}" th:object="${post}" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{postId}"/>
                 <textarea id="smile" th:field="*{content}" class="profile-box description" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>

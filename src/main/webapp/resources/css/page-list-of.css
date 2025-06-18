@@ -36,7 +36,7 @@
 /* Стили для плашки с результатами */
 .search_result {
     position: absolute;
-  /*  top: 42%;*/
+    top: 42%;
     left: 0;
     border: 1px solid #ddd;
     background: #fff;

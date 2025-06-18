@@ -46,7 +46,7 @@ public class MusicController {
     private static byte[] musicFile;
     @Autowired
     CommonsParams commonsParams;
-    private static final int MAX_UPLOAD_MUSIC_FILE_SIZE_IN_MB = 100 * 1024 * 1024; // 100 МБ
+    private static final int MAX_UPLOAD_MUSIC_FILE_SIZE_IN_MB = 100 * 24 * 24; // 100 МБ
     private static final Logger log = LoggerFactory.getLogger(MusicController.class);
 
     @Autowired
@@ -107,7 +107,7 @@ public class MusicController {
             return "media/add-info";
         } else {
             log.error(ERROR);
-            return "messages-templates/error";
+            return "messages-templates/errorAddMusicFile";
         }
     }
 

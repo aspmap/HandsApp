@@ -23,7 +23,7 @@ public class SaveFile {
     public static final String POINT = ".";
     private static final int IMAGE_WIDTH = 500;
     private static final int IMAGE_HEIGHT = 500;
-    private static final int MAX_UPLOAD_FILE_SIZE_IN_MB = 20 * 1024 * 1024; // 20 МБ
+    private static final int MAX_UPLOAD_FILE_SIZE_IN_MB = 20 * 24 * 24; // 20 МБ
 
 
     public Map<String, String> saveFile(String username, ServletContext context, MultipartFile file) throws IOException {

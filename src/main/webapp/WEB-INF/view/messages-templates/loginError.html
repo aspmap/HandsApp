@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="fragments.html :: header-login">
-    <title id="pageTitle">HandsApp - Ошибка авторизации</title>
+<head>
+    <title id="pageTitle" th:text="#{page_label_the_login_error} + ' - ' + #{application_name}"></title>
+    <th:block th:include="fragments.html :: header"/>
 </head>
 
 <!-- Navigation -->
@@ -10,18 +11,27 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
 <!-- Page Content -->
-<section class="main-post">
-    <div class="wrapper-posts">
+<section class="main">
+    <div class="wrapper">
         <div class="left-col">
-            <br><br><br><br><br><br>
-            <h1 class="h3 mb-3 font-weight-normal text-center" th:text="#{text_login_error}"></h1>
-            <br><br><br><br>
-            <p class="text-center">
-                <a th:href="@{/handshakes_search}" th:text="#{text_back_to_login_page}"></a>
-            </p>
-            <br><br><br><br>
-            <p class="text-center" th:insert="fragments.html :: footer-login"></p>
+            <div class="frame-title-create-form">
+                <p class="logo-title-text-create-form" th:text="#{page_label_the_login_error}"></p>
+            </div>
+            <div class="frame-content-create-form">
+                <div class="form-create">
+                    <p class="main-text" th:text="#{text_login_error}"></p>
+                    <p class="back-link-text">
+                        <a th:href="@{/login}" th:text="#{text_back_to_login_page}"></a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
         </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
     </div>
 </section>
 
