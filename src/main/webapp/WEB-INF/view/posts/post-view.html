@@ -4,12 +4,8 @@
 <head>
     <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_view_post}"></title>
     <th:block th:include="fragments.html :: header"/>
+    <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
 </head>
-
-<script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
-<script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
-<script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
-<script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
 
 <!-- Navigation -->
 <body>
@@ -89,10 +85,6 @@
 
     </div>
 </section>
-
-<!-- Bootstrap core JavaScript -->
-<!--<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>-->
 
 </body>
 </html>

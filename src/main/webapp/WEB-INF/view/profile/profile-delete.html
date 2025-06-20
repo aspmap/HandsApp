@@ -22,6 +22,7 @@
                     <p class="main-text" th:text="'Внимание! После подтверждения будут удалены все ваши посты, фотографии, лайки, комментарии. Вы уверены?'"></p>
                     <form method="POST" th:action="*{username}" th:object="${userinfo}">
                         <button type="submit" class="btn-delete" th:text="#{button_delete_profile_confirm}"></button>
+                        <a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn-create" th:text="'Отмена'"></a>
                     </form>
                 </div>
             </div>

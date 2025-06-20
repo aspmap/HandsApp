@@ -18,7 +18,7 @@
     border: 1px solid #0f87f6;
 }
 
-.btn-close {
+.btn-close-crop {
     margin: 10px 0;
     background-color: #3897f0;
     border: 1px solid #3897f0;
@@ -32,7 +32,7 @@
     font-size: 14px;
 }
 
-.btn-close:hover{
+.btn-close-crop:hover{
     /*color:#212529;*/
     background-color: #0f87f6;
     border: 1px solid #0f87f6;

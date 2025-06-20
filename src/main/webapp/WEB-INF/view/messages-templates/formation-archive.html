@@ -23,7 +23,8 @@
             <a th:href="@{'/resources/users_archive/users/' + ${user} + '.zip'}" th:text="#{text_download_archive_link}"></a>
           </p>
           <p th:if="${isAvailableArchive == false}" class="main-text">
-            <span th:text="#{text_download_archive_is_not_available}"></span>
+            <span th:text="#{text_download_archive_is_generate}"></span>
+            <a th:href="@{/profile_archive}" th:text="#{text_download_archive_is_generate_my_archive}"></a>
           </p>
           <p class="back-link-text">
             <a th:href="@{/}" th:text="#{text_back_to_main_page}"></a>

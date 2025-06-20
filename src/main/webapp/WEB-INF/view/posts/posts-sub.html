@@ -26,6 +26,11 @@
                             <p th:if="${userinfo_sub.isGoogle == false}" class="username-main gradient" th:text="${user_sub}"></p>
                             <p th:if="${userinfo_sub.isGoogle == true}" class="username-main gradient" th:text="${userinfo_sub.email}"></p>
                             <p class="description-main" th:if="${userinfo_sub.surname != null && userinfo_sub.firstname != null}" th:text="${userinfo_sub.surname} + ' ' + ${userinfo_sub.firstname}"></p>
+                            <p class="description-buttons-main">
+                                <a th:href="@{/dialogs/{usernameCompanion}(usernameCompanion = ${user_sub})}" th:if="${!user_sub.equals(user) && isClosedProfile == false}" class="btn-create" th:text="#{button_dialog}"></a>
+                                <a th:if="${isSub == 0 && !user.equals(user_sub) && isClosedProfile == false}" th:href="@{/subscription/{user}(user = ${user_sub})}" class="btn-create" th:text="#{button_subscribe}"></a>
+                                <a th:if="${isSub != 0 && !user.equals(user_sub) && isClosedProfile == false}" th:href="@{/unsubscription/{user}(user = ${user_sub})}" class="btn-delete" th:text="#{button_unsubscribe}"></a>
+                            </p>
                             <p th:if="${userinfo_sub.www != null}" class="description-main">
                                 <span th:text="#{label_site}"></span>
                                 <a th:href="${userinfo_sub.www}"><span th:text="${userinfo_sub.www}"></span></a>
@@ -50,9 +55,6 @@
                             </p>
                         </div>
                     </div>
-                    <a th:href="@{/dialogs/{usernameCompanion}(usernameCompanion = ${user_sub})}" th:if="${!user_sub.equals(user) && isClosedProfile == false}" class="btn-create" th:text="#{button_dialog}"></a>
-                    <a th:if="${isSub == 0 && !user.equals(user_sub) && isClosedProfile == false}" th:href="@{/subscription/{user}(user = ${user_sub})}" class="btn-create" th:text="#{button_subscribe}"></a>
-                    <a th:if="${isSub != 0 && !user.equals(user_sub) && isClosedProfile == false}" th:href="@{/unsubscription/{user}(user = ${user_sub})}" class="btn-delete" th:text="#{button_unsubscribe}"></a>
                 </div>
             </section>
             <div class="post">
@@ -91,10 +93,6 @@
         </div>
     </div>
 </section>
-
-<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-<script src="../resources/js/bootstrap.bundle.min.js"></script>-->
 
 </body>
 </html>

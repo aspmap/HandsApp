@@ -61,12 +61,10 @@ function posts() {
                 });
             },
             error: function (error) {
-                var br = $('<br><br><br><br><br><br>');
-                var textError = $('<h1 class="h3 mb-3 font-weight-normal text-center">Сервис временно недоступен. Попробуйте позже</h1>');
-                var br2 = $('<br><br><br><br>');
-                $('#br').append(br);
+                var br = $('<div class="frame-title-create-form"><p class="logo-title-text-create-form">Ошибка</p></div>');
+                var textError = $('<div class="frame-content-create-form"><div class="form-create"><p class="main-text">Сервис временно недоступен. Попробуйте позже</p><p class="back-link-text"><a href="/">Вернуться на главную страницу</a></p></div></div>');
+                $('#error').append(br);
                 $('#error').append(textError);
-                $('#br2').append(br2);
             }
         }
     );
