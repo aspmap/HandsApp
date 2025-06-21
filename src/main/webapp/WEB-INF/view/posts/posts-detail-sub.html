@@ -3,11 +3,9 @@
       xmlns="http://www.w3.org/1999/html">
 
 <head>
-    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_subscriptions}"></title>
+    <title id="pageTitle" th:text="#{page_label_subscriptions} + ' - ' + #{application_name}"></title>
     <th:block th:include="fragments.html :: header"/>
 </head>
-
-<script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
 
 <!-- Navigation -->
 <body>
@@ -136,11 +134,6 @@
 
     </div>
 </section>
-
-<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>-->
 
 </body>
 </html>

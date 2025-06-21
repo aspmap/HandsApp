@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import run.itlife.dto.ToDoDto;
+import run.itlife.entity.ToDo;
 import run.itlife.entity.User;
 import run.itlife.service.ToDoService;
 import run.itlife.service.UserService;

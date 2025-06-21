@@ -14,7 +14,7 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
     ArrayList<Playlist> getAllPlaylistsByUserId(Long userId);
 
     @Query(value = "select * from playlist " +
-            "where playlist_name LIKE ? and user_id = ? limit 5 ", nativeQuery = true)
+            "where upper(playlist_name) LIKE upper(?) and user_id = ? limit 5 ", nativeQuery = true)
     ArrayList<Playlist> searchPlaylists(String substring, Long userId);
 
     @Query(value = " select playlist_id from playlist " +

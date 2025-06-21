@@ -48,7 +48,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u.* from users u " +
             "left join user_role ur on u.user_id = ur.user_id " +
             "left join role r on ur.role_id = r.role_id " +
-            "where u.username LIKE ? AND r.name LIKE 'USER' AND u.is_google = 'false' AND u.is_closed = 'false' limit 5 ", nativeQuery = true)
+            "where upper(u.username) LIKE upper(?) AND r.name LIKE 'USER' AND u.is_google = 'false' AND u.is_closed = 'false' limit 5 ", nativeQuery = true)
     List<User> searchUsersForPermission(String substring);
 
     @Query(value = "select u.* from users u " +
