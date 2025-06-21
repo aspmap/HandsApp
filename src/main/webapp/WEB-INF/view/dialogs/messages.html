@@ -102,8 +102,8 @@
                         <div>
                             <img id="profilePicture" th:src="@{/resources/img/icons/staple.png}" alt="" data-target="#profileImageModal" data-toggle="modal">
                         </div>
-                        <input id="smile" th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.username} + '...'">
-                        <input id="smile" th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.email} + '...'">
+                        <input id="smile" th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.username} + '...'" maxlength="255">
+                        <input id="smile" th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="messageText"  th:placeholder="#{input_message_like} + ' ' + ${userinfo.email} + '...'" maxlength="255">
 
                         <!-- Modal Window -->
                         <div th:insert="fragments.html :: modal-window"></div>

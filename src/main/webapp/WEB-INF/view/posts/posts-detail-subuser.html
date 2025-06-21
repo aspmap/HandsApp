@@ -108,10 +108,10 @@
                           th:action="@{/comment/create_comment_detail_subuser/{user}(user = ${user_sub})}">
                         <input type="hidden" name="postId" th:value="${post.postId}"/>
                         <input id="smile" th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description"
-                               name="commentText" th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'">
+                               name="commentText" th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'" maxlength="255" required>
                         <input id="smile" th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description"
                                name="commentText"
-                               th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'">
+                               th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'" maxlength="255" required>
                         <br>
                         <button class="comment-btn" th:text="#{button_publish}"></button>
                     </form>

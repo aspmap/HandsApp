@@ -24,7 +24,7 @@
                             <input class="input-fields" type="file" name="file" accept="video/mp4, video/quicktime" style="display: none;">
                             <img class="image-upload-file" id="profilePicture" th:src="@{/resources/img/icons/upload.png}">
                         </label>
-                        <textarea id="smile" name="content" class="input-fields" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>
+                        <textarea id="smile" name="content" class="input-fields" rows="5" th:placeholder="#{input_enter_post_text}" maxlength="255" required></textarea>
                         <div class="smiles-create-form" th:insert="fragments.html :: smiles-in-post"></div>
                         <button type="submit" class="btn-create" th:text="#{button_publish_a_post}"></button>
                     </form>

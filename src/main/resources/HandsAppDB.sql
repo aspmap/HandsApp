@@ -65,14 +65,14 @@ CREATE TABLE comment (
     comment_id bigserial PRIMARY KEY,
     post_id bigint REFERENCES post(post_id) ON DELETE CASCADE,
     user_id bigint REFERENCES users(user_id),
-    comment_text text,
+    comment_text text NOT NULL,
     created_at timestamp without time zone,
     updated_at timestamp without time zone);
 
 CREATE TABLE bugs (
     bug_id bigserial PRIMARY KEY,
     user_id bigint REFERENCES users(user_id) ON DELETE CASCADE,
-    bug_text text,
+    bug_text text NOT NULL,
     username text,
     created_at timestamp without time zone);
 

@@ -33,13 +33,13 @@
                         <!-- Modal Window End -->
 
                         <input th:field="*{username}" type="text" class="input-fields input" th:placeholder="#{input_enter_login}" readonly disabled required>
-                        <input th:field="*{password}" type="password" class="input-fields" th:placeholder="#{input_enter_password}">
-                        <input th:field="*{surname}" type="text" class="input-fields" th:placeholder="#{input_enter_last_name}">
-                        <input th:field="*{firstname}" type="text" class="input-fields" th:placeholder="#{input_enter_name}">
-                        <textarea th:field="*{info}" class="input-fields" rows="9" th:placeholder="#{input_enter_information_about_yourself}"></textarea>
-                        <input th:field="*{www}" type="text" class="input-fields" th:placeholder="#{input_enter_site}">
-                        <input th:field="*{email}" type="text" class="input-fields" th:placeholder="#{input_enter_email}">
-                        <input th:field="*{phone}" type="text" class="input-fields" th:placeholder="#{input_enter_phone}">
+                        <input th:field="*{password}" type="password" class="input-fields" th:placeholder="#{input_enter_password}" maxlength="150">
+                        <input th:field="*{surname}" type="text" class="input-fields" th:placeholder="#{input_enter_last_name}" maxlength="150">
+                        <input th:field="*{firstname}" type="text" class="input-fields" th:placeholder="#{input_enter_name}" maxlength="150">
+                        <textarea th:field="*{info}" class="input-fields" rows="5" th:placeholder="#{input_enter_information_about_yourself}" maxlength="255"></textarea>
+                        <input th:field="*{www}" type="text" class="input-fields" th:placeholder="#{input_enter_site}" maxlength="150">
+                        <input th:field="*{email}" type="text" class="input-fields" th:placeholder="#{input_enter_email}" maxlength="50">
+                        <input th:field="*{phone}" type="text" class="input-fields" th:placeholder="#{input_enter_phone}" maxlength="20">
                         <select class="input-fields" rows="9" th:field="*{sex}">
                             <option th:value="${sex_male}" th:text="#{input_male}"></option>
                             <option th:value="${sex_female}" th:text="#{input_female}"></option>

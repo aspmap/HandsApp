@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_add_a_comment} + '...'">
+                        <input type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_add_a_comment} + '...'" maxlength="255" required>
                         <br>
                         <button class="comment-btn" th:text="#{button_publish}"></button>
                     </form>

@@ -24,7 +24,7 @@
                     <div class="search_box">
                         <form method="POST" th:action="@{/wishlist/permissions/add}">
                             <input type="hidden" name="wishlistIdWishlistPrivate" th:value="${id}"/>
-                            <input name="userWishlistPrivate" id="search" class="input-fields" th:placeholder="#{input_enter_username_wish}"/>
+                            <input name="userWishlistPrivate" id="search" class="input-fields" th:placeholder="#{input_enter_username_wish}" maxlength="150" required />
                             <div id="search_box-result"></div>
                             <button type="submit" class="btn-create" th:text="#{button_add_permission}"></button>
                         </form>

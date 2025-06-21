@@ -21,7 +21,7 @@
                 <div class="form-create">
                     <form method="POST" th:action="@{/post/edit}" th:object="${post}" enctype="multipart/form-data">
                         <input type="hidden" th:field="*{postId}"/>
-                        <textarea id="smile" th:field="*{content}" class="input-fields" rows="4" th:placeholder="#{input_enter_post_text}"></textarea>
+                        <textarea id="smile" th:field="*{content}" class="input-fields" rows="5" th:placeholder="#{input_enter_post_text}" maxlength="255" required></textarea>
                         <div class="smiles-create-form" th:insert="fragments.html :: smiles-in-post"></div>
                         <button type="submit" class="btn-create" th:text="#{button_edit_post}"></button>
                     </form>

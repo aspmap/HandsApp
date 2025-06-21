@@ -29,10 +29,10 @@
             <div th:insert="fragments.html :: modal-window"></div>
             <!-- Modal Window End -->
 
-            <input name="nameWish" class="input-fields" th:placeholder="#{input_enter_name_wish}" />
-            <textarea name="description" class="input-fields" rows="4" th:placeholder="#{input_enter_description_wish}"></textarea>
-            <input name="price" class="input-fields" th:placeholder="#{input_enter_price_wish}" />
-            <input name="link" class="input-fields" th:placeholder="#{input_enter_link_wish}" />
+            <input name="nameWish" class="input-fields" th:placeholder="#{input_enter_name_wish}" maxlength="350" required />
+            <textarea name="description" class="input-fields" rows="4" th:placeholder="#{input_enter_description_wish}" maxlength="500" required></textarea>
+            <input name="price" class="input-fields" th:placeholder="#{input_enter_price_wish}" maxlength="15" required />
+            <input name="link" class="input-fields" th:placeholder="#{input_enter_link_wish}"  maxlength="500" required />
             <div class="form-text">
               <span th:text="#{input_enter_private_wish}"></span>
               <input name="isSecret" type="checkbox">

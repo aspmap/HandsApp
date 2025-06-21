@@ -20,7 +20,7 @@
       <div class="frame-content-create-form">
         <div class="form-create">
           <form method="POST" th:action="@{/todo/add}">
-            <input name="todoText" class="input-fields" th:placeholder="#{input_enter_todo_text}" required />
+            <input name="todoText" class="input-fields" th:placeholder="#{input_enter_todo_text}"  maxlength="250" required />
             <input name="deadlineAt" class="input-fields" type="datetime-local" required />
             <button type="submit" class="btn-create" th:text="#{button_add_todo_task}"></button>
           </form>

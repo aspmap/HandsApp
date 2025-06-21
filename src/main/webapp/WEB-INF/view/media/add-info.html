@@ -20,9 +20,9 @@
             <div class="frame-content-create-form">
                 <div class="form-create">
                     <form method="POST" th:action="@{/music/save}">
-                        <input name="projectName" class="input-fields" th:value="${projectName}" th:placeholder="#{input_enter_project_name_text}" />
-                        <input name="songName" class="input-fields" th:value="${songName}" th:placeholder="#{input_enter_song_name_text}" />
-                        <input name="songYear" class="input-fields" th:value="${songYear}" th:placeholder="#{input_enter_release_year_text}" />
+                        <input name="projectName" class="input-fields" th:value="${projectName}" th:placeholder="#{input_enter_project_name_text}"  maxlength="250" required />
+                        <input name="songName" class="input-fields" th:value="${songName}" th:placeholder="#{input_enter_song_name_text}"  maxlength="250" required />
+                        <input name="songYear" class="input-fields" th:value="${songYear}" th:placeholder="#{input_enter_release_year_text}" maxlength="10" required />
                         <button type="submit" class="btn-create" th:text="#{button_download}"></button>
                     </form>
                 </div>

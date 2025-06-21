@@ -120,7 +120,7 @@
     <div class="nav-wrapper">
         <a th:href="@{/}"><img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt=""></a>
         <form class="search-form" method="GET" th:action="@{/search}" sec:authorize="isAuthenticated()">
-            <input type="text" class="search-box" name="search" th:placeholder="#{input_find}">
+            <input type="text" class="search-box" name="search" th:placeholder="#{input_find}" maxlength="150" minlength="2">
         </form>
         <div class="nav-items">
             <a class="icon" id="home-icon" sec:authorize="isAuthenticated()" th:href="@{/}">
@@ -217,7 +217,7 @@
             <img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt="">
         </a>
         <form class="search-form" method="GET" th:action="@{/search}" sec:authorize="isAuthenticated()">
-            <input type="text" class="search-box" name="search" th:placeholder="#{input_find}">
+            <input type="text" class="search-box" name="search" th:placeholder="#{input_find}" maxlength="150" minlength="2">
         </form>
         <div class="nav-items">
             <a class="icon" id="home-icon" th:href="@{/}">
