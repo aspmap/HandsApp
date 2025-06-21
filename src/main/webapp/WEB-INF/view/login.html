@@ -40,11 +40,11 @@
                         <div class="form">
                             <div class="input_field">
                                 <input type="text" name="username" th:placeholder="#{input_username}" id="username"
-                                       class="input">
+                                       class="input" maxlength="150" required>
                             </div>
                             <div class="input_field">
                                 <input type="password" name="password" th:placeholder="#{input_password}" id="password"
-                                       class="input">
+                                       class="input" maxlength="150" required>
                             </div>
                             <button class="deactivate" id="submit" type="submit" disabled><span
                                     th:text="#{text_to_come_in}"></span></button>

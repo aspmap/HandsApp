@@ -41,22 +41,22 @@
                     <form th:action="@{/register}" method="POST">
                         <div class="form">
                             <div class="input_field">
-                                <input type="text" name="phone" th:placeholder="#{input_mobile_phone}" class="input">
+                                <input type="text" name="phone" th:placeholder="#{input_mobile_phone}" class="input" maxlength="20">
                             </div>
                             <div class="input_field">
-                                <input type="text" name="email" th:placeholder="#{input_email_address}" class="input">
+                                <input type="text" name="email" th:placeholder="#{input_email_address}" class="input" maxlength="50">
                             </div>
                             <div class="input_field">
-                                <input type="text" name="firstname" th:placeholder="#{input_name}" class="input">
+                                <input type="text" name="firstname" th:placeholder="#{input_name}" class="input" maxlength="150">
                             </div>
                             <div class="input_field">
-                                <input type="text" name="surname" th:placeholder="#{input_surname}" class="input">
+                                <input type="text" name="surname" th:placeholder="#{input_surname}" class="input" maxlength="150">
                             </div>
                             <div class="input_field">
-                                <input type="text" name="username" th:placeholder="#{input_username}" id="username" class="input">
+                                <input type="text" name="username" th:placeholder="#{input_username}" id="username" class="input" maxlength="150" required>
                             </div>
                             <div class="input_field">
-                                <input type="password" name="password" th:placeholder="#{input_password}" id="password" class="input">
+                                <input type="password" name="password" th:placeholder="#{input_password}" id="password" class="input" maxlength="150" required>
                             </div>
                             <button class="deactivate" id="submit" type="submit" disabled th:text="#{button_register}"></button>
                         </div>
