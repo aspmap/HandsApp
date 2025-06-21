@@ -29,7 +29,7 @@
                         <div th:insert="fragments.html :: modal-window"></div>
                         <!-- Modal Window End -->
 
-                        <textarea id="smile" name="content" class="input-fields" rows="4" th:placeholder="#{input_enter_post_text}" required></textarea>
+                        <textarea id="smile" name="content" class="input-fields" rows="4" th:placeholder="#{input_enter_post_text}" maxlength="255" required></textarea>
                         <div class="smiles-create-form" th:insert="fragments.html :: smiles-in-post"></div>
                         <button type="submit" class="btn-create" th:text="#{button_publish_a_post}"></button>
                     </form>

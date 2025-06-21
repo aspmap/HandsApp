@@ -54,7 +54,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     int countSubscribesPosts(String username);
 
     @Query(value = "select p.* from post p " +
-            "where p.content LIKE ? ", nativeQuery = true)
+            "where upper(p.content) LIKE upper(?) ", nativeQuery = true)
     List<Post> searchTags(String substring);
 
     @Query(value = "select count(p.*) from post p " +
