@@ -8,7 +8,7 @@
     <meta property="og:description" content="Тест2" />
     <meta property="og:image" content="https://sun9-45.userapi.com/impg/yxvytyHXfVB_OHUBn1ewdDxyCoFsjf3VcG_Cng/s-VSO3wAjoA.jpg?size=1280x1280&quality=95&sign=fc98f67b9e61e6c635a70223b523778f&type=album" />
 
-    <title id="pageTitle" th:text="#{application_name} + ' - ' + #{page_label_view_post}"></title>
+    <title id="pageTitle" th:text="#{page_label_view_post} + ' - ' + #{application_name}"></title>
     <th:block th:include="fragments.html :: header"/>
     <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
 </head>
