@@ -20,7 +20,8 @@ import run.itlife.utils.SaveFile;
 import javax.servlet.ServletContext;
 import java.util.List;
 
-import static run.itlife.messages.ErrorMessages.ERROR;
+import static run.itlife.utils.Properties.ErrorMessages.ERROR;
+import static run.itlife.utils.Properties.Paths.SEPARATOR;
 
 @Controller
 public class MessagesController {
@@ -39,7 +40,7 @@ public class MessagesController {
 
     @GetMapping("/messages/{dialogId}")
     @PreAuthorize("hasRole('USER')")
-    public String view_messages(ModelMap modelMap, @PathVariable Long dialogId) {
+    public String findMessagesByDialogId(ModelMap modelMap, @PathVariable Long dialogId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         //ищем участников диалога
@@ -57,9 +58,9 @@ public class MessagesController {
         if (usersOwner.size() != 0) {
             for (String u : usersOwner) {
                 if (!u.equals(username)) {
-                    String userDialogPhoto = messagesService.getUserPhotoByUsername(u);
-                    String userDialogEmail = messagesService.getUserEmailByUsername(u);
-                    String userDialogGoogle = messagesService.getUserGoogleByUsername(u);
+                    String userDialogPhoto = messagesService.findUserPhotoByUsername(u);
+                    String userDialogEmail = messagesService.findUserEmailByUsername(u);
+                    String userDialogGoogle = messagesService.findUserGoogleByUsername(u);
                     modelMap.put("userDialogName", u);
                     modelMap.put("userDialogPhoto", userDialogPhoto);
                     modelMap.put("userDialogEmail", userDialogEmail);
@@ -76,7 +77,7 @@ public class MessagesController {
         modelMap.put("countMessagesInDialog", messagesService.countMessagesInDialog(dialogId));
 
         //получаем ID текущего диалога для отправки комментария
-        modelMap.put("dialog", dialogsService.findById(dialogId));
+        modelMap.put("dialog", dialogsService.findDialogById(dialogId));
 
         commonsParams.setCommonParams(modelMap);
         return "dialogs/messages";
@@ -84,7 +85,7 @@ public class MessagesController {
 
     @PostMapping("messages/create/{dialogId}")
     @PreAuthorize("hasRole('USER')")
-    public String create(ModelMap modelMap, Messages messages, @PathVariable Long dialogId, @RequestParam("file") String file) {
+    public String createMessage(ModelMap modelMap, Messages messages, @PathVariable Long dialogId, @RequestParam("file") String file) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         SaveFile sf = new SaveFile();
         String filename = "1";
@@ -95,13 +96,13 @@ public class MessagesController {
             if (filename.equals("0")) {
                 commonsParams.setCommonParams(modelMap);
                 modelMap.put("dialogId", dialogId);
-                return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMessages";
+                return "messages-templates" + SEPARATOR + "errorFileSizeMessages";
             }
-            messagesService.create(messages, dialogId, filename);
+            messagesService.createMessage(messages, dialogId, filename);
             return "redirect:/messages/" + dialogId;
         } catch (Exception e) {
             log.error(ERROR + e);
-            return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMessages";
+            return "messages-templates" + SEPARATOR + "errorFileSizeMessages";
         }
     }
 }

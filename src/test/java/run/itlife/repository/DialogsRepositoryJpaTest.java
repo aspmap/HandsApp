@@ -28,7 +28,7 @@ public class DialogsRepositoryJpaTest {
 
     @Test
     public void getDialogIdByUsers() {
-        long dialogIdByUsers = this.dialogsRepository.getDialogIdByUsers("terminator", "phantasm");
+        long dialogIdByUsers = this.dialogsRepository.findDialogIdByUsers("terminator", "phantasm");
         Assert.assertEquals(9, dialogIdByUsers);
     }
 }

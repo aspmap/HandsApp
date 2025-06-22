@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import run.itlife.dto.ToDoDto;
-import run.itlife.entity.ToDo;
 import run.itlife.entity.User;
 import run.itlife.service.ToDoService;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
-import run.itlife.utils.SaveFile;
+
+import static run.itlife.utils.Properties.Paths.*;
 
 @Controller
 public class ToDoController {
@@ -36,7 +36,7 @@ public class ToDoController {
 
     @GetMapping("/todo")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String todos(ModelMap modelMap) {
+    public String findTodos(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
@@ -46,7 +46,7 @@ public class ToDoController {
 
     @GetMapping("/todo/completed")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String todosCompleted(ModelMap modelMap) {
+    public String findTodosIsCompleted(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
@@ -56,31 +56,31 @@ public class ToDoController {
 
     @GetMapping("/todo/add")
     @PreAuthorize("hasRole('USER')")
-    public String newTask(ModelMap modelMap) {
+    public String createTodoTask(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "todo/add-todo";
     }
 
     @PostMapping("/todo/add")
     @PreAuthorize("hasRole('USER')")
-    public String addNewTask(ToDoDto toDoDto, ModelMap modelMap) {
+    public String createTodoTask(ToDoDto toDoDto, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Long toDoId;
         toDoId = toDoService.createToDoTask(toDoDto);
-        return "redirect:" + SaveFile.SEPARATOR + "todo";
+        return "redirect:" + SEPARATOR + "todo";
     }
 
     @GetMapping("/todo/{toDoId}/complete")
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.OK)
-    public void completeTask(@PathVariable Long toDoId) {
+    public void completeTodoTask(@PathVariable Long toDoId) {
         toDoService.completeTask(toDoId);
     }
 
     @PostMapping("/todo/delete/{id}")
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteToDo(@PathVariable Long id) {
+    public void deleteToDoTask(@PathVariable Long id) {
         toDoService.deleteTodo(id);
     }
 }

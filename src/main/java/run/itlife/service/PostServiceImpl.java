@@ -38,7 +38,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> listAllPosts() {
+    public List<Post> findAllPosts() {
         List<Post> posts =  postRepository.findAll(Sort.by("createdAt").descending());
         for (Post p : posts) {
             p.getComments().size();
@@ -47,8 +47,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> listAllPostsAsDto() {
-        return toDtoList(listAllPosts());
+    public List<PostDto> findAllPostsAsDto() {
+        return toDtoList(findAllPosts());
     }
 
     @Override
@@ -57,7 +57,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> searchDtos(String search) {
+    public List<PostDto> findDtos(String search) {
         return toDtoList(search(search));
     }
 
@@ -175,8 +175,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> sortedPostsByDate(String username) {
-        List<Post> posts = postRepository.sortedPostsByDate(username);
+    public List<Post> findSortedPostsByDate(String username) {
+        List<Post> posts = postRepository.findSortedPostsByDate(username);
         for (Post p : posts) {
             p.getComments().size();
         }
@@ -226,8 +226,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> searchTags(String substring) {
-        List<Post> posts = postRepository.searchTags("%#" + substring +"%");
+    public List<Post> findTags(String substring) {
+        List<Post> posts = postRepository.findTags("%#" + substring +"%");
         return posts;
     }
 
@@ -243,8 +243,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> selectMyLikesPosts(String username) {
-        return postRepository.selectMyLikesPosts(username);
+    public List<Post> findMyLikesPosts(String username) {
+        return postRepository.findMyLikesPosts(username);
     }
 
     @Override

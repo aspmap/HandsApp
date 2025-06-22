@@ -6,7 +6,7 @@ import run.itlife.entity.Bugs;
 import java.util.List;
 
 public interface BugsService {
-    void create(BugsDto bugsDto);
-    List<Bugs> listAllBugs();
-    void createFromKafka(BugsDto bugsDto);
+    void createBugReport(BugsDto bugsDto);
+    List<Bugs> findAllBugs();
+    void createBugReportFromKafka(BugsDto bugsDto);
 }

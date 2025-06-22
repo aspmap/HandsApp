@@ -54,10 +54,10 @@ public class UserServiceMockTest {
             user.setPassword("terminatorpassword");
             expectedData.add(user);
         }
-        Mockito.when(mockUserService.getUsersOnly()).thenReturn(expectedData);
-        List<User> resultData = mockUserService.getUsersOnly();
+        Mockito.when(mockUserService.findUsersOnly()).thenReturn(expectedData);
+        List<User> resultData = mockUserService.findUsersOnly();
         Assert.assertEquals(expectedData, resultData);
-        Mockito.verify(mockUserService).getUsersOnly();
+        Mockito.verify(mockUserService).findUsersOnly();
     }
 
     @Test
@@ -67,10 +67,10 @@ public class UserServiceMockTest {
         userDto.setPassword("terminatorpassword");
         ArrayList<UserDto> expectedData = new ArrayList<>();
         expectedData.add(userDto);
-        Mockito.when(mockUserService.getUsersOnlyKey(userDto.getUsername())).thenReturn(expectedData);
-        ArrayList<UserDto> resultData = mockUserService.getUsersOnlyKey(userDto.getUsername());
+        Mockito.when(mockUserService.findUsersOnlyKey(userDto.getUsername())).thenReturn(expectedData);
+        ArrayList<UserDto> resultData = mockUserService.findUsersOnlyKey(userDto.getUsername());
         Assert.assertEquals(expectedData, resultData);
-        Mockito.verify(mockUserService).getUsersOnlyKey(userDto.getUsername());
+        Mockito.verify(mockUserService).findUsersOnlyKey(userDto.getUsername());
     }
 
     @Test
@@ -82,10 +82,10 @@ public class UserServiceMockTest {
             user.setPassword("terminatorpassword");
             expectedData.add(user);
         }
-        Mockito.when(mockUserService.searchUsers("ter%")).thenReturn(expectedData);
-        List<User> resultData = mockUserService.searchUsers("ter%");
+        Mockito.when(mockUserService.findUsers("ter%")).thenReturn(expectedData);
+        List<User> resultData = mockUserService.findUsers("ter%");
         Assert.assertEquals(expectedData, resultData);
-        Mockito.verify(mockUserService).searchUsers("ter%");
+        Mockito.verify(mockUserService).findUsers("ter%");
     }
 
     @Test
@@ -97,10 +97,10 @@ public class UserServiceMockTest {
             user.setPassword("terminatorpassword");
             expectedData.add(user);
         }
-        Mockito.when(mockUserService.searchGoogleUsers("ter%")).thenReturn(expectedData);
-        List<User> resultData = mockUserService.searchGoogleUsers("ter%");
+        Mockito.when(mockUserService.findGoogleUsers("ter%")).thenReturn(expectedData);
+        List<User> resultData = mockUserService.findGoogleUsers("ter%");
         Assert.assertEquals(expectedData, resultData);
-        Mockito.verify(mockUserService).searchGoogleUsers("ter%");
+        Mockito.verify(mockUserService).findGoogleUsers("ter%");
     }
 
     @Test

@@ -29,77 +29,77 @@ public class CommentController {
     @PreAuthorize("hasRole('USER')")
     //Принимает он CommentDto - берёт данные с формы post.html, видит, что там есть name=”postId”, есть name="content”
     //и т.д. и он маппит по этим именам на объект CommentDto
-    public String create(CommentDto comment){
-        commentService.create(comment);
-        return "redirect:/post/" + comment.getPostId();
+    public String createCommentInPost(CommentDto comment){
+        commentService.createComment(comment);
+        return "redirect:/post_view/" + comment.getPostId();
+    }
+
+    @PostMapping("/create_comment")
+    @PreAuthorize("hasRole('USER')")
+    public String createCommentInComments(CommentDto comment){
+        commentService.createComment(comment);
+        return "redirect:/comment/" + comment.getPostId();
     }
 
     @GetMapping("/delete/{postId}/{commentId}")
     @PreAuthorize("hasRole('USER')")
-    public String delete(@PathVariable long commentId, @PathVariable long postId){
-        commentService.delete(commentId);
+    public String deleteComment(@PathVariable long commentId, @PathVariable long postId){
+        commentService.deleteComment(commentId);
         return "redirect:/comment/" + postId;
     }
 
     @GetMapping("/delete/sub/{postId}/{commentId}")
     @PreAuthorize("hasRole('USER')")
-    public String delete_sub(@PathVariable long commentId, @PathVariable long postId){
-        commentService.delete(commentId);
-        return "redirect:/comment/sub/" + postId;
+    public String deleteSubComment(@PathVariable long commentId, @PathVariable long postId){
+        commentService.deleteComment(commentId);
+        return "redirect:/comment/comments_sub/" + postId;
     }
 
     @PostMapping("/create_subuser_comment")
     @PreAuthorize("hasRole('USER')")
-    public String create_subuser_comment(CommentDto comment){
-        commentService.create(comment);
+    public String createSubuserComment(CommentDto comment){
+        commentService.createComment(comment);
         return "redirect:/post-view-sub/" + comment.getPostId();
     }
 
     @PostMapping("/create_comment_detail")
     @PreAuthorize("hasRole('USER')")
-    public String create_comment_detail(CommentDto comment){
-        commentService.create(comment);
+    public String createCommentDetail(CommentDto comment){
+        commentService.createComment(comment);
         return "redirect:/posts_detail/";
     }
 
     @GetMapping("/create_comment_detail_subuser/{user}")
     @PreAuthorize("hasRole('USER')")
-    public String create_comment_detail_subuser(CommentDto comment, @PathVariable String user){
-        commentService.create(comment);
+    public String createCommentDetailSubuser(CommentDto comment, @PathVariable String user){
+        commentService.createComment(comment);
         return "redirect:/posts_detail_subuser/" + user;
     }
 
     @PostMapping("/create_comment_detail_sub")
     @PreAuthorize("hasRole('USER')")
-    public String create_comment_detail_sub(CommentDto comment){
-        commentService.create(comment);
+    public String createCommentDetailSub(CommentDto comment){
+        commentService.createComment(comment);
         return "redirect:/";
-    }
-
-    @PostMapping("/create_comment")
-    @PreAuthorize("hasRole('USER')")
-    public String create_comment(CommentDto comment){
-        commentService.create(comment);
-        return "redirect:/comment/" + comment.getPostId();
     }
 
     @PostMapping("/create_comment_subuser")
     @PreAuthorize("hasRole('USER')")
-    public String create_comment_subuser(CommentDto comment){
-        commentService.create(comment);
-        return "redirect:/comment/sub/" + comment.getPostId();
+    public String createCommentSubuser(CommentDto comment){
+        commentService.createComment(comment);
+        return "redirect:/comment/comments_sub/" + comment.getPostId();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
-    public String comments(@PathVariable long id, ModelMap modelMap){
+    public String findCommentsById(@PathVariable long id, ModelMap modelMap){
         commonsParams.setCommonParams(id, modelMap);
         return "comments/comments";
     }
 
-    @GetMapping("/sub/{id}")
+    @GetMapping("/comments_sub/{id}")
     @PreAuthorize("hasRole('USER')")
-    public String comments_sub(@PathVariable long id, ModelMap modelMap){
+    public String findCommentsSubById(@PathVariable long id, ModelMap modelMap){
         commonsParams.setCommonParams(id, modelMap);
         return "comments/comments-sub";
     }

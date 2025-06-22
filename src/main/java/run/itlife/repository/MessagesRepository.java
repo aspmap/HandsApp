@@ -44,19 +44,19 @@ public interface MessagesRepository extends JpaRepository<Messages, Long> {
             "left join user_dialog ud2 on ud2.dialog_id = d2.dialog_id " +
             "left join users u2 on u2.user_id = ud2.user_id " +
             "where u.username = ? and u2.username = ? ", nativeQuery = true)
-    List<String> getDialogIdByUsersOwner(String username1, String username2);
+    List<String> findDialogIdByUsersOwner(String username1, String username2);
 
     @Query(value = "select u.photo from users u " +
             "where u.username = ? ", nativeQuery = true)
-    String getUserPhotoByUsername(String username);
+    String findUserPhotoByUsername(String username);
 
     @Query(value = "select u.email from users u " +
             "where u.username = ? ", nativeQuery = true)
-    String getUserEmailByUsername(String username);
+    String findUserEmailByUsername(String username);
 
     @Query(value = "select u.is_google from users u " +
             "where u.username = ? ", nativeQuery = true)
-    String getUserGoogleByUsername(String username);
+    String findUserGoogleByUsername(String username);
 
     @Modifying
     @Transactional

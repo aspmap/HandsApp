@@ -45,26 +45,26 @@ public class MessagesRepositoryJpaTest {
     }
 
     @Test
-    public void getDialogIdByUsersOwner() {
-        List<String> dialogIdByUsersOwner = this.messagesRepository.getDialogIdByUsersOwner("terminator", "phantasm");
+    public void findDialogIdByUsersOwner() {
+        List<String> dialogIdByUsersOwner = this.messagesRepository.findDialogIdByUsersOwner("terminator", "phantasm");
         Assert.assertEquals(1, dialogIdByUsersOwner.size());
     }
 
     @Test
-    public void getUserPhotoByUsername() {
-        String userPhotoByUsername = this.messagesRepository.getUserPhotoByUsername("terminator");
+    public void findUserPhotoByUsername() {
+        String userPhotoByUsername = this.messagesRepository.findUserPhotoByUsername("terminator");
         Assert.assertEquals("bc34a420-286b-460b-9d7e-af400f4f74b2.jpg", userPhotoByUsername);
     }
 
     @Test
-    public void getUserEmailByUsername() {
-        String userEmailByUsername = this.messagesRepository.getUserEmailByUsername("terminator");
+    public void findUserEmailByUsername() {
+        String userEmailByUsername = this.messagesRepository.findUserEmailByUsername("terminator");
         Assert.assertEquals("", userEmailByUsername);
     }
 
     @Test
-    public void getUserGoogleByUsername() {
-        String userGoogleByUsername = this.messagesRepository.getUserGoogleByUsername("terminator");
+    public void findUserGoogleByUsername() {
+        String userGoogleByUsername = this.messagesRepository.findUserGoogleByUsername("terminator");
         Assert.assertEquals("false", userGoogleByUsername);
     }
 }

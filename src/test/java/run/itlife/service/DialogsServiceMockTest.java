@@ -22,10 +22,10 @@ public class DialogsServiceMockTest {
         dialogs.setDialogId(4L);
         dialogs.setNameDialog("Dialog name");
         dialogs.setImgDialog("picture.jpg");
-        Mockito.when(dialogsService.findById(4L)).thenReturn(dialogs);
-        Dialogs dialogsById = dialogsService.findById(4L);
+        Mockito.when(dialogsService.findDialogById(4L)).thenReturn(dialogs);
+        Dialogs dialogsById = dialogsService.findDialogById(4L);
         Assert.assertEquals(dialogs, dialogsById);
-        Mockito.verify(dialogsService).findById(4L);
+        Mockito.verify(dialogsService).findDialogById(4L);
     }
 
     @Test
@@ -38,9 +38,9 @@ public class DialogsServiceMockTest {
 
     @Test
     public void getDialogIdByUsers() {
-        Mockito.when(dialogsService.getDialogIdByUsers("terminator", "phantasm")).thenReturn(2L);
-        long duplicateDialogues = dialogsService.getDialogIdByUsers("terminator", "phantasm");
+        Mockito.when(dialogsService.findDialogIdByUsers("terminator", "phantasm")).thenReturn(2L);
+        long duplicateDialogues = dialogsService.findDialogIdByUsers("terminator", "phantasm");
         Assert.assertEquals(2L, duplicateDialogues);
-        Mockito.verify(dialogsService).getDialogIdByUsers("terminator", "phantasm");
+        Mockito.verify(dialogsService).findDialogIdByUsers("terminator", "phantasm");
     }
 }

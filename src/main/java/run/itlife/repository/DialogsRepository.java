@@ -24,7 +24,7 @@ public interface DialogsRepository extends JpaRepository<Dialogs, Long> {
             "left join user_dialog ud2 on ud2.dialog_id = d2.dialog_id " +
             "left join users u2 on u2.user_id = ud2.user_id " +
             "where u.username = ? and u2.username = ? ", nativeQuery = true)
-    Long getDialogIdByUsers(String username1, String username2);
+    Long findDialogIdByUsers(String username1, String username2);
 
     @Query(value = "select d.dialog_id from dialogs d " +
             "left join user_dialog ud on d.dialog_id = ud.dialog_id " +
@@ -43,7 +43,7 @@ public interface DialogsRepository extends JpaRepository<Dialogs, Long> {
     @Query(value = "select count(m.dialog_id) from dialogs d " +
             "left join messages m on d.dialog_id = m.dialog_id " +
             "where d.dialog_id = ? ", nativeQuery = true)
-    Integer showCountDialog(Long dialogId);
+    Integer findCountDialog(Long dialogId);
 
     @Query(value = "select cast(d.dialog_id as INTEGER) as dialog_id, cast(count(*) as INTEGER) as count_messages from messages m " +
             "left join dialogs d on d.dialog_id = m.dialog_id " +

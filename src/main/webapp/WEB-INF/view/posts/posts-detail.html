@@ -33,7 +33,7 @@
                                 </div>
                             </td>
                             <td class="td-post-icon-edit">
-                                <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}">
+                                <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/edit/{postId} (postId = ${post.postId})}">
                                     <img th:src="@{/resources/img/nav/option.png}" class="options" alt="">
                                 </a>
                             </td>
@@ -89,7 +89,7 @@
                     <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
                     <!-- Comments -->
                     <div class="view-source comments-view">
-                        <a th:href="@{/comment/sub/{postId}(postId = ${post.postId})}"
+                        <a th:href="@{/comment/comments_sub/{postId}(postId = ${post.postId})}"
                            th:each="like, state : ${post.comments}" class="description comments"
                            th:text="${state.last} ? #{label_see_all_comments} + ' (' + ${state.count} + ')' : ''"></a>
                     </div>

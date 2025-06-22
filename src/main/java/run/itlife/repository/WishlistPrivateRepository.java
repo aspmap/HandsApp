@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 public interface WishlistPrivateRepository extends JpaRepository<WishlistPrivate, Long> {
     @Query(value = "select count(*) from wishlist_private wp " +
             "where wp.wishlist_id = ? and wp.user_id = ? ", nativeQuery = true)
-    Integer searchAlreadyPermissions(Long id, Long userId);
+    Integer findAlreadyPermissions(Long id, Long userId);
 
     @Modifying
     @Transactional

@@ -30,7 +30,7 @@ public class MessagesServiceImpl implements MessagesService {
     }
 
     @Override
-    public List<Messages> listAllMessages() {
+    public List<Messages> findAllMessages() {
         List<Messages> messages =  messagesRepository.findAll(Sort.by("createdAt").descending());
         for (Messages m : messages) {
             m.getCreatedAt().getMonth();
@@ -39,10 +39,10 @@ public class MessagesServiceImpl implements MessagesService {
     }
 
     @Override
-    public void create(Messages messages, Long dialogId, String file) {
+    public void createMessage(Messages messages, Long dialogId, String file) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User userId = userService.findByUsername(username);
-        Dialogs dialogIdCurrent = dialogsService.findById(dialogId);
+        Dialogs dialogIdCurrent = dialogsService.findDialogById(dialogId);
         dialogIdCurrent.setUpdatedAt(LocalDateTime.now());
         messages.setCreatedAt(LocalDateTime.now());
         messages.setUser(userId);
@@ -71,18 +71,18 @@ public class MessagesServiceImpl implements MessagesService {
     }
 
     @Override
-    public String getUserPhotoByUsername(String username) {
-        return messagesRepository.getUserPhotoByUsername(username);
+    public String findUserPhotoByUsername(String username) {
+        return messagesRepository.findUserPhotoByUsername(username);
     }
 
     @Override
-    public String getUserEmailByUsername(String username) {
-        return messagesRepository.getUserEmailByUsername(username);
+    public String findUserEmailByUsername(String username) {
+        return messagesRepository.findUserEmailByUsername(username);
     }
 
     @Override
-    public String getUserGoogleByUsername(String username) {
-        return messagesRepository.getUserGoogleByUsername(username);
+    public String findUserGoogleByUsername(String username) {
+        return messagesRepository.findUserGoogleByUsername(username);
     }
 
     @Override

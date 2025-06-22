@@ -30,18 +30,18 @@
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
-                            <a th:href="@{/sub-posts/{user}(user = ${post.user.username})}">
+                            <a th:href="@{/posts_sub/{user}(user = ${post.user.username})}">
                                 <img th:if="${post.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                 <img th:if="${post.user.photo != null and post.user.isGoogle == false}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/profile/' + ${post.user.photo}}" alt="">
                                 <img th:if="${post.user.photo != null and post.user.isGoogle == true}" th:src="${post.user.photo}" alt="">
                             </a>
                         </div>
-                        <a th:href="@{/sub-posts/{user}(user = ${post.user.username})}">
+                        <a th:href="@{/posts_sub/{user}(user = ${post.user.username})}">
                             <p th:if="${post.user.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
                             <p th:if="${post.user.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
                         </a>
                     </div>
-                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/delete_one_post(postId = ${post.postId})}">
+                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/delete_one_post/{postId} (postId = ${post.postId})}">
                         <img th:src="@{/resources/img/nav/delete.png}" class="options" alt="">
                     </a>
                     <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}">
@@ -62,7 +62,7 @@
                         <a th:if="${isLike == 0}" th:href="@{/like_view_sub/{postId}(postId = ${post.postId})}">
                             <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
                         </a>
-                        <a th:href="@{/comment/sub/{postId}(postId = ${post.postId})}">
+                        <a th:href="@{/comment/comments_sub/{postId}(postId = ${post.postId})}">
                             <img th:src="@{/resources/img/nav/comment.png}" class="icon" alt="">
                         </a>
                     </div>
@@ -76,7 +76,7 @@
 
                     <!-- Comments -->
                     <div class="view-source comments-view">
-                        <a th:href="@{/comment/sub/{postId}(postId = ${post.postId})}" th:each="like, state : ${post.comments}" class="description comments" th:text="${state.last} ? #{label_see_all_comments} + ' (' + ${state.count} + ')' : ''"></a>
+                        <a th:href="@{/comment/comments_sub/{postId}(postId = ${post.postId})}" th:each="like, state : ${post.comments}" class="description comments" th:text="${state.last} ? #{label_see_all_comments} + ' (' + ${state.count} + ')' : ''"></a>
                     </div>
                 </div>
 

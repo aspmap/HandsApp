@@ -2,7 +2,6 @@ package run.itlife.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import run.itlife.entity.Likes;
 import run.itlife.entity.Post;
 
 import java.util.List;
@@ -38,7 +37,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "join users u on p.user_id = u.user_id " +
             "where u.username = ? " +
             "order by p.created_at desc ", nativeQuery = true)
-    List<Post> sortedPostsByDate(String username);
+    List<Post> findSortedPostsByDate(String username);
 
     @Query(value = "select * from post p " +
             "join subscriptions s on s.user_sub_id = p.user_id " +
@@ -55,7 +54,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(value = "select p.* from post p " +
             "where upper(p.content) LIKE upper(?) ", nativeQuery = true)
-    List<Post> searchTags(String substring);
+    List<Post> findTags(String substring);
 
     @Query(value = "select count(p.*) from post p " +
             "where p.content LIKE ? ", nativeQuery = true)
@@ -73,7 +72,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "left join users u on u.user_id = l.user_id " +
             "where u.username = ? " +
             "order by p.created_at desc; ", nativeQuery = true)
-    List<Post> selectMyLikesPosts(String username);
+    List<Post> findMyLikesPosts(String username);
 
     @Query(value = "select count(p.post_id) from post p " +
             "left join likes l on p.post_id = l.post_id " +

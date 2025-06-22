@@ -1,6 +1,5 @@
 package run.itlife.dto;
 
-import run.itlife.entity.Music;
 import run.itlife.entity.User;
 
 public class PlaylistDto {

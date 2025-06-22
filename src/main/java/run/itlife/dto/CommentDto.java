@@ -2,7 +2,6 @@ package run.itlife.dto;
 
 // Используется в CommentController
 public class CommentDto {
-
     private Long commentId;
     private Long postId;
     private String commentText;

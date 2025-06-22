@@ -15,5 +15,5 @@ public interface MusicRepository extends JpaRepository<Music, Long> {
             "left join playlist_music pm on pm.music_id = m.music_id " +
             "left join playlist p on pm.playlist_id = p.playlist_id " +
             "where pm.playlist_id = ? ", nativeQuery = true)
-    ArrayList<Music> getPlaylistByPlaylistId(Long playlistId);
+    ArrayList<Music> findPlaylistByPlaylistId(Long playlistId);
 }

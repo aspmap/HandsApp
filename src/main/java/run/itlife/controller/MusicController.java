@@ -33,9 +33,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import static run.itlife.enums.FileExtensions.MP3;
-import static run.itlife.messages.ErrorMessages.ERROR;
-import static run.itlife.messages.ErrorMessages.NOT_PUBLISH_POST;
 import static run.itlife.utils.OtherUtils.generateFileName;
+import static run.itlife.utils.Properties.Files.*;
+import static run.itlife.utils.Properties.Paths.*;
+import static run.itlife.utils.Properties.ErrorMessages.*;
 
 @Controller
 public class MusicController {
@@ -46,7 +47,6 @@ public class MusicController {
     private static byte[] musicFile;
     @Autowired
     CommonsParams commonsParams;
-    private static final int MAX_UPLOAD_MUSIC_FILE_SIZE_IN_MB = 100 * 1024 * 1024; // 100 МБ
     private static final Logger log = LoggerFactory.getLogger(MusicController.class);
 
     @Autowired
@@ -59,7 +59,7 @@ public class MusicController {
 
     @GetMapping("/music")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String posts(ModelMap modelMap) {
+    public String findMusic(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
@@ -81,16 +81,16 @@ public class MusicController {
         if (!file.isEmpty()) {
             musicFile = file.getBytes();
             final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-            String filename = generateFileName() + SaveFile.POINT + MP3.getExtension();
-            File dir = new File(context.getRealPath(SaveFile.PATH_MUSIC_USERS + username + "/temp"));
+            String filename = generateFileName() + POINT + MP3.getExtension();
+            File dir = new File(context.getRealPath(PATH_MUSIC_USERS + username + "/temp"));
             if (!dir.exists()) {
                 dir.mkdirs();
             }
             byte[] bytes = file.getBytes();
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(dir + SaveFile.SEPARATOR + filename)));
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(dir + SEPARATOR + filename)));
             stream.write(bytes);
             stream.close();
-            File tempfile = new File(dir + SaveFile.SEPARATOR + filename);
+            File tempfile = new File(dir + SEPARATOR + filename);
             MP3File mp3file = (MP3File) AudioFileIO.read(tempfile);
             ID3v1Tag tagv1 = mp3file.getID3v1Tag();
             if (tagv1 != null) {
@@ -114,11 +114,11 @@ public class MusicController {
 
     @PostMapping("/music/save")
     @PreAuthorize("hasRole('USER')")
-    public String addNewMusic(MusicDto musicDto, ModelMap modelMap) {
+    public String saveMusic(MusicDto musicDto, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (musicFile.length > MAX_UPLOAD_MUSIC_FILE_SIZE_IN_MB) {
             commonsParams.setCommonParams(modelMap);
-            return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMusic";
+            return "messages-templates" + SEPARATOR + "errorFileSizeMusic";
         }
         Long musicId;
         SaveFile sf = new SaveFile();
@@ -128,22 +128,22 @@ public class MusicController {
                 Map<String, String> filenameMap = sf.saveMusicFile(username, context, musicFile);
                 if (filenameMap == null) {
                     commonsParams.setCommonParams(modelMap);
-                    return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMusic";
+                    return "messages-templates" + SEPARATOR + "errorFileSizeMusic";
                 }
                 for (Map.Entry<String, String> entry : filenameMap.entrySet()) {
                     musicDto.setFileName(entry.getKey());
                 }
                 musicId = musicService.createSong(musicDto);
-                return "redirect:" + SaveFile.SEPARATOR + "music";
+                return "redirect:" + SEPARATOR + "music";
             } catch (Exception e) {
                 log.error(ERROR + e);
                 commonsParams.setCommonParams(modelMap);
-                return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMusic";
+                return "messages-templates" + SEPARATOR + "errorFileSizeMusic";
             }
         } else {
             log.error(ERROR);
             commonsParams.setCommonParams(modelMap);
-            return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMusic";
+            return "messages-templates" + SEPARATOR + "errorFileSizeMusic";
         }
     }
 
@@ -156,11 +156,11 @@ public class MusicController {
 
     @PostMapping("/music/results")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String getResults(ModelMap modelMap) {
+    public String findPlaylists(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
-        modelMap.put("findPlaylists", playlistService.searchPlaylistsByUserId(user.getUserId()));
+        modelMap.put("findPlaylists", playlistService.findPlaylistsByUserId(user.getUserId()));
         return "media/results";
     }
 }

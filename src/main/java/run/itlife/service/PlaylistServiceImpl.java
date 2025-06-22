@@ -10,7 +10,6 @@ import run.itlife.entity.Playlist;
 import run.itlife.repository.PlaylistRepository;
 import run.itlife.repository.UserRepository;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Service
@@ -26,8 +25,8 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public ArrayList<Playlist> getAllPlaylistsByUserId(Long userId) {
-        return playlistRepository.getAllPlaylistsByUserId(userId);
+    public ArrayList<Playlist> findAllPlaylistsByUserId(Long userId) {
+        return playlistRepository.findAllPlaylistsByUserId(userId);
     }
 
     @Override
@@ -47,12 +46,12 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public ArrayList<Playlist> searchPlaylistsByUserId(Long userId) {
-        return playlistRepository.searchPlaylistsByUserId(userId);
+    public ArrayList<Playlist> findPlaylistsByUserId(Long userId) {
+        return playlistRepository.findPlaylistsByUserId(userId);
     }
 
     @Override
-    public Long getPlaylistId(String substring) {
-        return playlistRepository.getPlaylistId(substring);
+    public Long findPlaylistId(String substring) {
+        return playlistRepository.findPlaylistId(substring);
     }
 }

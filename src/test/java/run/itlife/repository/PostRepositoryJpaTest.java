@@ -39,8 +39,8 @@ public class PostRepositoryJpaTest {
     }
 
     @Test
-    public void sortedPostsByDate() {
-        List<Post> sortedPostsByDate = this.postRepository.sortedPostsByDate("altermuun");
+    public void findSortedPostsByDate() {
+        List<Post> sortedPostsByDate = this.postRepository.findSortedPostsByDate("altermuun");
         Assert.assertEquals(6, sortedPostsByDate.size());
     }
 
@@ -58,7 +58,7 @@ public class PostRepositoryJpaTest {
 
     @Test
     public void searchTags() {
-        List<Post> tags = this.postRepository.searchTags("%#veryimportantthings%");
+        List<Post> tags = this.postRepository.findTags("%#veryimportantthings%");
         Assert.assertEquals(2, tags.size());
     }
 
@@ -81,8 +81,8 @@ public class PostRepositoryJpaTest {
     }
 
     @Test
-    public void selectMyLikesPostsByUserName() {
-        List<Post> myLikesPostsByUserName = this.postRepository.selectMyLikesPosts("altermuun");
+    public void findMyLikesPostsByUserName() {
+        List<Post> myLikesPostsByUserName = this.postRepository.findMyLikesPosts("altermuun");
         Assert.assertEquals(2, myLikesPostsByUserName.size());
     }
 

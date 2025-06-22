@@ -136,19 +136,19 @@
                     <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
                     <ul class="nalumes-nucludem">
                         <li>
-                            <a th:href="@{/post/newImage}">
+                            <a th:href="@{/post/new_image}">
                                 <img th:src="@{/resources/img/nav/photo.png}" class="icon" alt="">
                                 <span th:text="#{menu_photo}"></span>
                             </a>
                         </li>
                         <li>
-                            <a th:href="@{/post/newS3Image}">
+                            <a th:href="@{/post/new_S3_image}">
                                 <img th:src="@{/resources/img/nav/photo.png}" class="icon" alt="">
                                 <span th:text="#{menu_s3_photo}"></span>
                             </a>
                         </li>
                         <li>
-                            <a th:href="@{/post/newVideo}">
+                            <a th:href="@{/post/new_video}">
                                 <img th:src="@{/resources/img/nav/video.png}" class="icon" alt="">
                                 <span th:text="#{menu_video}"></span>
                             </a>
@@ -191,7 +191,7 @@
                                 <a th:href="@{/posts_ms/}"><span th:text="#{menu_my_posts_ms}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/pagination}"><span th:text="#{menu_my_pagination}"></span></a>
+                                <a th:href="@{/posts_pagination}"><span th:text="#{menu_my_pagination}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/profile_archive}"><span th:text="#{menu_my_archive}"></span></a>
@@ -233,19 +233,19 @@
                     <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
                     <ul class="nalumes-nucludem">
                         <li>
-                            <a th:href="@{/post/newImage}">
+                            <a th:href="@{/post/new_image}">
                                 <img th:src="@{/resources/img/nav/photo.png}" class="icon" alt="">
                                 <span th:text="#{menu_photo}"></span>
                             </a>
                         </li>
                         <li>
-                            <a th:href="@{/post/newS3Image}">
+                            <a th:href="@{/post/new_S3_image}">
                                 <img th:src="@{/resources/img/nav/photo.png}" class="icon" alt="">
                                 <span th:text="#{menu_s3_photo}"></span>
                             </a>
                         </li>
                         <li>
-                            <a th:href="@{/post/newVideo}">
+                            <a th:href="@{/post/new_video}">
                                 <img th:src="@{/resources/img/nav/video.png}" class="icon" alt="">
                                 <span th:text="#{menu_video}"></span>
                             </a>
@@ -288,7 +288,7 @@
                                 <a th:href="@{/posts_ms/}"><span th:text="#{menu_my_posts_ms}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/pagination}"><span th:text="#{menu_my_pagination}"></span></a>
+                                <a th:href="@{/posts_pagination}"><span th:text="#{menu_my_pagination}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/profile_archive}"><span th:text="#{menu_my_archive}"></span></a>
@@ -321,7 +321,7 @@
     <p class="suggestion-text"><span th:text="#{text_recommendations_for_you}"></span></p>
     <div class="profile-card" th:each="users: ${usersOnlyKey}" th:if="${!users.username.equals(user)}">
         <div class="profile-pic">
-            <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
+            <a th:href="@{/posts_sub/{user}(user = ${users.username})}">
                 <img th:if="${users.photo == ''}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                 <img th:if="${users.photo != '' and users.isGoogle == 'f'}" th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
                 <img th:if="${users.photo != '' and users.isGoogle == 't'}" th:src="${users.photo}" alt="">
@@ -329,11 +329,11 @@
         </div>
         <div>
             <div>
-            <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
+            <a th:href="@{/posts_sub/{user}(user = ${users.username})}">
                 <span th:if="${users.isGoogle == 'f'}" th:text="${users.username}" class="username"></span>
                 <span th:if="${users.isGoogle == 't'}" th:text="${users.email}" class="username"></span>
             </a>
-            <a th:if="${users.isSub == '0'}" th:href="@{/subscription_fr/{user}(user = ${users.username})}" class="sub-btn" th:text="#{button_subscribe}"></a>
+            <a th:if="${users.isSub == '0'}" th:href="@{/subscription_from_recommendations/{user}(user = ${users.username})}" class="sub-btn" th:text="#{button_subscribe}"></a>
             </div>
                 <p th:if="${users.surname != null && users.firstname != null}" th:text="${users.surname} + ' ' + ${users.firstname}" class="sub-text"></p>
 
@@ -454,12 +454,12 @@
 <!-- Modal Window End -->
 
 <!-- Footer -->
-<p class="main-text-footer" th:fragment="footer-login">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
+<p class="main-text-footer" th:fragment="footer-login">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a th:href="@{/bug/create}" th:text="#{text_write_to_us}"></a>
     <br>
     <span class="text-lang" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
 </p>
 
-<footer class="main-text-footer" th:fragment="footer">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a th:href="@{/bug/new}" th:text="#{text_write_to_us}"></a>
+<footer class="main-text-footer" th:fragment="footer">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a th:href="@{/bug/create}" th:text="#{text_write_to_us}"></a>
     <br>
     <span class="text-lang" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
 </footer>

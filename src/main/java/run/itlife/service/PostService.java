@@ -7,9 +7,9 @@ import java.util.List;
 
 //Интерфейс, отвечающий за логику создания постов, валидацию, изменение и т.д.
 public interface PostService {
-    List<Post> listAllPosts();
-    List<PostDto> listAllPostsAsDto();
-    List<PostDto> searchDtos(String search);
+    List<Post> findAllPosts();
+    List<PostDto> findAllPostsAsDto();
+    List<PostDto> findDtos(String search);
     List<Post> search(String search);
     long createPost(PostDto postDto);
     List<Post> findByUser(String username);
@@ -21,13 +21,13 @@ public interface PostService {
     List<Post> findByUserName(String username);
     int countPosts(String username);
     Long countComments(Long id);
-    List<Post> sortedPostsByDate(String username);
+    List<Post> findSortedPostsByDate(String username);
     List<Post> findSubscribesPosts(String username);
     int countSubscribesPosts(String username);
-    List<Post> searchTags(String substring);
+    List<Post> findTags(String substring);
     int countSearchTags(String substring);
     List<Long> isLikePost(String username);
-    List<Post> selectMyLikesPosts(String username);
+    List<Post> findMyLikesPosts(String username);
     Long countMyLikesPosts(String username);
     boolean isClosedProfile(String username);
     boolean isClosedProfilebyPostId(long id);

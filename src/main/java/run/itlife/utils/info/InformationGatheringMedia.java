@@ -12,9 +12,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static run.itlife.messages.ErrorMessages.ERROR;
-import static run.itlife.utils.SaveFile.SEPARATOR;
+import static run.itlife.utils.Properties.ErrorMessages.*;
+import static run.itlife.utils.Properties.Paths.*;
 
 @Service
 public class InformationGatheringMedia implements InformationGathering {

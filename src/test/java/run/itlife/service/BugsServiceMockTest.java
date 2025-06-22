@@ -26,9 +26,9 @@ public class BugsServiceMockTest {
             bugs.setBugId(4L);
             expectedData.add(bugs);
         }
-        Mockito.when(mockBugsService.listAllBugs()).thenReturn(expectedData);
-        List<Bugs> allBugs = mockBugsService.listAllBugs();
+        Mockito.when(mockBugsService.findAllBugs()).thenReturn(expectedData);
+        List<Bugs> allBugs = mockBugsService.findAllBugs();
         Assert.assertEquals(expectedData, allBugs);
-        Mockito.verify(mockBugsService).listAllBugs();
+        Mockito.verify(mockBugsService).findAllBugs();
     }
 }

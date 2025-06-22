@@ -17,12 +17,12 @@ public class SubscriptionsControllerMockTest {
     private SubscriptionsController subscriptionsController;
 
     @Test
-    void subscribe_from_recommendations() {
-        assertEquals("redirect:/posts", subscriptionsController.subscribe_from_recommendations(null, "terminator"));
+    void createSubscribeFromRecommendations() {
+        assertEquals("redirect:/posts", subscriptionsController.createSubscribeFromRecommendations(null, "terminator"));
     }
 
     @Test
-    void subscribe() {
-        assertEquals("redirect:/sub-posts/{user}", subscriptionsController.subscribe("terminator"));
+    void createSubscribe() {
+        assertEquals("redirect:/posts_sub/{user}", subscriptionsController.createSubscribe("terminator"));
     }
 }

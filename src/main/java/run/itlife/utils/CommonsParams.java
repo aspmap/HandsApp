@@ -32,7 +32,7 @@ public class CommonsParams {
 
     public void setCommonParams(long id, ModelMap modelMap) {
         modelMap.put("post", postService.findById(id));
-        modelMap.put("comments", commentService.sortCommentsByDate(id));
+        modelMap.put("comments", commentService.findSortedCommentsByDate(id));
         modelMap.put("countComments", postService.countComments(id));
         this.setCommonParams(modelMap);
     }
@@ -42,8 +42,8 @@ public class CommonsParams {
         modelMap.put("userslist", userService.findAll());
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
+        modelMap.put("userOnlyList", userService.findUsersOnly());
+        modelMap.put("usersOnlyKey", userService.findUsersOnlyKey(username));
         modelMap.put("contextPath", context.getContextPath());
         this.setCommonConstParams(modelMap);
     }
@@ -51,7 +51,7 @@ public class CommonsParams {
     public void setCommonSubParams(ModelMap modelMap, String username) {
         modelMap.put("userinfo_sub", userService.findByUsername(username));
         modelMap.put("user_sub", username);
-        modelMap.put("posts", postService.sortedPostsByDate(username));
+        modelMap.put("posts", postService.findSortedPostsByDate(username));
         modelMap.put("countPosts", postService.countPosts(username));
         modelMap.put("isClosedProfile", postService.isClosedProfile(username));
         modelMap.put("countSubscribe", subscriptionsService.countSubscribe(username));
@@ -65,8 +65,8 @@ public class CommonsParams {
         modelMap.put("userslist", userService.findAll());
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
+        modelMap.put("userOnlyList", userService.findUsersOnly());
+        modelMap.put("usersOnlyKey", userService.findUsersOnlyKey(username));
         modelMap.put("userPhoto", userService.findByUsername(username).getPhoto());
         modelMap.put("unreadMessagesTotal", dialogsService.findUnreadDialogs(username).size());
         modelMap.put("contextPath", context.getContextPath());

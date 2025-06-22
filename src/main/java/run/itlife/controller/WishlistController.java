@@ -1,6 +1,5 @@
 package run.itlife.controller;
 
-import org.apache.kafka.common.protocol.types.Field;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,8 @@ import run.itlife.utils.SaveFile;
 
 import javax.servlet.ServletContext;
 
-import static run.itlife.messages.ErrorMessages.ERROR;
-import static run.itlife.messages.ErrorMessages.NOT_PUBLISH_POST;
+import static run.itlife.utils.Properties.ErrorMessages.*;
+import static run.itlife.utils.Properties.Paths.*;
 
 @Controller
 public class WishlistController {
@@ -46,7 +45,7 @@ public class WishlistController {
 
     @GetMapping("/wishlist")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String wishlist(ModelMap modelMap) {
+    public String findWishlist(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
@@ -59,7 +58,7 @@ public class WishlistController {
 
     @GetMapping("/wishlist_my_booking")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String wishlistMyBooking(ModelMap modelMap) {
+    public String findMyBookingWishlist(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
@@ -69,39 +68,39 @@ public class WishlistController {
 
     @GetMapping("/wishlist_sub/booking/{user_sub}/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String wishlistBooking(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+    public String createBookingWishlist(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
         commonsParams.setCommonParams(modelMap);
-        wishlistService.bookingWish(user_sub, id);
-        return "redirect:" + SaveFile.SEPARATOR + "wishlist_sub" + SaveFile.SEPARATOR + user_sub;
+        wishlistService.createBookingWishlist(user_sub, id);
+        return "redirect:" + SEPARATOR + "wishlist_sub" + SEPARATOR + user_sub;
     }
 
     @GetMapping("/wishlist_sub/unbooking/{user_sub}/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String wishlistUnBooking(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+    public String createUnBookingWishlist(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
         commonsParams.setCommonParams(modelMap);
-        wishlistService.unBookingWish(user_sub, id);
-        return "redirect:" + SaveFile.SEPARATOR + "wishlist_sub" + SaveFile.SEPARATOR + user_sub;
+        wishlistService.createUnBookingWishlist(user_sub, id);
+        return "redirect:" + SEPARATOR + "wishlist_sub" + SEPARATOR + user_sub;
     }
 
     @GetMapping("/booking_wishlist/booking/{user_sub}/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String myWishlistBooking(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+    public String createMyBookingWishlist(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
         commonsParams.setCommonParams(modelMap);
-        wishlistService.bookingWish(user_sub, id);
-        return "redirect:" + SaveFile.SEPARATOR + "wishlist_my_booking";
+        wishlistService.createBookingWishlist(user_sub, id);
+        return "redirect:" + SEPARATOR + "wishlist_my_booking";
     }
 
     @GetMapping("/booking_wishlist/unbooking/{user_sub}/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String myWishlistUnBooking(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+    public String createMyUnBookingWishlist(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
         commonsParams.setCommonParams(modelMap);
-        wishlistService.unBookingWish(user_sub, id);
-        return "redirect:" + SaveFile.SEPARATOR + "wishlist_my_booking";
+        wishlistService.createUnBookingWishlist(user_sub, id);
+        return "redirect:" + SEPARATOR + "wishlist_my_booking";
     }
 
     @GetMapping("/wishlist_sub/{user_sub}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String wishlist_sub(ModelMap modelMap, @PathVariable String user_sub) {
+    public String findSubWishlist(ModelMap modelMap, @PathVariable String user_sub) {
         commonsParams.setCommonParams(modelMap);
         modelMap.put("user_sub", user_sub);
         User user = userService.findByUsername(user_sub);
@@ -114,14 +113,14 @@ public class WishlistController {
 
     @GetMapping("/wishlist/add")
     @PreAuthorize("hasRole('USER')")
-    public String newWishlist(ModelMap modelMap) {
+    public String createWishlistGet(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "wishlist/add-to-wishlist";
     }
 
     @PostMapping("/wishlist/add")
     @PreAuthorize("hasRole('USER')")
-    public String addNewTask(WishlistDto wishlistDto, @RequestParam("photo") String file, ModelMap modelMap, @RequestParam(name = "isSecret", defaultValue = "false", required = false) Boolean isSecret) {
+    public String createWishlistPost(WishlistDto wishlistDto, @RequestParam("photo") String file, ModelMap modelMap, @RequestParam(name = "isSecret", defaultValue = "false", required = false) Boolean isSecret) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Long wishlistId;
         SaveFile sf = new SaveFile();
@@ -130,34 +129,34 @@ public class WishlistController {
                 String filename = sf.saveFileForWishlist(username, context, file);
                 if (filename == null) {
                     commonsParams.setCommonParams(modelMap);
-                    return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeWishlist";
+                    return "messages-templates" + SEPARATOR + "errorFileSizeWishlist";
                 }
                 wishlistDto.setPhoto(filename);
                 wishlistDto.setSecret(isSecret);
                 wishlistId = wishlistService.createElementOfWishlist(wishlistDto);
-                return "redirect:" + SaveFile.SEPARATOR + "wishlist";
+                return "redirect:" + SEPARATOR + "wishlist";
             } catch (Exception e) {
                 log.error(ERROR + e);
                 commonsParams.setCommonParams(modelMap);
-                return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeWishlist";
+                return "messages-templates" + SEPARATOR + "errorFileSizeWishlist";
             }
         } else {
             log.error(ERROR);
             commonsParams.setCommonParams(modelMap);
-            return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeWishlist";
+            return "messages-templates" + SEPARATOR + "errorFileSizeWishlist";
         }
     }
 
     @PostMapping("/wishlist/delete/{id}")
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteWish(@PathVariable Long id) {
+    public void deleteWishlist(@PathVariable Long id) {
         wishlistService.deleteWish(id);
     }
 
     @GetMapping("/wishlist/done")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String wishlistDone(ModelMap modelMap) {
+    public String findWishlistIsDone(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
@@ -167,7 +166,7 @@ public class WishlistController {
 
     @GetMapping("/wishlist/complete/{wishId}")
     @PreAuthorize("hasRole('USER')")
-    public String completeWishlist(ModelMap modelMap, @PathVariable Long wishId) {
+    public String findWishlistIsCompleted(ModelMap modelMap, @PathVariable Long wishId) {
         commonsParams.setCommonParams(modelMap);
         wishlistService.checkCompleteWish(wishId);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -181,14 +180,14 @@ public class WishlistController {
 
     @GetMapping("/wishlist/permissions/add/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String addPermissions(ModelMap modelMap, @PathVariable Long id) {
+    public String createPermissionsToWishlistGet(ModelMap modelMap, @PathVariable Long id) {
         commonsParams.setCommonParams(modelMap);
         return "wishlist/add-permission";
     }
 
     @PostMapping("/wishlist/permissions/add")
     @PreAuthorize("hasRole('USER')")
-    public String addPermissionsPost(ModelMap modelMap, @RequestParam("userWishlistPrivate") String username, @RequestParam("wishlistIdWishlistPrivate") Long id) {
+    public String createPermissionsToWishlistGetPost(ModelMap modelMap, @RequestParam("userWishlistPrivate") String username, @RequestParam("wishlistIdWishlistPrivate") Long id) {
         WishlistPrivateDto  wishlistPrivateDto = new WishlistPrivateDto();
         Integer countAlreadyPermission;
         User user = new User();
@@ -196,10 +195,10 @@ public class WishlistController {
         String usernameCurrent = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
             user = userService.findByUsername(username);
-            countAlreadyPermission = wishlistPrivateService.searchAlreadyPermissions(id, user.getUserId());
+            countAlreadyPermission = wishlistPrivateService.findAlreadyPermissions(id, user.getUserId());
         } catch (UsernameNotFoundException e) {
             log.error(ERROR + e);
-            return "messages-templates" + SaveFile.SEPARATOR + "existPermission";
+            return "messages-templates" + SEPARATOR + "existPermission";
         }
 
         if (countAlreadyPermission == 0 && !username.equals(usernameCurrent)) {
@@ -208,14 +207,14 @@ public class WishlistController {
             wishlistPrivateDto.setWishlistIdWishlistPrivate(wishlist);
             wishlistPrivateDto.setUserWishlistPrivate(user);
             wishlistService.addPermission(wishlistPrivateDto);
-            return "redirect:" + SaveFile.SEPARATOR + "wishlist";
+            return "redirect:" + SEPARATOR + "wishlist";
         }
-        return "messages-templates" + SaveFile.SEPARATOR + "existPermission";
+        return "messages-templates" + SEPARATOR + "existPermission";
     }
 
     @GetMapping("/wishlist/permissions/delete/{id}")
     @PreAuthorize("hasRole('USER')")
-    public String deletePermissions(ModelMap modelMap, @PathVariable Long id) {
+    public String deletePermissionsFromWishlist(ModelMap modelMap, @PathVariable Long id) {
         wishlistPrivateService.deletePermissions(id);
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -229,9 +228,9 @@ public class WishlistController {
 
     @PostMapping("/results/{username}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String getResults(ModelMap modelMap, @PathVariable String username) {
+    public String findUsersForPermissions(ModelMap modelMap, @PathVariable String username) {
         commonsParams.setCommonParams(modelMap);
-        modelMap.put("findUsers", userService.searchUsersForPermission(username));
+        modelMap.put("findUsers", userService.findUsersForPermission(username));
         return "wishlist/results";
     }
 }

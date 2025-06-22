@@ -1,25 +1,19 @@
 package run.itlife.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import run.itlife.entity.User;
+
 import java.time.LocalDateTime;
 
 @JsonAutoDetect
 public class BugsDto {
     @JsonIgnore
     private Long bugId;
-
     private Long userId;
     private String bugText;
-
     @JsonIgnore
     private LocalDateTime createdAt;
-
     private String createdAtText;
-
     private String username;
 
 

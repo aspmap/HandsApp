@@ -34,7 +34,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     //Имя пользователя достаётся во время создания комментария. Реализация в CommentServiceImpl в методе create.
-    public void create(CommentDto commentDto) {
+    public void createComment(CommentDto commentDto) {
         Comment comment = new Comment();
         comment.setPost(postService.findById(commentDto.getPostId()));
         comment.setCommentText(commentDto.getCommentText());
@@ -45,7 +45,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void delete(long id) {
+    public void deleteComment(long id) {
         String username = commentRepository.findById(id)
                 .orElseThrow()
                 .getUser().getUsername();
@@ -56,8 +56,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> sortCommentsByDate(long id) {
-            List<Comment> comments = commentRepository.sortCommentsByDate(id);
+    public List<Comment> findSortedCommentsByDate(long id) {
+            List<Comment> comments = commentRepository.findSortedCommentsByDate(id);
             return comments;
     }
 

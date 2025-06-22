@@ -1,5 +1,5 @@
 function deletePost(postId) {
-	fetch(contextPath + "/post/" + postId + "/delete", {method: "POST"})
+	fetch(contextPath + "/post/delete/" + postId, {method: "POST"})
   	 .then((response) => {
     	if (response.status == 200 && response.redirected != true){
     		var element = document.getElementById("post-" + postId);

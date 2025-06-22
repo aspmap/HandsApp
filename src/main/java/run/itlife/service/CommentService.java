@@ -7,7 +7,7 @@ import java.util.List;
 
 //Интерфейс, отвечающий за логику создания комментариев
 public interface CommentService {
-    void create(CommentDto comment);
-    void delete(long id);
-    List<Comment> sortCommentsByDate(long id);
+    void createComment(CommentDto comment);
+    void deleteComment(long id);
+    List<Comment> findSortedCommentsByDate(long id);
 }

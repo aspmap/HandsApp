@@ -19,7 +19,7 @@
             </div>
             <div class="frame-content-create-form">
                 <div class="form-create">
-                    <form method="POST" th:action="@{/post/newImage}" enctype="multipart/form-data">
+                    <form method="POST" th:action="@{/post/new_image}" enctype="multipart/form-data">
                         <textarea id="blob-img" name="file" class="input-fields" rows="4" placeholder="" style="display:none;"></textarea>
                         <div>
                             <img class="image-upload-file" id="profilePicture" th:src="@{/resources/img/icons/upload.png}" data-target="#profileImageModal" data-toggle="modal">

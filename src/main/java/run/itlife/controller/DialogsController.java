@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import run.itlife.entity.Dialogs;
 import run.itlife.service.DialogsService;
 import run.itlife.service.MessagesService;
-import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
 
 import java.util.List;
@@ -19,20 +18,18 @@ import java.util.List;
 public class DialogsController {
     private final DialogsService dialogsService;
     private final MessagesService messagesService;
-    private final UserService userService;
     @Autowired
     CommonsParams commonsParams;
 
     @Autowired
-    public DialogsController(DialogsService dialogsService, MessagesService messagesService, UserService userService) {
+    public DialogsController(DialogsService dialogsService, MessagesService messagesService) {
         this.dialogsService = dialogsService;
         this.messagesService = messagesService;
-        this.userService = userService;
     }
 
     @GetMapping("/dialogs")
     @PreAuthorize("hasRole('USER')")
-    public String index(ModelMap modelMap) {
+    public String findDialogs(ModelMap modelMap) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("dialogs", dialogsService.findDialogs(username));
         modelMap.put("unreadMessages", dialogsService.findUnreadDialogs(username));
@@ -43,14 +40,14 @@ public class DialogsController {
 
     @GetMapping("/dialogs/{usernameCompanion}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String create_dialog(Dialogs dialogs, ModelMap modelMap, @PathVariable String usernameCompanion) {
+    public String createDialog(Dialogs dialogs, ModelMap modelMap, @PathVariable String usernameCompanion) {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         byte countDublicatesDialog = dialogsService.checkDuplicateDialogues(username, usernameCompanion);
         if (countDublicatesDialog == 0) {
-            dialogsService.create(dialogs, usernameCompanion);
+            dialogsService.createDialog(dialogs, usernameCompanion);
         }
-        Long dialogIdByUsers = dialogsService.getDialogIdByUsers(username, usernameCompanion);
+        Long dialogIdByUsers = dialogsService.findDialogIdByUsers(username, usernameCompanion);
         List<String> usersOwner = messagesService.findUsersByDialogId(dialogIdByUsers);
         if (messagesService.countMessagesInDialog(dialogIdByUsers) != 0) {
             if (usersOwner.contains(username)) {
@@ -62,9 +59,9 @@ public class DialogsController {
         if (usersOwner.size() != 0) {
             for (String u : usersOwner) {
                 if (!u.equals(username)) {
-                    String userDialogPhoto = messagesService.getUserPhotoByUsername(u);
-                    String userDialogEmail = messagesService.getUserEmailByUsername(u);
-                    String userDialogGoogle = messagesService.getUserGoogleByUsername(u);
+                    String userDialogPhoto = messagesService.findUserPhotoByUsername(u);
+                    String userDialogEmail = messagesService.findUserEmailByUsername(u);
+                    String userDialogGoogle = messagesService.findUserGoogleByUsername(u);
                     modelMap.put("userDialogName", u);
                     modelMap.put("userDialogPhoto", userDialogPhoto);
                     modelMap.put("userDialogEmail", userDialogEmail);
@@ -75,13 +72,13 @@ public class DialogsController {
             modelMap.put("userDialogName", "Диалог удален или не существует");
         }
         modelMap.put("countMessagesInDialog", messagesService.countMessagesInDialog(dialogIdByUsers));
-        modelMap.put("dialog", dialogsService.findById(dialogIdByUsers));
+        modelMap.put("dialog", dialogsService.findDialogById(dialogIdByUsers));
         return "dialogs/messages";
     }
 
     @GetMapping("/update_count_dialogs")
     @PreAuthorize("hasRole('USER')")
-    public String update_count_dialogs(ModelMap modelMap) {
+    public String updateCountDialogs(ModelMap modelMap) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("unreadMessagesTotal", dialogsService.findUnreadDialogs(username).size());
         return "fragments/unread-dialogs-count";

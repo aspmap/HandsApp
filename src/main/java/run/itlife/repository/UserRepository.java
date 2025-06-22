@@ -24,7 +24,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean isClosedProfile(String username);
 
     @Query(value = "select * from recommendations ", nativeQuery = true)
-    List<User> getUsersOnly();
+    List<User> findUsersOnly();
 
     @Query(value = "select " +
             "(select count(s.sub_id) from subscriptions s " +
@@ -37,25 +37,25 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "where r.name = 'USER' AND u.is_closed = 'false'  " +
             "order by u.created_at desc " +
             "LIMIT 5 ; ", nativeQuery = true)
-    ArrayList<String> getUsersOnlyKey(String currentUsername);
+    ArrayList<String> findUsersOnlyKey(String currentUsername);
 
     @Query(value = "select u.* from users u " +
             "left join user_role ur on u.user_id = ur.user_id " +
             "left join role r on ur.role_id = r.role_id " +
     "where upper(u.username) LIKE upper(?) AND r.name LIKE 'USER' AND u.is_google = 'false' AND u.is_closed = 'false' ", nativeQuery = true)
-    List<User> searchUsers(String substring);
+    List<User> findUsers(String substring);
 
     @Query(value = "select u.* from users u " +
             "left join user_role ur on u.user_id = ur.user_id " +
             "left join role r on ur.role_id = r.role_id " +
             "where upper(u.username) LIKE upper(?) AND r.name LIKE 'USER' AND u.is_google = 'false' AND u.is_closed = 'false' limit 5 ", nativeQuery = true)
-    List<User> searchUsersForPermission(String substring);
+    List<User> findUsersForPermission(String substring);
 
     @Query(value = "select u.* from users u " +
             "left join user_role ur on u.user_id = ur.user_id " +
             "left join role r on ur.role_id = r.role_id " +
             "where upper(u.email) LIKE upper(?) AND r.name LIKE 'USER' AND u.is_google = 'true' AND u.is_closed = 'false' ", nativeQuery = true)
-    List<User> searchGoogleUsers(String substring);
+    List<User> findGoogleUsers(String substring);
 
     @Query(value = "select count(u.username) from users u " +
             "where u.username LIKE ? AND u.is_closed = 'false' ", nativeQuery = true)

@@ -20,7 +20,7 @@ public class WishlistPrivateServiceImpl implements WishlistPrivateService {
     }
 
     @Override
-    public Integer searchAlreadyPermissions(Long id, Long userId) {
-        return wishlistPrivateRepository.searchAlreadyPermissions(id, userId);
+    public Integer findAlreadyPermissions(Long id, Long userId) {
+        return wishlistPrivateRepository.findAlreadyPermissions(id, userId);
     }
 }

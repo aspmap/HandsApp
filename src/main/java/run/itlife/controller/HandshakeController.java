@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-import static run.itlife.messages.ErrorMessages.ERROR;
+import static run.itlife.utils.Properties.ErrorMessages.*;
 
 
 @Controller
@@ -42,14 +42,14 @@ public class HandshakeController {
 
     @GetMapping("/handshakes_search")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String handshakes_search(ModelMap modelMap) {
+    public String findHandshakes(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "handshakes/handshakes-search";
     }
 
     @PostMapping("/handshakes_results")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String handshakes_results(ModelMap modelMap, @RequestParam(required = false) String searchUsername) throws ExecutionException, InterruptedException {
+    public String getHandshakesResults(ModelMap modelMap, @RequestParam(required = false) String searchUsername) throws ExecutionException, InterruptedException {
         // Используем Executor и Future
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -70,7 +70,7 @@ public class HandshakeController {
                                 Integer searchUserId = userService.findByUsername(searchUsernameLowerCase).getUserId().intValue();
                                 ArrayList<Integer> searched = new ArrayList<>();
                                 Map<Integer, ArrayList<Integer>> usersGraph = new HashMap<>();
-                                ArrayList<Integer> usersIdFirstLevel = handshakeService.selectUsersId(currentUserId);
+                                ArrayList<Integer> usersIdFirstLevel = handshakeService.findUsersId(currentUserId);
                                 usersGraph.put(currentUserId, usersIdFirstLevel);
                                 Handshakes handshakes = new Handshakes();
                                 Byte level = START_LEVEL;
@@ -108,7 +108,7 @@ public class HandshakeController {
             ArrayList<Integer> usersIdNextLevel = new ArrayList<>();
             if (!searched.contains(usersIdLevel.get(i))) {
                 Integer usernameId = usersIdLevel.get(i);
-                usersIdNextLevel = handshakeService.selectUsersId(usernameId);
+                usersIdNextLevel = handshakeService.findUsersId(usernameId);
                 usersGraph.put(usernameId, usersIdNextLevel);
                 if (i == (usersIdLevel.size() - 1)) {
                     level++;
@@ -144,7 +144,7 @@ public class HandshakeController {
         modelMap.put("userslist", userService.findAll());
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
+        modelMap.put("userOnlyList", userService.findUsersOnly());
+        modelMap.put("usersOnlyKey", userService.findUsersOnlyKey(username));
     }
 }

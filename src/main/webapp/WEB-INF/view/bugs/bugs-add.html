@@ -16,7 +16,7 @@
 <section class="main-post">
     <div class="wrapper-posts">
         <div class="left-col">
-            <form method="POST" th:action="@{/bug/new}">
+            <form method="POST" th:action="@{/bug/create}">
                 <textarea name="bugText" class="profile-box description" rows="4" th:placeholder="#{input_describe_error}" maxlength="255" required></textarea>
                 <br>
                     <!-- FIXME По умолчанию сделал без кафки, т.к. кафку на хостинге еще не развернул -->

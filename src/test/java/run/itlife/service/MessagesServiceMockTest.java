@@ -27,10 +27,10 @@ public class MessagesServiceMockTest {
             messages.setRead(true);
             expectedData.add(messages);
         }
-        Mockito.when(messagesService.listAllMessages()).thenReturn(expectedData);
-        List<Messages> allMessages = messagesService.listAllMessages();
+        Mockito.when(messagesService.findAllMessages()).thenReturn(expectedData);
+        List<Messages> allMessages = messagesService.findAllMessages();
         Assert.assertEquals(2, allMessages.size());
-        Mockito.verify(messagesService).listAllMessages();
+        Mockito.verify(messagesService).findAllMessages();
     }
 
     @Test
@@ -71,27 +71,27 @@ public class MessagesServiceMockTest {
     }
 
     @Test
-    public void getUserPhotoByUsername() {
-        Mockito.when(messagesService.getUserPhotoByUsername("terminator")).thenReturn("photo.jpg");
-        String userPhotoByUsername = messagesService.getUserPhotoByUsername("terminator");
+    public void findUserPhotoByUsername() {
+        Mockito.when(messagesService.findUserPhotoByUsername("terminator")).thenReturn("photo.jpg");
+        String userPhotoByUsername = messagesService.findUserPhotoByUsername("terminator");
         Assert.assertEquals("photo.jpg", userPhotoByUsername);
-        Mockito.verify(messagesService).getUserPhotoByUsername("terminator");
+        Mockito.verify(messagesService).findUserPhotoByUsername("terminator");
     }
 
     @Test
-    public void getUserEmailByUsername() {
-        Mockito.when(messagesService.getUserEmailByUsername("terminator")).thenReturn("terminator@gmail.com");
-        String uUserEmailByUsername = messagesService.getUserEmailByUsername("terminator");
+    public void findUserEmailByUsername() {
+        Mockito.when(messagesService.findUserEmailByUsername("terminator")).thenReturn("terminator@gmail.com");
+        String uUserEmailByUsername = messagesService.findUserEmailByUsername("terminator");
         Assert.assertEquals("terminator@gmail.com", uUserEmailByUsername);
-        Mockito.verify(messagesService).getUserEmailByUsername("terminator");
+        Mockito.verify(messagesService).findUserEmailByUsername("terminator");
     }
 
     @Test
-    public void getUserGoogleByUsername() {
-        Mockito.when(messagesService.getUserGoogleByUsername("terminator")).thenReturn("true");
-        String isIserGoogleByUsername = messagesService.getUserGoogleByUsername("terminator");
+    public void findUserGoogleByUsername() {
+        Mockito.when(messagesService.findUserGoogleByUsername("terminator")).thenReturn("true");
+        String isIserGoogleByUsername = messagesService.findUserGoogleByUsername("terminator");
         Assert.assertEquals("true", isIserGoogleByUsername);
-        Mockito.verify(messagesService).getUserGoogleByUsername("terminator");
+        Mockito.verify(messagesService).findUserGoogleByUsername("terminator");
     }
 
     @Test

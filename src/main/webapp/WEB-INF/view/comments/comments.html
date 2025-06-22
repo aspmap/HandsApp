@@ -46,14 +46,14 @@
                                 <div class="info-comments">
                                     <div class="user-comments">
                                         <div class="profile-pic-comments">
-                                            <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
+                                            <a th:href="@{/posts_sub/{user}(user = ${comment.user.username})}">
                                                 <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                                 <img th:if="${comment.user.photo != null and comment.user.isGoogle == false}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
                                                 <img th:if="${comment.user.photo != null and comment.user.isGoogle == true}" th:src="${comment.user.photo}" alt="">
                                             </a>
                                         </div>
                                         <div>
-                                            <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
+                                            <a th:href="@{/posts_sub/{user}(user = ${comment.user.username})}">
                                                 <b class="description-comments-user">
                                                     <span th:if="${comment.user.isGoogle == false}" th:text="${comment.user.username}"></span>
                                                     <span th:if="${comment.user.isGoogle == true}" th:text="${comment.user.email}"></span>

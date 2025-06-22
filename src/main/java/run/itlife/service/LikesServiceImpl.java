@@ -38,7 +38,7 @@ public class LikesServiceImpl implements LikesService {
     }
 
     @Override
-    public void create_like(Long postId) {
+    public void createLike(Long postId) {
         Likes likes = new Likes();
         likes.setUserLikeId(userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         //likes.setUserLikeId(userService.findByUsername(getCurrentUserDetails().getUsername()));
@@ -47,8 +47,8 @@ public class LikesServiceImpl implements LikesService {
     }
 
     @Override
-    public void delete_like(long userId, long postId) {
-        likesRepository.delete_like(userId, postId);
+    public void deleteLike(long userId, long postId) {
+        likesRepository.deleteLike(userId, postId);
     }
 
 }

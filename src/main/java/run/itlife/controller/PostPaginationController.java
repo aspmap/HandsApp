@@ -34,7 +34,6 @@ public class PostPaginationController {
     VersionProject versionProject;
     @Autowired
     CommonsParams commonsParams;
-
     private static final Logger log = LoggerFactory.getLogger(PostPaginationController.class);
 
     @Autowired
@@ -44,9 +43,9 @@ public class PostPaginationController {
         this.postPaginationService = postPaginationService;
     }
 
-    @GetMapping("/pagination")
+    @GetMapping("/posts_pagination")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String getSubscribesPosts(ModelMap modelMap, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size, String sortBy) {
+    public String findSubscribesPosts(ModelMap modelMap, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size, String sortBy) {
         ArrayList<Integer> pages = new ArrayList<>();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Pageable pageable = PageRequest.of(page, size);
@@ -62,12 +61,12 @@ public class PostPaginationController {
         modelMap.put("posts_sub", myDataPage);
         commonsParams.setCommonParams(modelMap);
 
-        return "posts/pagination_posts";
+        return "posts/posts-pagination";
     }
 
     @GetMapping("/")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String getSubscribesPostsScroll(ModelMap modelMap, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size, String sortBy) throws IOException {
+    public String findSubscribesPostsScroll(ModelMap modelMap, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size, String sortBy) throws IOException {
         ArrayList<Integer> pages = new ArrayList<>();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Pageable pageable = PageRequest.of(page, size);
@@ -81,6 +80,6 @@ public class PostPaginationController {
         modelMap.put("isYourLike", postService.isLikePost(username)); // TODO как выдернуть id поста??
         modelMap.put("userPhotoCurrent", userService.findByUsername(username).getPhoto());
         commonsParams.setCommonParams(modelMap);
-        return "posts/infinite_scroll_posts";
+        return "posts/posts-infinite-scroll";
     }
 }

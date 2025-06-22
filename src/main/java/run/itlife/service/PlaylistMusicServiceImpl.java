@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import run.itlife.dto.PlaylistMusicDto;
-import run.itlife.dto.WishlistPrivateDto;
 import run.itlife.entity.Music;
 import run.itlife.entity.PlaylistMusic;
-import run.itlife.entity.WishlistPrivate;
 import run.itlife.repository.MusicRepository;
 import run.itlife.repository.PlaylistMusicRepository;
 
@@ -26,13 +24,13 @@ public class PlaylistMusicServiceImpl implements PlaylistMusicService {
     }
 
     @Override
-    public ArrayList<Music> getPlaylistByPlaylistId(Long playlistId) {
-        return musicRepository.getPlaylistByPlaylistId(playlistId);
+    public ArrayList<Music> findPlaylistByPlaylistId(Long playlistId) {
+        return musicRepository.findPlaylistByPlaylistId(playlistId);
     }
 
     @Override
-    public String getNamePlaylist(Long playlistId) {
-        return playlistMusicRepository.getNamePlaylist(playlistId);
+    public String findNamePlaylist(Long playlistId) {
+        return playlistMusicRepository.findNamePlaylist(playlistId);
     }
 
     @Override
@@ -44,7 +42,7 @@ public class PlaylistMusicServiceImpl implements PlaylistMusicService {
     }
 
     @Override
-    public void deleteFromPlaylist(Long playlistId, Long musicId) {
-        playlistMusicRepository.deleteFromPlaylist(playlistId, musicId);
+    public void deleteMusicFromPlaylist(Long playlistId, Long musicId) {
+        playlistMusicRepository.deleteMusicFromPlaylist(playlistId, musicId);
     }
 }

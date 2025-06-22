@@ -22,8 +22,8 @@ public class PostApiController {
     @GetMapping
     public ResponseEntity<List<PostDto>> findAll(@RequestParam(required = false) String search) {
         return  new ResponseEntity<>(search != null ?
-                postService.searchDtos(search) :
-                postService.listAllPostsAsDto(), HttpStatus.OK);
+                postService.findDtos(search) :
+                postService.findAllPostsAsDto(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

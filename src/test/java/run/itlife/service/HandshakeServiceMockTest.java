@@ -21,10 +21,10 @@ public class HandshakeServiceMockTest {
         for (int i = 1; i < 7; i++) {
             expectedData.add(i);
         }
-        Mockito.when(handshakeService.selectUsersId(1)).thenReturn(expectedData);
-        ArrayList<Integer> resultData = handshakeService.selectUsersId(1);
+        Mockito.when(handshakeService.findUsersId(1)).thenReturn(expectedData);
+        ArrayList<Integer> resultData = handshakeService.findUsersId(1);
         Assert.assertEquals(expectedData, resultData);
-        Mockito.verify(handshakeService).selectUsersId(1);
+        Mockito.verify(handshakeService).findUsersId(1);
     }
 
     @Test

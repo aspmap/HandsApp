@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import run.itlife.dto.UserDto;
 import run.itlife.entity.User;
+import run.itlife.enums.FileExtensions;
 import run.itlife.enums.Sex;
 import run.itlife.service.PostService;
 import run.itlife.service.SubscriptionsService;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
 import run.itlife.utils.Profile;
-import run.itlife.utils.info.InformationGathering;
 import run.itlife.utils.info.InformationGatheringArchive;
 import run.itlife.utils.info.InformationGatheringInfo;
 import run.itlife.utils.info.InformationGatheringMedia;
@@ -39,10 +39,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
 
-import static run.itlife.messages.ErrorMessages.ERROR;
+import static run.itlife.utils.Properties.ErrorMessages.*;
 import static run.itlife.utils.EditImage.resizeImage;
 import static run.itlife.utils.OtherUtils.generateFileName;
-import static run.itlife.utils.SaveFile.SEPARATOR;
+import static run.itlife.utils.Properties.Files.*;
+import static run.itlife.utils.Properties.Paths.*;
 
 //UserController, отвечающий за логин юзеров и т.д.
 //Создаем в папке view страницу register.html. Далее необходимо сделать, чтобы мы пересылали данные в контроллер.
@@ -63,9 +64,6 @@ public class UserController {
     private final InformationGatheringMedia informationGatheringMedia;
     private final InformationGatheringInfo informationGatheringInfo;
     private final InformationGatheringArchive informationGatheringArchive;
-    private static final String PATH_VIDEO_USERS = "/resources/video/users/";
-    private static final String PATH_IMAGE_USERS = "/resources/img/users/";
-    private static final String PATH_FILES = "/resources/users_archive/users/";
     @Autowired
     CommonsParams commonsParams;
     private Logger log = LoggerFactory.getLogger(UserController.class);
@@ -125,7 +123,7 @@ public class UserController {
 
     @GetMapping("/profile_delete/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String profile_delete(ModelMap modelMap, @PathVariable String user) {
+    public String deleteProfileGet(ModelMap modelMap, @PathVariable String user) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!username.equals(user)) {
             commonsParams.setCommonParams(modelMap);
@@ -137,11 +135,11 @@ public class UserController {
 
     @PostMapping("/profile_delete/{user}")
     @PreAuthorize("hasRole('USER')")
-    public String delete_profile(ModelMap modelMap, @PathVariable String user) {
-        userService.delete_profile(user);
+    public String deleteProfilePost(ModelMap modelMap, @PathVariable String user) {
+        userService.deleteProfile(user);
         //удаляем папки и файлы пользователя
-        File dir_img = new File(context.getRealPath("/resources/img/users/" + user));
-        File dir_video = new File(context.getRealPath("/resources/video/users/" + user));
+        File dir_img = new File(context.getRealPath(PATH_IMAGE_USERS + user));
+        File dir_video = new File(context.getRealPath(PATH_VIDEO_USERS + user));
         Profile.recursiveFilesDelete(dir_img);
         Profile.recursiveFilesDelete(dir_video);
         return "redirect:/";
@@ -149,7 +147,7 @@ public class UserController {
 
     @GetMapping("/profile_edit/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String profile_edit(ModelMap modelMap, @PathVariable String user) {
+    public String editProfile(ModelMap modelMap, @PathVariable String user) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!username.equals(user)) {
             commonsParams.setCommonParams(modelMap);
@@ -163,7 +161,7 @@ public class UserController {
 
     @PostMapping("/profile_edit")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String profile_edit(UserDto userDto, @RequestParam("file") String file, ModelMap modelMap) {
+    public String editProfile(UserDto userDto, @RequestParam("file") String file, ModelMap modelMap) {
         if (!file.isEmpty()) {
             try {
                 // изменение и генерация ноового имени файла
@@ -175,7 +173,7 @@ public class UserController {
 
                 // сохранение самого файла в папку юзера
                 final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-                File dir = new File(context.getRealPath("/resources/img/users/" + username + "/profile/"));
+                File dir = new File(context.getRealPath(PATH_IMAGE_USERS + username + "/profile/"));
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
@@ -190,11 +188,11 @@ public class UserController {
                 BufferedImage originalImage = ImageIO.read(uploadedFile);
                 BufferedImage resizeImage = null;
                 File newFileJPG = null;
-                resizeImage = resizeImage(originalImage, 500, 500);
+                resizeImage = resizeImage(originalImage, IMAGE_WIDTH, IMAGE_HEIGHT);
                 newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
 
                 //записываем файл
-                ImageIO.write(resizeImage, "png", newFileJPG);
+                ImageIO.write(resizeImage, FileExtensions.PNG.getExtension(), newFileJPG);
                 stream.flush();
                 stream.close();
                 return "redirect:/posts/";
@@ -212,7 +210,7 @@ public class UserController {
 
     @GetMapping("/subscriptions")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String find_Subscribes(ModelMap modelMap) {
+    public String findSubscribes(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("sub", subscriptionsService.findSubscribes(username));
@@ -221,7 +219,7 @@ public class UserController {
 
     @GetMapping("/subscribers")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String find_Subscribers(ModelMap modelMap) {
+    public String findSubscribers(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("sub", subscriptionsService.findSubscribers(username));
@@ -230,7 +228,7 @@ public class UserController {
 
     @GetMapping("/subscriptions_subuser/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String find_Subscribes_subuser(ModelMap modelMap, @PathVariable String user) {
+    public String findSubscribesSubuser(ModelMap modelMap, @PathVariable String user) {
         commonsParams.setCommonParams(modelMap);
         modelMap.put("sub", subscriptionsService.findSubscribes(user));
         return "subs/subscriptions-subuser";
@@ -238,7 +236,7 @@ public class UserController {
 
     @GetMapping("/subscribers_subuser/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String find_Subscribers_subuser(ModelMap modelMap, @PathVariable String user) {
+    public String findSubscribersSubuser(ModelMap modelMap, @PathVariable String user) {
         commonsParams.setCommonParams(modelMap);
         modelMap.put("sub", subscriptionsService.findSubscribers(user));
         return "subs/subscribers-subuser";
@@ -254,9 +252,9 @@ public class UserController {
         modelMap.put("countSearchTags", postService.countSearchTags(search));
         modelMap.put("tagUserName", search);
         if (search != null) {
-            modelMap.put("findUsers", userService.searchUsers(search));
-            modelMap.put("findGoogleUsers", userService.searchGoogleUsers(search));
-            modelMap.put("findTags", postService.searchTags(search));
+            modelMap.put("findUsers", userService.findUsers(search));
+            modelMap.put("findGoogleUsers", userService.findGoogleUsers(search));
+            modelMap.put("findTags", postService.findTags(search));
             return "search-results";
         } else {
             modelMap.put("findUsers", userService.findAll());
@@ -266,7 +264,7 @@ public class UserController {
 
     @GetMapping("/get_profile_archive")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String getProfileArchive(ModelMap modelMap) throws ExecutionException, InterruptedException {
+    public String createProfileArchive(ModelMap modelMap) throws ExecutionException, InterruptedException {
         // Используем Executor и Future
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -300,12 +298,12 @@ public class UserController {
                     }
                 });
         executorService.shutdown();
-        return profileArchiveGenerate(modelMap);
+        return generateProfileArchive(modelMap);
     }
 
     @GetMapping("/profile_archive")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String profileArchive(ModelMap modelMap) {
+    public String findProfileArchive(ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         boolean isAvailableArchive = false;
         File dirOriginArchiveZip = new File(context.getRealPath(PATH_FILES + username) + ".zip");
@@ -319,7 +317,7 @@ public class UserController {
 
     @GetMapping("/profile_archive_generate")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String profileArchiveGenerate(ModelMap modelMap) {
+    public String generateProfileArchive(ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         boolean isAvailableArchive = false;
         File dirOriginArchiveZip = new File(context.getRealPath(PATH_FILES + username) + ".zip");
@@ -336,7 +334,7 @@ public class UserController {
         modelMap.put("userslist", userService.findAll());
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-        modelMap.put("usersOnlyKey", userService.getUsersOnlyKey(username));
+        modelMap.put("userOnlyList", userService.findUsersOnly());
+        modelMap.put("usersOnlyKey", userService.findUsersOnlyKey(username));
     }
 }

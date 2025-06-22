@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static run.itlife.messages.ErrorMessages.ERROR;
+import static run.itlife.utils.Properties.ErrorMessages.*;
 
 @Service
 public class InformationGatheringArchive implements InformationGathering {

@@ -12,7 +12,6 @@ import run.itlife.entity.User;
 import run.itlife.repository.BugsRepository;
 import run.itlife.repository.UserRepository;
 
-import run.itlife.utils.SecurityUtils;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class BugsServiceImpl implements BugsService {
     }
 
     @Override
-    public void create(BugsDto bugsDto) {
+    public void createBugReport(BugsDto bugsDto) {
         Bugs bugs = new Bugs();
         bugs.setBugText(bugsDto.getBugText());
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -41,7 +40,7 @@ public class BugsServiceImpl implements BugsService {
     }
 
     @Override
-    public void createFromKafka(BugsDto bugsDto) {
+    public void createBugReportFromKafka(BugsDto bugsDto) {
         Bugs bugs = new Bugs();
         String username = bugsDto.getUsername();
         User userId = userRepository.findByUsername(username).orElseThrow();
@@ -54,7 +53,7 @@ public class BugsServiceImpl implements BugsService {
     }
 
     @Override
-    public List<Bugs> listAllBugs() {
+    public List<Bugs> findAllBugs() {
         List<Bugs> bugs =  bugsRepository.findAll(Sort.by("createdAt").descending());
         for (Bugs b : bugs) {
             b.getBugText().length();

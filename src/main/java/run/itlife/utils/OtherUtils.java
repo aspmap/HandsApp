@@ -1,6 +1,5 @@
 package run.itlife.utils;
 
-import java.util.Random;
 import java.util.UUID;
 
 public class OtherUtils {

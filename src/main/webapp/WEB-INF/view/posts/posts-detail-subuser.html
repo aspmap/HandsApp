@@ -24,7 +24,7 @@
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
-                            <a th:href="@{/sub-posts/{user}(user = ${post.user.username})}">
+                            <a th:href="@{/posts_sub/{user}(user = ${post.user.username})}">
                                 <img th:if="${userinfo_sub.isGoogle == false}" th:src="@{'/resources/img/users/' + ${user_sub} + '/profile/' + ${userinfo_sub.photo}}"
                                      alt="">
                                 <img th:if="${userinfo_sub.isGoogle == true}" th:src="@{${userinfo_sub.photo}}"
@@ -77,7 +77,7 @@
                                 <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
                             </a>
                         </div>
-                        <a th:href="@{/comment/sub/{postId}(postId = ${post.postId})}">
+                        <a th:href="@{/comment/comments_sub/{postId}(postId = ${post.postId})}">
                             <img th:src="@{/resources/img/nav/comment.png}" class="icon" alt="">
                         </a>
                     </div>
@@ -95,7 +95,7 @@
 
                     <!-- Comments -->
                     <div class="view-source comments-view">
-                        <a th:href="@{/comment/sub/{postId}(postId = ${post.postId})}"
+                        <a th:href="@{/comment/comments_sub/{postId}(postId = ${post.postId})}"
                            th:each="like, state : ${post.comments}" class="description comments"
                            th:text="${state.last} ? #{label_see_all_comments} + ' (' + ${state.count} + ')' : ''"></a>
                     </div>

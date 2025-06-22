@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete_profile(String user) {
+    public void deleteProfile(String user) {
         Optional<User> username = userRepository.findByUsername(user);
         if(username.isPresent()) {
             userRepository.deleteById(username.get().getUserId());
@@ -152,14 +152,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersOnly() {
-         return userRepository.getUsersOnly();
+    public List<User> findUsersOnly() {
+         return userRepository.findUsersOnly();
     }
 
     @Override
-    public ArrayList<UserDto> getUsersOnlyKey(String currentUsername) {
+    public ArrayList<UserDto> findUsersOnlyKey(String currentUsername) {
         ArrayList<UserDto> dto = new ArrayList<>();
-        ArrayList<String> splitUsers = userRepository.getUsersOnlyKey(currentUsername);
+        ArrayList<String> splitUsers = userRepository.findUsersOnlyKey(currentUsername);
         String[] usersString;
         for (int i = 0; i < splitUsers.size(); i++) {
             UserDto dtoOne = new UserDto();
@@ -178,18 +178,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> searchUsers(String substring) {
-        return userRepository.searchUsers("%" + substring +"%");
+    public List<User> findUsers(String substring) {
+        return userRepository.findUsers("%" + substring +"%");
     }
 
     @Override
-    public List<User> searchUsersForPermission(String substring) {
-        return userRepository.searchUsersForPermission("%" + substring +"%");
+    public List<User> findUsersForPermission(String substring) {
+        return userRepository.findUsersForPermission("%" + substring +"%");
     }
 
     @Override
-    public List<User> searchGoogleUsers(String substring) {
-        return userRepository.searchGoogleUsers("%" + substring +"%");
+    public List<User> findGoogleUsers(String substring) {
+        return userRepository.findGoogleUsers("%" + substring +"%");
     }
 
     @Override

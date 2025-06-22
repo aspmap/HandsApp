@@ -7,6 +7,8 @@ import run.itlife.entity.Post;
 import run.itlife.entity.User;
 import run.itlife.service.PostService;
 import run.itlife.service.UserService;
+import static run.itlife.utils.Properties.Files.*;
+import static run.itlife.utils.Properties.Paths.*;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,9 +19,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static run.itlife.enums.FileExtensions.TXT;
-import static run.itlife.messages.ErrorMessages.ERROR;
+import static run.itlife.utils.Properties.ErrorMessages.*;
 import static run.itlife.utils.OtherUtils.generateFileName;
-import static run.itlife.utils.SaveFile.POINT;
 
 @Service
 public class InformationGatheringInfo implements InformationGathering {

@@ -22,7 +22,7 @@ public class CommentRepositoryJpaTest {
 
     @Test
     public void sortCommentsByDate() {
-        List<Comment> commentsByDate = this.commentRepository.sortCommentsByDate(107L);
+        List<Comment> commentsByDate = this.commentRepository.findSortedCommentsByDate(107L);
         Assert.assertEquals(7, commentsByDate.size());
     }
 }

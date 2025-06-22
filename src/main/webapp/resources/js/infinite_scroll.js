@@ -29,17 +29,17 @@ function posts_pagination() {
                     user.append(pic);
                     var imgLink;
                     if (el.user.isGoogle == true && el.user.photo != null) {
-                        imgLink = $('<a href="' + contextPath + '/sub-posts/' + el.user.username + '"><img src="' + el.user.photo + '" alt="" /></a>');
+                        imgLink = $('<a href="' + contextPath + '/posts_sub/' + el.user.username + '"><img src="' + el.user.photo + '" alt="" /></a>');
                     } else if (el.user.isGoogle == false && el.user.photo != null) {
-                        imgLink = $('<a href="' + contextPath + '/sub-posts/' + el.user.username + '"><img src="' + contextPath + "/resources/img/users/" + el.user.username + "/profile/" + el.user.photo + '" alt="" /></a>');
+                        imgLink = $('<a href="' + contextPath + '/posts_sub/' + el.user.username + '"><img src="' + contextPath + "/resources/img/users/" + el.user.username + "/profile/" + el.user.photo + '" alt="" /></a>');
                     } else if (el.user.photo == null) {
-                        imgLink = $('<a href="' + contextPath + '/sub-posts/' + el.user.username + '"><img src="' + contextPath + "/resources/img/icons/avatar.jpg" + '"alt="" /></a>');
+                        imgLink = $('<a href="' + contextPath + '/posts_sub/' + el.user.username + '"><img src="' + contextPath + "/resources/img/icons/avatar.jpg" + '"alt="" /></a>');
                     }
                     var usernameLink;
                     if (el.user.isGoogle == true) {
-                        usernameLink = $('<a href="' + contextPath + '/sub-posts/' + el.user.username + '"><p class="username">' + el.user.email + '</p></a>');
+                        usernameLink = $('<a href="' + contextPath + '/posts_sub/' + el.user.username + '"><p class="username">' + el.user.email + '</p></a>');
                     } else if (el.user.isGoogle == false) {
-                        usernameLink = $('<a href="' + contextPath + '/sub-posts/' + el.user.username + '"><p class="username">' + el.user.username + '</p></a>');
+                        usernameLink = $('<a href="' + contextPath + '/posts_sub/' + el.user.username + '"><p class="username">' + el.user.username + '</p></a>');
                     }
                     pic.append(imgLink);
                     user.append(usernameLink);
@@ -78,7 +78,7 @@ function posts_pagination() {
                         likesAhref = $('<a href="/like_detail_sub/' + el.postId + '"><img src="' + contextPath + '/resources/img/icons/notlike.png" class="icon" alt=""></a>');
                         emptyDiv.append(likesAhref);
                     }
-                    var commentsIcon = $('<a href="/comment/sub/' + el.postId + '"><img src="' + contextPath + '/resources/img/nav/comment.png" class="icon" alt=""></a>');
+                    var commentsIcon = $('<a href="/comment/comments_sub/' + el.postId + '"><img src="' + contextPath + '/resources/img/nav/comment.png" class="icon" alt=""></a>');
                     reactionWrapper.append(commentsIcon);
                     if (el.postLike.length > 0) {
                         var textCountLikes = $('<p class="likes">Нравится: ' + el.postLike.length + '</p>');
@@ -104,7 +104,7 @@ function posts_pagination() {
                     var commentView = $('<div class="view-source comments-view"></div>');
                     postContent.append(commentView);
                     if (el.comments.length > 0) {
-                        var linkComments = $('<a href="/comment/sub/' + el.postId + '" class="description comments">Смотреть все комментарии (' + el.comments.length + ')</a>');
+                        var linkComments = $('<a href="/comment/comments_sub/' + el.postId + '" class="description comments">Смотреть все комментарии (' + el.comments.length + ')</a>');
                         commentView.append(linkComments);
                     }
                     var commentWrapper = $('<form class="comment-wrapper" method="POST" action="/comment/create_comment_detail_sub"></form>');

@@ -13,19 +13,10 @@ import static run.itlife.enums.FileExtensions.*;
 import static run.itlife.enums.FileExtensions.PNG;
 import static run.itlife.utils.EditImage.resizeImage;
 import static run.itlife.utils.OtherUtils.generateFileName;
+import static run.itlife.utils.Properties.Files.*;
+import static run.itlife.utils.Properties.Paths.*;
 
 public class SaveFile {
-    private static final String PATH_VIDEO_USERS = "/resources/video/users/";
-    private static final String PATH_IMAGE_USERS = "/resources/img/users/";
-    public static final String PATH_MUSIC_USERS = "/resources/music/users/";
-    public static final String SEPARATOR = "/";
-    private static final String COMMA = ",";
-    public static final String POINT = ".";
-    private static final int IMAGE_WIDTH = 500;
-    private static final int IMAGE_HEIGHT = 500;
-    private static final int MAX_UPLOAD_FILE_SIZE_IN_MB = 20 * 1024 * 1024; // 20 МБ
-
-
     public Map<String, String> saveFile(String username, ServletContext context, MultipartFile file) throws IOException {
         Map<String, String> filenameMap = new HashMap<>();
         String extension;
@@ -66,11 +57,11 @@ public class SaveFile {
             return null;
         }
         String filename = generateFileName() + POINT + PNG.getExtension();
-        File dir = new File(context.getRealPath(PATH_IMAGE_USERS + username)); // TODO PATH_VIDEO_USERS вынести в аргументы функции
+        File dir = new File(context.getRealPath(PATH_IMAGE_USERS + username)); // TODO PATH_IMAGE_USERS вынести в аргументы функции
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        File uploadedFile = new File(dir + SEPARATOR + filename); // TODO PATH_VIDEO_USERS вынести в аргументы функции
+        File uploadedFile = new File(dir + SEPARATOR + filename); // TODO PATH_IMAGE_USERS вынести в аргументы функции
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
         stream.write(imageBytes);
         BufferedImage originalImage = ImageIO.read(uploadedFile);

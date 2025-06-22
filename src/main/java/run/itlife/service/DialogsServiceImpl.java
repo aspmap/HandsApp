@@ -29,7 +29,7 @@ public class DialogsServiceImpl implements DialogsService {
     }
 
     @Override
-    public void create(Dialogs dialogs, String usernameCompanion) {
+    public void createDialog(Dialogs dialogs, String usernameCompanion) {
         //String username = SecurityUtils.getCurrentUserDetails().getUsername();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
@@ -57,7 +57,7 @@ public class DialogsServiceImpl implements DialogsService {
             ArrayList<User> usernames = new ArrayList<>();
             usernames = userService.findUsersByDialogId(dialogsId.get(i));
             for (int j = 0; j < usernames.size(); j++) {
-                Integer isShowDialog = showCountDialog(dialogsId.get(i));
+                Integer isShowDialog = findCountDialog(dialogsId.get(i));
                 if (!usernames.get(j).getUsername().equals(username) && isShowDialog > 0) {
                     dialogs.put(dialogsId.get(i), usernames.get(j));
                 }
@@ -94,12 +94,12 @@ public class DialogsServiceImpl implements DialogsService {
     }
 
     @Override
-    public Integer showCountDialog(Long dialogId) {
-        return dialogsRepository.showCountDialog(dialogId);
+    public Integer findCountDialog(Long dialogId) {
+        return dialogsRepository.findCountDialog(dialogId);
     }
 
     @Override
-    public Dialogs findById(long id) {
+    public Dialogs findDialogById(long id) {
         Dialogs dialog = dialogsRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
         dialog.getNameDialog().length();
@@ -112,8 +112,8 @@ public class DialogsServiceImpl implements DialogsService {
     }
 
     @Override
-    public Long getDialogIdByUsers(String username1, String username2) {
-        return dialogsRepository.getDialogIdByUsers(username1, username2);
+    public Long findDialogIdByUsers(String username1, String username2) {
+        return dialogsRepository.findDialogIdByUsers(username1, username2);
     }
 
     @Override

@@ -15,7 +15,8 @@ import run.itlife.entity.User;
 import run.itlife.service.PlaylistService;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
-import run.itlife.utils.SaveFile;
+
+import static run.itlife.utils.Properties.Paths.*;
 
 @Controller
 public class PlaylistController {
@@ -32,11 +33,11 @@ public class PlaylistController {
 
     @GetMapping("/music/playlists")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String playlists(ModelMap modelMap) {
+    public String findPlaylists(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
-        modelMap.put("playlistAll", playlistService.getAllPlaylistsByUserId(user.getUserId()));
+        modelMap.put("playlistAll", playlistService.findAllPlaylistsByUserId(user.getUserId()));
         return "media/playlists";
     }
 
@@ -49,9 +50,9 @@ public class PlaylistController {
 
     @PostMapping("/music/playlist/create")
     @PreAuthorize("hasRole('USER')")
-    public String confirmMusic(PlaylistDto playlistDto, ModelMap modelMap) {
+    public String createPlaylist(PlaylistDto playlistDto, ModelMap modelMap) {
         playlistService.createPlaylist(playlistDto);
-        return "redirect:" + SaveFile.SEPARATOR + "music/playlists";
+        return "redirect:" + SEPARATOR + "music/playlists";
     }
 
     @PostMapping("/music/playlist/delete/{id}")

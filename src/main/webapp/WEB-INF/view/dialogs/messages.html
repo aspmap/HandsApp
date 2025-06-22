@@ -23,14 +23,14 @@
                             </a>
                         </div>
                         <div class="profile-pic-messages">
-                            <a th:href="@{/sub-posts/{user}(user = ${userDialogName})}">
+                            <a th:href="@{/posts_sub/{user}(user = ${userDialogName})}">
                                 <img th:if="${userDialogPhoto == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                 <img th:if="${userDialogPhoto != null and userDialogGoogle == 'false'}" th:src="@{'/resources/img/users/' + ${userDialogName} + '/profile/' + ${userDialogPhoto}}" alt="">
                                 <img th:if="${userDialogPhoto != null and userDialogGoogle == 'true'}" th:src="${userDialogPhoto}" alt="">
                             </a>
                         </div>
                         <div>
-                            <a th:href="@{/sub-posts/{user}(user = ${userDialogName})}">
+                            <a th:href="@{/posts_sub/{user}(user = ${userDialogName})}">
                                 <b class="description-comments-user">
                                     <span th:if="${userDialogGoogle == 'false'}" th:text="${userDialogName} + ' (Всего сообщений: ' + ${countMessagesInDialog} + ')'"></span>
                                     <span th:if="${userDialogGoogle == 'true'}" th:text="${userDialogEmail} + ' (Всего сообщений: ' + ${countMessagesInDialog} + ')'"></span>

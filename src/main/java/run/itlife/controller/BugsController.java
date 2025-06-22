@@ -20,13 +20,12 @@ import run.itlife.entity.User;
 import run.itlife.service.BugsService;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
+import static run.itlife.utils.Properties.ErrorMessages.*;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
-
-import static run.itlife.messages.ErrorMessages.ERROR;
 
 @Controller
 public class BugsController {
@@ -42,9 +41,9 @@ public class BugsController {
         this.userService = userService;
     }
 
-    @PostMapping("/bug/newKafka")
+    @PostMapping("/bug/create_bug_kafka")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String postNewBugKafka(BugsDto bugsDto, ModelMap modelMap) throws IOException {
+    public String createBugKafka(BugsDto bugsDto, ModelMap modelMap) throws IOException {
 
         //Подготавливаем данные для отправки в Кафку
         commonsParams.setCommonParams(modelMap);
@@ -83,28 +82,28 @@ public class BugsController {
         StringReader reader = new StringReader(in);
         ObjectMapper mapper = new ObjectMapper();
         BugsDto bugsDto = mapper.readValue(reader, BugsDto.class);
-        bugsService.createFromKafka(bugsDto);
+        bugsService.createBugReportFromKafka(bugsDto);
     }
 
-    @GetMapping("/bug/new")
+    @GetMapping("/bug/create")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String bugNew(ModelMap modelMap) {
+    public String createBug(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "bugs/bugs-add";
     }
 
-    @PostMapping("/bug/new")
+    @PostMapping("/bug/create")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String postNewBug(BugsDto bugsDto, ModelMap modelMap) {
+    public String createBug(BugsDto bugsDto, ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
-        bugsService.create(bugsDto);
+        bugsService.createBugReport(bugsDto);
         return "messages-templates/message-send";
     }
 
     @GetMapping("/bugs_view")
     @PreAuthorize("hasRole('ADMIN')")
-    public String index(ModelMap modelMap) {
-        modelMap.put("bugs", bugsService.listAllBugs());
+    public String viewBugs(ModelMap modelMap) {
+        modelMap.put("bugs", bugsService.findAllBugs());
         modelMap.put("userslist", userService.findAll());
         commonsParams.setCommonParams(modelMap);
         return "bugs/bugs";

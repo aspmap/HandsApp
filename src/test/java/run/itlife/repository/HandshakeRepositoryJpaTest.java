@@ -21,7 +21,7 @@ public class HandshakeRepositoryJpaTest {
 
     @Test
     public void selectUsersId() {
-        List<Integer> usersId = this.handshakeRepository.selectUsersId(4);
+        List<Integer> usersId = this.handshakeRepository.findUsersId(4);
         Assert.assertEquals(8, usersId.size());
     }
 

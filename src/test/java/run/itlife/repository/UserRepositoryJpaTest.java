@@ -22,26 +22,26 @@ public class UserRepositoryJpaTest {
     private UserRepository userRepository;
 
     @Test
-    public void getUsersOnly() {
-        List<User> usersOnly = this.userRepository.getUsersOnly();
+    public void findUsersOnly() {
+        List<User> usersOnly = this.userRepository.findUsersOnly();
         Assert.assertEquals(5, usersOnly.size());
     }
 
     @Test
-    public void getUsersOnlyKey() {
-        ArrayList<String> usersOnlyKey = this.userRepository.getUsersOnlyKey("terminator");
+    public void findUsersOnlyKey() {
+        ArrayList<String> usersOnlyKey = this.userRepository.findUsersOnlyKey("terminator");
         Assert.assertEquals(5, usersOnlyKey.size());
     }
 
     @Test
-    public void searchUsers() {
-        List<User> users = this.userRepository.searchUsers("shu%");
+    public void findUsers() {
+        List<User> users = this.userRepository.findUsers("shu%");
         Assert.assertEquals(2, users.size());
     }
 
     @Test
-    public void searchGoogleUsers() {
-        List<User> users = this.userRepository.searchGoogleUsers("pav%");
+    public void findGoogleUsers() {
+        List<User> users = this.userRepository.findGoogleUsers("pav%");
         Assert.assertEquals(1, users.size());
     }
 

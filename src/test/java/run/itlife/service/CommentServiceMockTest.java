@@ -25,9 +25,9 @@ public class CommentServiceMockTest {
             comment.setCommentText("bug №" + i);
             expectedData.add(comment);
         }
-        Mockito.when(mockCommentService.sortCommentsByDate(1L)).thenReturn(expectedData);
-        List<Comment> commentsByDate = mockCommentService.sortCommentsByDate(1L);
+        Mockito.when(mockCommentService.findSortedCommentsByDate(1L)).thenReturn(expectedData);
+        List<Comment> commentsByDate = mockCommentService.findSortedCommentsByDate(1L);
         Assert.assertEquals(expectedData, commentsByDate);
-        Mockito.verify(mockCommentService).sortCommentsByDate(1L);
+        Mockito.verify(mockCommentService).findSortedCommentsByDate(1L);
     }
 }

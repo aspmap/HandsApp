@@ -14,14 +14,14 @@ public interface UserService extends UserDetailsService {
     void createGoogleUser(User user);
     void update(UserDto userDto);
     public void checkAuthority(long userId);
-    List<User> getUsersOnly();
-    ArrayList<UserDto> getUsersOnlyKey(String currentUsername);
-    List<User> searchUsers(String substring);
-    List<User> searchUsersForPermission(String substring);
-    List<User> searchGoogleUsers(String substring);
+    List<User> findUsersOnly();
+    ArrayList<UserDto> findUsersOnlyKey(String currentUsername);
+    List<User> findUsers(String substring);
+    List<User> findUsersForPermission(String substring);
+    List<User> findGoogleUsers(String substring);
     int countSearchUsers(String substring);
     int countSearchGoogleUsers(String substring);
-    void delete_profile(String user);
+    void deleteProfile(String user);
     boolean isClosedProfile(String username);
     ArrayList<User> findUsersByDialogId(Long dialogId);
 }

@@ -23,7 +23,7 @@
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
-                            <a th:href="@{/sub-posts/{user}(user = ${post_sub.user.username})}">
+                            <a th:href="@{/posts_sub/{user}(user = ${post_sub.user.username})}">
                                 <img th:if="${post_sub.user.photo == null}"
                                      th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                 <img th:if="${post_sub.user.photo != null and post_sub.user.isGoogle == false}"
@@ -33,7 +33,7 @@
                                      th:src="${post_sub.user.photo}" alt="">
                             </a>
                         </div>
-                        <a th:href="@{/sub-posts/{user}(user = ${post_sub.user.username})}">
+                        <a th:href="@{/posts_sub/{user}(user = ${post_sub.user.username})}">
                             <p th:if="${post_sub.user.isGoogle == false}" class="username"
                                th:text="${post_sub.user.username}"></p>
                             <p th:if="${post_sub.user.isGoogle == true}" class="username"
@@ -74,7 +74,7 @@
                                 <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
                             </a>
                         </div>
-                        <a th:href="@{/comment/sub/{postId}(postId = ${post_sub.postId})}">
+                        <a th:href="@{/comment/comments_sub/{postId}(postId = ${post_sub.postId})}">
                             <img th:src="@{/resources/img/nav/comment.png}" class="icon" alt="">
                         </a>
                     </div>
@@ -92,7 +92,7 @@
 
                     <!-- Comments -->
                     <div class="view-source comments-view">
-                        <a th:href="@{/comment/sub/{postId}(postId = ${post_sub.postId})}"
+                        <a th:href="@{/comment/comments_sub/{postId}(postId = ${post_sub.postId})}"
                            th:each="like, state : ${post_sub.comments}" class="description comments"
                            th:text="${state.last} ? #{label_see_all_comments} + ' (' + ${state.count} + ')' : ''"></a>
                     </div>

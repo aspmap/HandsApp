@@ -69,7 +69,7 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public void bookingWish(String user_sub, Long id) {
+    public void createBookingWishlist(String user_sub, Long id) {
         Wishlist wishlist = wishlistRepository.findById(id).orElseThrow();
         wishlist.setBooking(true);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -79,7 +79,7 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public void unBookingWish(String user_sub, Long id) {
+    public void createUnBookingWishlist(String user_sub, Long id) {
         Wishlist wishlist = wishlistRepository.findById(id).orElseThrow();
         wishlist.setBooking(false);
         wishlist.setBookingUser(null);

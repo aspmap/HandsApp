@@ -24,9 +24,9 @@ public class SubscriptionsController {
         this.subscriptionsService = subscriptionsService;
     }
 
-    @GetMapping("/sub-posts/{user}")
+    @GetMapping("/posts_sub/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String index(ModelMap modelMap, @PathVariable String user) {
+    public String findPostsSub(ModelMap modelMap, @PathVariable String user) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         commonsParams.setCommonSubParams(modelMap, user);
         commonsParams.setCommonParams(modelMap);
@@ -40,16 +40,16 @@ public class SubscriptionsController {
      * @param user
      * @return
      */
-    @GetMapping("/subscription_fr/{user}")
+    @GetMapping("/subscription_from_recommendations/{user}")
     @PreAuthorize("hasRole('USER')")
-    public String subscribe_from_recommendations(ModelMap modelMap, @PathVariable String user){
+    public String createSubscribeFromRecommendations(ModelMap modelMap, @PathVariable String user){
         subscriptionsService.createSub(user);
         return "redirect:/posts";
     }
 
     @GetMapping("/subscription/{user}")
     @PreAuthorize("hasRole('USER')")
-    public String subscribe(@PathVariable String user){
+    public String createSubscribe(@PathVariable String user){
         subscriptionsService.createSub(user);
         return "redirect:/sub-posts/{user}";
     }
@@ -58,7 +58,6 @@ public class SubscriptionsController {
     @PreAuthorize("hasRole('USER')")
     public String unsubscribe(@PathVariable String user){
         long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
-        //long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
         long subUserId = userService.findByUsername(user).getUserId().longValue();
         subscriptionsService.deleteSubscribeLong(currentUserId, subUserId);
         return "redirect:/sub-posts/{user}";

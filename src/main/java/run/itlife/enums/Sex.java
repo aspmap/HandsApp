@@ -1,7 +1,6 @@
 package run.itlife.enums;
 
 public enum Sex {
-
     MALE ("Мужской"),
     FEMALE ("Женский");
 

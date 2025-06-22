@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface HandshakeService {
-    ArrayList<Integer> selectUsersId(Integer userId);
+    ArrayList<Integer> findUsersId(Integer userId);
     List<String> findUsersById(Integer userId);
 
 
