@@ -75,3 +75,11 @@
     width: 30%;
     align-content: start;
 }
+
+.icons-permission {
+    display: ruby; !important;
+}
+
+.user-icon-permission {
+    margin-bottom: 0px; !important;
+}
