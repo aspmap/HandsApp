@@ -123,13 +123,13 @@ public class WishlistController {
     @PreAuthorize("hasRole('USER')")
     public String addNewTask(WishlistDto wishlistDto, @RequestParam("photo") String file, ModelMap modelMap, @RequestParam(name = "isSecret", defaultValue = "false", required = false) Boolean isSecret) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        commonsParams.setCommonParams(modelMap);
         Long wishlistId;
         SaveFile sf = new SaveFile();
         if (!file.isEmpty()) {
             try {
                 String filename = sf.saveFileForWishlist(username, context, file);
                 if (filename == null) {
+                    commonsParams.setCommonParams(modelMap);
                     return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeWishlist";
                 }
                 wishlistDto.setPhoto(filename);
@@ -138,10 +138,12 @@ public class WishlistController {
                 return "redirect:" + SaveFile.SEPARATOR + "wishlist";
             } catch (Exception e) {
                 log.error(ERROR + e);
+                commonsParams.setCommonParams(modelMap);
                 return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeWishlist";
             }
         } else {
-            log.error(ERROR + NOT_PUBLISH_POST);
+            log.error(ERROR);
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeWishlist";
         }
     }

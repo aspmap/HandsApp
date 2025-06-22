@@ -51,7 +51,6 @@ public class PlaylistController {
     @PreAuthorize("hasRole('USER')")
     public String confirmMusic(PlaylistDto playlistDto, ModelMap modelMap) {
         playlistService.createPlaylist(playlistDto);
-        commonsParams.setCommonParams(modelMap);
         return "redirect:" + SaveFile.SEPARATOR + "music/playlists";
     }
 

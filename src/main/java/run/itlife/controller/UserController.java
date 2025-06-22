@@ -164,8 +164,6 @@ public class UserController {
     @PostMapping("/profile_edit")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String profile_edit(UserDto userDto, @RequestParam("file") String file, ModelMap modelMap) {
-        commonsParams.setCommonParams(modelMap);
-
         if (!file.isEmpty()) {
             try {
                 // изменение и генерация ноового имени файла
@@ -202,6 +200,7 @@ public class UserController {
                 return "redirect:/posts/";
             } catch (Exception e) {
                 log.error(ERROR + e);
+                commonsParams.setCommonParams(modelMap);
                 return "messages-templates/error";
             }
         } else {

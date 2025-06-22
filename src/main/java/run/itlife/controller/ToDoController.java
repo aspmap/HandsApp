@@ -65,7 +65,6 @@ public class ToDoController {
     @PreAuthorize("hasRole('USER')")
     public String addNewTask(ToDoDto toDoDto, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        commonsParams.setCommonParams(modelMap);
         Long toDoId;
         toDoId = toDoService.createToDoTask(toDoDto);
         return "redirect:" + SaveFile.SEPARATOR + "todo";

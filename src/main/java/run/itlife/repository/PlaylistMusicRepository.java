@@ -11,8 +11,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 
 public interface PlaylistMusicRepository extends JpaRepository<PlaylistMusic, Long> {
-    @Query(value = "select distinct p.playlist_name from playlist_music pm " +
-            "left join playlist p on pm.playlist_id = p.playlist_id " +
+    @Query(value = "select distinct p.playlist_name from playlist p " +
             "where p.playlist_id = ? ", nativeQuery = true)
     String getNamePlaylist(Long playlistId);
 

@@ -132,8 +132,8 @@ public class PostController {
     @PreAuthorize("hasRole('USER')")
     public String postNewVideo(PostDto postDto, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        commonsParams.setCommonParams(modelMap);
         if (file.getSize() > MAX_UPLOAD_VIDEO_FILE_SIZE_IN_MB) {
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates" + SaveFile.SEPARATOR + "errorVideoSize";
         }
         long postId;
@@ -150,14 +150,17 @@ public class PostController {
                     postId = postService.createPost(postDto);
                     return "redirect:/post/" + postId;
                 } else {
+                    commonsParams.setCommonParams(modelMap);
                     return "messages-templates/error";
                 }
             } catch (Exception e) {
                 log.error(ERROR + e);
+                commonsParams.setCommonParams(modelMap);
                 return "messages-templates/error";
             }
         } else {
             log.error(ERROR + NOT_PUBLISH_POST);
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates/error";
         }
     }
@@ -173,7 +176,6 @@ public class PostController {
     @PreAuthorize("hasRole('USER')")
     public String postNewImage(PostDto postDto, @RequestParam("file") String file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        commonsParams.setCommonParams(modelMap);
         long postId;
         SaveFile sf = new SaveFile();
 
@@ -181,6 +183,7 @@ public class PostController {
             try {
                 String filename = sf.saveFile(username, context, file);
                 if (filename == null) {
+                    commonsParams.setCommonParams(modelMap);
                     return "messages-templates" + SaveFile.SEPARATOR + "errorFileSize";
                 }
                 postDto.setExtFile(PNG.getExtension());
@@ -189,10 +192,12 @@ public class PostController {
                 return "redirect:" + SaveFile.SEPARATOR + "post" + SaveFile.SEPARATOR + postId;
             } catch (Exception e) {
                 log.error(ERROR + e);
+                commonsParams.setCommonParams(modelMap);
                 return "messages-templates" + SaveFile.SEPARATOR + "errorFileSize";
             }
         } else {
             log.error(ERROR + NOT_PUBLISH_POST);
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates" + SaveFile.SEPARATOR + "errorFileSize";
         }
     }
@@ -208,7 +213,6 @@ public class PostController {
     @PreAuthorize("hasRole('USER')")
     public String postNewS3Image(PostDto postDto, @RequestParam("file") String file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        commonsParams.setCommonParams(modelMap);
         long postId;
         SaveFile sf = new SaveFile();
 
@@ -216,6 +220,7 @@ public class PostController {
             try {
                 File multipartFile = sf.saveS3File(file);
                 if (!multipartFile.exists()) {
+                    commonsParams.setCommonParams(modelMap);
                     return "messages-templates" + SaveFile.SEPARATOR + "errorS3FileSize";
                 }
                 if (multipartFile != null) {
@@ -229,10 +234,12 @@ public class PostController {
                 return "redirect:/post/";
             } catch (Exception e) {
                 log.error(ERROR + e);
+                commonsParams.setCommonParams(modelMap);
                 return "messages-templates/error";
             }
         } else {
             log.error(ERROR + NOT_PUBLISH_POST);
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates/error";
         }
     }
@@ -250,7 +257,6 @@ public class PostController {
     @PreAuthorize("hasRole('USER')")
     public String postEdit(PostDto postDto, ModelMap modelMap) {
         // получаем имя юзера для формирования пути сохранения фото
-        commonsParams.setCommonParams(modelMap);
         postService.checkAuthority(postDto.getPostId());
         postService.update(postDto);
         return "redirect:/post/" + postDto.getPostId();

@@ -298,7 +298,7 @@ body {
     height: auto;
     background: #fff;
     border: 1px solid #898989;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .info {
@@ -390,15 +390,15 @@ body {
 }
 
 .info .options {
-    height: 10px;
+    height: 15px;
     cursor: pointer;
     margin-left: 10px;
 }
 
 .info .delete {
-    height: 10px;
+    height: 15px;
     cursor: pointer;
-    margin-left: 15px;
+    margin-left: 10px;
 }
 
 .info .user {
@@ -851,4 +851,20 @@ p {
     border: 0px; !important;
     margin-top: 0px;
     background: white;
+}
+
+.table-post {
+    width: 100%;
+}
+
+.td-post-photo {
+    width: 90%;
+}
+
+.td-post-icon-delete {
+    width: 5%;
+}
+
+.td-post-icon-edit {
+    width: 5%;
 }

@@ -131,9 +131,6 @@
                 <img th:if="${unreadMessagesTotal > 0}" th:src="@{/resources/img/nav/messenger_unread.png}" class="icon" alt="">
                 <span id="update_count_dialogs" th:insert="fragments/unread-dialogs-count.html :: unreadMessagesTotal"></span>
             </a>
-            <a class="icon" sec:authorize="isAuthenticated()" th:href="@{/handshakes_search}">
-                <img th:src="@{/resources/img/nav/handshakes.png}" class="icon" alt="">
-            </a>
             <ul class="nav-list icon" sec:authorize="isAuthenticated()">
                 <li class="icon">
                     <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
@@ -171,6 +168,9 @@
                             </li>
                             <li>
                                 <a th:href="@{/profile_edit/{user}(user = ${user})}"><span th:text="#{menu_settings}"></span></a>
+                            </li>
+                            <li>
+                                <a th:href="@{/handshakes_search}"><span th:text="#{text_handshakes}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
@@ -228,9 +228,6 @@
                 <img th:if="${unreadMessagesTotal > 0}" th:src="@{/resources/img/nav/messenger_unread.png}" class="icon" alt="">
                 <span id="update_count_dialogs" th:insert="fragments/unread-dialogs-count.html :: unreadMessagesTotal"></span>
             </a>
-            <a class="icon" sec:authorize="isAuthenticated()" th:href="@{/handshakes_search}">
-                <img th:src="@{/resources/img/nav/handshakes.png}" class="icon" alt="">
-            </a>
             <ul class="nav-list icon" sec:authorize="isAuthenticated()">
                 <li class="icon">
                     <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
@@ -268,6 +265,9 @@
                             </li>
                             <li>
                                 <a th:href="@{/profile_edit/{user}(user = ${user})}"><span th:text="#{menu_settings}"></span></a>
+                            </li>
+                            <li>
+                                <a th:href="@{/handshakes_search}"><span th:text="#{text_handshakes}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>

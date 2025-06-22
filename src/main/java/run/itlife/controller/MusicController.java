@@ -107,6 +107,7 @@ public class MusicController {
             return "media/add-info";
         } else {
             log.error(ERROR);
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates/errorAddMusicFile";
         }
     }
@@ -115,8 +116,8 @@ public class MusicController {
     @PreAuthorize("hasRole('USER')")
     public String addNewMusic(MusicDto musicDto, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        commonsParams.setCommonParams(modelMap);
         if (musicFile.length > MAX_UPLOAD_MUSIC_FILE_SIZE_IN_MB) {
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMusic";
         }
         Long musicId;
@@ -126,6 +127,7 @@ public class MusicController {
             try {
                 Map<String, String> filenameMap = sf.saveMusicFile(username, context, musicFile);
                 if (filenameMap == null) {
+                    commonsParams.setCommonParams(modelMap);
                     return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMusic";
                 }
                 for (Map.Entry<String, String> entry : filenameMap.entrySet()) {
@@ -135,10 +137,12 @@ public class MusicController {
                 return "redirect:" + SaveFile.SEPARATOR + "music";
             } catch (Exception e) {
                 log.error(ERROR + e);
+                commonsParams.setCommonParams(modelMap);
                 return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMusic";
             }
         } else {
-            log.error(ERROR + NOT_PUBLISH_POST);
+            log.error(ERROR);
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates" + SaveFile.SEPARATOR + "errorFileSizeMusic";
         }
     }

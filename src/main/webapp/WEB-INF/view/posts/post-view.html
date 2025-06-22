@@ -18,18 +18,32 @@
             <div class="post" th:object="${post}">
                 <input type="hidden" th:field="*{postId}"/>
                 <div class="info">
-                    <div class="user">
-                        <div class="profile-pic">
-                            <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${userinfo.username} + '/profile/' + ${userinfo.photo}}" alt="">
-                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
-                            <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
-                        </div>
-                        <p th:if="${userinfo.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
-                        <p th:if="${userinfo.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
-                    </div>
-                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/delete_one_post(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/delete.png}" class="options" alt=""></a>
-                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/option.png}" class="options" alt=""></a>
+                    <table class="table-post">
+                        <tr>
+                            <td class="td-post-photo">
+                                <div class="user">
+                                    <div class="profile-pic">
+                                        <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                        <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${userinfo.username} + '/profile/' + ${userinfo.photo}}" alt="">
+                                        <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
+                                        <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
+                                    </div>
+                                    <p th:if="${userinfo.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
+                                    <p th:if="${userinfo.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
+                                </div>
+                            </td>
+                            <td class="td-post-icon-edit">
+                                <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}">
+                                    <img th:src="@{/resources/img/nav/option.png}" class="options" alt="">
+                                </a>
+                            </td>
+                            <td class="td-post-icon-delete">
+                                <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/delete_one_post(postId = ${post.postId})}">
+                                    <img th:src="@{/resources/img/nav/delete.png}" class="options" alt="">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType != 'S3'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
                 <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType == 'S3'}" th:src="@{${post.photo}}" class="post-image" alt="">

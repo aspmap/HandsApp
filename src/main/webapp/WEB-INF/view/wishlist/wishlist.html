@@ -2,12 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-  <title id="pageTitle" th:text="#{page_label_wishlist} + ' - ' + #{application_name}"></title>
+  <title id="pageTitle" th:text="#{text_wishlist} + ' - ' + #{application_name}"></title>
   <th:block th:include="fragments.html :: header"/>
+  <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
+  <script type="text/javascript" th:src="@{/resources/js/delete-wish.js}"></script>
 </head>
-
-<script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
-<script type="text/javascript" th:src="@{/resources/js/delete-wish.js}"></script>
 
 <!-- Navigation -->
 <body>
