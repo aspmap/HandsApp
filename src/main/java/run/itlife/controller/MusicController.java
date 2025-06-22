@@ -150,13 +150,13 @@ public class MusicController {
         musicService.deleteMusic(id);
     }
 
-    @PostMapping("/music/results/{playlistName}")
+    @PostMapping("/music/results")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String getResults(ModelMap modelMap, @PathVariable String playlistName) {
+    public String getResults(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username);
-        modelMap.put("findPlaylists", playlistService.searchPlaylists(playlistName, user.getUserId()));
+        modelMap.put("findPlaylists", playlistService.searchPlaylistsByUserId(user.getUserId()));
         return "media/results";
     }
 }

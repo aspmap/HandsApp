@@ -1,12 +1,12 @@
 $(document).ready(function() {
     var $result = $('#search_box-result');
 
-    $('#search').on('keyup', function(){
+    $('#search').on('click', function(){
         var search = $(this).val();
-        if ((search != '') && (search.length > 1)){
+        if ((search == '') && (search.length == 0)){
             $.ajax({
                 type: "POST",
-                url: "/music/results/" + search,
+                url: "/music/results",
                 success: function(msg){
                     $result.html(msg);
                     if(msg != ''){

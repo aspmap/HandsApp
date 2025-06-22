@@ -9,6 +9,6 @@ public interface PlaylistService {
     ArrayList<Playlist> getAllPlaylistsByUserId(Long userId);
     Long createPlaylist(PlaylistDto playlistDto);
     void deletePlaylist(Long id);
-    ArrayList<Playlist> searchPlaylists(String substring, Long userId);
+    ArrayList<Playlist> searchPlaylistsByUserId(Long userId);
     Long getPlaylistId(String substring);
 }

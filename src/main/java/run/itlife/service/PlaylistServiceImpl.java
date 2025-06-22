@@ -47,8 +47,8 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public ArrayList<Playlist> searchPlaylists(String substring, Long userId) {
-        return playlistRepository.searchPlaylists("%" + substring +"%", userId);
+    public ArrayList<Playlist> searchPlaylistsByUserId(Long userId) {
+        return playlistRepository.searchPlaylistsByUserId(userId);
     }
 
     @Override
