@@ -18,7 +18,7 @@ public class LikesControllerMockTest {
 
     @Test
     void createLike() {
-        assertEquals("redirect:/post/{postId}", likesController.createLike(1L));
+        assertEquals("redirect:/post_view/{postId}", likesController.createLike(1L));
     }
 
     @Test

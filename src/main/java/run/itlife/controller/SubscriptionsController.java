@@ -51,7 +51,7 @@ public class SubscriptionsController {
     @PreAuthorize("hasRole('USER')")
     public String createSubscribe(@PathVariable String user){
         subscriptionsService.createSub(user);
-        return "redirect:/sub-posts/{user}";
+        return "redirect:/posts_sub/{user}";
     }
 
     @GetMapping("/unsubscription/{user}")
