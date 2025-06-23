@@ -24,26 +24,20 @@
       <div class="post">
         <div class="post-content qrcode-position">
           <div class="view-source comments-view qrcode-view">
-              <img th:src="*{'data:image/png;base64,'+ qrQode}" alt="" />
+            <img th:src="*{'data:image/png;base64,'+ qrQode}" alt="" />
           </div>
         </div>
       </div>
 
       <!-- Footer -->
       <footer th:insert="fragments.html :: footer"></footer>
-
     </div>
 
     <!-- Right Column -->
     <div th:insert="fragments.html :: right-column"></div>
-
-    </div>
+  </div>
   </div>
 </section>
-
-<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>-->
-<script src="../resources/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

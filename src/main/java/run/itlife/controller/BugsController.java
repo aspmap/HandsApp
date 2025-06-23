@@ -89,7 +89,7 @@ public class BugsController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createBug(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
-        return "bugs/bugs-add";
+        return "bugs/create-bug";
     }
 
     @PostMapping("/bug/create")

@@ -107,7 +107,7 @@ public class UserController {
 
     @GetMapping("/confidentiality")
     public String confidentiality(ModelMap modelMap) {
-        return "confidentiality";
+        return "info/confidentiality";
     }
 
     @PostMapping("/register")

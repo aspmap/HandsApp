@@ -47,7 +47,6 @@ public class PlaylistMusicController {
     @PostMapping("/music/addToPlaylist")
     @PreAuthorize("hasRole('USER')")
     public String addMusicToPlaylist(ModelMap modelMap, @RequestParam("playlistName") String playlistName, @RequestParam("musicId") Long musicId) {
-        commonsParams.setCommonParams(modelMap);
         Long playlistId = playlistService.findPlaylistId(playlistName);
         Playlist playlist = new Playlist();
         playlist.setPlaylistId(playlistId);

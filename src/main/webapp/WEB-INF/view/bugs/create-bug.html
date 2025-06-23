@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <title id="pageTitle" th:text="#{page_label_add_permission} + ' - ' + #{application_name}"></title>
+    <title id="pageTitle" th:text="#{page_label_send_feedback} + ' - ' + #{application_name}"></title>
     <th:block th:include="fragments.html :: header"/>
 </head>
 
@@ -15,18 +15,14 @@
     <div sec:authorize="isAuthenticated()" class="wrapper">
         <div class="left-col">
             <div class="frame-title-create-form">
-                <p class="logo-title-text-create-form" th:text="#{page_label_add_permission}"></p>
+                <p class="logo-title-text-create-form" th:text="#{page_label_send_feedback}"></p>
             </div>
             <div class="frame-content-create-form">
                 <div class="form-create">
-                    <div class="search_box">
-                        <form method="POST" th:action="@{/wishlist/permissions/add}">
-                            <input type="hidden" name="wishlistIdWishlistPrivate" th:value="${id}"/>
-                            <input name="userWishlistPrivate" id="search" class="input-fields" th:placeholder="#{input_enter_username_wish}" maxlength="150" required />
-                            <div id="search_box-result"></div>
-                            <button type="submit" class="btn-create" th:text="#{button_add_permission}"></button>
-                        </form>
-                    </div>
+                    <form method="POST" th:action="@{/bug/create}">
+                        <textarea name="bugText" class="input-fields" rows="5" th:placeholder="#{input_describe_error}" maxlength="255" required></textarea>
+                        <button type="submit" class="btn-create" th:text="#{button_submit_a_bug_report}"></button>
+                    </form>
                 </div>
             </div>
 

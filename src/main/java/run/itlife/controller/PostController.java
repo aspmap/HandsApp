@@ -187,16 +187,16 @@ public class PostController {
                 postDto.setExtFile(PNG.getExtension());
                 postDto.setPhoto(filename);
                 postId = postService.createPost(postDto);
-                return "redirect:" + SEPARATOR + "post" + SEPARATOR + postId;
+                return "redirect:" + SEPARATOR + "post_view" + SEPARATOR + postId;
             } catch (Exception e) {
                 log.error(ERROR + e);
                 commonsParams.setCommonParams(modelMap);
-                return "messages-templates" + SEPARATOR + "errorFileSize";
+                return "messages-templates/error";
             }
         } else {
             log.error(ERROR + NOT_PUBLISH_POST);
             commonsParams.setCommonParams(modelMap);
-            return "messages-templates" + SEPARATOR + "errorFileSize";
+            return "messages-templates/error";
         }
     }
 

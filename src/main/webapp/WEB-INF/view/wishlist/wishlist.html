@@ -4,13 +4,11 @@
 <head>
   <title id="pageTitle" th:text="#{text_wishlist} + ' - ' + #{application_name}"></title>
   <th:block th:include="fragments.html :: header"/>
-  <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
-  <script type="text/javascript" th:src="@{/resources/js/delete-wish.js}"></script>
 </head>
 
 <!-- Navigation -->
 <body>
-<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
 <!-- Page Content -->
 <section class="main">
@@ -98,7 +96,6 @@
 
       <!-- Footer -->
       <footer th:insert="fragments.html :: footer"></footer>
-
     </div>
 
     <!-- Right Column -->

@@ -22,13 +22,23 @@
     <link th:href="@{/resources/css/placeholder.css}" rel="stylesheet">
     <link th:href="@{/resources/css/footer.css}" rel="stylesheet">
     <link th:href="@{/resources/css/borders.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/page-list-of.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+    <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/update_count_dialogs.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/get-users.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/get-playlists.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/delete-music.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/delete-playlist.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/delete-from-playlist.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/complete-task.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/delete-todo.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/delete-wish.js}"></script>
 </head>
 
 <head th:fragment="header-login">
@@ -78,8 +88,12 @@
     <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/highslide.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/jquery.scrollTo.js}"></script>
-    <script type="text/javascript" th:src="@{/resources/js/test.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/js/scroll-dialog.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/smiles.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.js"></script>
+    <script type="text/javascript" th:src="@{/resources/js/crop.js}"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
 </head>
 
