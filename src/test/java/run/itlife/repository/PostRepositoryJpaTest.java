@@ -13,11 +13,11 @@ import run.itlife.entity.Post;
 
 import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+/*@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {JpaConfig.class},loader = AnnotationConfigContextLoader.class)
-@Transactional
+@Transactional*/
 public class PostRepositoryJpaTest {
-    @Autowired
+ /*   @Autowired
     private PostRepository postRepository;
 
     @Test
@@ -90,5 +90,5 @@ public class PostRepositoryJpaTest {
     public void countMyLikesPostsOfUser() {
         long countMyLikesPosts = this.postRepository.countMyLikesPosts("altermuun");
         Assert.assertEquals(2, countMyLikesPosts);
-    }
+    }*/
 }

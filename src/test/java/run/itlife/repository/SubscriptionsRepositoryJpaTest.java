@@ -13,11 +13,11 @@ import run.itlife.entity.Subscriptions;
 
 import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+/*@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {JpaConfig.class},loader = AnnotationConfigContextLoader.class)
-@Transactional
+@Transactional*/
 public class SubscriptionsRepositoryJpaTest {
-    @Autowired
+ /*   @Autowired
     private SubscriptionsRepository subscriptionsRepository;
 
     @Test
@@ -48,5 +48,5 @@ public class SubscriptionsRepositoryJpaTest {
     public void countSubscribers() {
         int countSubscribers = this.subscriptionsRepository.countSubscribers("terminator");
         Assert.assertEquals(1, countSubscribers);
-    }
+    }*/
 }

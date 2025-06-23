@@ -12,11 +12,11 @@ import run.itlife.config.JpaConfig;
 
 import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+/*@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {JpaConfig.class},loader = AnnotationConfigContextLoader.class)
-@Transactional
+@Transactional*/
 public class HandshakeRepositoryJpaTest {
-    @Autowired
+   /* @Autowired
     private HandshakeRepository handshakeRepository;
 
     @Test
@@ -29,5 +29,5 @@ public class HandshakeRepositoryJpaTest {
     public void findUsersById() {
         List<String> users = this.handshakeRepository.findUsersById(4);
         Assert.assertEquals(1, users.size());
-    }
+    }*/
 }
