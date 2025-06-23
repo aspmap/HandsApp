@@ -11,11 +11,11 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
 <!-- Page Content -->
-<section class="main-post">
+<section class="main-post" sec:authorize="isAuthenticated()">
     <div class="wrapper-posts">
         <div class="left-col">
             <section class="text-center">
-                <div sec:authorize="isAuthenticated()" class="info-main">
+                <div class="info-main">
                     <div class="user-main">
                         <div class="profile-pic-main">
                             <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">

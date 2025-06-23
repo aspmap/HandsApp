@@ -11,7 +11,7 @@
 <nav class="navbar" th:insert="fragments.html :: navigation"></nav>
 
 <!-- Page Content -->
-<section class="main">
+<section class="main" sec:authorize="isAuthenticated()">
     <div class="wrapper">
         <div class="left-col">
 

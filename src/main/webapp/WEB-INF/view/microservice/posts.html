@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <title id="pageTitle" th:text="#{page_label_my_posts_ms} + ' - ' + #{application_name}"></title>
@@ -29,7 +29,7 @@
 </script>
 
 <!-- Page Content -->
-<section class="main">
+<section class="main" sec:authorize="isAuthenticated()">
   <div class="wrapper">
     <div class="left-col">
       <div id="posts"></div>

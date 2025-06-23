@@ -17,7 +17,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
 <!-- Page Content -->
-<section class="main">
+<section class="main" sec:authorize="isAuthenticated()">
     <div class="wrapper">
         <div class="left-col">
             <div class="no_public" th:if="${isClosedProfilebyPostId == true}">

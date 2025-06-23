@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:fragment="header">
+<head th:fragment="header" sec:authorize="isAuthenticated()">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
     <meta charset="utf-8">
     <meta name="port" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -41,7 +41,7 @@
     <script type="text/javascript" th:src="@{/resources/js/delete-wish.js}"></script>
 </head>
 
-<head th:fragment="header-login">
+<head th:fragment="header-login" sec:authorize="isAuthenticated()">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -60,7 +60,7 @@
     <script type="text/javascript" th:src="@{/resources/js/update_count_dialogs.js}"></script>
 </head>
 
-<head th:fragment="header-messages">
+<head th:fragment="header-messages" sec:authorize="isAuthenticated()">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
     <meta charset="utf-8">
     <meta name="port" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -97,7 +97,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
 </head>
 
-<head th:fragment="header-add-img">
+<head th:fragment="header-add-img" sec:authorize="isAuthenticated()">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -130,7 +130,7 @@
 <body>
 
 <!-- Navigation -->
-<nav class="navbar" th:fragment="navigation">
+<nav class="navbar" th:fragment="navigation" sec:authorize="isAuthenticated()">
     <div class="nav-wrapper">
         <a th:href="@{/}"><img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt=""></a>
         <form class="search-form" method="GET" th:action="@{/search}" sec:authorize="isAuthenticated()">
@@ -217,6 +217,9 @@
                             <li sec:authorize="hasRole('ADMIN')">
                                 <a th:href="@{/bugs_view}"><span th:text="#{menu_bugs}"></span></a>
                             </li>
+                            <li sec:authorize="hasRole('ADMIN')">
+                                <a th:href="@{/api}"><span th:text="'API'"></span></a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -225,7 +228,7 @@
     </div>
 </nav>
 
-<nav class="navbar" th:fragment="navigation-add-img">
+<nav class="navbar" th:fragment="navigation-add-img" sec:authorize="isAuthenticated()">
     <div class="nav-wrapper">
         <a th:href="@{/}">
             <img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt="">
@@ -313,6 +316,9 @@
                             <b sec:authorize="hasRole('ADMIN')" style="margin-left: 5px" th:text="#{menu_admin}"></b>
                             <li sec:authorize="hasRole('ADMIN')">
                                 <a th:href="@{/bugs_view}"><span th:text="#{menu_bugs}"></span></a>
+                            </li>
+                            <li sec:authorize="hasRole('ADMIN')">
+                                <a th:href="@{/api}"><span th:text="'API'"></span></a>
                             </li>
                         </ul>
                     </li>
@@ -434,7 +440,7 @@
 </div>
 
 <!-- Modal Window -->
-<div th:fragment="modal-window" class="modal fade" id="profileImageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div th:fragment="modal-window" class="modal fade" id="profileImageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" sec:authorize="isAuthenticated()">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
