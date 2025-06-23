@@ -41,7 +41,6 @@ public class LikesServiceImpl implements LikesService {
     public void createLike(Long postId) {
         Likes likes = new Likes();
         likes.setUserLikeId(userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
-        //likes.setUserLikeId(userService.findByUsername(getCurrentUserDetails().getUsername()));
         likes.setPostLikeId(postService.findById(postId));
         likesRepository.save(likes);
     }

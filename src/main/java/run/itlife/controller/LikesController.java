@@ -21,14 +21,14 @@ public class LikesController {
     }
 
     @GetMapping("/like/{postId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createLike(@PathVariable long postId){
         likesService.createLike(postId);
         return "redirect:/post_view/{postId}";
     }
 
     @GetMapping("/unlike/{postId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String deleteLike(@PathVariable long postId){
         long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
         likesService.deleteLike(currentUserId, postId);
@@ -36,14 +36,14 @@ public class LikesController {
     }
 
     @GetMapping("/like_view_sub/{postId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createLikeSub(@PathVariable long postId){
         likesService.createLike(postId);
         return "redirect:/post-view-sub/{postId}";
     }
 
     @GetMapping("/unlike_view_sub/{postId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String deleteLikeSub(@PathVariable long postId){
         long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
         likesService.deleteLike(currentUserId, postId);
@@ -51,14 +51,14 @@ public class LikesController {
     }
 
     @GetMapping("/like_detail/{postId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createLikeDetail(@PathVariable long postId){
         likesService.createLike(postId);
         return "redirect:/posts_detail";
     }
 
     @GetMapping("/unlike_detail/{postId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String deleteLikeDetail(@PathVariable long postId){
         long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
         likesService.deleteLike(currentUserId, postId);
@@ -66,14 +66,14 @@ public class LikesController {
     }
 
     @GetMapping("/like_detail_sub/{postId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createLikeDetailSub(@PathVariable long postId){
         likesService.createLike(postId);
         return "redirect:/";
     }
 
     @GetMapping("/unlike_detail_sub/{postId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String deleteLikeDetailSub(@PathVariable long postId){
         long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
         likesService.deleteLike(currentUserId, postId);
@@ -81,14 +81,14 @@ public class LikesController {
     }
 
     @GetMapping("/like_detail_subuser/{user}/{postId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createLikeDetailSubuser(@PathVariable long postId, @PathVariable String user){
         likesService.createLike(postId);
         return "redirect:/posts_detail_subuser/{user}";
     }
 
     @GetMapping("/unlike_detail_subuser/{user}/{postId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String deleteLikeDetailSubuser(@PathVariable long postId, @PathVariable String user){
         long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
         likesService.deleteLike(currentUserId, postId);

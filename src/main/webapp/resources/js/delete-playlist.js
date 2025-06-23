@@ -1,5 +1,5 @@
 function deletePlaylist(playlistId) {
-    fetch(contextPath + "/music/playlist/delete/" + playlistId, {method: "POST"})
+    fetch(contextPath + "/music/playlist/delete/" + playlistId, {method: "DELETE"})
         .then((response) => {
             if (response.status == 200 && response.redirected != true){
                 var element = document.getElementById("playlist-" + playlistId);

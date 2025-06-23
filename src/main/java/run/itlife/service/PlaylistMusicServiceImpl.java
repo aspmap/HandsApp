@@ -1,6 +1,7 @@
 package run.itlife.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import run.itlife.dto.PlaylistMusicDto;
@@ -10,6 +11,8 @@ import run.itlife.repository.MusicRepository;
 import run.itlife.repository.PlaylistMusicRepository;
 
 import java.util.ArrayList;
+
+import static run.itlife.utils.SecurityUtils.*;
 
 @Service
 @Transactional

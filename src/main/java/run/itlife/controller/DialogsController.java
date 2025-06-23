@@ -28,7 +28,7 @@ public class DialogsController {
     }
 
     @GetMapping("/dialogs")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findDialogs(ModelMap modelMap) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("dialogs", dialogsService.findDialogs(username));
@@ -77,7 +77,7 @@ public class DialogsController {
     }
 
     @GetMapping("/update_count_dialogs")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String updateCountDialogs(ModelMap modelMap) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("unreadMessagesTotal", dialogsService.findUnreadDialogs(username).size());

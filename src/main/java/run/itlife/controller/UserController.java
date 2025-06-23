@@ -134,7 +134,7 @@ public class UserController {
     }
 
     @PostMapping("/profile_delete/{user}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String deleteProfilePost(ModelMap modelMap, @PathVariable String user) {
         userService.deleteProfile(user);
         //удаляем папки и файлы пользователя

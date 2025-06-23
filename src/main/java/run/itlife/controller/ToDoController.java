@@ -8,10 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import run.itlife.dto.ToDoDto;
 import run.itlife.entity.User;
 import run.itlife.service.ToDoService;
@@ -55,14 +52,14 @@ public class ToDoController {
     }
 
     @GetMapping("/todo/add")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createTodoTask(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "todo/add-todo";
     }
 
     @PostMapping("/todo/add")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createTodoTask(ToDoDto toDoDto, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Long toDoId;
@@ -71,14 +68,14 @@ public class ToDoController {
     }
 
     @GetMapping("/todo/{toDoId}/complete")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void completeTodoTask(@PathVariable Long toDoId) {
         toDoService.completeTask(toDoId);
     }
 
-    @PostMapping("/todo/delete/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/todo/delete/{id}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteToDoTask(@PathVariable Long id) {
         toDoService.deleteTodo(id);

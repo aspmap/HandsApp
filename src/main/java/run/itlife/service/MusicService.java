@@ -10,6 +10,6 @@ import java.util.ArrayList;
 public interface MusicService {
     ArrayList<Music> findAllByUser(User user);
     Long createSong(MusicDto musicDto);
-    void deleteMusic(@PathVariable Long id);
+    void deleteSong(@PathVariable Long id);
 
 }

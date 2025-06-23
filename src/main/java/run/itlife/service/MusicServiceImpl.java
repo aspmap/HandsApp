@@ -1,6 +1,7 @@
 package run.itlife.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ import run.itlife.repository.MusicRepository;
 import run.itlife.repository.UserRepository;
 
 import java.util.ArrayList;
+
+import static run.itlife.utils.SecurityUtils.*;
 
 @Service
 @Transactional
@@ -45,7 +48,13 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public void deleteMusic(Long id) {
+    public void deleteSong(Long id) {
+        String username = musicRepository.findById(id)
+                .orElseThrow()
+                .getUser().getUsername();
+        if (!hasAuthority(username) && !hasRole("ADMIN")) {
+            throw new AccessDeniedException(ACCESS_DENIED);
+        }
         musicRepository.deleteById(id);
     }
 }

@@ -9,8 +9,11 @@ import run.itlife.entity.ToDo;
 import run.itlife.entity.User;
 import run.itlife.repository.ToDoRepository;
 import run.itlife.repository.UserRepository;
+import org.springframework.security.access.AccessDeniedException;
 
 import java.util.ArrayList;
+
+import static run.itlife.utils.SecurityUtils.*;
 
 @Service
 @Transactional
@@ -50,6 +53,12 @@ public class ToDoServiceImpl implements ToDoService {
 
     @Override
     public void deleteTodo(Long id) {
+        String username = toDoRepository.findById(id)
+                .orElseThrow()
+                .getUser().getUsername();
+        if (!hasAuthority(username) && !hasRole("ADMIN")) {
+            throw new AccessDeniedException(ACCESS_DENIED);
+        }
         toDoRepository.deleteById(id);
     }
 

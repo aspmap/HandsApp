@@ -68,14 +68,14 @@ public class MusicController {
     }
 
     @GetMapping("/music/addfile")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String addMusic(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "media/add-file";
     }
 
     @PostMapping("/music/addinfo")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String confirmMusic(MusicDto musicDto, ModelMap modelMap, @RequestParam("file") MultipartFile file) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException {
         commonsParams.setCommonParams(modelMap);
         if (!file.isEmpty()) {
@@ -113,7 +113,7 @@ public class MusicController {
     }
 
     @PostMapping("/music/save")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String saveMusic(MusicDto musicDto, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (musicFile.length > MAX_UPLOAD_MUSIC_FILE_SIZE_IN_MB) {
@@ -147,11 +147,11 @@ public class MusicController {
         }
     }
 
-    @PostMapping("/music/delete/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/music/delete/{id}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteMusic(@PathVariable Long id) {
-        musicService.deleteMusic(id);
+    public void deleteSong(@PathVariable Long id) {
+        musicService.deleteSong(id);
     }
 
     @PostMapping("/music/results")

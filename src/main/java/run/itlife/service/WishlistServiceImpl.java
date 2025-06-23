@@ -12,6 +12,8 @@ import run.itlife.entity.WishlistPrivate;
 import run.itlife.repository.UserRepository;
 import run.itlife.repository.WishlistPrivateRepository;
 import run.itlife.repository.WishlistRepository;
+import org.springframework.security.access.AccessDeniedException;
+import static run.itlife.utils.SecurityUtils.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -98,6 +100,12 @@ public class WishlistServiceImpl implements WishlistService {
 
     @Override
     public void deleteWish(Long id) {
+        String username = wishlistRepository.findById(id)
+                .orElseThrow()
+                .getUser().getUsername();
+        if (!hasAuthority(username) && !hasRole("ADMIN")) {
+            throw new AccessDeniedException(ACCESS_DENIED);
+        }
         wishlistRepository.deleteById(id);
     }
 

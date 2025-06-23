@@ -9,8 +9,11 @@ import run.itlife.dto.PlaylistDto;
 import run.itlife.entity.Playlist;
 import run.itlife.repository.PlaylistRepository;
 import run.itlife.repository.UserRepository;
+import org.springframework.security.access.AccessDeniedException;
 
 import java.util.ArrayList;
+
+import static run.itlife.utils.SecurityUtils.*;
 
 @Service
 @Transactional
@@ -42,6 +45,12 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     @Override
     public void deletePlaylist(Long id) {
+        String username = playlistRepository.findById(id)
+                .orElseThrow()
+                .getUser().getUsername();
+        if (!hasAuthority(username) && !hasRole("ADMIN")) {
+            throw new AccessDeniedException(ACCESS_DENIED);
+        }
         playlistRepository.deleteById(id);
     }
 

@@ -41,21 +41,21 @@ public class SubscriptionsController {
      * @return
      */
     @GetMapping("/subscription_from_recommendations/{user}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createSubscribeFromRecommendations(ModelMap modelMap, @PathVariable String user){
         subscriptionsService.createSub(user);
         return "redirect:/posts";
     }
 
     @GetMapping("/subscription/{user}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createSubscribe(@PathVariable String user){
         subscriptionsService.createSub(user);
         return "redirect:/posts_sub/{user}";
     }
 
     @GetMapping("/unsubscription/{user}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String unsubscribe(@PathVariable String user){
         long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
         long subUserId = userService.findByUsername(user).getUserId().longValue();

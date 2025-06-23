@@ -23,7 +23,7 @@ public class QRcodeController {
     private static final Logger log = LoggerFactory.getLogger(QRcodeController.class);
 
     @GetMapping("qrcode/")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createQrCode(HttpServletResponse response, ModelMap modelMap) throws Exception {
         commonsParams.setCommonParams(modelMap);
         byte[] qrImage = ZXingQR.qrcode(response);

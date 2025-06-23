@@ -120,14 +120,14 @@ public class PostController {
     }
 
     @GetMapping("/post/new_video")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createNewPostVideo(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "posts/post-new-video";
     }
 
     @PostMapping("/post/new_video")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createNewPostVideo(PostDto postDto, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (file.getSize() > MAX_UPLOAD_VIDEO_FILE_SIZE_IN_MB) {
@@ -164,14 +164,14 @@ public class PostController {
     }
 
     @GetMapping("/post/new_image")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createNewPostImage(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "posts/post-new-img";
     }
 
     @PostMapping("/post/new_image")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createNewPostImage(PostDto postDto, @RequestParam("file") String file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         long postId;
@@ -201,14 +201,14 @@ public class PostController {
     }
 
     @GetMapping("/post/new_S3_image")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createNewPostS3Image(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "posts/post-new-s3-img";
     }
 
     @PostMapping("/post/new_S3_image")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createNewPostS3Image(PostDto postDto, @RequestParam("file") String file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         long postId;
@@ -243,7 +243,7 @@ public class PostController {
     }
 
     @GetMapping("/post/edit/{postId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String editPost(ModelMap modelMap, @PathVariable long postId) {
         commonsParams.setCommonParams(modelMap);
         postService.checkAuthority(postId);
@@ -252,7 +252,7 @@ public class PostController {
     }
 
     @PostMapping("/post/edit")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String editPost(PostDto postDto, ModelMap modelMap) {
         // получаем имя юзера для формирования пути сохранения фото
         postService.checkAuthority(postDto.getPostId());
@@ -287,15 +287,15 @@ public class PostController {
         return "posts/post-view";
     }
 
-    @PostMapping("/post/delete/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/post/delete/{id}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deletePost(@PathVariable long id) {
         postService.delete(id);
     }
 
     @GetMapping("/post/delete_one_post/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String deleteOnePost(@PathVariable long id) {
         postService.delete(id);
         return "redirect:/posts_detail";

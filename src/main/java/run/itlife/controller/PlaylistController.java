@@ -6,10 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import run.itlife.dto.PlaylistDto;
 import run.itlife.entity.User;
 import run.itlife.service.PlaylistService;
@@ -42,21 +39,21 @@ public class PlaylistController {
     }
 
     @GetMapping("/music/playlist/create")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createPlaylist(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "media/create-playlist";
     }
 
     @PostMapping("/music/playlist/create")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createPlaylist(PlaylistDto playlistDto, ModelMap modelMap) {
         playlistService.createPlaylist(playlistDto);
         return "redirect:" + SEPARATOR + "music/playlists";
     }
 
-    @PostMapping("/music/playlist/delete/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/music/playlist/delete/{id}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deletePlaylist(@PathVariable Long id) {
         playlistService.deletePlaylist(id);

@@ -34,7 +34,6 @@ public class SecurityUtils {
     }
 
     public static boolean hasAuthority(String username) {
-        //return Objects.equals(username, getCurrentUserDetails().getUsername());
         return Objects.equals(username, SecurityContextHolder.getContext().getAuthentication().getName());
 
     }

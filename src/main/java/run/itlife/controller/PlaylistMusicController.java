@@ -45,7 +45,7 @@ public class PlaylistMusicController {
     }
 
     @PostMapping("/music/addToPlaylist")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String addMusicToPlaylist(ModelMap modelMap, @RequestParam("playlistName") String playlistName, @RequestParam("musicId") Long musicId) {
         Long playlistId = playlistService.findPlaylistId(playlistName);
         Playlist playlist = new Playlist();
@@ -59,8 +59,8 @@ public class PlaylistMusicController {
         return "redirect:" + SEPARATOR + "music/playlist/" + playlistId;
     }
 
-    @PostMapping("/music/playlist/song/delete/{playlistId}/{musicId}")
-    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/music/playlist/song/delete/{playlistId}/{musicId}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteMusicFromPlaylist(@PathVariable Long playlistId, @PathVariable Long musicId) {
         playlistMusicService.deleteMusicFromPlaylist(playlistId, musicId);

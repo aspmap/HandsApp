@@ -39,7 +39,7 @@ public class MessagesController {
     }
 
     @GetMapping("/messages/{dialogId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findMessagesByDialogId(ModelMap modelMap, @PathVariable Long dialogId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
@@ -84,7 +84,7 @@ public class MessagesController {
     }
 
     @PostMapping("messages/create/{dialogId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createMessage(ModelMap modelMap, Messages messages, @PathVariable Long dialogId, @RequestParam("file") String file) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         SaveFile sf = new SaveFile();

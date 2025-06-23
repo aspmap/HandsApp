@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +15,7 @@ import run.itlife.dto.WishlistDto;
 import run.itlife.dto.WishlistPrivateDto;
 import run.itlife.entity.User;
 import run.itlife.entity.Wishlist;
+import run.itlife.repository.WishlistRepository;
 import run.itlife.service.UserService;
 import run.itlife.service.WishlistPrivateService;
 import run.itlife.service.WishlistService;
@@ -24,6 +26,7 @@ import javax.servlet.ServletContext;
 
 import static run.itlife.utils.Properties.ErrorMessages.*;
 import static run.itlife.utils.Properties.Paths.*;
+import static run.itlife.utils.SecurityUtils.*;
 
 @Controller
 public class WishlistController {
@@ -112,14 +115,14 @@ public class WishlistController {
     }
 
     @GetMapping("/wishlist/add")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createWishlistGet(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "wishlist/add-to-wishlist";
     }
 
     @PostMapping("/wishlist/add")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createWishlistPost(WishlistDto wishlistDto, @RequestParam("photo") String file, ModelMap modelMap, @RequestParam(name = "isSecret", defaultValue = "false", required = false) Boolean isSecret) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Long wishlistId;
@@ -147,8 +150,8 @@ public class WishlistController {
         }
     }
 
-    @PostMapping("/wishlist/delete/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/wishlist/delete/{id}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteWishlist(@PathVariable Long id) {
         wishlistService.deleteWish(id);
@@ -165,7 +168,7 @@ public class WishlistController {
     }
 
     @GetMapping("/wishlist/complete/{wishId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findWishlistIsCompleted(ModelMap modelMap, @PathVariable Long wishId) {
         commonsParams.setCommonParams(modelMap);
         wishlistService.checkCompleteWish(wishId);
@@ -186,7 +189,7 @@ public class WishlistController {
     }
 
     @PostMapping("/wishlist/permissions/add")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createPermissionsToWishlistGetPost(ModelMap modelMap, @RequestParam("userWishlistPrivate") String username, @RequestParam("wishlistIdWishlistPrivate") Long id) {
         WishlistPrivateDto  wishlistPrivateDto = new WishlistPrivateDto();
         Integer countAlreadyPermission;
@@ -213,7 +216,7 @@ public class WishlistController {
     }
 
     @GetMapping("/wishlist/permissions/delete/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String deletePermissionsFromWishlist(ModelMap modelMap, @PathVariable Long id) {
         wishlistPrivateService.deletePermissions(id);
         commonsParams.setCommonParams(modelMap);
