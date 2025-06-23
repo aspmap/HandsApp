@@ -3,12 +3,12 @@
 
 <head>
     <title id="pageTitle" th:text="#{page_label_new_post} + ' - ' + #{application_name}"></title>
-    <th:block th:include="fragments.html :: header-add-img"/>
+    <th:block th:include="fragments.html :: header-with-add-img"/>
 </head>
 
 <!-- Navigation -->
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation-add-img"></nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
 <!-- Page Content -->
 <section class="main" sec:authorize="isAuthenticated()">

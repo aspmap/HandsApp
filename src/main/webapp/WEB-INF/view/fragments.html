@@ -97,7 +97,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
 </head>
 
-<head th:fragment="header-add-img" sec:authorize="isAuthenticated()">
+<head th:fragment="header-with-add-img" sec:authorize="isAuthenticated()">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -105,9 +105,7 @@
     <meta name="generator" content="Jekyll v4.1.1">
     <title th:include=":: #pageTitle"></title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
-    <link th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.css">
     <link th:href="@{/resources/css/crop.css}" rel="stylesheet">
     <link th:href="@{/resources/css/handshakes.css}" rel="stylesheet">
@@ -132,7 +130,7 @@
 <!-- Navigation -->
 <nav class="navbar" th:fragment="navigation" sec:authorize="isAuthenticated()">
     <div class="nav-wrapper">
-        <a th:href="@{/}"><img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt=""></a>
+        <a th:href="@{/}"><img th:src="@{/resources/img/nav/handsapp.png}" class="brand-img" alt=""></a>
         <form class="search-form" method="GET" th:action="@{/search}" sec:authorize="isAuthenticated()">
             <input type="text" class="search-box" name="search" th:placeholder="#{input_find}" maxlength="150" minlength="2">
         </form>
@@ -184,110 +182,10 @@
                                 <a th:href="@{/profile_edit/{user}(user = ${user})}"><span th:text="#{menu_settings}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/handshakes_search}"><span th:text="#{text_handshakes}"></span></a>
-                            </li>
-                            <li>
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/music}"><span th:text="#{menu_my_music}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/todo}"><span th:text="#{menu_my_todo_list}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/wishlist}"><span th:text="#{menu_my_wishlist}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/posts_ms/}"><span th:text="#{menu_my_posts_ms}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/posts_pagination}"><span th:text="#{menu_my_pagination}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/profile_archive}"><span th:text="#{menu_my_archive}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
-                            </li>
-                            <b sec:authorize="hasRole('ADMIN')" style="margin-left: 5px" th:text="#{menu_admin}"></b>
-                            <li sec:authorize="hasRole('ADMIN')">
-                                <a th:href="@{/bugs_view}"><span th:text="#{menu_bugs}"></span></a>
-                            </li>
-                            <li sec:authorize="hasRole('ADMIN')">
-                                <a th:href="@{/api}"><span th:text="'API'"></span></a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</nav>
-
-<nav class="navbar" th:fragment="navigation-add-img" sec:authorize="isAuthenticated()">
-    <div class="nav-wrapper">
-        <a th:href="@{/}">
-            <img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt="">
-        </a>
-        <form class="search-form" method="GET" th:action="@{/search}" sec:authorize="isAuthenticated()">
-            <input type="text" class="search-box" name="search" th:placeholder="#{input_find}" maxlength="150" minlength="2">
-        </form>
-        <div class="nav-items">
-            <a class="icon" id="home-icon" th:href="@{/}">
-                <img th:src="@{/resources/img/nav/home.png}" class="icon" alt="">
-            </a>
-            <a class="icon" sec:authorize="isAuthenticated()" th:href="@{/dialogs}">
-                <img th:if="${unreadMessagesTotal == 0}" th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
-                <img th:if="${unreadMessagesTotal > 0}" th:src="@{/resources/img/nav/messenger_unread.png}" class="icon" alt="">
-                <span id="update_count_dialogs" th:insert="fragments/unread-dialogs-count.html :: unreadMessagesTotal"></span>
-            </a>
-            <ul class="nav-list icon" sec:authorize="isAuthenticated()">
-                <li class="icon">
-                    <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
-                    <ul class="nalumes-nucludem">
-                        <li>
-                            <a th:href="@{/post/new_image}">
-                                <img th:src="@{/resources/img/nav/photo.png}" class="icon" alt="">
-                                <span th:text="#{menu_photo}"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/post/new_S3_image}">
-                                <img th:src="@{/resources/img/nav/photo.png}" class="icon" alt="">
-                                <span th:text="#{menu_s3_photo}"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/post/new_video}">
-                                <img th:src="@{/resources/img/nav/video.png}" class="icon" alt="">
-                                <span th:text="#{menu_video}"></span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="icon user-profile" sec:authorize="isAuthenticated()" >
-                <ul class="icon user-profile nav-list" sec:authorize="isAuthenticated()">
-                    <li>
-                        <img th:if="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                        <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" class="icon user-profile" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
-                        <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" class="icon user-profile" th:src="${userinfo.photo}" alt="">
-                        <ul class="nalumes-nucludem">
-                            <li>
-                                <a th:href="@{/posts}"><span th:text="#{menu_profile}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/profile_edit/{user}(user = ${user})}"><span th:text="#{menu_settings}"></span></a>
-                            </li>
-                            <li>
                                 <a th:href="@{/handshakes_search}"><span th:text="#{text_handshakes}"></span></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/music}"><span th:text="#{menu_my_music}"></span></a>
@@ -331,7 +229,7 @@
 <!-- Right Column -->
 <div sec:authorize="!isAuthenticated()" th:fragment="right-column-unauth">
     <div class="image-container">
-        <img th:src="@{/resources/img/login/insta-signup-page.png}" alt="HandsApp In Phone Image">
+        <img th:src="@{/resources/img/login/signup-page.png}" alt="HandsApp In Phone Image">
     </div>
 </div>
 

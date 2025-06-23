@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var $result = $('#search_box-result');
 
-    $('#search').on('keyup', function(){
+    $('#search-users').on('keyup', function(){
         var search = $(this).val();
         if ((search != '') && (search.length > 1)){
             $.ajax({
@@ -30,7 +30,7 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.search_result-name a', function(){
-        $('#search').val($(this).text());
+        $('#search-users').val($(this).text());
         $result.fadeOut(100);
         return false;
     });

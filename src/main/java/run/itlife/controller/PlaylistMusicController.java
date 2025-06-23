@@ -1,5 +1,7 @@
 package run.itlife.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +15,7 @@ import run.itlife.service.PlaylistMusicService;
 import run.itlife.service.PlaylistService;
 import run.itlife.utils.CommonsParams;
 
+import static run.itlife.utils.Properties.ErrorMessages.*;
 import static run.itlife.utils.Properties.Paths.SEPARATOR;
 
 @Controller
@@ -21,6 +24,7 @@ public class PlaylistMusicController {
     CommonsParams commonsParams;
     private final PlaylistMusicService playlistMusicService;
     private final PlaylistService playlistService;
+    private static final Logger log = LoggerFactory.getLogger(PlaylistMusicController.class);
 
     public PlaylistMusicController(PlaylistMusicService playlistMusicService, PlaylistService playlistService) {
         this.playlistMusicService = playlistMusicService;
@@ -48,6 +52,11 @@ public class PlaylistMusicController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String addMusicToPlaylist(ModelMap modelMap, @RequestParam("playlistName") String playlistName, @RequestParam("musicId") Long musicId) {
         Long playlistId = playlistService.findPlaylistId(playlistName);
+        if (playlistId == null) {
+            log.error(ERROR + NOT_ADD_SONG_TO_PLAYLIST);
+            commonsParams.setCommonParams(modelMap);
+            return "messages-templates" + SEPARATOR + "errorAddSongToPlaylist";
+        }
         Playlist playlist = new Playlist();
         playlist.setPlaylistId(playlistId);
         Music music = new Music();

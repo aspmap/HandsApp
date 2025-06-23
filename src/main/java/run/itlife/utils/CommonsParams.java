@@ -45,6 +45,8 @@ public class CommonsParams {
         modelMap.put("userOnlyList", userService.findUsersOnly());
         modelMap.put("usersOnlyKey", userService.findUsersOnlyKey(username));
         modelMap.put("contextPath", context.getContextPath());
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("unreadMessagesTotal", dialogsService.findUnreadDialogs(currentUsername).size());
         this.setCommonConstParams(modelMap);
     }
 

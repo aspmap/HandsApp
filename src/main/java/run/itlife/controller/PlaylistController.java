@@ -55,6 +55,7 @@ public class PlaylistController {
         Long playlistId = playlistService.createPlaylist(playlistDto);
         if (playlistId == null) {
             log.error(ERROR + NOT_PUBLISH_PLAYLIST);
+            commonsParams.setCommonParams(modelMap);
             return "messages-templates" + SEPARATOR + "error";
         }
         return "redirect:" + SEPARATOR + "music/playlists";

@@ -111,7 +111,8 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(User user) {
+    public String register(ModelMap modelMap, User user) {
+        commonsParams.setCommonConstParams(modelMap);
         try {
             userService.create(user);
             return "messages-templates/registration-success";

@@ -99,6 +99,9 @@ public class MessagesController {
                 modelMap.put("dialogId", dialogId);
                 return "messages-templates" + SEPARATOR + "errorFileSizeMessages";
             }
+            if (filename.equals("1") && messages.getMessageText().equals("")) {
+                return "redirect:/messages/" + dialogId;
+            }
             messagesService.createMessage(messages, dialogId, filename);
             return "redirect:/messages/" + dialogId;
         } catch (Exception e) {

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import run.itlife.entity.User;
+import run.itlife.repository.DialogsRepository;
+import run.itlife.service.DialogsService;
 import run.itlife.service.HandshakeService;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
@@ -29,15 +31,17 @@ import static run.itlife.utils.Properties.ErrorMessages.*;
 public class HandshakeController {
     private final HandshakeService handshakeService;
     private final UserService userService;
+    private final DialogsService dialogsService;
     @Autowired
     CommonsParams commonsParams;
     private static final Logger log = LoggerFactory.getLogger(HandshakeController.class);
     private static final Byte START_LEVEL = 1;
 
     @Autowired
-    public HandshakeController(HandshakeService handshakeService, UserService userService) {
+    public HandshakeController(HandshakeService handshakeService, UserService userService, DialogsService dialogsService) {
         this.handshakeService = handshakeService;
         this.userService = userService;
+        this.dialogsService = dialogsService;
     }
 
     @GetMapping("/handshakes_search")
@@ -146,5 +150,6 @@ public class HandshakeController {
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userOnlyList", userService.findUsersOnly());
         modelMap.put("usersOnlyKey", userService.findUsersOnlyKey(username));
+        modelMap.put("unreadMessagesTotal", dialogsService.findUnreadDialogs(username).size());
     }
 }
