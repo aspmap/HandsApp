@@ -265,7 +265,7 @@ public class PostController {
     public String findPostViewSub(@PathVariable long id, ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         modelMap.put("post", postService.findById(id));
-        modelMap.put("isClosedProfilebyPostId", postService.isClosedProfilebyPostId(id));
+        modelMap.put("isClosedProfilebyPostId", postService.isClosedProfileByPostId(id));
         modelMap.put("comments", commentService.findSortedCommentsByDate(id));
         modelMap.put("countComments", postService.countComments(id));
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
