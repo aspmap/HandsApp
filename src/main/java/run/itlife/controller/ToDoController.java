@@ -15,6 +15,7 @@ import run.itlife.service.ToDoService;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
 
+import static run.itlife.utils.Properties.ErrorMessages.*;
 import static run.itlife.utils.Properties.Paths.*;
 
 @Controller
@@ -61,9 +62,11 @@ public class ToDoController {
     @PostMapping("/todo/add")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createTodoTask(ToDoDto toDoDto, ModelMap modelMap) {
-        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Long toDoId;
-        toDoId = toDoService.createToDoTask(toDoDto);
+        Long toDoId = toDoService.createToDoTask(toDoDto);
+        if (toDoId == null) {
+            log.error(ERROR + NOT_PUBLISH_TODO_TASK);
+            return "messages-templates" + SEPARATOR + "error";
+        }
         return "redirect:" + SEPARATOR + "todo";
     }
 

@@ -1,5 +1,7 @@
 package run.itlife.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +15,7 @@ import run.itlife.service.PlaylistService;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
 
+import static run.itlife.utils.Properties.ErrorMessages.*;
 import static run.itlife.utils.Properties.Paths.*;
 
 @Controller
@@ -21,6 +24,7 @@ public class PlaylistController {
     CommonsParams commonsParams;
     private final UserService userService;
     private final PlaylistService playlistService;
+    private static final Logger log = LoggerFactory.getLogger(PlaylistController.class);
 
     @Autowired
     public PlaylistController(UserService userService, PlaylistService playlistService) {
@@ -48,7 +52,11 @@ public class PlaylistController {
     @PostMapping("/music/playlist/create")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createPlaylist(PlaylistDto playlistDto, ModelMap modelMap) {
-        playlistService.createPlaylist(playlistDto);
+        Long playlistId = playlistService.createPlaylist(playlistDto);
+        if (playlistId == null) {
+            log.error(ERROR + NOT_PUBLISH_PLAYLIST);
+            return "messages-templates" + SEPARATOR + "error";
+        }
         return "redirect:" + SEPARATOR + "music/playlists";
     }
 

@@ -21,6 +21,7 @@ import javax.servlet.ServletContext;
 import java.util.List;
 
 import static run.itlife.utils.Properties.ErrorMessages.ERROR;
+import static run.itlife.utils.Properties.ErrorMessages.NOT_PUBLISH_MESSAGE;
 import static run.itlife.utils.Properties.Paths.SEPARATOR;
 
 @Controller
@@ -101,7 +102,7 @@ public class MessagesController {
             messagesService.createMessage(messages, dialogId, filename);
             return "redirect:/messages/" + dialogId;
         } catch (Exception e) {
-            log.error(ERROR + e);
+            log.error(ERROR + NOT_PUBLISH_MESSAGE);
             return "messages-templates" + SEPARATOR + "errorFileSizeMessages";
         }
     }

@@ -139,12 +139,12 @@ public class WishlistController {
                 wishlistId = wishlistService.createElementOfWishlist(wishlistDto);
                 return "redirect:" + SEPARATOR + "wishlist";
             } catch (Exception e) {
-                log.error(ERROR + e);
+                log.error(ERROR + NOT_PUBLISH_WISHLIST);
                 commonsParams.setCommonParams(modelMap);
                 return "messages-templates" + SEPARATOR + "errorFileSizeWishlist";
             }
         } else {
-            log.error(ERROR);
+            log.error(ERROR + NOT_PUBLISH_WISHLIST);
             commonsParams.setCommonParams(modelMap);
             return "messages-templates" + SEPARATOR + "errorFileSizeWishlist";
         }
@@ -200,7 +200,7 @@ public class WishlistController {
             user = userService.findByUsername(username);
             countAlreadyPermission = wishlistPrivateService.findAlreadyPermissions(id, user.getUserId());
         } catch (UsernameNotFoundException e) {
-            log.error(ERROR + e);
+            log.error(ERROR + NOT_PUBLISH_WISHLIST);
             return "messages-templates" + SEPARATOR + "existPermission";
         }
 

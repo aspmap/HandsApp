@@ -106,7 +106,7 @@ public class MusicController {
             }
             return "media/add-info";
         } else {
-            log.error(ERROR);
+            log.error(ERROR + NOT_PUBLISH_SONG);
             commonsParams.setCommonParams(modelMap);
             return "messages-templates/errorAddMusicFile";
         }
@@ -136,12 +136,12 @@ public class MusicController {
                 musicId = musicService.createSong(musicDto);
                 return "redirect:" + SEPARATOR + "music";
             } catch (Exception e) {
-                log.error(ERROR + e);
+                log.error(ERROR + NOT_PUBLISH_SONG);
                 commonsParams.setCommonParams(modelMap);
                 return "messages-templates" + SEPARATOR + "errorFileSizeMusic";
             }
         } else {
-            log.error(ERROR);
+            log.error(ERROR + NOT_PUBLISH_SONG);
             commonsParams.setCommonParams(modelMap);
             return "messages-templates" + SEPARATOR + "errorFileSizeMusic";
         }

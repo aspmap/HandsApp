@@ -152,7 +152,7 @@ public class PostController {
                     return "messages-templates/error";
                 }
             } catch (Exception e) {
-                log.error(ERROR + e);
+                log.error(ERROR + NOT_PUBLISH_POST);
                 commonsParams.setCommonParams(modelMap);
                 return "messages-templates/error";
             }
@@ -189,7 +189,7 @@ public class PostController {
                 postId = postService.createPost(postDto);
                 return "redirect:" + SEPARATOR + "post_view" + SEPARATOR + postId;
             } catch (Exception e) {
-                log.error(ERROR + e);
+                log.error(ERROR + NOT_PUBLISH_POST);
                 commonsParams.setCommonParams(modelMap);
                 return "messages-templates/error";
             }
@@ -231,7 +231,7 @@ public class PostController {
                 }
                 return "redirect:/post_view/";
             } catch (Exception e) {
-                log.error(ERROR + e);
+                log.error(ERROR + NOT_PUBLISH_POST);
                 commonsParams.setCommonParams(modelMap);
                 return "messages-templates/error";
             }

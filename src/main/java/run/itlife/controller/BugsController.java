@@ -72,7 +72,7 @@ public class BugsController {
             context.getBean(Sender.class).sendMsg(result, keyData);
             return "messages-templates/message-send";
         } catch (KafkaException ke) {
-            log.error(ERROR + ke);
+            log.error(ERROR + NOT_PUBLISH_BUG);
             return "messages-templates/errorkafka";
         }
     }

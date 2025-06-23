@@ -90,7 +90,7 @@ public class HandshakeController {
 
                                 return "handshakes/handshakes-results";
                             } catch (Exception e) {
-                                log.error(ERROR + e);
+                                log.error(ERROR + HANDSHAKE_SEARCH_ERROR);
                                 return "messages-templates/usernotfound";
                             }
                         }

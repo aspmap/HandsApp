@@ -21,10 +21,19 @@ public class Properties {
     }
 
     public interface ErrorMessages {
-        public static String ERROR = "Error: ";
-        public static String WARNING = "Warning: ";
-        public static String INFO = "Info: ";
-        public static String DEBUG = "Debug: ";
-        public static String NOT_PUBLISH_POST = "Publishing error. The file does not match the format, or the file name is too long, or the file is not attached";
+        String ERROR = "Error: ";
+        String WARNING = "Warning: ";
+        String INFO = "Info: ";
+        String DEBUG = "Debug: ";
+        String NOT_PUBLISH_POST = "Publishing post error. The file does not match the format, or the file name is too long, or the file is not attached";
+        String NOT_PUBLISH_BUG = "Publishing bug error";
+        String NOT_PUBLISH_COMMENT = "Publishing comment error";
+        String NOT_PUBLISH_MESSAGE = "Publishing message error";
+        String NOT_PUBLISH_SONG = "Publishing song error. The file does not match the format, or the file name is too long, or the file is not attached";
+        String NOT_PUBLISH_PLAYLIST = "Publishing playlist error";
+        String NOT_ADD_SONG_TO_PLAYLIST = "Add song to playlist error";
+        String NOT_PUBLISH_TODO_TASK = "Publishing TODO-task error";
+        String NOT_PUBLISH_WISHLIST = "Publishing wishlist error. The file does not match the format, or the file name is too long, or the file is not attached";
+        String HANDSHAKE_SEARCH_ERROR = "Handshake search error";
     }
 }
