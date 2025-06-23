@@ -40,7 +40,6 @@ public class PostPaginationAPIController {
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.findAndRegisterModules();
-        String json = mapper.writeValueAsString(myDataPage);
-        return json;
+        return mapper.writeValueAsString(myDataPage);
     }
 }

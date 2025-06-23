@@ -147,8 +147,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int countPosts(String username) {
-        int count = postRepository.countPosts(username);
-        return count;
+        return postRepository.countPosts(username);
     }
 
     @Override
@@ -160,7 +159,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean isClosedProfilebyPostId(long id) {
+    public boolean isClosedProfileByPostId(long id) {
         if (id > 0) {
             return postRepository.isClosedProfilebyPostId(id);
         }
@@ -221,14 +220,12 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int countSubscribesPosts(String username) {
-        int count = postRepository.countSubscribesPosts(username);
-        return count;
+        return postRepository.countSubscribesPosts(username);
     }
 
     @Override
     public List<Post> findTags(String substring) {
-        List<Post> posts = postRepository.findTags("%#" + substring +"%");
-        return posts;
+        return postRepository.findTags("%#" + substring +"%");
     }
 
     @Override
@@ -238,8 +235,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Long> isLikePost(String username) {
-        List<Long> isLike = postRepository.isLikePost(username);
-        return isLike;
+        return postRepository.isLikePost(username);
     }
 
     @Override

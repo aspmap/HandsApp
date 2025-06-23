@@ -11,7 +11,6 @@ import run.itlife.repository.CommentRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import static run.itlife.utils.SecurityUtils.*;
-import static run.itlife.utils.SecurityUtils.ACCESS_DENIED;
 
 // Уровень обслуживания
 // Класс, реализующий интерфейс, который отвечает за логику создания комментариев
@@ -57,8 +56,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> findSortedCommentsByDate(long id) {
-            List<Comment> comments = commentRepository.findSortedCommentsByDate(id);
-            return comments;
+        return commentRepository.findSortedCommentsByDate(id);
     }
 
 }

@@ -55,7 +55,7 @@ public class BugsController {
         bugsDto.setCreatedAtText(bugsDto.getCreatedAt().toString());
         bugsDto.setUsername(username);
 
-        //Делаем сериализацию в JSON
+        //Делаем сериализация в JSON
         StringWriter writer = new StringWriter();
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());

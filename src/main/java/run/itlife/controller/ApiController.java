@@ -10,6 +10,7 @@ import run.itlife.utils.CommonsParams;
 public class ApiController {
     @Autowired
     CommonsParams commonsParams;
+
     @GetMapping("/api")
     public String index(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);

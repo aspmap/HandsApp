@@ -36,9 +36,6 @@ public class SubscriptionsController {
 
     /**
      * Подписка в рекомендациях
-     * @param modelMap
-     * @param user
-     * @return
      */
     @GetMapping("/subscription_from_recommendations/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")

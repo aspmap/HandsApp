@@ -18,7 +18,7 @@ public class HandshakeServiceImpl implements HandshakeService {
 
     @Override
     public ArrayList<Integer> findUsersId(Integer userId) {
-        ArrayList<Integer> userIdList = new ArrayList<>();
+        ArrayList<Integer> userIdList;
         userIdList = handshakeRepository.findUsersId(userId);
         return userIdList;
     }

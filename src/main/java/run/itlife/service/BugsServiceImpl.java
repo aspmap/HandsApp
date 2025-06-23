@@ -32,7 +32,6 @@ public class BugsServiceImpl implements BugsService {
         Bugs bugs = new Bugs();
         bugs.setBugText(bugsDto.getBugText());
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        //String username = SecurityUtils.getCurrentUserDetails().getUsername();
         bugs.setUserId(userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username)));
         bugs.setCreatedAt(LocalDateTime.now());

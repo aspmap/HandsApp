@@ -14,7 +14,6 @@ import run.itlife.config.KafkaConfig;
 import run.itlife.controller.api.kafka.Sender;
 import run.itlife.dto.BugsDto;
 import run.itlife.entity.User;
-import run.itlife.service.BugsService;
 import run.itlife.service.UserService;
 
 import java.io.IOException;
@@ -24,12 +23,10 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("api/kafka")
 public class BugsApiController {
-    private final BugsService bugsService;
     private final UserService userService;
 
     @Autowired
-    public BugsApiController(BugsService bugsService, UserService userService) {
-        this.bugsService = bugsService;
+    public BugsApiController(UserService userService) {
         this.userService = userService;
     }
 
@@ -48,7 +45,7 @@ public class BugsApiController {
         bugsDto.setCreatedAtText(bugsDto.getCreatedAt().toString());
         bugsDto.setUsername(username);
 
-        //Делаем сериализацию в JSON
+        //Делаем сериализация в JSON
         StringWriter writer = new StringWriter();
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());

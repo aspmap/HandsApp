@@ -27,7 +27,7 @@ public enum CustomOAuth2Provider {
 
     private static final String DEFAULT_REDIRECT_URL = "{baseUrl}/{action}/oauth2/code/{registrationId}";
 
-    private CustomOAuth2Provider() {
+    CustomOAuth2Provider() {
     }
 
     protected final ClientRegistration.Builder getBuilder(String registrationId, ClientAuthenticationMethod method, String redirectUri) {

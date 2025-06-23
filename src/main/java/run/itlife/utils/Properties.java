@@ -8,6 +8,8 @@ public class Properties {
         int MAX_UPLOAD_VIDEO_FILE_SIZE_IN_MB = 100 * 1024 * 1024; // 100 МБ
         int IMAGE_WIDTH = 500;
         int IMAGE_HEIGHT = 500;
+        int WIDTH_QR_CODE = 400;
+        int HEIGHT_QR_CODE = 400;
     }
 
     public interface Paths {

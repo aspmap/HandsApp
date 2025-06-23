@@ -9,18 +9,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 
-public class ZXingQR {
-    private static int WIDTH_QR_CODE = 400;
-    private static int HEIGHT_QR_CODE = 400;
+import static run.itlife.utils.Properties.Files.*;
 
-    public static byte[] qrcode(HttpServletResponse response) throws Exception {
+public class ZXingQR {
+    public static byte[] qrcode(HttpServletResponse response) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        //if (!CheckObjectsForNull.isNull(username)) {
             String path = "handsapp.top/" + "sub-posts" + '/' + username;
             response.setContentType("image/png");
             return ZXingQR.getQRCodeImage(path, WIDTH_QR_CODE, HEIGHT_QR_CODE);
-        //}
-        //return null;
     }
 
     public static byte[] getQRCodeImage(String text, int width, int height) {

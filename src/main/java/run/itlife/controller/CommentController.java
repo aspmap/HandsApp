@@ -27,7 +27,7 @@ public class CommentController {
 
     @PostMapping("/create")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    //Принимает он CommentDto - берёт данные с формы post.html, видит, что там есть name=”postId”, есть name="content”
+    //Принимает он CommentDto - берёт данные с формы post.html, видит, что там есть name="postId", есть name="content"
     //и т.д. и он маппит по этим именам на объект CommentDto
     public String createCommentInPost(CommentDto comment){
         commentService.createComment(comment);

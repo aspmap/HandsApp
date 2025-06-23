@@ -18,21 +18,21 @@
                 <img th:src="@{'/resources/img/icons/close.png'}" alt="">
                 <h1 class="h3 mb-3 font-weight-normal no_public" th:text="#{text_closed_profile}"></h1>
             </div>
-            <div class="post" th:if="${isClosedProfile == false}" th:each="post: ${posts}" th:id="'post-' + ${post.postId}"
-                 th:name="'post-' + ${post.postId}">
+            <div class="post" th:if="${isClosedProfile == false}" th:each="post: ${posts}" th:id="'post-' + ${post.postId}" th:name="'post-' + ${post.postId}">
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
                             <a th:href="@{/posts_sub/{user}(user = ${post.user.username})}">
-                                <img th:if="${userinfo_sub.isGoogle == false}" th:src="@{'/resources/img/users/' + ${user_sub} + '/profile/' + ${userinfo_sub.photo}}"
-                                     alt="">
-                                <img th:if="${userinfo_sub.isGoogle == true}" th:src="@{${userinfo_sub.photo}}"
-                                     alt="">
+                                <img th:if="${userinfo_sub.isGoogle == false}" th:src="@{'/resources/img/users/' + ${user_sub} + '/profile/' + ${userinfo_sub.photo}}" alt="">
+                                <img th:if="${userinfo_sub.isGoogle == true}" th:src="@{${userinfo_sub.photo}}" alt="">
+                                <p th:if="${userinfo_sub.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
+                                <p th:if="${userinfo_sub.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
+                            </a>
                         </div>
                         <p th:if="${userinfo_sub.isGoogle == false}" class="username"
                            th:text="${post.user.username}"></p>
                         <p th:if="${userinfo_sub.isGoogle == true}" class="username"
-                           th:text="${post.user.email}"></p></a>
+                           th:text="${post.user.email}"></p>
                     </div>
                     <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}"
                        th:onclick="'deletePost(\'' + ${post.postId} + '\');'">
@@ -80,37 +80,27 @@
                             <img th:src="@{/resources/img/nav/comment.png}" class="icon" alt="">
                         </a>
                     </div>
-                    <p th:each="like, state : ${post.postLike}" class="likes"
-                       th:text="${state.last} ? #{label_likes} + ': ' + ${state.count} : ''"></p>
+                    <p th:each="like, state : ${post.postLike}" class="likes" th:text="${state.last} ? #{label_likes} + ': ' + ${state.count} : ''"></p>
                     <b class="description">
-                        <span th:if="${post.user.isGoogle == false}"
-                              th:text="${post.user.username}"></span>
-                        <span th:if="${post.user.isGoogle == true}"
-                              th:text="${post.user.email}"></span>
+                        <span th:if="${post.user.isGoogle == false}" th:text="${post.user.username}"></span>
+                        <span th:if="${post.user.isGoogle == true}" th:text="${post.user.email}"></span>
                     </b>
                     <span class="description-normal" th:text="${post.content}"></span>
-                    <p class="post-time"
-                       th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
+                    <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
 
                     <!-- Comments -->
                     <div class="view-source comments-view">
-                        <a th:href="@{/comment/comments_sub/{postId}(postId = ${post.postId})}"
-                           th:each="like, state : ${post.comments}" class="description comments"
-                           th:text="${state.last} ? #{label_see_all_comments} + ' (' + ${state.count} + ')' : ''"></a>
+                        <a th:href="@{/comment/comments_sub/{postId}(postId = ${post.postId})}" th:each="like, state : ${post.comments}" class="description comments" th:text="${state.last} ? #{label_see_all_comments} + ' (' + ${state.count} + ')' : ''"></a>
                     </div>
                 </div>
 
                 <!-- Comments Form -->
                 <div sec:authorize="hasAnyRole('USER')">
                     <div class="div-smiles-messages" th:insert="fragments.html :: smiles-in-comments"></div>
-                    <form class="comment-wrapper" method="GET"
-                          th:action="@{/comment/create_comment_detail_subuser/{user}(user = ${user_sub})}">
+                    <form class="comment-wrapper" method="GET" th:action="@{/comment/create_comment_detail_subuser/{user}(user = ${user_sub})}">
                         <input type="hidden" name="postId" th:value="${post.postId}"/>
-                        <input id="smile" th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description"
-                               name="commentText" th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'" maxlength="255" required>
-                        <input id="smile" th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description"
-                               name="commentText"
-                               th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'" maxlength="255" required>
+                        <input id="smile" th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="commentText" th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'" maxlength="255" required>
+                        <input id="smile" th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="commentText" th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'" maxlength="255" required>
                         <br>
                         <button class="comment-btn" th:text="#{button_publish}"></button>
                     </form>
@@ -125,6 +115,5 @@
         <div th:insert="fragments.html :: right-column"></div>
     </div>
 </section>
-
 </body>
 </html>

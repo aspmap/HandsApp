@@ -30,5 +30,5 @@ public interface PostService {
     List<Post> findMyLikesPosts(String username);
     Long countMyLikesPosts(String username);
     boolean isClosedProfile(String username);
-    boolean isClosedProfilebyPostId(long id);
+    boolean isClosedProfileByPostId(long id);
 }

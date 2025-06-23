@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static run.itlife.enums.FileExtensions.*;
-import static run.itlife.enums.FileExtensions.PNG;
 import static run.itlife.utils.EditImage.resizeImage;
 import static run.itlife.utils.OtherUtils.generateFileName;
 import static run.itlife.utils.Properties.Files.*;

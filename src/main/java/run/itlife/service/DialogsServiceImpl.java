@@ -54,7 +54,7 @@ public class DialogsServiceImpl implements DialogsService {
         ArrayList<Long> dialogsId = findDialogsIdByUsername(username);
 
         for (int i = 0; i < dialogsId.size(); i++) {
-            ArrayList<User> usernames = new ArrayList<>();
+            ArrayList<User> usernames;
             usernames = userService.findUsersByDialogId(dialogsId.get(i));
             for (int j = 0; j < usernames.size(); j++) {
                 Integer isShowDialog = findCountDialog(dialogsId.get(i));

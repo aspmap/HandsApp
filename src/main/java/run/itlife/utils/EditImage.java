@@ -2,7 +2,6 @@ package run.itlife.utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class EditImage {
 
@@ -20,8 +19,7 @@ public class EditImage {
     }
 
     // обрезка изображения
-    public static BufferedImage cropImage(BufferedImage originalImage) throws IOException {
-        BufferedImage cropImage = null;
+    public static BufferedImage cropImage(BufferedImage originalImage) {
         float imgWidth = originalImage.getWidth();
         float imgHeight = originalImage.getHeight();
         float imgResize = 0;
@@ -37,7 +35,6 @@ public class EditImage {
             x = (1 - (imgHeight / imgWidth)) * imgResize / 2;
             y = 0;
         }
-        return cropImage = originalImage.getSubimage((int) x, (int) y, (int) imgResize, (int) imgResize);
+        return originalImage.getSubimage((int) x, (int) y, (int) imgResize, (int) imgResize);
     }
-
 }

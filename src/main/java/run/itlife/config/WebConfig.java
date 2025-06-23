@@ -81,10 +81,10 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
     // --- MultipartConfig ---
     @Bean
     public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver cmr = new CommonsMultipartResolver();
-        //cmr.setMaxUploadSize(maxUploadSizeInMb * 2);
-        //cmr.setMaxUploadSizePerFile(maxUploadSizeInMb); // байты
-        return cmr;
+        return new CommonsMultipartResolver();
+        /*cmr.setMaxUploadSize(maxUploadSizeInMb * 2);
+        cmr.setMaxUploadSizePerFile(maxUploadSizeInMb);*/
+        //байты
     }
     // -----------------------
 

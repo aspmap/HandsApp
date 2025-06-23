@@ -7,7 +7,6 @@ import run.itlife.entity.Post;
 import run.itlife.entity.User;
 import run.itlife.service.PostService;
 import run.itlife.service.UserService;
-import static run.itlife.utils.Properties.Files.*;
 import static run.itlife.utils.Properties.Paths.*;
 
 import java.io.File;
@@ -42,7 +41,7 @@ public class InformationGatheringInfo implements InformationGathering {
             dirDestination.mkdirs();
         }
         File txtFileUser = new File(dirDestination, filenameUser);
-        try(Writer wr = new FileWriter(txtFileUser, Charset.forName("cp1251"));) {
+        try(Writer wr = new FileWriter(txtFileUser, Charset.forName("cp1251"))) {
             wr.write("ID: " + user.getUserId() + "\n");
             wr.write("Username: " + user.getUsername() + "\n");
             wr.write("Firstname: " + user.getFirstname() + "\n");
@@ -66,7 +65,7 @@ public class InformationGatheringInfo implements InformationGathering {
         }
         File txtFilePosts = new File(dirDestination, filenamePosts);
         AtomicInteger ai = new AtomicInteger();
-        try(Writer wrPosts = new FileWriter(txtFilePosts, Charset.forName("cp1251"));) {
+        try(Writer wrPosts = new FileWriter(txtFilePosts, Charset.forName("cp1251"))) {
             for (ai.get(); ai.get() < posts.size(); ai.incrementAndGet()) {
                 wrPosts.write("Post ID: " + posts.get(ai.get()).getPostId() + "\n");
                 wrPosts.write("Content: " + posts.get(ai.get()).getContent() + "\n");

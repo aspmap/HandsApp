@@ -13,7 +13,7 @@ public interface UserService extends UserDetailsService {
     void create(User user);
     void createGoogleUser(User user);
     void update(UserDto userDto);
-    public void checkAuthority(long userId);
+    void checkAuthority(long userId);
     List<User> findUsersOnly();
     ArrayList<UserDto> findUsersOnlyKey(String currentUsername);
     List<User> findUsers(String substring);
