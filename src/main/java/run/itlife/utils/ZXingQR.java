@@ -14,7 +14,7 @@ import static run.itlife.utils.Properties.Files.*;
 public class ZXingQR {
     public static byte[] qrcode(HttpServletResponse response) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-            String path = "handsapp.top/" + "sub-posts" + '/' + username;
+            String path = "handsapp.top/" + "posts_sub" + '/' + username;
             response.setContentType("image/png");
             return ZXingQR.getQRCodeImage(path, WIDTH_QR_CODE, HEIGHT_QR_CODE);
     }

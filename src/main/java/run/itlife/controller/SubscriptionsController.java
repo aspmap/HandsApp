@@ -57,6 +57,6 @@ public class SubscriptionsController {
         long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
         long subUserId = userService.findByUsername(user).getUserId().longValue();
         subscriptionsService.deleteSubscribeLong(currentUserId, subUserId);
-        return "redirect:/sub-posts/{user}";
+        return "redirect:/posts_sub/{user}";
     }
 }

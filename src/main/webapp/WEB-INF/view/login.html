@@ -6,6 +6,16 @@
     <link th:href="@{/resources/css/login.css}" rel="stylesheet">
     <link th:href="@{/resources/css/sign-up.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta charset="utf-8">
+    <meta name="description" content="HandsApp - социальная сеть, ориентированная на обмен фотографиями, видео, создание вишлистов, TODO-задач, прослушивание музыки и многое другое">
+    <meta name="keywords" content="Социальная сеть, Онлайн-сообщество, Общение, Коммуникация, Пользователи, Контент, Публикации, Профиль, Лента, Друзья, Подписчики, Посты, Комментарии, Лайки, Аудитория, Развлечения, Информация, Поиск, Хештеги, Группы, Мероприятия, События, Чат, Сообщения, Видео, Фото, Текст, Аудио">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=3.0, user-scalable=yes">
+    <meta property="og:type" content="HandsApp" />
+    <meta property="og:url" content="https://handsapp.top/login" />
+    <meta property="og:title" content="HandsApp" />
+    <meta property="og:description" content="Социальная сеть, ориентированная на обмен фотографиями, видео, создание вишлистов, TODO-задач, прослушивание музыки и многое другое" />
+    <meta property="og:image" content="https://handsapp.top/resources/img/icons/logo.jpg" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>
         $(function () {
@@ -44,7 +54,7 @@
                             </div>
                             <div class="input_field">
                                 <input type="password" name="password" th:placeholder="#{input_password}" id="password"
-                                       class="input" maxlength="150" required>
+                                       class="input" minlength="6" maxlength="150" required>
                             </div>
                             <button class="deactivate" id="submit" type="submit" disabled><span
                                     th:text="#{text_to_come_in}"></span></button>

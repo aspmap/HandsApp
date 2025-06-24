@@ -20,6 +20,7 @@ public class Properties {
         String SEPARATOR = "/";
         String COMMA = ",";
         String POINT = ".";
+        String UNDERSCORE = "_";
     }
 
     public interface ErrorMessages {

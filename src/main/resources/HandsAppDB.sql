@@ -188,11 +188,12 @@ insert into comment (post_id, comment_text, created_at) values (3, 'Atrocious!',
 -- Создание представления (View) для рекомендаций
 create view recommendations AS
 select u.user_id, u.username, u.password, u.surname, u.firstname, u.photo, u.info, u.www, u.email, u.phone, u.sex, u.created_at, u.is_active, u.is_google, u.is_hidden, u.is_closed, u.last_visit, u.previous_visit
-join user_role ur on ur.user_id = u.user_id
-join role r on r.role_id = ur.role_id
+from users u
+         join user_role ur on ur.user_id = u.user_id
+         join role r on r.role_id = ur.role_id
 where r.name = 'USER' AND u.is_closed = 'false'
 order by u.created_at desc
-LIMIT 5;
+    LIMIT 5;
 
 
 -- Если в БД не была указано каскадное удаление (добавление каскадного удаления для удаления профиля пользователя)

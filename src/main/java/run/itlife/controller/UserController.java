@@ -265,7 +265,7 @@ public class UserController {
 
     @GetMapping("/get_profile_archive")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String createProfileArchive(ModelMap modelMap) throws ExecutionException, InterruptedException {
+    public String createProfileArchive(ModelMap modelMap) {
         // Используем Executor и Future
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 

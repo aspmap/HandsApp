@@ -43,7 +43,7 @@ public class PostPaginationController {
         this.postPaginationService = postPaginationService;
     }
 
-    @GetMapping("/posts_pagination")
+    @GetMapping("/")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findSubscribesPosts(ModelMap modelMap, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size, String sortBy) {
         ArrayList<Integer> pages = new ArrayList<>();
@@ -64,7 +64,7 @@ public class PostPaginationController {
         return "posts/posts-pagination";
     }
 
-    @GetMapping("/")
+    @GetMapping("/posts_infinite_scroll")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findSubscribesPostsScroll(ModelMap modelMap, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size, String sortBy) throws IOException {
         ArrayList<Integer> pages = new ArrayList<>();

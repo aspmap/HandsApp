@@ -27,7 +27,7 @@ public class PostControllerMicroService {
     }
 
     @GetMapping("posts_ms/")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String getPosts(ModelMap modelMap, Authentication authentication) {
         String token = jwTtoken.generateToken(authentication);
         modelMap.put("bToken", token);
