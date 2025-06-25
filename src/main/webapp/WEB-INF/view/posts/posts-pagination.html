@@ -122,16 +122,16 @@
                 </div>
             </div>
             <div th:class="pages" th:if="${posts_sub.totalPages > 1}">
-                <a th:if="${posts_sub.hasPrevious}"
-                   th:href="@{/(page= ${posts_sub.number - 1}, size= ${posts_sub.size})}">Предыдущая
-                    &lt;</a>
+                <a th:if="${posts_sub.hasPrevious}" th:href="@{/(page= ${posts_sub.number - 1}, size= ${posts_sub.size})}">
+                    <span th:text="#{text_previous}"></span>
+                </a>
                 <span th:each="pages: ${pages}">
-                    <a th:if="${!currentPage.equals(pages)}"
-                       th:href="@{/(page= ${pages}, size= ${posts_sub.size})}" th:text="${pages + 1}"></a>
+                    <a th:if="${!currentPage.equals(pages)}" th:href="@{/(page= ${pages}, size= ${posts_sub.size})}" th:text="${pages + 1}"></a>
                     <b th:if="${currentPage.equals(pages)}" th:text="${pages + 1}"></b>
                 </span>
-                <a th:if="${posts_sub.hasNext}"
-                   th:href="@{/(page= ${posts_sub.number + 1}, size= ${posts_sub.size})}">&gt; Следующая</a>
+                <a th:if="${posts_sub.hasNext}" th:href="@{/(page= ${posts_sub.number + 1}, size= ${posts_sub.size})}">
+                    <span th:text="#{text_next}"></span>
+                </a>
             </div>
 
             <!-- Footer -->

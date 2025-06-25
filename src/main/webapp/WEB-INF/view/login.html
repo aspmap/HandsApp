@@ -4,19 +4,21 @@
 <head>
     <title th:text="#{page_label_login} + ' - ' + #{application_name}"></title>
     <link th:href="@{/resources/css/login.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/footer.css}" rel="stylesheet">
     <link th:href="@{/resources/css/sign-up.css}" rel="stylesheet">
     <link rel="icon" th:href="@{/resources/favicon.ico}" type="image/x-icon">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
     <meta charset="utf-8">
     <meta name="description" content="HandsApp - социальная сеть, ориентированная на обмен фотографиями, видео, создание вишлистов, TODO-задач, прослушивание музыки и многое другое">
     <meta name="keywords" content="Социальная сеть, Онлайн-сообщество, Общение, Коммуникация, Пользователи, Контент, Публикации, Профиль, Лента, Друзья, Подписчики, Посты, Комментарии, Лайки, Аудитория, Развлечения, Информация, Поиск, Хештеги, Группы, Мероприятия, События, Чат, Сообщения, Видео, Фото, Текст, Аудио">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=3.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7, minimum-scale=0.1, maximum-scale=3.0, user-scalable=yes">
     <meta property="og:type" content="HandsApp" />
     <meta property="og:url" content="https://handsapp.top/login" />
     <meta property="og:title" content="HandsApp" />
     <meta property="og:description" content="Социальная сеть, ориентированная на обмен фотографиями, видео, создание вишлистов, TODO-задач, прослушивание музыки и многое другое" />
     <meta property="og:image" content="https://handsapp.top/resources/img/icons/logo.jpg" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/resources/js/show-password-login.js}"></script>
     <script>
         $(function () {
             $("form").on('change input paste', 'input', function (e) {
@@ -38,7 +40,7 @@
 <div class="wrapper">
     <div class="header">
         <div class="main-container">
-            <div class="image-container">
+            <div class="image-container" id="image-container-login">
                 <img th:src="@{/resources/img/login/signup-page.png}" alt="HandsApp In Phone Image">
             </div>
             <div class="form-container">
@@ -52,9 +54,9 @@
                                 <input type="text" name="username" th:placeholder="#{input_username}" id="username"
                                        class="input" maxlength="150" required>
                             </div>
-                            <div class="input_field">
-                                <input type="password" name="password" th:placeholder="#{input_password}" id="password"
-                                       class="input" minlength="6" maxlength="150" required>
+                            <div class="input_field password">
+                                <input type="password" name="password" th:placeholder="#{input_password}" id="password" class="input" minlength="6" maxlength="150" required>
+                                <a href="#" class="password-control" onclick="return show_hide_password_login(this);"></a>
                             </div>
                             <button class="deactivate" id="submit" type="submit" disabled><span
                                     th:text="#{text_to_come_in}"></span></button>
@@ -75,9 +77,9 @@
                             </a>
                         </div>
 
-                        <div class="forgot">
+              <!--          <div class="forgot">
                             <a href="#" th:text="#{text_forgot_password} + '?'"></a>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <div class="signup">

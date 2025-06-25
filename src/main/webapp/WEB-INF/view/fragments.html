@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="description" content="HandsApp - социальная сеть, ориентированная на обмен фотографиями, видео, создание вишлистов, TODO-задач, прослушивание музыки и многое другое">
     <meta name="keywords" content="Социальная сеть, Онлайн-сообщество, Общение, Коммуникация, Пользователи, Контент, Публикации, Профиль, Лента, Друзья, Подписчики, Посты, Комментарии, Лайки, Аудитория, Развлечения, Информация, Поиск, Хештеги, Группы, Мероприятия, События, Чат, Сообщения, Видео, Фото, Текст, Аудио">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8, minimum-scale=0.1, maximum-scale=3.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7, minimum-scale=0.1, maximum-scale=3.0, user-scalable=yes">
     <meta property="og:type" content="HandsApp" />
     <meta property="og:image" th:content="@{'/resources/img/icons/logo.jpg'}" />
     <meta property="og:title" content="HandsApp" />
@@ -48,7 +48,7 @@
     <meta charset="utf-8">
     <meta name="description" content="HandsApp - социальная сеть, ориентированная на обмен фотографиями, видео, создание вишлистов, TODO-задач, прослушивание музыки и многое другое">
     <meta name="keywords" content="Социальная сеть, Онлайн-сообщество, Общение, Коммуникация, Пользователи, Контент, Публикации, Профиль, Лента, Друзья, Подписчики, Посты, Комментарии, Лайки, Аудитория, Развлечения, Информация, Поиск, Хештеги, Группы, Мероприятия, События, Чат, Сообщения, Видео, Фото, Текст, Аудио">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8, minimum-scale=0.1, maximum-scale=3.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7, minimum-scale=0.1, maximum-scale=3.0, user-scalable=yes">
     <meta property="og:type" content="HandsApp" />
     <meta property="og:image" th:content="@{'/resources/img/icons/logo.jpg'}" />
     <meta property="og:title" content="HandsApp" />
@@ -70,7 +70,7 @@
     <meta charset="utf-8">
     <meta name="description" content="HandsApp - социальная сеть, ориентированная на обмен фотографиями, видео, создание вишлистов, TODO-задач, прослушивание музыки и многое другое">
     <meta name="keywords" content="Социальная сеть, Онлайн-сообщество, Общение, Коммуникация, Пользователи, Контент, Публикации, Профиль, Лента, Друзья, Подписчики, Посты, Комментарии, Лайки, Аудитория, Развлечения, Информация, Поиск, Хештеги, Группы, Мероприятия, События, Чат, Сообщения, Видео, Фото, Текст, Аудио">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8, minimum-scale=0.1, maximum-scale=3.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7, minimum-scale=0.1, maximum-scale=3.0, user-scalable=yes">
     <meta property="og:type" content="HandsApp" />
     <meta property="og:image" th:content="@{'/resources/img/icons/logo.jpg'}" />
     <meta property="og:title" content="HandsApp" />
@@ -109,7 +109,7 @@
     <meta charset="utf-8">
     <meta name="description" content="HandsApp - социальная сеть, ориентированная на обмен фотографиями, видео, создание вишлистов, TODO-задач, прослушивание музыки и многое другое">
     <meta name="keywords" content="Социальная сеть, Онлайн-сообщество, Общение, Коммуникация, Пользователи, Контент, Публикации, Профиль, Лента, Друзья, Подписчики, Посты, Комментарии, Лайки, Аудитория, Развлечения, Информация, Поиск, Хештеги, Группы, Мероприятия, События, Чат, Сообщения, Видео, Фото, Текст, Аудио">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8, minimum-scale=0.1, maximum-scale=3.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7, minimum-scale=0.1, maximum-scale=3.0, user-scalable=yes">
     <meta property="og:type" content="HandsApp" />
     <meta property="og:image" th:content="@{'/resources/img/icons/logo.jpg'}" />
     <meta property="og:title" content="HandsApp" />
@@ -150,7 +150,7 @@
                 <img th:if="${unreadMessagesTotal > 0}" th:src="@{/resources/img/nav/messenger_unread.png}" class="icon" alt="">
                 <span id="update_count_dialogs" th:insert="fragments/unread-dialogs-count.html :: unreadMessagesTotal"></span>
             </a>
-            <ul class="nav-list icon" sec:authorize="isAuthenticated()">
+            <ul class="nav-list icon" id="nav-list-files" sec:authorize="isAuthenticated()">
                 <li class="icon">
                     <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
                     <ul class="nalumes-nucludem">
@@ -169,6 +169,7 @@
                     </ul>
                 </li>
             </ul>
+
             <div class="icon user-profile" sec:authorize="isAuthenticated()">
                 <ul class="icon user-profile nav-list" sec:authorize="isAuthenticated()">
                     <li>

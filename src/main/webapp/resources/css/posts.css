@@ -83,6 +83,35 @@ body {
 
 @media screen and (max-width: 770px) {
     .search-form {
+        /*display: none;*/
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 25px;
+        background: #fafafa;
+        border: 1px solid #dfdfdf;
+        border-radius: 2px;
+        color: rgba(0, 0, 0, 0.5);
+        text-align: center;
+        text-transform: capitalize;
+    }
+
+    .search-box {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 25px;
+        background: #fafafa;
+        border: 1px solid #dfdfdf;
+        border-radius: 2px;
+        color: rgba(0, 0, 0, 0.5);
+        text-align: center;
+        /* text-transform: capitalize;*/
+    }
+
+    #nav-list-files {
         display: none;
     }
 
@@ -345,7 +374,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    margin-top: 50px;
+    margin-top: 65px;
 }
 
 .info-view {
@@ -377,8 +406,9 @@ body {
     width: auto;
     font-weight: normal;
     color: #000;
-    font-size: 24px;
+    font-size: 18px;
     margin-left: 10px;
+  /*  margin-right: 10px;*/
 }
 
 .info-main .username-main {

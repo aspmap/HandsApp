@@ -37,13 +37,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-import static run.itlife.utils.Properties.ErrorMessages.*;
 import static run.itlife.utils.EditImage.resizeImage;
 import static run.itlife.utils.OtherUtils.generateFileName;
-import static run.itlife.utils.Properties.Files.*;
+import static run.itlife.utils.Properties.ErrorMessages.ERROR;
+import static run.itlife.utils.Properties.Files.IMAGE_HEIGHT;
+import static run.itlife.utils.Properties.Files.IMAGE_WIDTH;
 import static run.itlife.utils.Properties.Paths.*;
+import static run.itlife.utils.SecurityUtils.hasRole;
 
 //UserController, отвечающий за логин юзеров и т.д.
 //Создаем в папке view страницу register.html. Далее необходимо сделать, чтобы мы пересылали данные в контроллер.
@@ -96,6 +101,7 @@ public class UserController {
 
     @GetMapping("/error")
     public String loginError(ModelMap modelMap) {
+        commonsParams.setCommonConstParams(modelMap);
         return "messages-templates/loginError";
     }
 
@@ -252,15 +258,25 @@ public class UserController {
         modelMap.put("countSearchGoogleUsers", userService.countSearchGoogleUsers(search));
         modelMap.put("countSearchTags", postService.countSearchTags(search));
         modelMap.put("tagUserName", search);
-        if (search != null) {
+        if (search != null && !search.equals("")) {
             modelMap.put("findUsers", userService.findUsers(search));
             modelMap.put("findGoogleUsers", userService.findGoogleUsers(search));
             modelMap.put("findTags", postService.findTags(search));
             return "search-results";
-        } else {
+        } else if (hasRole("ADMIN")) {
             modelMap.put("findUsers", userService.findAll());
             return "search-results";
+        } else if (search.equals("")) {
+            return "redirect:/error_search";
         }
+        return "search-results";
+    }
+
+    @GetMapping("/error_search")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String errorSearch(ModelMap modelMap) {
+        commonsParams.setCommonParams(modelMap);
+        return "messages-templates/error-search";
     }
 
     @GetMapping("/get_profile_archive")
