@@ -193,27 +193,29 @@ DELETE http://handsapp.top/api/post/295
 
 > Страница регистрации
 
-![error_3](https://github.com/user-attachments/assets/60d61f30-a5bf-4de7-abbc-66c81363ab6f)
+![error_3](https://github.com/user-attachments/assets/df5cb42b-2f40-4cf5-a77a-cf9c53e70d12)
+
 
 
 > Страница пользователя без подписок
 
-![pod_3](https://github.com/user-attachments/assets/6e940522-86f8-4878-bd7c-dc6fa705cf81)
+![pod_3](https://github.com/user-attachments/assets/f00a153c-c085-4425-8108-1404128c83b2)
+
 
 
 > Создание и публикация поста
 
-![post_1](https://github.com/user-attachments/assets/acc6bbe7-862f-4f95-a2ac-b59a21ac6a8d)
+![post_1](https://github.com/user-attachments/assets/d21164aa-560e-4136-b573-21d1a243357c)
 
-![post_2](https://github.com/user-attachments/assets/c7abf6de-b0e9-4241-9b3d-90d2faa33225)
+![post_2](https://github.com/user-attachments/assets/4275e825-b872-45fd-95c8-f0fe3c751593)
 
-![post_3](https://github.com/user-attachments/assets/c6f8e8f5-2c2c-419b-b648-8bf490f73431)
-
+![post_3](https://github.com/user-attachments/assets/f9bdf759-783c-4cca-8a62-c3f875924255)
 
 
 > Страница с постами текущего пользователя
 
-![main](https://github.com/user-attachments/assets/ac5178a0-3d63-4d34-abe5-aa9bf17dc52d)
+![main](https://github.com/user-attachments/assets/0c660d91-bc0f-4c39-b4c1-e361a1ba9ed1)
+
 
 
 > Изменение поста
@@ -228,51 +230,63 @@ DELETE http://handsapp.top/api/post/295
 
 > Страница пользователя на которого можно подписаться или отписаться
 
-![profile_2](https://github.com/user-attachments/assets/046c6267-9016-418d-85c3-b232e58c6c76)
+![profile_2](https://github.com/user-attachments/assets/2811011f-0a89-43e8-ae03-ceb8ceeeeb47)
+
 
 
 > Страница с подписчиками
 
-![pod_2](https://github.com/user-attachments/assets/92da386b-ef9b-4b3c-93b4-e53fe59f8a62)
+![pod_2](https://github.com/user-attachments/assets/88066005-7afa-4b17-a967-64a00e351b47)
+
 
 
 > Страница с подписками
 
-![pod_1](https://github.com/user-attachments/assets/fda420a8-51c5-44fe-a963-6e24c8226cff)
+![pod_1](https://github.com/user-attachments/assets/b8870b57-3761-4b37-a315-667590a85252)
+
 
 
 > Поиск пользователей и постов по тегам
 
-![search](https://github.com/user-attachments/assets/b364f6b5-7cbd-4658-a243-fed1e080deab)
+![search](https://github.com/user-attachments/assets/80b575e9-1b4c-4177-855e-6b464348aa11)
+
 
 
 > Страница c результатами поиска связей
 
-![handshakes_search_3](https://github.com/user-attachments/assets/a2e789f7-9890-4311-b6c2-7afcfc6795cc)
+![handshakes_search_1](https://github.com/user-attachments/assets/f286392c-2719-4234-829d-8ab9f452e6af)
 
-![handshakes_search_1](https://github.com/user-attachments/assets/c71bcaf0-ff7b-43c1-8ee8-8eeb0e74cc27)
+![handshakes_search_2](https://github.com/user-attachments/assets/223e5a9b-a734-468f-9e39-b9c12ba52f29)
 
-![handshakes_search_2](https://github.com/user-attachments/assets/754a5c7b-84ae-4513-8514-733d94ba3bf7)
+![handshakes_search_3](https://github.com/user-attachments/assets/8c716e7f-86fc-4fe0-aca2-f61f69782964)
 
 
 > Редактирование профиля
 
-![profile](https://github.com/user-attachments/assets/d68c1e2f-3a46-4039-97cf-c8aba04ea030)
+![profile](https://github.com/user-attachments/assets/5b46318c-1537-4b72-9482-fba67d322740)
+
+
+> Архив профиля
+
+![archive](https://github.com/user-attachments/assets/f40c83bb-aac4-443f-91f2-9e8c62821375)
 
 
 > Удаление профиля
 
-![delete_profile](https://github.com/user-attachments/assets/8f4a1dde-ce29-4833-b7e8-121aa59c2591)
+![delete_profile](https://github.com/user-attachments/assets/cdb0443e-171c-4f5c-b590-afa5a4b7e43b)
+
 
 
 > QR-код страницы пользователя
 
-![qr](https://github.com/user-attachments/assets/39a0f47e-cf77-42fc-b607-929378427710)
+![qr](https://github.com/user-attachments/assets/1b73bab6-c16d-43bb-ac22-61a69391da4b)
+
 
 
 > Обмен сообщениями
 
-![dialogs_2](https://github.com/user-attachments/assets/4d2d0167-a2d2-4123-9c47-e9d7e7560f4c)
+![dialogs_2](https://github.com/user-attachments/assets/d49a2505-d343-431f-8291-852b6d98bbe4)
+
 
 
 > Галочка о прочтении
@@ -282,27 +296,32 @@ DELETE http://handsapp.top/api/post/295
 
 > Уведомление о непрочтенных сообщениях и чатах
 
-![dialogs_1](https://github.com/user-attachments/assets/69514848-efe4-4133-ada8-ba5a186c710c)
+![dialogs_1](https://github.com/user-attachments/assets/ce772261-7d48-4f8e-940b-5c718be3c4f3)
+
 
 
 > Отправка фото в чате
 
-![dialogs_3](https://github.com/user-attachments/assets/8beca380-9241-495b-8a60-58ee6589ad0a)
+![dialogs_3](https://github.com/user-attachments/assets/a3a31cb9-ce56-44d5-8934-13b8a073be0c)
+
 
 
 > Раздел "Мои лайки"
 
-![mylikes](https://github.com/user-attachments/assets/6b3c2058-20e5-49f8-893d-2b4aa7ccb668)
+![mylikes](https://github.com/user-attachments/assets/c613ea7d-51bb-49cf-ba4b-42100915cc4b)
+
 
 
 > Закрытый профиль
 
-![close_profile](https://github.com/user-attachments/assets/1661fbf1-b858-4867-b1b9-1b3b32f65ca5)
+![close_profile](https://github.com/user-attachments/assets/e0598655-2b8f-4b23-b1f6-9b3cd0c22698)
+
 
 
 > Пагинация постов
 
-![pagination](https://github.com/user-attachments/assets/98baae70-5c1d-405b-8e52-17f0f99f4584)
+![pagination](https://github.com/user-attachments/assets/ff264d26-12e8-486d-b59a-f53fb9906216)
+
 
 
 > Карта смайлов
@@ -312,44 +331,47 @@ DELETE http://handsapp.top/api/post/295
 
 > TODO-задачи
 
-![todo_1](https://github.com/user-attachments/assets/0745b35e-74e4-4489-8f70-53cbec4bb7de)
+![todo_1](https://github.com/user-attachments/assets/151dbc95-adda-4590-a23e-1c69419ee531)
 
-![todo_2](https://github.com/user-attachments/assets/5c86f5a8-4968-408d-b614-6ead05eff79c)
+![todo_2](https://github.com/user-attachments/assets/6f3ec7a3-cd99-4764-bea4-e87fe7c59db5)
 
-![todo_3](https://github.com/user-attachments/assets/a07a7a1c-a614-46f1-a0f8-04cf9da76b1a)
+![todo_3](https://github.com/user-attachments/assets/646360e1-5156-4fd1-b4be-5fe167ff5119)
 
 
 > Вишлисты
 
-![wishlist_1](https://github.com/user-attachments/assets/fab3a1bd-a323-4cce-9e99-ef5fdd0dde02)
+![wishlist_1](https://github.com/user-attachments/assets/ce131983-0d0a-4022-91ba-4d7d59ce1216)
 
-![wishlist_2](https://github.com/user-attachments/assets/989317ef-ae37-42a9-9da5-dc96d23c072d)
+![wishlist_2](https://github.com/user-attachments/assets/f8424a2a-11d7-4791-9b41-14703a793708)
 
-![wishlist_3](https://github.com/user-attachments/assets/75c9fad3-8f48-41e9-ae81-169ad10f6f4d)
+![wishlist_3](https://github.com/user-attachments/assets/fd013d23-0c4b-408c-adc5-ce7b524a519a)
 
-![wishlist_4](https://github.com/user-attachments/assets/2a8f6764-eedb-42c1-a53e-89a7e2e91dff)
+![wishlist_4](https://github.com/user-attachments/assets/3e3c2601-6a3b-4485-ab48-0bf2c548d36a)
 
-![wishlist_5](https://github.com/user-attachments/assets/7ff47e44-a016-43a2-ad7f-b7a96fc75f16)
+![wishlist_5](https://github.com/user-attachments/assets/eb12030c-ef2f-405a-8a6f-8c09b3a3e350)
 
-![wishlist_6](https://github.com/user-attachments/assets/650a8ef7-ba52-479a-9808-0db89c734a12)
+![wishlist_6](https://github.com/user-attachments/assets/1de7fc42-47e4-4cb6-8a38-dfd37c7a58c8)
+
 
 
 > Музыка
 
-![music_1](https://github.com/user-attachments/assets/9d4170b2-d4c5-4969-8076-dadea2c1c11f)
+![music_1](https://github.com/user-attachments/assets/d79fb708-9387-4d24-86ec-8e48d48a0b21)
 
-![music_2](https://github.com/user-attachments/assets/f1a1dd49-be81-4639-a997-22d9e5a6f2e5)
+![music_2](https://github.com/user-attachments/assets/c60aaea2-886c-490e-b726-52394cd2d075)
 
-![music_3](https://github.com/user-attachments/assets/d0bb8f2c-91bb-439d-ae4a-6407940fedd3)
+![music_3](https://github.com/user-attachments/assets/1390f06f-5b30-460b-a1bb-442ed9a48af5)
 
-![music_4](https://github.com/user-attachments/assets/4f4b23dc-8583-4663-815f-fecf19ad7ce5)
+![music_4](https://github.com/user-attachments/assets/7d67019b-2bb9-451d-bb29-ce59f4971678)
 
-![music_5](https://github.com/user-attachments/assets/a3efeab9-b7aa-4db0-8ba6-4e9958f84b7c)
+![music_5](https://github.com/user-attachments/assets/ba6c2e79-ee2c-4b14-af14-81685bc8721a)
+
 
 
 > Информационные страницы
 
-![error_1](https://github.com/user-attachments/assets/be64a313-5491-4cb3-8c76-d284bdb9ab0d)
+![error_1](https://github.com/user-attachments/assets/2746bfcd-e86e-4214-b268-15bb0325b11b)
 
-![error_2](https://github.com/user-attachments/assets/40e1f460-8832-476c-85ec-ee5231a42390)
+![error_2](https://github.com/user-attachments/assets/6b5f9308-9b2f-4eec-b56b-c9c43799229d)
+
 
