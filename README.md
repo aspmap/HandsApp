@@ -188,7 +188,8 @@ DELETE http://handsapp.top/api/post/295
 
 > Страница авторизации
 
-![login](https://github.com/user-attachments/assets/e58f27a7-f437-4003-b78a-37d799b87b65)
+![login](https://github.com/user-attachments/assets/ebec37c4-0ba8-4613-a5c4-f29895360173)
+
 
 
 > Страница регистрации
@@ -220,7 +221,8 @@ DELETE http://handsapp.top/api/post/295
 
 > Изменение поста
 
-![edit_post](https://github.com/user-attachments/assets/d981dbe2-999e-4d93-aca0-8ec9752ffc79)
+![edit_post](https://github.com/user-attachments/assets/37e79c32-48a3-41ca-a4fe-3dcea49c7e30)
+
 
 
 > Страница с постами по подписке
@@ -326,7 +328,8 @@ DELETE http://handsapp.top/api/post/295
 
 > Карта смайлов
 
-![smiles](https://github.com/user-attachments/assets/ae81362c-1c96-4932-a14f-06fab8868a81)
+![smiles](https://github.com/user-attachments/assets/7f2041a6-6351-4b4f-a079-c5ca562ad276)
+
 
 
 > TODO-задачи
