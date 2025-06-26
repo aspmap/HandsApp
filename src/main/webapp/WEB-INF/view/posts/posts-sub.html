@@ -30,6 +30,7 @@
                                 <a th:href="@{/dialogs/{usernameCompanion}(usernameCompanion = ${user_sub})}" th:if="${!user_sub.equals(user) && isClosedProfile == false}" class="btn-create" th:text="#{button_dialog}"></a>
                                 <a th:if="${isSub == 0 && !user.equals(user_sub) && isClosedProfile == false}" th:href="@{/subscription/{user}(user = ${user_sub})}" class="btn-create" th:text="#{button_subscribe}"></a>
                                 <a th:if="${isSub != 0 && !user.equals(user_sub) && isClosedProfile == false}" th:href="@{/unsubscription/{user}(user = ${user_sub})}" class="btn-delete" th:text="#{button_unsubscribe}"></a>
+                                <a sec:authorize="hasRole('ADMIN')" th:href="@{/user_profile_delete/{user}(user = ${user_sub})}" class="btn-delete" th:text="#{button_delete_user_profile}"></a>
                             </p>
                             <p th:if="${userinfo_sub.www != null}" class="description-main">
                                 <span th:text="#{label_site}"></span>

@@ -42,14 +42,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u.* from users u " +
             "left join user_role ur on u.user_id = ur.user_id " +
             "left join role r on ur.role_id = r.role_id " +
-    "where upper(u.username) LIKE upper(?) AND r.name LIKE 'USER' AND u.is_google = 'false' AND u.is_closed = 'false' ", nativeQuery = true)
+            "where upper(u.username) LIKE upper(?) AND r.name LIKE 'USER' AND u.is_google = 'false' AND u.is_closed = 'false' ", nativeQuery = true)
     List<User> findUsers(String substring);
 
-    @Query(value = "select u.* from users u " +
+    @Query(value = "select count(u.username) from users u " +
             "left join user_role ur on u.user_id = ur.user_id " +
             "left join role r on ur.role_id = r.role_id " +
-            "where upper(u.username) LIKE upper(?) AND r.name LIKE 'USER' AND u.is_google = 'false' AND u.is_closed = 'false' limit 5 ", nativeQuery = true)
-    List<User> findUsersForPermission(String substring);
+            "where upper(u.username) LIKE upper(?) AND r.name LIKE 'USER' AND u.is_google = 'false' AND u.is_closed = 'false' ", nativeQuery = true)
+    int countSearchUsers(String substring);
 
     @Query(value = "select u.* from users u " +
             "left join user_role ur on u.user_id = ur.user_id " +
@@ -58,15 +58,23 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findGoogleUsers(String substring);
 
     @Query(value = "select count(u.username) from users u " +
-            "where u.username LIKE ? AND u.is_closed = 'false' ", nativeQuery = true)
-    int countSearchUsers(String substring);
-
-    @Query(value = "select count(u.username) from users u " +
-            "where u.email LIKE ? AND u.is_closed = 'false' ", nativeQuery = true)
+            "left join user_role ur on u.user_id = ur.user_id " +
+            "left join role r on ur.role_id = r.role_id " +
+            "where upper(u.email) LIKE upper(?) AND r.name LIKE 'USER' AND u.is_google = 'true' AND u.is_closed = 'false' ", nativeQuery = true)
     int countSearchGoogleUsers(String substring);
+
+    @Query(value = "select u.* from users u " +
+            "left join user_role ur on u.user_id = ur.user_id " +
+            "left join role r on ur.role_id = r.role_id " +
+            "where upper(u.username) LIKE upper(?) AND r.name LIKE 'USER' AND u.is_google = 'false' AND u.is_closed = 'false' limit 5 ", nativeQuery = true)
+    List<User> findUsersForPermission(String substring);
 
     @Query(value = "SELECT u.* FROM user_dialog ud " +
             "left join users u on u.user_id = ud.user_id " +
             "where ud.dialog_id = ? ", nativeQuery = true)
     ArrayList<User> findUsersByDialogId(Long dialogId);
+
+    @Query(value = "select u.* from users u " +
+            "order by u.created_at desc ", nativeQuery = true)
+    List<User> findAllUsers();
 }

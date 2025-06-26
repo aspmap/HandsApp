@@ -10,6 +10,7 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
     User findByUsername(String username);
     List<User> findAll();
+    List<User> findAllUsers();
     void create(User user);
     void createGoogleUser(User user);
     void update(UserDto userDto);

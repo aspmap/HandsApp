@@ -41,6 +41,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll(Sort.by("username"));
     }
 
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAllUsers();
+    }
+
     public void create(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent())
             throw new EntityExistsException();

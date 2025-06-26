@@ -221,6 +221,9 @@
                                 <a th:href="@{/posts_infinite_scroll}"><span th:text="#{menu_my_posts_infinite_scroll}"></span></a>
                             </li>
                             <li sec:authorize="hasRole('ADMIN')">
+                                <a th:href="@{/all_users}"><span th:text="'Пользователи'"></span></a>
+                            </li>
+                            <li sec:authorize="hasRole('ADMIN')">
                                 <a th:href="@{/post/new_S3_image}"><span th:text="#{menu_s3_photo}"></span></a>
                             </li>
                         </ul>
@@ -242,6 +245,8 @@
             <a class="second-menu-add" th:href="@{/wishlist}"><span th:text="#{menu_my_wishlist}"></span></a>
             <a class="second-menu-add" th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
             <a class="second-menu-add" th:href="@{/profile_archive}"><span th:text="#{menu_my_archive}"></span></a>
+            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/all_users}"><span th:text="'Пользователи'"></span></a>
+            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/bugs_view}"><span th:text="#{menu_bugs}"></span></a>
             <a class="second-menu-add" th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
         </div>
     </div>
