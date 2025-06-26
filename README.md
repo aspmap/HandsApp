@@ -225,10 +225,6 @@ DELETE http://handsapp.top/api/post/295
 
 
 
-> Страница с постами по подписке
-
-![subs](https://github.com/user-attachments/assets/cf0ec229-aaea-4259-8c40-0b1ce2cf4d1e)
-
 
 > Страница пользователя на которого можно подписаться или отписаться
 
@@ -289,11 +285,6 @@ DELETE http://handsapp.top/api/post/295
 
 ![dialogs_2](https://github.com/user-attachments/assets/d49a2505-d343-431f-8291-852b6d98bbe4)
 
-
-
-> Галочка о прочтении
-
-![chat_01](https://github.com/user-attachments/assets/197e4840-8d15-4709-9501-f988e87b1d96)
 
 
 > Уведомление о непрочтенных сообщениях и чатах
