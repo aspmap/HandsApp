@@ -1,7 +1,7 @@
 # HandsApp
 HandsApp - социальная сеть, ориентированная на обмен фотографиями, видео, создание вишлистов, TODO-задач, прослушивание музыки и многое другое (веб-версия)
 
-Адрес в сети интернет: http://handsapp.top
+Адрес в сети интернет: https://handsapp.top
 
 **Старт проекта:** 15 марта 2022 г.
 
@@ -124,12 +124,12 @@ cloud.aws.region.static = ${REGION_S3}
 
 > Выборка постов по ключевому слову
 
-GET http://handsapp.top/api/post?search=москва
+GET https://handsapp.top/api/post?search=москва
 
 
 > Выборка всех постов
 
-GET http://handsapp.top/api/post
+GET https://handsapp.top/api/post
 
 
 > Поиск поста по ID
@@ -139,7 +139,7 @@ GET http://handsapp.top/api/post/284
 
 > Создание поста
 
-POST http://handsapp.top/api/post/
+POST https://handsapp.top/api/post/
 
 > Пример запроса
 
@@ -158,7 +158,7 @@ POST http://handsapp.top/api/post/
 
 > Редактирование поста
 
-PUT http://handsapp.top/api/post/294
+PUT https://handsapp.top/api/post/294
 
 Пример запроса
 
@@ -177,7 +177,7 @@ PUT http://handsapp.top/api/post/294
 
 > Удаление поста
 
-DELETE http://handsapp.top/api/post/295
+DELETE https://handsapp.top/api/post/295
 
 
 :abcd: **CI/CD:**
