@@ -193,32 +193,27 @@ DELETE http://handsapp.top/api/post/295
 
 > Страница регистрации
 
-![register](https://github.com/user-attachments/assets/9029b4bc-5931-4f2a-ba93-ddd5f7762bf8)
+![error_3](https://github.com/user-attachments/assets/60d61f30-a5bf-4de7-abbc-66c81363ab6f)
 
 
 > Страница пользователя без подписок
 
-![without_sub](https://github.com/user-attachments/assets/c3597719-be1d-4167-9162-1adaa7c26c1f)
-
+![pod_3](https://github.com/user-attachments/assets/6e940522-86f8-4878-bd7c-dc6fa705cf81)
 
 
 > Создание и публикация поста
 
-![create_post_1](https://github.com/user-attachments/assets/7bdcfdf3-71e2-4ceb-8066-865b4ece9c23)
+![post_1](https://github.com/user-attachments/assets/acc6bbe7-862f-4f95-a2ac-b59a21ac6a8d)
 
-![create_post_2](https://github.com/user-attachments/assets/b63ddff5-1dd1-405d-bf89-ac72b5120d2b)
+![post_2](https://github.com/user-attachments/assets/c7abf6de-b0e9-4241-9b3d-90d2faa33225)
 
-![create_post_3](https://github.com/user-attachments/assets/0814cf73-40ed-419a-93af-92a7fc3f266c)
+![post_3](https://github.com/user-attachments/assets/c6f8e8f5-2c2c-419b-b648-8bf490f73431)
 
-![create_post_4](https://github.com/user-attachments/assets/53de6770-c56e-4da0-b659-125a1bb505c8)
-
-![create_post_5](https://github.com/user-attachments/assets/794c8b3a-0cf4-4666-8f50-ede4d6451b6c)
 
 
 > Страница с постами текущего пользователя
 
-![my_posts](https://github.com/user-attachments/assets/ed533b1f-ed99-4e37-bdeb-dcfb675d878b)
-
+![main](https://github.com/user-attachments/assets/ac5178a0-3d63-4d34-abe5-aa9bf17dc52d)
 
 
 > Изменение поста
@@ -226,75 +221,58 @@ DELETE http://handsapp.top/api/post/295
 ![edit_post](https://github.com/user-attachments/assets/d981dbe2-999e-4d93-aca0-8ec9752ffc79)
 
 
-
 > Страница с постами по подписке
 
 ![subs](https://github.com/user-attachments/assets/cf0ec229-aaea-4259-8c40-0b1ce2cf4d1e)
 
 
-
 > Страница пользователя на которого можно подписаться или отписаться
 
-![sub_1](https://github.com/user-attachments/assets/18dcd297-a563-47ea-aeb4-aca62e7c672a)
-
-![sub_2](https://github.com/user-attachments/assets/37ae082d-b361-4118-97ea-05179121ca6f)
-
+![profile_2](https://github.com/user-attachments/assets/046c6267-9016-418d-85c3-b232e58c6c76)
 
 
 > Страница с подписчиками
 
-![subs_page_1](https://github.com/user-attachments/assets/a9497b4c-6e6f-4b6a-9303-af08051f7775)
-
+![pod_2](https://github.com/user-attachments/assets/92da386b-ef9b-4b3c-93b4-e53fe59f8a62)
 
 
 > Страница с подписками
 
-![subs_page_2](https://github.com/user-attachments/assets/7004c859-7a31-4a01-b324-eb3b4ea1605d)
-
+![pod_1](https://github.com/user-attachments/assets/fda420a8-51c5-44fe-a963-6e24c8226cff)
 
 
 > Поиск пользователей и постов по тегам
 
-![search_tags](https://github.com/user-attachments/assets/445d8cb6-e553-496a-8ff1-89bb462c40cf)
-
-![search_users](https://github.com/user-attachments/assets/f563ecec-914c-4426-82cb-4b691e532838)
-
-
+![search](https://github.com/user-attachments/assets/b364f6b5-7cbd-4658-a243-fed1e080deab)
 
 
 > Страница c результатами поиска связей
 
-![handshakes](https://github.com/user-attachments/assets/d1abc6dc-7f8e-489e-8060-d499e1409310)
+![handshakes_search_3](https://github.com/user-attachments/assets/a2e789f7-9890-4311-b6c2-7afcfc6795cc)
 
+![handshakes_search_1](https://github.com/user-attachments/assets/c71bcaf0-ff7b-43c1-8ee8-8eeb0e74cc27)
+
+![handshakes_search_2](https://github.com/user-attachments/assets/754a5c7b-84ae-4513-8514-733d94ba3bf7)
 
 
 > Редактирование профиля
 
-![edit_profile_1](https://github.com/user-attachments/assets/76752882-4160-44bd-8bca-43c697169089)
-
-![edit_profile_2](https://github.com/user-attachments/assets/c56f2771-72de-41d5-bfdf-42f11765be53)
-
-
+![profile](https://github.com/user-attachments/assets/d68c1e2f-3a46-4039-97cf-c8aba04ea030)
 
 
 > Удаление профиля
 
-![delete_profile_1](https://github.com/user-attachments/assets/d3ecd69f-536b-406f-9fb2-15cea81cbbb0)
-
-![delete_profile_2](https://github.com/user-attachments/assets/5bd50894-ad67-4ec9-b7e4-c9d1e81d4f72)
-
+![delete_profile](https://github.com/user-attachments/assets/8f4a1dde-ce29-4833-b7e8-121aa59c2591)
 
 
 > QR-код страницы пользователя
 
-![qr_code](https://github.com/user-attachments/assets/7bd9624c-54bd-4467-8d14-f542631ad93c)
-
+![qr](https://github.com/user-attachments/assets/39a0f47e-cf77-42fc-b607-929378427710)
 
 
 > Обмен сообщениями
 
-![chat](https://github.com/user-attachments/assets/4eb584eb-8376-4511-9285-517b075ec167)
-
+![dialogs_2](https://github.com/user-attachments/assets/4d2d0167-a2d2-4123-9c47-e9d7e7560f4c)
 
 
 > Галочка о прочтении
@@ -302,34 +280,29 @@ DELETE http://handsapp.top/api/post/295
 ![chat_01](https://github.com/user-attachments/assets/197e4840-8d15-4709-9501-f988e87b1d96)
 
 
-
-
 > Уведомление о непрочтенных сообщениях и чатах
 
-![chat_02](https://github.com/user-attachments/assets/2eeb241f-60ae-443e-b0a0-00c6af978e54)
+![dialogs_1](https://github.com/user-attachments/assets/69514848-efe4-4133-ada8-ba5a186c710c)
 
 
 > Отправка фото в чате
 
-![send_photo](https://github.com/user-attachments/assets/c82dfaec-aaef-4612-b8d1-a8c735710159)
-
+![dialogs_3](https://github.com/user-attachments/assets/8beca380-9241-495b-8a60-58ee6589ad0a)
 
 
 > Раздел "Мои лайки"
 
-![my_likes](https://github.com/user-attachments/assets/8f6ab092-9a08-4e0c-8a7d-546bce7ad582)
+![mylikes](https://github.com/user-attachments/assets/6b3c2058-20e5-49f8-893d-2b4aa7ccb668)
 
 
 > Закрытый профиль
 
-![close_profile](https://github.com/user-attachments/assets/555f51b1-a712-4bc3-b693-188d9371cd8e)
-
-
+![close_profile](https://github.com/user-attachments/assets/1661fbf1-b858-4867-b1b9-1b3b32f65ca5)
 
 
 > Пагинация постов
 
-![pagination](https://github.com/user-attachments/assets/5b38ea8d-2afb-4af1-aa87-fc35e3094234)
+![pagination](https://github.com/user-attachments/assets/98baae70-5c1d-405b-8e52-17f0f99f4584)
 
 
 > Карта смайлов
@@ -337,15 +310,46 @@ DELETE http://handsapp.top/api/post/295
 ![smiles](https://github.com/user-attachments/assets/ae81362c-1c96-4932-a14f-06fab8868a81)
 
 
+> TODO-задачи
+
+![todo_1](https://github.com/user-attachments/assets/0745b35e-74e4-4489-8f70-53cbec4bb7de)
+
+![todo_2](https://github.com/user-attachments/assets/5c86f5a8-4968-408d-b614-6ead05eff79c)
+
+![todo_3](https://github.com/user-attachments/assets/a07a7a1c-a614-46f1-a0f8-04cf9da76b1a)
+
+
+> Вишлисты
+
+![wishlist_1](https://github.com/user-attachments/assets/fab3a1bd-a323-4cce-9e99-ef5fdd0dde02)
+
+![wishlist_2](https://github.com/user-attachments/assets/989317ef-ae37-42a9-9da5-dc96d23c072d)
+
+![wishlist_3](https://github.com/user-attachments/assets/75c9fad3-8f48-41e9-ae81-169ad10f6f4d)
+
+![wishlist_4](https://github.com/user-attachments/assets/2a8f6764-eedb-42c1-a53e-89a7e2e91dff)
+
+![wishlist_5](https://github.com/user-attachments/assets/7ff47e44-a016-43a2-ad7f-b7a96fc75f16)
+
+![wishlist_6](https://github.com/user-attachments/assets/650a8ef7-ba52-479a-9808-0db89c734a12)
+
+
+> Музыка
+
+![music_1](https://github.com/user-attachments/assets/9d4170b2-d4c5-4969-8076-dadea2c1c11f)
+
+![music_2](https://github.com/user-attachments/assets/f1a1dd49-be81-4639-a997-22d9e5a6f2e5)
+
+![music_3](https://github.com/user-attachments/assets/d0bb8f2c-91bb-439d-ae4a-6407940fedd3)
+
+![music_4](https://github.com/user-attachments/assets/4f4b23dc-8583-4663-815f-fecf19ad7ce5)
+
+![music_5](https://github.com/user-attachments/assets/a3efeab9-b7aa-4db0-8ba6-4e9958f84b7c)
+
 
 > Информационные страницы
 
-![info_1](https://github.com/user-attachments/assets/10146796-92f4-4667-90e3-2e5c46d7d17a)
+![error_1](https://github.com/user-attachments/assets/be64a313-5491-4cb3-8c76-d284bdb9ab0d)
 
-![info_2](https://github.com/user-attachments/assets/0bd93fc5-90e5-4241-9597-96b0056e72db)
+![error_2](https://github.com/user-attachments/assets/40e1f460-8832-476c-85ec-ee5231a42390)
 
-![info_3](https://github.com/user-attachments/assets/3858d79e-efe8-480c-9b3b-5eecaafb724d)
-
-![info_4](https://github.com/user-attachments/assets/f19cf7f0-8d7d-489e-a3fe-2e7ae83b1193)
-
-![info_5](https://github.com/user-attachments/assets/29ca0bea-8d40-404e-923e-a9d5d43c64aa)
