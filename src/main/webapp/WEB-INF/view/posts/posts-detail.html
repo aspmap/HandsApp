@@ -30,7 +30,7 @@
                                 </div>
                             </td>
                             <td class="td-post-icon-edit">
-                                <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/edit/{postId} (postId = ${post.postId})}">
+                                <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/post/edit/{postId} (postId = ${post.postId})}">
                                     <img th:src="@{/resources/img/nav/option.png}" class="options" alt="">
                                 </a>
                             </td>

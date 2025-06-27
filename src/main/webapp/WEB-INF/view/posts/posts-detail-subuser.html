@@ -20,28 +20,34 @@
             </div>
             <div class="post" th:if="${isClosedProfile == false}" th:each="post: ${posts}" th:id="'post-' + ${post.postId}" th:name="'post-' + ${post.postId}">
                 <div class="info">
-                    <div class="user">
-                        <div class="profile-pic">
-                            <a th:href="@{/posts_sub/{user}(user = ${post.user.username})}">
-                                <img th:if="${userinfo_sub.isGoogle == false}" th:src="@{'/resources/img/users/' + ${user_sub} + '/profile/' + ${userinfo_sub.photo}}" alt="">
-                                <img th:if="${userinfo_sub.isGoogle == true}" th:src="@{${userinfo_sub.photo}}" alt="">
-                                <p th:if="${userinfo_sub.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
-                                <p th:if="${userinfo_sub.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
-                            </a>
-                        </div>
-                        <p th:if="${userinfo_sub.isGoogle == false}" class="username"
-                           th:text="${post.user.username}"></p>
-                        <p th:if="${userinfo_sub.isGoogle == true}" class="username"
-                           th:text="${post.user.email}"></p>
-                    </div>
-                    <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}"
-                       th:onclick="'deletePost(\'' + ${post.postId} + '\');'">
-                        <img th:src="@{/resources/img/nav/delete.png}" class="delete" alt="">
-                    </a>
-                    <a th:if="${#authentication.name == post.user.username}"
-                       th:href="@{/post/{postId}/edit(postId = ${post.postId})}">
-                        <img th:src="@{/resources/img/nav/option.png}" class="options" alt="">
-                    </a>
+                    <table class="table-post">
+                        <tr>
+                            <td class="td-post-photo">
+                                <div class="user">
+                                    <div class="profile-pic">
+                                        <a th:href="@{/posts_sub/{user}(user = ${post.user.username})}">
+                                            <img th:if="${userinfo_sub.isGoogle == false}" th:src="@{'/resources/img/users/' + ${user_sub} + '/profile/' + ${userinfo_sub.photo}}" alt="">
+                                            <img th:if="${userinfo_sub.isGoogle == true}" th:src="@{${userinfo_sub.photo}}" alt="">
+                                            <p th:if="${userinfo_sub.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
+                                            <p th:if="${userinfo_sub.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
+                                        </a>
+                                    </div>
+                                    <p th:if="${userinfo_sub.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
+                                    <p th:if="${userinfo_sub.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
+                                </div>
+                            </td>
+                            <td class="td-post-icon-edit">
+                                <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/post/edit/{postId}(postId = ${post.postId})}">
+                                    <img th:src="@{/resources/img/nav/option.png}" class="options" alt="">
+                                </a>
+                            </td>
+                            <td class="td-post-icon-delete">
+                                <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'">
+                                    <img th:src="@{/resources/img/nav/delete.png}" class="delete" alt="">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <a th:href="@{/post-view-sub/{postId}(postId = ${post.postId})}">
                     <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType != 'S3'}"
