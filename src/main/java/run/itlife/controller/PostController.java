@@ -80,7 +80,7 @@ public class PostController {
         modelMap.put("posts_sub", postService.findSubscribesPosts(username));
         modelMap.put("countPosts", postService.countSubscribesPosts(username));
         modelMap.put("isYourLike", postService.isLikePost(username));
-        return "posts/posts-detail-sub";
+        return "page-subscriber";
     }
 
     //@RequestMapping(value = "/posts_detail", method = RequestMethod.GET)
@@ -106,7 +106,7 @@ public class PostController {
         return "posts/posts";
     }
 
-    @GetMapping("/posts_detail_subuser/{user}")
+    @GetMapping("/posts_detail_subscriber/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findPostsDetailSubuser(ModelMap modelMap, @PathVariable String user) {
         commonsParams.setCommonParams(modelMap);
@@ -116,7 +116,7 @@ public class PostController {
         modelMap.put("userinfo_sub", userService.findByUsername(user));
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("isYourLike", postService.isLikePost(username));
-        return "posts/posts-detail-subuser";
+        return "posts/posts-detail-subscriber";
     }
 
     @GetMapping("/post/new_video")
@@ -260,7 +260,7 @@ public class PostController {
         return "redirect:/post_view/" + postDto.getPostId();
     }
 
-    @GetMapping("/post-view-sub/{id}")
+    @GetMapping("/post_view_of_subscriber/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findPostViewSub(@PathVariable long id, ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
@@ -271,7 +271,7 @@ public class PostController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("countLikes", likesService.countLikesByPostId(id));
         modelMap.put("isLike", likesService.isLikePostForCurrentUser(id, username));
-        return "posts/post-view-sub";
+        return "posts/post-view-subscriber";
     }
 
     @GetMapping("/post_view/{id}")

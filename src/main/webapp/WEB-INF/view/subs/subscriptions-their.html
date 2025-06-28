@@ -32,14 +32,14 @@
                                     <div class="user-comments">
                                         <div class="profile-card">
                                             <div class="profile-pic-comments">
-                                                <a th:href="@{/posts_sub/{user}(user = ${subs.subUserId.username})}">
+                                                <a th:href="@{/page/{user}(user = ${subs.subUserId.username})}">
                                                     <img th:if="${subs.subUserId.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                                     <img th:if="${subs.subUserId.photo != null and subs.subUserId.isGoogle == false}" th:src="@{'/resources/img/users/' + ${subs.subUserId.username} + '/profile/' + ${subs.subUserId.photo}}" alt="">
                                                     <img th:if="${subs.subUserId.photo != null and subs.subUserId.isGoogle == true}" th:src="${subs.subUserId.photo}" alt="">
                                                 </a>
                                             </div>
                                             <div>
-                                                <a th:href="@{/posts_sub/{user}(user = ${subs.subUserId.username})}">
+                                                <a th:href="@{/page/{user}(user = ${subs.subUserId.username})}">
                                                     <b th:if="${subs.subUserId.isGoogle == false}" class="description-comments-user"><span th:text="${subs.subUserId.username}"></span></b>
                                                     <b th:if="${subs.subUserId.isGoogle == true}" class="description-comments-user"><span th:text="${subs.subUserId.email}"></span></b>
                                                 </a>
@@ -76,14 +76,14 @@
                                     <div class="user-comments">
                                         <div class="profile-card">
                                             <div class="profile-pic-comments">
-                                                <a th:href="@{/posts_sub/{user}(user = ${users.username})}">
+                                                <a th:href="@{/page/{user}(user = ${users.username})}">
                                                     <img th:if="${users.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                                     <img th:if="${users.photo != null and users.isGoogle == false}" th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
                                                     <img th:if="${users.photo != null and users.isGoogle == true}" th:src="${users.photo}" alt="">
                                                 </a>
                                             </div>
                                             <div>
-                                                <a th:href="@{/posts_sub/{user}(user = ${users.username})}">
+                                                <a th:href="@{/page/{user}(user = ${users.username})}">
                                                     <b th:if="${users.isGoogle == false}" class="description-comments-user"><span th:text="${users.username}"></span></b>
                                                     <b th:if="${users.isGoogle == true}" class="description-comments-user"><span th:text="${users.email}"></span></b>
                                                 </a>

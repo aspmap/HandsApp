@@ -21,9 +21,9 @@
                     <div class="user">
                         <p class="comments-logo" th:text="#{text_wishlist_reservations}"></p>
                     </div>
-                    <a class="audio-add" th:href="@{/wishlist/add}"><span th:text="#{button_add_wishlist}"></span></a>
-                    <a class="audio-add" th:href="@{/wishlist}"><span th:text="#{text_wishlist}"></span></a>
-                    <a class="audio-add" th:href="@{/wishlist/done}"><span th:text="#{page_label_wishlist_done}"></span></a>
+                    <a class="audio-add" th:href="@{/wishlists/add}"><span th:text="#{button_add_wishlist}"></span></a>
+                    <a class="audio-add" th:href="@{/wishlists}"><span th:text="#{text_wishlist}"></span></a>
+                    <a class="audio-add" th:href="@{/wishlists/done}"><span th:text="#{page_label_wishlist_done}"></span></a>
                 </div>
             </div>
             <div class="post">
@@ -48,12 +48,12 @@
                                                 </div>
                                                 <div th:if="${wishlistAll_view.isBooking() == false || wishlistAll_view.isBooking() == null}">
                                                     <img class="img-icon" th:src="@{'/resources/img/icons/ok.png'}" />
-                                                    <a class="wishlist-add" th:href="@{/booking_wishlist/booking/} + ${wishlistAll_view.user} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_book_wish}"></span></a>
+                                                    <a class="wishlist-add" th:href="@{/wishlists/booking_wishlist/booking/} + ${wishlistAll_view.user} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_book_wish}"></span></a>
                                                 </div>
 
                                                 <div th:if="${wishlistAll_view.isBooking() == true && wishlistAll_view.bookingUser.equals(userinfo.userId)}">
                                                     <img class="img-icon" th:src="@{'/resources/img/icons/delete.png'}" />
-                                                    <a class="wishlist-add" th:href="@{/booking_wishlist/unbooking/} + ${wishlistAll_view.user} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_unbook_wish}"></span></a>
+                                                    <a class="wishlist-add" th:href="@{/wishlists/booking_wishlist/unbooking/} + ${wishlistAll_view.user} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_unbook_wish}"></span></a>
                                                 </div>
                                             </td>
                                             <td class="td-wishlist-text">

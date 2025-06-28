@@ -6,7 +6,7 @@ $(document).ready(function() {
         if ((search != '') && (search.length > 1)){
             $.ajax({
                 type: "POST",
-                url: "/results/" + search,
+                url: "/wishlists/results/" + search,
                 success: function(msg){
                     $result.html(msg);
                     if(msg != ''){

@@ -233,20 +233,20 @@ public class UserController {
         return "subs/subscribers";
     }
 
-    @GetMapping("/subscriptions_subuser/{user}")
+    @GetMapping("/subscriptions_their/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String findSubscribesSubuser(ModelMap modelMap, @PathVariable String user) {
+    public String findSubscribesTheir(ModelMap modelMap, @PathVariable String user) {
         commonsParams.setCommonParams(modelMap);
         modelMap.put("sub", subscriptionsService.findSubscribes(user));
-        return "subs/subscriptions-subuser";
+        return "subs/subscriptions-their";
     }
 
-    @GetMapping("/subscribers_subuser/{user}")
+    @GetMapping("/subscribers_their/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String findSubscribersSubuser(ModelMap modelMap, @PathVariable String user) {
+    public String findSubscribersTheir(ModelMap modelMap, @PathVariable String user) {
         commonsParams.setCommonParams(modelMap);
         modelMap.put("sub", subscriptionsService.findSubscribers(user));
-        return "subs/subscribers-subuser";
+        return "subs/subscribers-their";
     }
 
     @GetMapping("/search")

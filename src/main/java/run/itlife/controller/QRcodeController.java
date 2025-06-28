@@ -22,7 +22,7 @@ public class QRcodeController {
     CommonsParams commonsParams;
     private static final Logger log = LoggerFactory.getLogger(QRcodeController.class);
 
-    @GetMapping("qrcode/")
+    @GetMapping("/qrcode")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createQrCode(HttpServletResponse response, ModelMap modelMap) throws Exception {
         commonsParams.setCommonParams(modelMap);

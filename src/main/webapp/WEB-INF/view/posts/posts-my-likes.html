@@ -30,7 +30,7 @@
                                 <h1 class="h3 mb-3 font-weight-normal no_public" th:text="#{text_no_likes_posts_yet}"></h1>
                             </div>
                             <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="${post.postId}">
-                                <a th:href="@{/post-view-sub/} + ${post.postId}">
+                                <a th:href="@{/post_view_of_subscriber/} + ${post.postId}">
                                     <div class="card mb-4">
                                         <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType != 'S3'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
                                         <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType == 'S3'}" th:src="@{${post.photo}}">

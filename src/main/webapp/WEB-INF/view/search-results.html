@@ -31,13 +31,13 @@
                                     <div class="user-comments">
                                         <div  class="profile-card">
                                             <div class="profile-pic-comments">
-                                                <a th:href="@{/posts_sub/{user}(user = ${results.username})}">
+                                                <a th:href="@{/page/{user}(user = ${results.username})}">
                                                     <img th:if="${results.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                                     <img th:if="${results.photo != null}" th:src="@{'/resources/img/users/' + ${results.username} + '/profile/' + ${results.photo}}" alt="">
                                                 </a>
                                             </div>
                                             <div>
-                                                <a th:href="@{/posts_sub/{user}(user = ${results.username})}">
+                                                <a th:href="@{/page/{user}(user = ${results.username})}">
                                                     <b class="description-comments-user">
                                                         <span th:text="${results.username}"></span>
                                                     </b>
@@ -58,13 +58,13 @@
                                     <div class="user-comments">
                                         <div  class="profile-card">
                                             <div class="profile-pic-comments">
-                                                <a th:href="@{/posts_sub/{user}(user = ${results.username})}">
+                                                <a th:href="@{/page/{user}(user = ${results.username})}">
                                                     <img th:if="${results.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                                     <img th:if="${results.photo != null}" th:src="${results.photo}" alt="">
                                                 </a>
                                             </div>
                                             <div>
-                                                <a th:href="@{/posts_sub/{user}(user = ${results.username})}">
+                                                <a th:href="@{/page/{user}(user = ${results.username})}">
                                                     <b class="description-comments-user">
                                                         <span th:text="${results.email}"></span>
                                                     </b>
@@ -96,7 +96,7 @@
                     <div class="view-source comments-view">
                         <div class="row">
                             <div class="col-md-4" th:each="tag: ${findTags}">
-                                <a th:href="@{/post-view-sub/{postId}(postId = ${tag.postId})}">
+                                <a th:href="@{/post_view_of_subscriber/{postId}(postId = ${tag.postId})}">
                                     <div class="card mb-4">
                                         <img th:if="${(tag.extFile == 'png' || tag.extFile == 'jpg') && tag.storageType != 'S3'}" th:src="@{'/resources/img/users/' + ${tag.user.username} + '/' + ${tag.photo}}">
                                         <img th:if="${(tag.extFile == 'png' || tag.extFile == 'jpg') && tag.storageType == 'S3'}" th:src="@{${tag.photo}}">

@@ -52,12 +52,12 @@
 
                                                 <div th:if="${wishlistAll_view.isBooking() == false || wishlistAll_view.isBooking() == null}">
                                                     <img class="img-icon" th:src="@{'/resources/img/icons/ok.png'}" />
-                                                    <a class="wishlist-add" th:href="@{/wishlist_sub/booking/} + ${user_sub} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_book_wish}"></span></a>
+                                                    <a class="wishlist-add" th:href="@{/wishlist_of_subscriber/booking/} + ${user_sub} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_book_wish}"></span></a>
                                                 </div>
 
                                                 <div th:if="${wishlistAll_view.isBooking() == true && wishlistAll_view.bookingUser.equals(userinfo.userId)}">
                                                     <img class="img-icon" th:src="@{'/resources/img/icons/delete.png'}" />
-                                                    <a class="wishlist-add" th:href="@{/wishlist_sub/unbooking/} + ${user_sub} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_unbook_wish}"></span></a>
+                                                    <a class="wishlist-add" th:href="@{/wishlist_of_subscriber/unbooking/} + ${user_sub} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_unbook_wish}"></span></a>
                                                 </div>
                                             </td>
                                             <td class="td-wishlist-text">
@@ -103,7 +103,7 @@
 
                                                 <div th:if="${wishlistAll_view.isBooking() == true && wishlistAll_view.bookingUser.equals(userinfo.userId)}">
                                                     <img class="img-icon" th:src="@{'/resources/img/icons/delete.png'}" />
-                                                    <a class="wishlist-add" th:href="@{/wishlist_sub/unbooking/} + ${user_sub} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_unbook_wish}"></span></a>
+                                                    <a class="wishlist-add" th:href="@{/wishlist_of_subscriber/unbooking/} + ${user_sub} + '/' + ${wishlistAll_view.wishlistId}"><span th:text="#{button_unbook_wish}"></span></a>
                                                 </div>
                                             </td>
                                             <td class="td-wishlist-text">

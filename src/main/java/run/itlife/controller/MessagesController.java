@@ -7,10 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import run.itlife.entity.Messages;
 import run.itlife.service.DialogsService;
 import run.itlife.service.MessagesService;
@@ -25,6 +22,7 @@ import static run.itlife.utils.Properties.ErrorMessages.NOT_PUBLISH_MESSAGE;
 import static run.itlife.utils.Properties.Paths.SEPARATOR;
 
 @Controller
+@RequestMapping("/messages")
 public class MessagesController {
     private final MessagesService messagesService;
     private final DialogsService dialogsService;
@@ -39,7 +37,7 @@ public class MessagesController {
         this.context = context;
     }
 
-    @GetMapping("/messages/{dialogId}")
+    @GetMapping("/{dialogId}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findMessagesByDialogId(ModelMap modelMap, @PathVariable Long dialogId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -84,7 +82,7 @@ public class MessagesController {
         return "dialogs/messages";
     }
 
-    @PostMapping("messages/create/{dialogId}")
+    @PostMapping("/create/{dialogId}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createMessage(ModelMap modelMap, Messages messages, @PathVariable Long dialogId, @RequestParam("file") String file) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();

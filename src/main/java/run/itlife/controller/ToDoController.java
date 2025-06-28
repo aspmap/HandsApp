@@ -19,6 +19,7 @@ import static run.itlife.utils.Properties.ErrorMessages.*;
 import static run.itlife.utils.Properties.Paths.*;
 
 @Controller
+@RequestMapping("/todo")
 public class ToDoController {
     @Autowired
     CommonsParams commonsParams;
@@ -32,7 +33,7 @@ public class ToDoController {
         this.userService = userService;
     }
 
-    @GetMapping("/todo")
+    @GetMapping("")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findTodos(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
@@ -42,7 +43,7 @@ public class ToDoController {
         return "todo/todo";
     }
 
-    @GetMapping("/todo/completed")
+    @GetMapping("/completed")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findTodosIsCompleted(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
@@ -52,14 +53,14 @@ public class ToDoController {
         return "todo/todo-completed";
     }
 
-    @GetMapping("/todo/add")
+    @GetMapping("/add")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createTodoTask(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "todo/add-todo";
     }
 
-    @PostMapping("/todo/add")
+    @PostMapping("/add")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createTodoTask(ToDoDto toDoDto, ModelMap modelMap) {
         Long toDoId = toDoService.createToDoTask(toDoDto);
@@ -70,14 +71,14 @@ public class ToDoController {
         return "redirect:" + SEPARATOR + "todo";
     }
 
-    @GetMapping("/todo/{toDoId}/complete")
+    @GetMapping("/{toDoId}/complete")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void completeTodoTask(@PathVariable Long toDoId) {
         toDoService.completeTask(toDoId);
     }
 
-    @DeleteMapping("/todo/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteToDoTask(@PathVariable Long id) {

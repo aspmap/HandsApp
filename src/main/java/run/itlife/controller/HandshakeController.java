@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import run.itlife.entity.User;
 import run.itlife.repository.DialogsRepository;
@@ -28,6 +29,7 @@ import static run.itlife.utils.Properties.ErrorMessages.*;
 
 
 @Controller
+@RequestMapping("/handshakes")
 public class HandshakeController {
     private final HandshakeService handshakeService;
     private final UserService userService;
@@ -44,14 +46,14 @@ public class HandshakeController {
         this.dialogsService = dialogsService;
     }
 
-    @GetMapping("/handshakes_search")
+    @GetMapping("/find")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findHandshakes(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "handshakes/handshakes-search";
     }
 
-    @PostMapping("/handshakes_results")
+    @PostMapping("/results")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String getHandshakesResults(ModelMap modelMap, @RequestParam(required = false) String searchUsername) throws ExecutionException, InterruptedException {
         // Используем Executor и Future

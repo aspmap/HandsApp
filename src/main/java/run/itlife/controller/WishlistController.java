@@ -28,6 +28,7 @@ import static run.itlife.utils.Properties.Paths.*;
 import static run.itlife.utils.SecurityUtils.*;
 
 @Controller
+@RequestMapping("/wishlists")
 public class WishlistController {
     @Autowired
     CommonsParams commonsParams;
@@ -45,7 +46,7 @@ public class WishlistController {
         this.context = context;
     }
 
-    @GetMapping("/wishlist")
+    @GetMapping("")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findWishlist(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
@@ -68,44 +69,44 @@ public class WishlistController {
         return "wishlist/view-my-booking";
     }
 
-    @GetMapping("/wishlist_sub/booking/{user_sub}/{id}")
+    @GetMapping("/wishlist_of_subscriber/booking/{user_subscriber}/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String createBookingWishlist(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+    public String createBookingWishlist(ModelMap modelMap, @PathVariable String user_subscriber, @PathVariable Long id) {
         commonsParams.setCommonParams(modelMap);
-        wishlistService.createBookingWishlist(user_sub, id);
-        return "redirect:" + SEPARATOR + "wishlist_sub" + SEPARATOR + user_sub;
+        wishlistService.createBookingWishlist(user_subscriber, id);
+        return "redirect:" + SEPARATOR + "wishlists" + SEPARATOR + "wishlist_subscriber" + SEPARATOR + user_subscriber;
     }
 
-    @GetMapping("/wishlist_sub/unbooking/{user_sub}/{id}")
+    @GetMapping("/wishlist_of_subscriber/unbooking/{user_subscriber}/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String createUnBookingWishlist(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+    public String createUnBookingWishlist(ModelMap modelMap, @PathVariable String user_subscriber, @PathVariable Long id) {
         commonsParams.setCommonParams(modelMap);
-        wishlistService.createUnBookingWishlist(user_sub, id);
-        return "redirect:" + SEPARATOR + "wishlist_sub" + SEPARATOR + user_sub;
+        wishlistService.createUnBookingWishlist(user_subscriber, id);
+        return "redirect:" + SEPARATOR + "wishlists" + SEPARATOR + "wishlist_subscriber" + SEPARATOR + user_subscriber;
     }
 
-    @GetMapping("/booking_wishlist/booking/{user_sub}/{id}")
+    @GetMapping("/booking_wishlist/booking/{user_subscriber}/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String createMyBookingWishlist(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+    public String createMyBookingWishlist(ModelMap modelMap, @PathVariable String user_subscriber, @PathVariable Long id) {
         commonsParams.setCommonParams(modelMap);
-        wishlistService.createBookingWishlist(user_sub, id);
-        return "redirect:" + SEPARATOR + "wishlist_my_booking";
+        wishlistService.createBookingWishlist(user_subscriber, id);
+        return "redirect:" + SEPARATOR + "wishlists" + SEPARATOR + "wishlist_my_booking";
     }
 
-    @GetMapping("/booking_wishlist/unbooking/{user_sub}/{id}")
+    @GetMapping("/booking_wishlist/unbooking/{user_subscriber}/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String createMyUnBookingWishlist(ModelMap modelMap, @PathVariable String user_sub, @PathVariable Long id) {
+    public String createMyUnBookingWishlist(ModelMap modelMap, @PathVariable String user_subscriber, @PathVariable Long id) {
         commonsParams.setCommonParams(modelMap);
-        wishlistService.createUnBookingWishlist(user_sub, id);
-        return "redirect:" + SEPARATOR + "wishlist_my_booking";
+        wishlistService.createUnBookingWishlist(user_subscriber, id);
+        return "redirect:" + SEPARATOR + "wishlists" + SEPARATOR + "wishlist_my_booking";
     }
 
-    @GetMapping("/wishlist_sub/{user_sub}")
+    @GetMapping("/wishlist_subscriber/{user_subscriber}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String findSubWishlist(ModelMap modelMap, @PathVariable String user_sub) {
+    public String findSubWishlist(ModelMap modelMap, @PathVariable String user_subscriber) {
         commonsParams.setCommonParams(modelMap);
-        modelMap.put("user_sub", user_sub);
-        User user = userService.findByUsername(user_sub);
+        modelMap.put("user_sub", user_subscriber);
+        User user = userService.findByUsername(user_subscriber);
         modelMap.put("wishlistAll", wishlistService.findAllByUserAndSecretIsFalse(user));
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User userCurrent = userService.findByUsername(username);
@@ -113,14 +114,14 @@ public class WishlistController {
         return "wishlist/wishlist-sub";
     }
 
-    @GetMapping("/wishlist/add")
+    @GetMapping("/add")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createWishlistGet(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "wishlist/add-to-wishlist";
     }
 
-    @PostMapping("/wishlist/add")
+    @PostMapping("/add")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createWishlistPost(WishlistDto wishlistDto, @RequestParam("photo") String file, ModelMap modelMap, @RequestParam(name = "isSecret", defaultValue = "false", required = false) Boolean isSecret) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -136,7 +137,7 @@ public class WishlistController {
                 wishlistDto.setPhoto(filename);
                 wishlistDto.setSecret(isSecret);
                 wishlistId = wishlistService.createElementOfWishlist(wishlistDto);
-                return "redirect:" + SEPARATOR + "wishlist";
+                return "redirect:" + SEPARATOR + "wishlists";
             } catch (Exception e) {
                 log.error(ERROR + NOT_PUBLISH_WISHLIST);
                 commonsParams.setCommonParams(modelMap);
@@ -149,14 +150,14 @@ public class WishlistController {
         }
     }
 
-    @DeleteMapping("/wishlist/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteWishlist(@PathVariable Long id) {
         wishlistService.deleteWish(id);
     }
 
-    @GetMapping("/wishlist/done")
+    @GetMapping("/done")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findWishlistIsDone(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
@@ -166,7 +167,7 @@ public class WishlistController {
         return "wishlist/wishlist-done";
     }
 
-    @GetMapping("/wishlist/complete/{wishId}")
+    @GetMapping("/complete/{wishId}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findWishlistIsCompleted(ModelMap modelMap, @PathVariable Long wishId) {
         commonsParams.setCommonParams(modelMap);
@@ -180,14 +181,14 @@ public class WishlistController {
         return "wishlist/wishlist";
     }
 
-    @GetMapping("/wishlist/permissions/add/{id}")
+    @GetMapping("/permissions/add/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createPermissionsToWishlistGet(ModelMap modelMap, @PathVariable Long id) {
         commonsParams.setCommonParams(modelMap);
         return "wishlist/add-permission";
     }
 
-    @PostMapping("/wishlist/permissions/add")
+    @PostMapping("/permissions/add")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createPermissionsToWishlistGetPost(ModelMap modelMap, @RequestParam("userWishlistPrivate") String username, @RequestParam("wishlistIdWishlistPrivate") Long id) {
         WishlistPrivateDto  wishlistPrivateDto = new WishlistPrivateDto();
@@ -209,12 +210,12 @@ public class WishlistController {
             wishlistPrivateDto.setWishlistIdWishlistPrivate(wishlist);
             wishlistPrivateDto.setUserWishlistPrivate(user);
             wishlistService.addPermission(wishlistPrivateDto);
-            return "redirect:" + SEPARATOR + "wishlist";
+            return "redirect:" + SEPARATOR + "wishlists";
         }
         return "messages-templates" + SEPARATOR + "existPermission";
     }
 
-    @GetMapping("/wishlist/permissions/delete/{id}")
+    @GetMapping("/permissions/delete/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String deletePermissionsFromWishlist(ModelMap modelMap, @PathVariable Long id) {
         wishlistPrivateService.deletePermissions(id);

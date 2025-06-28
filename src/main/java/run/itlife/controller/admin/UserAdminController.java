@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
 import run.itlife.utils.Profile;
@@ -21,6 +22,7 @@ import static run.itlife.utils.Properties.Paths.PATH_IMAGE_USERS;
 import static run.itlife.utils.Properties.Paths.PATH_VIDEO_USERS;
 
 @Controller
+@RequestMapping("/admin")
 public class UserAdminController {
     @Autowired
     CommonsParams commonsParams;
@@ -58,6 +60,6 @@ public class UserAdminController {
         File dir_video = new File(context.getRealPath(PATH_VIDEO_USERS + user));
         Profile.recursiveFilesDelete(dir_img);
         Profile.recursiveFilesDelete(dir_video);
-        return "redirect:/all_users";
+        return "redirect:/admin/all_users";
     }
 }

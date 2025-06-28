@@ -21,9 +21,9 @@
           <div class="user">
             <p class="comments-logo" th:text="#{text_wishlist}"></p>
           </div>
-          <a class="audio-add" th:href="@{/wishlist/add}"><span th:text="#{button_add_wishlist}"></span></a>
-          <a class="audio-add" th:href="@{/wishlist_my_booking}"><span th:text="#{text_wishlist_reservations}"></span></a>
-          <a class="audio-add" th:href="@{/wishlist/done}"><span th:text="#{page_label_wishlist_done}"></span></a>
+          <a class="audio-add" th:href="@{/wishlists/add}"><span th:text="#{button_add_wishlist}"></span></a>
+          <a class="audio-add" th:href="@{/wishlists/wishlist_my_booking}"><span th:text="#{text_wishlist_reservations}"></span></a>
+          <a class="audio-add" th:href="@{/wishlists/done}"><span th:text="#{page_label_wishlist_done}"></span></a>
         </div>
       </div>
       <p class="wishlist-count" th:text="#{text_reservations_1} + ' ' + ${countAllWishesByUserAndIsBookingTrue} + ' ' + #{text_reservations_2} + ' ' + ${countAllWishesByUser} + ' ' + #{text_reservations_3}"></p>
@@ -51,16 +51,16 @@
                         </div>
                         <div>
                           <img th:if="${wishlistAll_view.done != true}" class="img-icon" th:src="@{'/resources/img/icons/ok.png'}" />
-                          <a class="wishlist-add-done" th:href="@{/wishlist/complete/} + ${wishlistAll_view.wishlistId}"><span th:text="#{text_check_done}"></span></a>
+                          <a class="wishlist-add-done" th:href="@{/wishlists/complete/} + ${wishlistAll_view.wishlistId}"><span th:text="#{text_check_done}"></span></a>
                         </div>
                         <div th:if="${wishlistAll_view.secret == true}">
                           <img class="img-icon" th:src="@{'/resources/img/icons/public.png'}" />
-                          <a class="wishlist-add" th:href="@{/wishlist/permissions/add/} + ${wishlistAll_view.wishlistId}"><span th:text="#{text_add_permission}"></span></a>
+                          <a class="wishlist-add" th:href="@{/wishlists/permissions/add/} + ${wishlistAll_view.wishlistId}"><span th:text="#{text_add_permission}"></span></a>
                         </div>
                         <p th:if="${wishlistAll_view.secret == true}" class="wishlist-text" th:text="#{text_who_sees_wishlist}"></p>
                         <div th:if="${!whoSeesSecretWishes.isEmpty()}" th:each="whoSeesSecretWishes_view: ${whoSeesSecretWishes}" class="info-comments icons-permission">
                           <div th:if="${wishlistAll_view.wishlistId.equals(whoSeesSecretWishes_view.key)}" th:each="whoSeesSecretWishes_viewInner: ${whoSeesSecretWishes_view.value}" class="profile-pic-comments container-wish">
-                            <a th:href="@{/wishlist/permissions/delete/} + ${whoSeesSecretWishes_viewInner.privateIdWishlistPrivate}">
+                            <a th:href="@{/wishlists/permissions/delete/} + ${whoSeesSecretWishes_viewInner.privateIdWishlistPrivate}">
                               <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" class="image image2">
                               <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo != null and whoSeesSecretWishes_viewInner.userWishlistPrivate.isGoogle == false}" th:src="@{'/resources/img/users/' + ${whoSeesSecretWishes_viewInner.userWishlistPrivate.username} + '/profile/' + ${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo}}" class="image image2">
                               <img th:if="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo != null and whoSeesSecretWishes_viewInner.userWishlistPrivate.isGoogle == true}" th:src="${whoSeesSecretWishes_viewInner.userWishlistPrivate.photo}" class="image image2">

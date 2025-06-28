@@ -28,6 +28,7 @@ import java.io.StringWriter;
 import java.time.LocalDateTime;
 
 @Controller
+@RequestMapping("/bugs")
 public class BugsController {
     private final BugsService bugsService;
     private final UserService userService;
@@ -41,10 +42,9 @@ public class BugsController {
         this.userService = userService;
     }
 
-    @PostMapping("/bug/create_bug_kafka")
+    @PostMapping("/create_bug_kafka")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createBugKafka(BugsDto bugsDto, ModelMap modelMap) throws IOException {
-
         //Подготавливаем данные для отправки в Кафку
         commonsParams.setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -85,14 +85,14 @@ public class BugsController {
         bugsService.createBugReportFromKafka(bugsDto);
     }
 
-    @GetMapping("/bug/create")
+    @GetMapping("/create")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createBug(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "bugs/create-bug";
     }
 
-    @PostMapping("/bug/create")
+    @PostMapping("/create")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createBug(BugsDto bugsDto, ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
@@ -100,7 +100,7 @@ public class BugsController {
         return "messages-templates/message-send";
     }
 
-    @GetMapping("/bugs_view")
+    @GetMapping("")
     @PreAuthorize("hasRole('ADMIN')")
     public String viewBugs(ModelMap modelMap) {
         modelMap.put("bugs", bugsService.findAllBugs());

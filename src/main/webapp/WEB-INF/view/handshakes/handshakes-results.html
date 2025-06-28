@@ -33,7 +33,7 @@
                                         <div  th:if="${pathOfUsers.isEmpty()}">
                                             <b class="description-comments-user">
                                                 <span th:text="#{text_handshakes_results_not_found1} + ' '"></span>
-                                                <a th:href="@{/posts_sub/{user}(user = ${searchUsername})}">
+                                                <a th:href="@{/page/{user}(user = ${searchUsername})}">
                                                     <b class="description-handshakes-user">
                                                         <span th:text="${searchUsername}"></span>
                                                     </b>
@@ -44,7 +44,7 @@
                                         <div  th:if="${!pathOfUsers.isEmpty()}">
                                             <b class="description-comments-user">
                                                 <span th:text="#{text_handshakes_results_found1} + ' '"></span>
-                                                <a th:href="@{/posts_sub/{user}(user = ${searchUsername})}">
+                                                <a th:href="@{/page/{user}(user = ${searchUsername})}">
                                                     <b class="description-handshakes-user">
                                                         <span th:text="${searchUsername}"></span>
                                                     </b>
@@ -73,19 +73,19 @@
                                             <div class="handshakes-comments">
                                                 <div class="handshakes-profile-card">
                                                     <div class="profile-pic-handshakes">
-                                                        <a th:href="@{/posts_sub/{user}(user = ${linkUsersResults.username})}">
+                                                        <a th:href="@{/page/{user}(user = ${linkUsersResults.username})}">
                                                             <img th:if="${linkUsersResults == 'null'}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                                             <img th:if="${linkUsersResults.photo != null and linkUsersResults.isGoogle == false}" th:src="@{'/resources/img/users/' + ${linkUsersResults.username} + '/profile/' + ${linkUsersResults.photo}}" alt="">
                                                             <img th:if="${linkUsersResults.photo != null and linkUsersResults.isGoogle == true}" th:src="${linkUsersResults.photo}" alt="">
                                                         </a>
                                                     </div>
                                                     <div>
-                                                        <a th:if="${linkUsersResults.isGoogle == false}" th:href="@{/posts_sub/{user}(user = ${linkUsersResults.username})}">
+                                                        <a th:if="${linkUsersResults.isGoogle == false}" th:href="@{/page/{user}(user = ${linkUsersResults.username})}">
                                                             <b class="description-handshakes-user">
                                                                 <span th:text="${linkUsersResults.username}"></span>
                                                             </b>
                                                         </a>
-                                                        <a th:if="${linkUsersResults.isGoogle == true}" th:href="@{/posts_sub/{user}(user = ${linkUsersResults.username})}">
+                                                        <a th:if="${linkUsersResults.isGoogle == true}" th:href="@{/page/{user}(user = ${linkUsersResults.username})}">
                                                             <b class="description-handshakes-user">
                                                                 <span th:text="${linkUsersResults.email}"></span>
                                                             </b>
@@ -106,14 +106,14 @@
                                             <div class="handshakes-comments">
                                                 <div class="handshakes-profile-card">
                                                     <div class="profile-pic-handshakes">
-                                                        <a th:href="@{/posts_sub/{user}(user = ${searchUsername})}">
+                                                        <a th:href="@{/page/{user}(user = ${searchUsername})}">
                                                             <img th:if="${searchUserinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                                             <img th:if="${searchUserinfo.photo != null and searchUserinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${searchUserinfo.username} + '/profile/' + ${searchUserinfo.photo}}" alt="">
                                                             <img th:if="${searchUserinfo.photo != null and searchUserinfo.isGoogle == true}" th:src="${searchUserinfo.photo}" alt="">
                                                         </a>
                                                     </div>
                                                     <div>
-                                                        <a th:href="@{/posts_sub/{user}(user = ${searchUsername})}">
+                                                        <a th:href="@{/page/{user}(user = ${searchUsername})}">
                                                             <b class="description-handshakes-user">
                                                                 <span th:text="${searchUsername}"></span>
                                                             </b>
@@ -131,7 +131,7 @@
             </div>
             <br>
             <p class="text-center">
-                <a th:href="@{/handshakes_search}" th:text="#{text_back_to_search_handshakes}"></a>
+                <a th:href="@{/handshakes/find}" th:text="#{text_back_to_search_handshakes}"></a>
             </p>
             <br>
             <!-- Footer -->

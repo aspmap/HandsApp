@@ -28,9 +28,9 @@
                             <p class="description-main" th:if="${userinfo_sub.surname != null && userinfo_sub.firstname != null}" th:text="${userinfo_sub.surname} + ' ' + ${userinfo_sub.firstname}"></p>
                             <p class="description-buttons-main">
                                 <a th:href="@{/dialogs/{usernameCompanion}(usernameCompanion = ${user_sub})}" th:if="${!user_sub.equals(user) && isClosedProfile == false}" class="btn-create" th:text="#{button_dialog}"></a>
-                                <a th:if="${isSub == 0 && !user.equals(user_sub) && isClosedProfile == false}" th:href="@{/subscription/{user}(user = ${user_sub})}" class="btn-create" th:text="#{button_subscribe}"></a>
-                                <a th:if="${isSub != 0 && !user.equals(user_sub) && isClosedProfile == false}" th:href="@{/unsubscription/{user}(user = ${user_sub})}" class="btn-delete" th:text="#{button_unsubscribe}"></a>
-                                <a sec:authorize="hasRole('ADMIN')" th:href="@{/user_profile_delete/{user}(user = ${user_sub})}" class="btn-delete" th:text="#{button_delete_user_profile}"></a>
+                                <a th:if="${isSub == 0 && !user.equals(user_sub) && isClosedProfile == false}" th:href="@{/page/subscription/{user}(user = ${user_sub})}" class="btn-create" th:text="#{button_subscribe}"></a>
+                                <a th:if="${isSub != 0 && !user.equals(user_sub) && isClosedProfile == false}" th:href="@{/page/unsubscription/{user}(user = ${user_sub})}" class="btn-delete" th:text="#{button_unsubscribe}"></a>
+                                <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/user_profile_delete/{user}(user = ${user_sub})}" class="btn-delete" th:text="#{button_delete_user_profile}"></a>
                             </p>
                             <p th:if="${userinfo_sub.www != null}" class="description-main">
                                 <span th:text="#{label_site}"></span>
@@ -42,10 +42,10 @@
                             </p>
                             <p class="description-main">
                                 <span th:text="${countPosts} + ' ' + #{label_publications}"></span>
-                                <a th:href="@{/subscribers_subuser/{user}(user = ${user_sub})}">
+                                <a th:href="@{/subscribers_their/{user}(user = ${user_sub})}">
                                     <span th:text="${countSubscribers} + ' ' + #{label_subscribers}"></span>
                                 </a>
-                                <a th:href="@{/subscriptions_subuser/{user}(user = ${user_sub})}">
+                                <a th:href="@{/subscriptions_their/{user}(user = ${user_sub})}">
                                     <span th:text="${countSubscribe} + ' ' + #{label_subscriptions}"></span>
                                 </a>
                             </p>
@@ -73,7 +73,7 @@
                             </div>
 
                             <div th:if="${countPosts > 0 && isClosedProfile == false}" class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
-                                <a th:href="@{/posts_detail_subuser/{user}#post- (user = ${user_sub})} + ${post.postId}">
+                                <a th:href="@{/posts_detail_subscriber/{user}#post- (user = ${user_sub})} + ${post.postId}">
                                     <div class="card mb-4">
                                         <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType != 'S3'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
                                         <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType == 'S3'}" th:src="@{${post.photo}}">

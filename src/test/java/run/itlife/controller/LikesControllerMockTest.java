@@ -1,6 +1,6 @@
 package run.itlife.controller;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -23,21 +23,21 @@ public class LikesControllerMockTest {
 
     @Test
     void createLikeSub() {
-        assertEquals("redirect:/post-view-sub/{postId}", likesController.createLikeSub(1L));
+        assertEquals("redirect:/post_view_of_subscriber/{postId}", likesController.createLikeInSubscribers(1L));
     }
 
     @Test
     void createLikeDetail() {
-        assertEquals("redirect:/posts_detail", likesController.createLikeDetail(1L));
+        assertEquals("redirect:/posts_detail", likesController.createLikeInPostsDetail(1L));
     }
 
     @Test
     void createLikeDetailSub() {
-        assertEquals("redirect:/", likesController.createLikeDetailSub(1L));
+        assertEquals("redirect:/", likesController.createLikeInPostsDetail(1L));
     }
 
     @Test
     void createLikeDetailSubuser() {
-        assertEquals("redirect:/posts_detail_subuser/{user}", likesController.createLikeDetailSubuser(1L, "terminator"));
+        assertEquals("redirect:/create_comment_in_posts_detail_of_subscriber/{user}", likesController.createLikeDetailInSubscriber(1L, "terminator"));
     }
 }

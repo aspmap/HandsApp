@@ -31,13 +31,13 @@
                   <div class="user-comments">
                     <div  class="profile-card">
                       <div class="profile-pic-comments">
-                        <a th:href="@{/posts_sub/{user}(user = ${results.username})}">
+                        <a th:href="@{/{user}(user = ${results.username})}">
                           <img th:if="${results.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                           <img th:if="${results.photo != null}" th:src="@{'/resources/img/users/' + ${results.username} + '/profile/' + ${results.photo}}" alt="">
                         </a>
                       </div>
                       <div>
-                        <a th:href="@{/posts_sub/{user}(user = ${results.username})}">
+                        <a th:href="@{/page/{user}(user = ${results.username})}">
                           <b class="description-comments-user">
                             <span th:text="${results.username}"></span>
                           </b>
@@ -58,13 +58,13 @@
                   <div class="user-comments">
                     <div  class="profile-card">
                       <div class="profile-pic-comments">
-                        <a th:href="@{/posts_sub/{user}(user = ${results.username})}">
+                        <a th:href="@{/{user}(user = ${results.username})}">
                           <img th:if="${results.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                           <img th:if="${results.photo != null}" th:src="${results.photo}" alt="">
                         </a>
                       </div>
                       <div>
-                        <a th:href="@{/posts_sub/{user}(user = ${results.username})}">
+                        <a th:href="@{/page/{user}(user = ${results.username})}">
                           <b class="description-comments-user">
                             <span th:text="${results.email}"></span>
                           </b>

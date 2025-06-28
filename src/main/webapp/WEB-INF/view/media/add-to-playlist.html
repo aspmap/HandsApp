@@ -20,7 +20,7 @@
       <div class="frame-content-create-form">
         <div class="form-create">
           <div class="search_box">
-            <form method="POST" th:action="@{/music/addToPlaylist}">
+            <form method="POST" th:action="@{/music/playlists/playlist/addToPlaylist}">
               <input type="hidden" name="musicId" th:value="${musicId}"/>
               <input name="playlistName" id="search" class="input-fields" th:placeholder="#{input_enter_playlist_select}"  maxlength="100" required />
               <div id="search_box-result"></div>

@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import run.itlife.service.SubscriptionsService;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
 
 @Controller
+@RequestMapping("/page")
 public class SubscriptionsController {
     private final UserService userService;
     private final SubscriptionsService subscriptionsService;
@@ -24,14 +26,14 @@ public class SubscriptionsController {
         this.subscriptionsService = subscriptionsService;
     }
 
-    @GetMapping("/posts_sub/{user}")
+    @GetMapping("/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findPostsSub(ModelMap modelMap, @PathVariable String user) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         commonsParams.setCommonSubParams(modelMap, user);
         commonsParams.setCommonParams(modelMap);
         modelMap.put("isSub", subscriptionsService.isSubscribe(username, user));
-        return "posts/posts-sub";
+        return "posts/page-subscriber";
     }
 
     /**
@@ -48,7 +50,7 @@ public class SubscriptionsController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createSubscribe(@PathVariable String user){
         subscriptionsService.createSub(user);
-        return "redirect:/posts_sub/{user}";
+        return "redirect:/page/{user}";
     }
 
     @GetMapping("/unsubscription/{user}")
@@ -57,6 +59,6 @@ public class SubscriptionsController {
         long currentUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getUserId().longValue();
         long subUserId = userService.findByUsername(user).getUserId().longValue();
         subscriptionsService.deleteSubscribeLong(currentUserId, subUserId);
-        return "redirect:/posts_sub/{user}";
+        return "redirect:/page/{user}";
     }
 }

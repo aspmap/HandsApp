@@ -23,6 +23,6 @@ public class SubscriptionsControllerMockTest {
 
     @Test
     void createSubscribe() {
-        assertEquals("redirect:/posts_sub/{user}", subscriptionsController.createSubscribe("terminator"));
+        assertEquals("redirect:/page/{user}", subscriptionsController.createSubscribe("terminator"));
     }
 }

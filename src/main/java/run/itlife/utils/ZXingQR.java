@@ -5,6 +5,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.springframework.security.core.context.SecurityContextHolder;
+import static run.itlife.utils.Properties.Paths.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
@@ -14,7 +15,7 @@ import static run.itlife.utils.Properties.Files.*;
 public class ZXingQR {
     public static byte[] qrcode(HttpServletResponse response) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-            String path = "handsapp.top/" + "posts_sub" + '/' + username;
+            String path = "handsapp.top" + SEPARATOR + "page" + SEPARATOR + username;
             response.setContentType("image/png");
             return ZXingQR.getQRCodeImage(path, WIDTH_QR_CODE, HEIGHT_QR_CODE);
     }

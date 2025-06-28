@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import run.itlife.entity.Dialogs;
 import run.itlife.service.DialogsService;
 import run.itlife.service.MessagesService;
@@ -15,6 +16,7 @@ import run.itlife.utils.CommonsParams;
 import java.util.List;
 
 @Controller
+@RequestMapping("/dialogs")
 public class DialogsController {
     private final DialogsService dialogsService;
     private final MessagesService messagesService;
@@ -27,7 +29,7 @@ public class DialogsController {
         this.messagesService = messagesService;
     }
 
-    @GetMapping("/dialogs")
+    @GetMapping("")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findDialogs(ModelMap modelMap) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -38,7 +40,7 @@ public class DialogsController {
         return "dialogs/dialogs";
     }
 
-    @GetMapping("/dialogs/{usernameCompanion}")
+    @GetMapping("/{usernameCompanion}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createDialog(Dialogs dialogs, ModelMap modelMap, @PathVariable String usernameCompanion) {
         commonsParams.setCommonParams(modelMap);

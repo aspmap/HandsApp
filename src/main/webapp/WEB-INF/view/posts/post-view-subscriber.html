@@ -21,25 +21,35 @@
             <div class="post" th:if="${isClosedProfilebyPostId == false}" th:object="${post}">
                 <input type="hidden" th:field="*{postId}"/>
                 <div class="info">
-                    <div class="user">
-                        <div class="profile-pic">
-                            <a th:href="@{/posts_sub/{user}(user = ${post.user.username})}">
-                                <img th:if="${post.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                <img th:if="${post.user.photo != null and post.user.isGoogle == false}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/profile/' + ${post.user.photo}}" alt="">
-                                <img th:if="${post.user.photo != null and post.user.isGoogle == true}" th:src="${post.user.photo}" alt="">
-                            </a>
-                        </div>
-                        <a th:href="@{/posts_sub/{user}(user = ${post.user.username})}">
-                            <p th:if="${post.user.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
-                            <p th:if="${post.user.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
-                        </a>
-                    </div>
-                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/delete_one_post/{postId} (postId = ${post.postId})}">
-                        <img th:src="@{/resources/img/nav/delete.png}" class="options" alt="">
-                    </a>
-                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}">
-                        <img th:src="@{/resources/img/nav/option.png}" class="options" alt="">
-                    </a>
+                    <table class="table-post">
+                        <tr>
+                            <td class="td-post-photo">
+                                <div class="user">
+                                    <div class="profile-pic">
+                                        <a th:href="@{/page/{user}(user = ${post.user.username})}">
+                                        <img th:if="${post.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                            <img th:if="${post.user.photo != null and post.user.isGoogle == false}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/profile/' + ${post.user.photo}}" alt="">
+                                            <img th:if="${post.user.photo != null and post.user.isGoogle == true}" th:src="${post.user.photo}" alt="">
+                                        </a>
+                                    </div>
+                                    <a th:href="@{/page/{user}(user = ${post.user.username})}">
+                                        <p th:if="${post.user.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
+                                        <p th:if="${post.user.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="td-post-icon-edit">
+                                <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/post/edit/{postId}(postId = ${post.postId})}">
+                                    <img th:src="@{/resources/img/nav/option.png}" class="options" alt="">
+                                </a>
+                            </td>
+                            <td class="td-post-icon-delete">
+                                <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/post/delete_one_post/{postId} (postId = ${post.postId})}">
+                                    <img th:src="@{/resources/img/nav/delete.png}" class="delete" alt="">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType != 'S3'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
                 <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType == 'S3'}" th:src="@{${post.photo}}" class="post-image" alt="">
@@ -49,13 +59,13 @@
                 </video>
                 <div class="post-content">
                     <div class="reaction-wrapper">
-                        <a th:if="${isLike != 0}" th:href="@{/unlike_view_sub/{postId}(postId = ${post.postId})}">
+                        <a th:if="${isLike != 0}" th:href="@{/likes/unlike_view_of_subscriber/{postId}(postId = ${post.postId})}">
                             <img th:src="@{/resources/img/icons/like.png}" class="icon" alt="">
                         </a>
-                        <a th:if="${isLike == 0}" th:href="@{/like_view_sub/{postId}(postId = ${post.postId})}">
+                        <a th:if="${isLike == 0}" th:href="@{/likes/like_view_of_subscriber/{postId}(postId = ${post.postId})}">
                             <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
                         </a>
-                        <a th:href="@{/comment/comments_sub/{postId}(postId = ${post.postId})}">
+                        <a th:href="@{/comments/comments_subscriber/{postId}(postId = ${post.postId})}">
                             <img th:src="@{/resources/img/nav/comment.png}" class="icon" alt="">
                         </a>
                     </div>
@@ -69,14 +79,14 @@
 
                     <!-- Comments -->
                     <div class="view-source comments-view">
-                        <a th:href="@{/comment/comments_sub/{postId}(postId = ${post.postId})}" th:each="like, state : ${post.comments}" class="description comments" th:text="${state.last} ? #{label_see_all_comments} + ' (' + ${state.count} + ')' : ''"></a>
+                        <a th:href="@{/comments/comments_subscriber/{postId}(postId = ${post.postId})}" th:each="like, state : ${post.comments}" class="description comments" th:text="${state.last} ? #{label_see_all_comments} + ' (' + ${state.count} + ')' : ''"></a>
                     </div>
                 </div>
 
                 <!-- Comments Form -->
                 <div sec:authorize="hasAnyRole('USER')">
                     <div class="div-smiles-messages" th:insert="fragments.html :: smiles-in-comments"></div>
-                    <form class="comment-wrapper" method="POST" th:action="@{/comment/create_subuser_comment}">
+                    <form class="comment-wrapper" method="POST" th:action="@{/comments/create_comment_in_subscriber_post}">
                         <input type="hidden" name="postId" th:value="${post.postId}" />
                         <input id="smile" th:if="${post.user.isGoogle == false}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'" maxlength="255" required>
                         <input id="smile" th:if="${post.user.isGoogle == true}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'" maxlength="255" required>

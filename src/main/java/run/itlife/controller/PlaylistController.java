@@ -19,6 +19,7 @@ import static run.itlife.utils.Properties.ErrorMessages.*;
 import static run.itlife.utils.Properties.Paths.*;
 
 @Controller
+@RequestMapping("/music/playlists")
 public class PlaylistController {
     @Autowired
     CommonsParams commonsParams;
@@ -32,7 +33,7 @@ public class PlaylistController {
         this.playlistService = playlistService;
     }
 
-    @GetMapping("/music/playlists")
+    @GetMapping("")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findPlaylists(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
@@ -42,14 +43,14 @@ public class PlaylistController {
         return "media/playlists";
     }
 
-    @GetMapping("/music/playlist/create")
+    @GetMapping("/create")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createPlaylist(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "media/create-playlist";
     }
 
-    @PostMapping("/music/playlist/create")
+    @PostMapping("/create")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createPlaylist(PlaylistDto playlistDto, ModelMap modelMap) {
         Long playlistId = playlistService.createPlaylist(playlistDto);
@@ -61,7 +62,7 @@ public class PlaylistController {
         return "redirect:" + SEPARATOR + "music/playlists";
     }
 
-    @DeleteMapping("/music/playlist/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deletePlaylist(@PathVariable Long id) {

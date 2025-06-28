@@ -18,13 +18,13 @@
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
-                            <a th:href="@{/posts_detail_subuser/{postId}#post- (postId = ${post.user.username})} + ${post.postId}">
+                            <a th:href="@{/posts_detail_subscriber/{postId}#post- (postId = ${post.user.username})} + ${post.postId}">
                                 <img th:src="@{'/resources/img/nav/arrow-left.png'}" alt="">
                             </a>
                         </div>
                         <p class="comments-logo" th:text="#{text_comments}"></p>
                     </div>
-                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/option.png}" class="options" alt=""></a>
+                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/edit/{postId}(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/option.png}" class="options" alt=""></a>
                 </div>
             </div>
             <div class="post" th:object="${post}">
@@ -45,14 +45,14 @@
                                 <div class="info-comments">
                                     <div class="user-comments">
                                         <div class="profile-pic-comments">
-                                            <a th:href="@{/posts_sub/{user}(user = ${comment.user.username})}">
+                                            <a th:href="@{/page/{user}(user = ${comment.user.username})}">
                                                 <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                                 <img th:if="${comment.user.photo != null and comment.user.isGoogle == false}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
                                                 <img th:if="${comment.user.photo != null and comment.user.isGoogle == true}" th:src="${comment.user.photo}" alt="">
                                             </a>
                                         </div>
                                         <div>
-                                            <a th:href="@{/posts_sub/{user}(user = ${comment.user.username})}">
+                                            <a th:href="@{/page/{user}(user = ${comment.user.username})}">
                                                 <b class="description-comments-user">
                                                     <p th:if="${userinfo.isGoogle == false}" th:text="${comment.user.username}"></p>
                                                     <p th:if="${userinfo.isGoogle == true}" th:text="${comment.user.email}"></p>
@@ -61,7 +61,7 @@
                                             <span class="description-comments" th:text="${comment.commentText}"></span>
                                             <div>
                                                 <span class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')}"></span>
-                                                <a th:if="${#authentication.name == comment.user.username}" class="post-time-comments" th:href="@{/comment/delete/sub/{postId}/{commentId}(commentId = ${comment.commentId}, postId = ${post.postId})}" th:text="#{text_delete_comment}"></a>
+                                                <a th:if="${#authentication.name == comment.user.username}" class="post-time-comments" th:href="@{/comments/delete_in_comments/{postId}/{commentId}(commentId = ${comment.commentId}, postId = ${post.postId})}" th:text="#{text_delete_comment}"></a>
                                             </div>
                                         </div>
                                     </div>
@@ -74,7 +74,7 @@
                 <!-- Comments Form -->
                 <div sec:authorize="hasAnyRole('USER')">
                     <div class="div-smiles-messages" th:insert="fragments.html :: smiles-in-comments"></div>
-                    <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment_subuser}">
+                    <form class="comment-wrapper" method="POST" th:action="@{/comments/create_comment_in_comments_of_subscriber}">
                         <input type="hidden" name="postId" th:value="${post.postId}" />
                         <input id="smile" th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'" maxlength="255" required>
                         <input id="smile" th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'" maxlength="255" required>

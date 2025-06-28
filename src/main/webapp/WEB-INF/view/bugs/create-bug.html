@@ -19,7 +19,7 @@
             </div>
             <div class="frame-content-create-form">
                 <div class="form-create">
-                    <form method="POST" th:action="@{/bug/create}">
+                    <form method="POST" th:action="@{/bugs/create}">
                         <textarea name="bugText" class="input-fields" rows="5" th:placeholder="#{input_describe_error}" maxlength="255" required></textarea>
                         <button type="submit" class="btn-create" th:text="#{button_submit_a_bug_report}"></button>
                     </form>

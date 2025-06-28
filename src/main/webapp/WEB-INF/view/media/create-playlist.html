@@ -19,7 +19,7 @@
       </div>
       <div class="frame-content-create-form">
         <div class="form-create">
-          <form method="POST" th:action="@{/music/playlist/create}">
+          <form method="POST" th:action="@{/music/playlists/create}">
             <input name="playlistName" class="input-fields" th:value="${projectName}" th:placeholder="#{input_enter_playlist_name}" maxlength="100" required />
             <button type="submit" class="btn-create" th:text="#{button_create_playlist}"></button>
           </form>

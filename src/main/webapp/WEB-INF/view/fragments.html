@@ -187,7 +187,7 @@
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/handshakes_search}"><span th:text="#{text_handshakes}"></span></a>
+                                <a th:href="@{/handshakes/find}"><span th:text="#{text_handshakes}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/music}"><span th:text="#{menu_my_music}"></span></a>
@@ -196,10 +196,10 @@
                                 <a th:href="@{/todo}"><span th:text="#{menu_my_todo_list}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/wishlist}"><span th:text="#{menu_my_wishlist}"></span></a>
+                                <a th:href="@{/wishlists}"><span th:text="#{menu_my_wishlist}"></span></a>
                             </li>
                             <li>
-                                <a th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
+                                <a th:href="@{/qrcode}"><span th:text="#{menu_qrcode}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/profile_archive}"><span th:text="#{menu_my_archive}"></span></a>
@@ -209,7 +209,7 @@
                             </li>
                             <b sec:authorize="hasRole('ADMIN')" style="margin-left: 5px" th:text="#{menu_admin}"></b>
                             <li sec:authorize="hasRole('ADMIN')">
-                                <a th:href="@{/bugs_view}"><span th:text="#{menu_bugs}"></span></a>
+                                <a th:href="@{/bugs}"><span th:text="#{menu_bugs}"></span></a>
                             </li>
                             <li sec:authorize="hasRole('ADMIN')">
                                 <a th:href="@{/api}"><span th:text="'API'"></span></a>
@@ -221,7 +221,7 @@
                                 <a th:href="@{/posts_infinite_scroll}"><span th:text="#{menu_my_posts_infinite_scroll}"></span></a>
                             </li>
                             <li sec:authorize="hasRole('ADMIN')">
-                                <a th:href="@{/all_users}"><span th:text="'Пользователи'"></span></a>
+                                <a th:href="@{/admin/all_users}"><span th:text="'Пользователи'"></span></a>
                             </li>
                             <li sec:authorize="hasRole('ADMIN')">
                                 <a th:href="@{/post/new_S3_image}"><span th:text="#{menu_s3_photo}"></span></a>
@@ -239,14 +239,14 @@
             <a class="second-menu-add" th:href="@{/post/new_image}"><span th:text="#{menu_photo}"></span></a>
             <a class="second-menu-add" th:href="@{/post/new_video}"><span th:text="#{menu_video}"></span></a>
             <a class="second-menu-add" th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
-            <a class="second-menu-add" th:href="@{/handshakes_search}"><span th:text="#{text_handshakes}"></span></a>
+            <a class="second-menu-add" th:href="@{/handshakes/find}"><span th:text="#{text_handshakes}"></span></a>
             <a class="second-menu-add" th:href="@{/music}"><span th:text="#{menu_my_music}"></span></a>
             <a class="second-menu-add" th:href="@{/todo}"><span th:text="#{menu_my_todo_list}"></span></a>
-            <a class="second-menu-add" th:href="@{/wishlist}"><span th:text="#{menu_my_wishlist}"></span></a>
-            <a class="second-menu-add" th:href="@{/qrcode/}"><span th:text="#{menu_qrcode}"></span></a>
+            <a class="second-menu-add" th:href="@{/wishlists}"><span th:text="#{menu_my_wishlist}"></span></a>
+            <a class="second-menu-add" th:href="@{/qrcode}"><span th:text="#{menu_qrcode}"></span></a>
             <a class="second-menu-add" th:href="@{/profile_archive}"><span th:text="#{menu_my_archive}"></span></a>
-            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/all_users}"><span th:text="'Пользователи'"></span></a>
-            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/bugs_view}"><span th:text="#{menu_bugs}"></span></a>
+            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/admin/all_users}"><span th:text="'Пользователи'"></span></a>
+            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/bugs}"><span th:text="#{menu_bugs}"></span></a>
             <a class="second-menu-add" th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
         </div>
     </div>
@@ -265,7 +265,7 @@
     <p class="suggestion-text"><span th:text="#{text_recommendations_for_you}"></span></p>
     <div class="profile-card" th:each="users: ${usersOnlyKey}" th:if="${!users.username.equals(user)}">
         <div class="profile-pic">
-            <a th:href="@{/posts_sub/{user}(user = ${users.username})}">
+            <a th:href="@{/page/{user}(user = ${users.username})}">
                 <img th:if="${users.photo == ''}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                 <img th:if="${users.photo != '' and users.isGoogle == 'f'}" th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
                 <img th:if="${users.photo != '' and users.isGoogle == 't'}" th:src="${users.photo}" alt="">
@@ -273,11 +273,11 @@
         </div>
         <div>
             <div>
-            <a th:href="@{/posts_sub/{user}(user = ${users.username})}">
+            <a th:href="@{/page/{user}(user = ${users.username})}">
                 <span th:if="${users.isGoogle == 'f'}" th:text="${users.username}" class="username"></span>
                 <span th:if="${users.isGoogle == 't'}" th:text="${users.email}" class="username"></span>
             </a>
-            <a th:if="${users.isSub == '0'}" th:href="@{/subscription_from_recommendations/{user}(user = ${users.username})}" class="sub-btn" th:text="#{button_subscribe}"></a>
+            <a th:if="${users.isSub == '0'}" th:href="@{/page/subscription_from_recommendations/{user}(user = ${users.username})}" class="sub-btn" th:text="#{button_subscribe}"></a>
             </div>
                 <p th:if="${users.surname != null && users.firstname != null}" th:text="${users.surname} + ' ' + ${users.firstname}" class="sub-text"></p>
 
@@ -398,12 +398,12 @@
 <!-- Modal Window End -->
 
 <!-- Footer -->
-<p class="main-text-footer" th:fragment="footer-login">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a th:href="@{/bug/create}" th:text="#{text_write_to_us}"></a>
+<p class="main-text-footer" th:fragment="footer-login">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a th:href="@{/bugs/create}" th:text="#{text_write_to_us}"></a>
     <br>
     <span class="text-lang" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
 </p>
 
-<footer class="main-text-footer" th:fragment="footer">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a th:href="@{/bug/create}" th:text="#{text_write_to_us}"></a>
+<footer class="main-text-footer" th:fragment="footer">© 2022-<span th:text="${currentYear}"></span> <span th:text="#{application_name}"></span><span th:if="${majorVersion != null}" th:text="' (' + ${majorVersion} + '.' + ${minorVersion} + '.' + ${microVersion} + ' ' + ${stageVersion} + ')'"></span>. <span th:text="#{text_found_an_error}"></span>? <a th:href="@{/bugs/create}" th:text="#{text_write_to_us}"></a>
     <br>
     <span class="text-lang" th:text="#{text_choose_language}"></span>: <a th:href="@{/?lang=en}" th:text="#{label_en}"></a> <a th:href="@{/?lang=ru}" th:text="#{label_ru}"></a>
 </footer>

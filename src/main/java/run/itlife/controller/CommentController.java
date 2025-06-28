@@ -14,7 +14,7 @@ import run.itlife.utils.CommonsParams;
 
 //Контроллер для комментариев (создание)
 @Controller
-@RequestMapping("/comment")
+@RequestMapping("/comments")
 public class CommentController {
     private final CommentService commentService;
     @Autowired
@@ -34,73 +34,73 @@ public class CommentController {
         return "redirect:/post_view/" + comment.getPostId();
     }
 
-    @PostMapping("/create_comment")
+    @PostMapping("/create_in_comments")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createCommentInComments(CommentDto comment){
         commentService.createComment(comment);
-        return "redirect:/comment/" + comment.getPostId();
+        return "redirect:/comments/" + comment.getPostId();
     }
 
-    @GetMapping("/delete/{postId}/{commentId}")
+    @PostMapping("/create_comment_in_subscriber_post")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String deleteComment(@PathVariable long commentId, @PathVariable long postId){
-        commentService.deleteComment(commentId);
-        return "redirect:/comment/" + postId;
-    }
-
-    @GetMapping("/delete/sub/{postId}/{commentId}")
-    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String deleteSubComment(@PathVariable long commentId, @PathVariable long postId){
-        commentService.deleteComment(commentId);
-        return "redirect:/comment/comments_sub/" + postId;
-    }
-
-    @PostMapping("/create_subuser_comment")
-    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String createSubuserComment(CommentDto comment){
+    public String createCommentInSubscriberPost(CommentDto comment){
         commentService.createComment(comment);
-        return "redirect:/post-view-sub/" + comment.getPostId();
+        return "redirect:/post_view_of_subscriber/" + comment.getPostId();
     }
 
-    @PostMapping("/create_comment_detail")
+    @PostMapping("/create_comment_in_posts_detail")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String createCommentDetail(CommentDto comment){
+    public String createCommentInPostsDetail(CommentDto comment){
         commentService.createComment(comment);
         return "redirect:/posts_detail/";
     }
 
-    @GetMapping("/create_comment_detail_subuser/{user}")
+    @GetMapping("/create_comment_in_posts_detail_of_subscriber/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String createCommentDetailSubuser(CommentDto comment, @PathVariable String user){
+    public String createCommentInPostsDetailOfSubscriber(CommentDto comment, @PathVariable String user){
         commentService.createComment(comment);
-        return "redirect:/posts_detail_subuser/" + user;
+        return "redirect:/create_comment_in_posts_detail_of_subscriber/" + user;
     }
 
-    @PostMapping("/create_comment_detail_sub")
+    @PostMapping("/create_comment_in_posts_detail_of_subscriber")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createCommentDetailSub(CommentDto comment){
         commentService.createComment(comment);
         return "redirect:/";
     }
 
-    @PostMapping("/create_comment_subuser")
+    @PostMapping("/create_comment_in_comments_of_subscriber")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String createCommentSubuser(CommentDto comment){
+    public String createCommentInCommentsOfSubscriber(CommentDto comment){
         commentService.createComment(comment);
-        return "redirect:/comment/comments_sub/" + comment.getPostId();
+        return "redirect:/comments/comments_subscriber/" + comment.getPostId();
+    }
+
+    @GetMapping("/delete/{postId}/{commentId}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String deleteComment(@PathVariable long commentId, @PathVariable long postId){
+        commentService.deleteComment(commentId);
+        return "redirect:/comments/" + postId;
+    }
+
+    @GetMapping("/delete_in_comments/{postId}/{commentId}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String deleteCommentInComments(@PathVariable long commentId, @PathVariable long postId){
+        commentService.deleteComment(commentId);
+        return "redirect:/comments/comments_subscriber/" + postId;
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String findCommentsById(@PathVariable long id, ModelMap modelMap){
+    public String findCommentById(@PathVariable long id, ModelMap modelMap){
         commonsParams.setCommonParams(id, modelMap);
         return "comments/comments";
     }
 
-    @GetMapping("/comments_sub/{id}")
+    @GetMapping("/comments_subscriber/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String findCommentsSubById(@PathVariable long id, ModelMap modelMap){
+    public String findCommentByIdInSubscriber(@PathVariable long id, ModelMap modelMap){
         commonsParams.setCommonParams(id, modelMap);
-        return "comments/comments-sub";
+        return "comments/comments-subscriber";
     }
 }

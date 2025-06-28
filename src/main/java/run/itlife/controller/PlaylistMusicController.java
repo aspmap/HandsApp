@@ -19,6 +19,7 @@ import static run.itlife.utils.Properties.ErrorMessages.*;
 import static run.itlife.utils.Properties.Paths.SEPARATOR;
 
 @Controller
+@RequestMapping("/music/playlists/playlist")
 public class PlaylistMusicController {
     @Autowired
     CommonsParams commonsParams;
@@ -31,7 +32,7 @@ public class PlaylistMusicController {
         this.playlistService = playlistService;
     }
 
-    @GetMapping("/music/playlist/{playlistId}")
+    @GetMapping("/{playlistId}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findPlaylist(ModelMap modelMap, @PathVariable Long playlistId) {
         commonsParams.setCommonParams(modelMap);
@@ -41,14 +42,14 @@ public class PlaylistMusicController {
         return "media/view-playlist";
     }
 
-    @GetMapping("/music/addToPlaylist/{musicId}")
+    @GetMapping("/addToPlaylist/{musicId}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String addMusicToPlaylist(ModelMap modelMap, @PathVariable Long musicId) {
         commonsParams.setCommonParams(modelMap);
         return "media/add-to-playlist";
     }
 
-    @PostMapping("/music/addToPlaylist")
+    @PostMapping("/addToPlaylist")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String addMusicToPlaylist(ModelMap modelMap, @RequestParam("playlistName") String playlistName, @RequestParam("musicId") Long musicId) {
         Long playlistId = playlistService.findPlaylistId(playlistName);
@@ -65,10 +66,10 @@ public class PlaylistMusicController {
         playlistMusicDto.setMusicId(music);
         playlistMusicDto.setPlaylistId(playlist);
         playlistMusicService.addToPlaylist(playlistMusicDto);
-        return "redirect:" + SEPARATOR + "music/playlist/" + playlistId;
+        return "redirect:" + SEPARATOR + "music/playlists/playlist/" + playlistId;
     }
 
-    @DeleteMapping("/music/playlist/song/delete/{playlistId}/{musicId}")
+    @DeleteMapping("/song/delete/{playlistId}/{musicId}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteMusicFromPlaylist(@PathVariable Long playlistId, @PathVariable Long musicId) {

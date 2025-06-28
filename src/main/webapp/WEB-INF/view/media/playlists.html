@@ -22,7 +22,7 @@
             <p class="comments-logo" th:text="#{page_label_playlists}"></p>
           </div>
           <a class="audio-add" th:href="@{/music/addfile}"><span th:text="#{button_add_song}"></span></a>
-          <a class="audio-add" th:href="@{/music/playlist/create}"><span th:text="#{button_create_playlist}"></span></a>
+          <a class="audio-add" th:href="@{/music/playlists/create}"><span th:text="#{button_create_playlist}"></span></a>
           <a class="audio-add" th:href="@{/music}"><span th:text="#{menu_my_music}"></span></a>
         </div>
       </div>
@@ -35,7 +35,7 @@
                   <table class="dialogs-table">
                     <tr>
                       <td class="audio-text-icons">
-                        <a th:href="@{/music/playlist/} + ${playlistAll_view.playlistId}" th:text="${playlistAll_view.playlistName}"></a>
+                        <a th:href="@{/music/playlists/playlist/} + ${playlistAll_view.playlistId}" th:text="${playlistAll_view.playlistName}"></a>
                       </td>
                       <td class="audio-text-icons">
                         <a class="wishlist-add"  th:onclick="'deletePlaylist(\'' + ${playlistAll_view.playlistId} + '\');'">

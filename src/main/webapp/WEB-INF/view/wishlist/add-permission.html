@@ -20,7 +20,7 @@
             <div class="frame-content-create-form">
                 <div class="form-create">
                     <div class="search_box">
-                        <form method="POST" th:action="@{/wishlist/permissions/add}">
+                        <form method="POST" th:action="@{/wishlists/permissions/add}">
                             <input type="hidden" name="wishlistIdWishlistPrivate" th:value="${id}"/>
                             <input name="userWishlistPrivate" id="search-users" class="input-fields" th:placeholder="#{input_enter_username_wish}" maxlength="150" required />
                             <div id="search_box-result"></div>

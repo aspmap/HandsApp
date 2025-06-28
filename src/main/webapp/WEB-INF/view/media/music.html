@@ -22,7 +22,7 @@
             <p class="comments-logo" th:text="#{text_music}"></p>
           </div>
           <a class="audio-add" th:href="@{/music/addfile}"><span th:text="#{button_add_song}"></span></a>
-          <a class="audio-add" th:href="@{/music/playlist/create}"><span th:text="#{button_create_playlist}"></span></a>
+          <a class="audio-add" th:href="@{/music/playlists/create}"><span th:text="#{button_create_playlist}"></span></a>
           <a class="audio-add" th:href="@{/music/playlists}"><span th:text="#{page_label_playlists}"></span></a>
         </div>
       </div>
@@ -42,7 +42,7 @@
                               <a th:href="@{'/resources/music/users/' + ${user} + '/' + ${musicAll_view.getFileName()}}">Ссылка на аудио</a>
                             </p>
                           </audio>
-                        <a class="audio-add" th:href="@{music/addToPlaylist/} + ${musicAll_view.getMusicId()}" th:text="#{button_add_to_playlist}"></a>
+                        <a class="audio-add" th:href="@{music/playlists/playlist/addToPlaylist/} + ${musicAll_view.getMusicId()}" th:text="#{button_add_to_playlist}"></a>
                       </td>
                       <td class="audio-text">
                         <p th:text="${musicAll_view.songName +' ('+ musicAll_view.songYear} + ')'"></p>

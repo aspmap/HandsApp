@@ -39,6 +39,7 @@ import static run.itlife.utils.Properties.Paths.*;
 import static run.itlife.utils.Properties.ErrorMessages.*;
 
 @Controller
+@RequestMapping("/music")
 public class MusicController {
     private final MusicService musicService;
     private final UserService userService;
@@ -57,7 +58,7 @@ public class MusicController {
         this.context = context;
     }
 
-    @GetMapping("/music")
+    @GetMapping("")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findMusic(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
@@ -67,14 +68,14 @@ public class MusicController {
         return "media/music";
     }
 
-    @GetMapping("/music/addfile")
+    @GetMapping("/addfile")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String addMusic(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
         return "media/add-file";
     }
 
-    @PostMapping("/music/addinfo")
+    @PostMapping("/addinfo")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String confirmMusic(MusicDto musicDto, ModelMap modelMap, @RequestParam("file") MultipartFile file) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException {
         commonsParams.setCommonParams(modelMap);
@@ -112,7 +113,7 @@ public class MusicController {
         }
     }
 
-    @PostMapping("/music/save")
+    @PostMapping("/save")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String saveMusic(MusicDto musicDto, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -147,14 +148,14 @@ public class MusicController {
         }
     }
 
-    @DeleteMapping("/music/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteSong(@PathVariable Long id) {
         musicService.deleteSong(id);
     }
 
-    @PostMapping("/music/results")
+    @PostMapping("/results")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findPlaylists(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
