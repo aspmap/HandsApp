@@ -61,7 +61,7 @@ public class PostPaginationController {
         modelMap.put("posts_sub", myDataPage);
         commonsParams.setCommonParams(modelMap);
 
-        return "posts/posts-pagination";
+        return "posts/view/posts-pagination";
     }
 
     @GetMapping("/posts_infinite_scroll")
@@ -80,6 +80,6 @@ public class PostPaginationController {
         modelMap.put("isYourLike", postService.isLikePost(username)); // TODO как выдернуть id поста??
         modelMap.put("userPhotoCurrent", userService.findByUsername(username).getPhoto());
         commonsParams.setCommonParams(modelMap);
-        return "posts/posts-infinite-scroll";
+        return "posts/view/posts-infinite-scroll";
     }
 }

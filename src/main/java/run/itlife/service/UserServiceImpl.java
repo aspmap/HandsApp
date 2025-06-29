@@ -111,6 +111,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateAdmin(UserDto userDto) {
+        User user = userRepository.findById(userDto.getUserId()).orElseThrow();
+        if (!StringUtils.isEmpty(userDto.getPassword()))
+            user.setPassword(cryptPasswordEncoder.encode(userDto.getPassword()));
+        if (!StringUtils.isEmpty(userDto.getFirstname()))
+            user.setFirstname(userDto.getFirstname());
+        if (!StringUtils.isEmpty(userDto.getSurname()))
+            user.setSurname(userDto.getSurname());
+        if (!StringUtils.isEmpty(userDto.getEmail()))
+            user.setEmail(userDto.getEmail());
+        if (!StringUtils.isEmpty(userDto.getInfo()))
+            user.setInfo(userDto.getInfo());
+        if (!StringUtils.isEmpty(userDto.getPhone()))
+            user.setPhone(userDto.getPhone());
+        if (!StringUtils.isEmpty(userDto.getSex()))
+            user.setSex(userDto.getSex());
+        if (!StringUtils.isEmpty(userDto.getWww()))
+            user.setWww(userDto.getWww());
+        if (!StringUtils.isEmpty(userDto.getIsClosed()))
+            user.setIsClosed(userDto.getIsClosed());
+        if (!StringUtils.isEmpty(userDto.getIsHidden()))
+            user.setIsHidden(userDto.getIsHidden());
+        if (!StringUtils.isEmpty(userDto.getIsActive()))
+            user.setIsActive(userDto.getIsActive());
+        userRepository.save(user);
+    }
+
+    @Override
     public void deleteProfile(String user) {
         Optional<User> username = userRepository.findByUsername(user);
         if(username.isPresent()) {

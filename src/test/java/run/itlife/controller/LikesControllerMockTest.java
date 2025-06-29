@@ -18,17 +18,17 @@ public class LikesControllerMockTest {
 
     @Test
     void createLike() {
-        assertEquals("redirect:/post_view/{postId}", likesController.createLike(1L));
+        assertEquals("redirect:/post/{postId}", likesController.createLike(1L));
     }
 
     @Test
     void createLikeSub() {
-        assertEquals("redirect:/post_view_of_subscriber/{postId}", likesController.createLikeInSubscribers(1L));
+        assertEquals("redirect:/post_subscriber/{postId}", likesController.createLikeInSubscribers(1L));
     }
 
     @Test
     void createLikeDetail() {
-        assertEquals("redirect:/posts_detail", likesController.createLikeInPostsDetail(1L));
+        assertEquals("redirect:/posts", likesController.createLikeInPostsDetail(1L));
     }
 
     @Test

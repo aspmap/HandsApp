@@ -31,7 +31,7 @@ public class CommentController {
     //и т.д. и он маппит по этим именам на объект CommentDto
     public String createCommentInPost(CommentDto comment){
         commentService.createComment(comment);
-        return "redirect:/post_view/" + comment.getPostId();
+        return "redirect:/post/" + comment.getPostId();
     }
 
     @PostMapping("/create_in_comments")
@@ -45,14 +45,14 @@ public class CommentController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createCommentInSubscriberPost(CommentDto comment){
         commentService.createComment(comment);
-        return "redirect:/post_view_of_subscriber/" + comment.getPostId();
+        return "redirect:/post_subscriber/" + comment.getPostId();
     }
 
     @PostMapping("/create_comment_in_posts_detail")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createCommentInPostsDetail(CommentDto comment){
         commentService.createComment(comment);
-        return "redirect:/posts_detail/";
+        return "redirect:/posts/";
     }
 
     @GetMapping("/create_comment_in_posts_detail_of_subscriber/{user}")

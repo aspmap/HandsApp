@@ -51,7 +51,7 @@
                         </tr>
                     </table>
                 </div>
-                <a th:href="@{/post_view_of_subscriber/{postId}(postId = ${post.postId})}">
+                <a th:href="@{/post_subscriber/{postId}(postId = ${post.postId})}">
                     <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType != 'S3'}"
                          th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}"
                          class="post-image" alt="">

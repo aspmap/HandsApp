@@ -178,7 +178,7 @@
                         <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" class="icon user-profile" th:src="${userinfo.photo}" alt="">
                         <ul class="nalumes-nucludem">
                             <li>
-                                <a th:href="@{/posts}"><span th:text="#{menu_profile}"></span></a>
+                                <a th:href="@{/my_page}"><span th:text="#{menu_profile}"></span></a>
                             </li>
                             <li>
                                 <a th:href="@{/profile_edit/{user}(user = ${user})}"><span th:text="#{menu_settings}"></span></a>
@@ -234,7 +234,7 @@
     </div>
     <div class="second-menu">
         <div class="second-menu-info">
-            <a class="second-menu-add" th:href="@{/posts}"><span th:text="#{menu_profile}"></span></a>
+            <a class="second-menu-add" th:href="@{/my_page}"><span th:text="#{menu_profile}"></span></a>
             <a class="second-menu-add" th:href="@{/profile_edit/{user}(user = ${user})}"><span th:text="#{menu_settings}"></span></a>
             <a class="second-menu-add" th:href="@{/post/new_image}"><span th:text="#{menu_photo}"></span></a>
             <a class="second-menu-add" th:href="@{/post/new_video}"><span th:text="#{menu_video}"></span></a>

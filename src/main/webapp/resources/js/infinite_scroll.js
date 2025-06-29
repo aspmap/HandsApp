@@ -43,7 +43,7 @@ function posts_pagination() {
                     }
                     pic.append(imgLink);
                     user.append(usernameLink);
-                    var ahref = $('<a href="' + contextPath + "/post_view_of_subscriber/" + el.postId + '"></a>');
+                    var ahref = $('<a href="' + contextPath + "/post_subscriber/" + el.postId + '"></a>');
                     if (el.storageType == 'S3' && el.extFile == 'png') {
                         var imgpost = $('<img class="post-image" src="' + el.photo + '" alt="" />');
                     } else if (el.storageType != 'S3' && el.extFile == 'png') {

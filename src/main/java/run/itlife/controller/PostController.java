@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.PostDto;
@@ -20,7 +21,9 @@ import run.itlife.utils.SaveFile;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Optional;
 
 import static run.itlife.enums.FileExtensions.*;
 import static run.itlife.enums.FileTypes.*;
@@ -38,7 +41,6 @@ public class PostController {
     private final CommentService commentService;
     private final SubscriptionsService subscriptionsService;
     private final UserRepository userRepository;
-    private final DialogsService dialogsService;
     private final ServletContext context;
     @Autowired
     CommonsParams commonsParams;
@@ -49,7 +51,7 @@ public class PostController {
     private S3Service service;
 
     @Autowired
-    public PostController(PostService postsService, LikesService likesService, UserService userService, CommentService commentService, ServletContext context, SubscriptionsService subscriptionsService, UserRepository userRepository, DialogsService dialogsService) {
+    public PostController(PostService postsService, LikesService likesService, UserService userService, CommentService commentService, ServletContext context, SubscriptionsService subscriptionsService, UserRepository userRepository) {
         this.postService = postsService;
         this.likesService = likesService;
         this.userService = userService;
@@ -57,7 +59,6 @@ public class PostController {
         this.subscriptionsService = subscriptionsService;
         this.context = context;
         this.userRepository = userRepository;
-        this.dialogsService = dialogsService;
     }
 
     @GetMapping("/main")
@@ -74,27 +75,19 @@ public class PostController {
             userService.createGoogleUser(newUser);
             return newUser;
         });
+        Optional<User> user = userRepository.findByUsername(username);
+        if (!StringUtils.isEmpty(user)) {
+            if (user.get().getLastVisit() != null) {
+                user.get().setPreviousVisit(user.get().getLastVisit());
+            }
+            user.get().setLastVisit(LocalDateTime.now());
+            userRepository.save(user.get());
+        }
 
-        commonsParams.setCommonParams(modelMap, username);
-        modelMap.put("unreadMessagesTotal", dialogsService.findUnreadDialogs(username).size());
-        modelMap.put("posts_sub", postService.findSubscribesPosts(username));
-        modelMap.put("countPosts", postService.countSubscribesPosts(username));
-        modelMap.put("isYourLike", postService.isLikePost(username));
-        return "page-subscriber";
+        return "redirect:/";
     }
 
-    //@RequestMapping(value = "/posts_detail", method = RequestMethod.GET)
-    @GetMapping("/posts_detail") // такая же запись как и выше, но в другом виде, более современная
-    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String findPostsDetail(ModelMap modelMap) {
-        commonsParams.setCommonParams(modelMap);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("posts", postService.findSortedPostsByDate(username));
-        modelMap.put("countLikes", likesService.countLikesByUsername(username));
-        return "posts/posts-detail";
-    }
-
-    @GetMapping("/posts")
+    @GetMapping("/my_page")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findPosts(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
@@ -103,10 +96,20 @@ public class PostController {
         modelMap.put("countPosts", postService.countPosts(username));
         modelMap.put("countSubscribe", subscriptionsService.countSubscribe(username));
         modelMap.put("countSubscribers", subscriptionsService.countSubscribers(username));
-        return "posts/posts";
+        return "posts/view/my-page";
     }
 
-    @GetMapping("/posts_detail_subscriber/{user}")
+    @GetMapping("/posts") // такая же запись как и выше, но в другом виде, более современная
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String findPostsDetail(ModelMap modelMap) {
+        commonsParams.setCommonParams(modelMap);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("posts", postService.findSortedPostsByDate(username));
+        modelMap.put("countLikes", likesService.countLikesByUsername(username));
+        return "posts/view/posts";
+    }
+
+    @GetMapping("/posts_subscriber/{user}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findPostsDetailSubuser(ModelMap modelMap, @PathVariable String user) {
         commonsParams.setCommonParams(modelMap);
@@ -116,58 +119,41 @@ public class PostController {
         modelMap.put("userinfo_sub", userService.findByUsername(user));
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("isYourLike", postService.isLikePost(username));
-        return "posts/posts-detail-subscriber";
+        return "posts/view/posts-subscriber";
     }
 
-    @GetMapping("/post/new_video")
+    @GetMapping("/post_subscriber/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String createNewPostVideo(ModelMap modelMap) {
+    public String findPostViewSub(@PathVariable long id, ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
-        return "posts/post-new-video";
+        modelMap.put("post", postService.findById(id));
+        modelMap.put("isClosedProfilebyPostId", postService.isClosedProfileByPostId(id));
+        modelMap.put("comments", commentService.findSortedCommentsByDate(id));
+        modelMap.put("countComments", postService.countComments(id));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("countLikes", likesService.countLikesByPostId(id));
+        modelMap.put("isLike", likesService.isLikePostForCurrentUser(id, username));
+        return "posts/view/post-subscriber";
     }
 
-    @PostMapping("/post/new_video")
+    @GetMapping("/post/{id}")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String createNewPostVideo(PostDto postDto, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
-        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (file.getSize() > MAX_UPLOAD_VIDEO_FILE_SIZE_IN_MB) {
-            commonsParams.setCommonParams(modelMap);
-            return "messages-templates" + SEPARATOR + "errorVideoSize";
-        }
-        long postId;
-        SaveFile sf = new SaveFile();
-
-        if (!file.isEmpty()) {
-            try {
-                if (file.getContentType().equals(VIDEO_MP4.getType()) || file.getContentType().equals(VIDEO_QT.getType())) {
-                    Map<String, String> filenameMap = sf.saveFile(username, context, file);
-                    for (Map.Entry<String, String> entry : filenameMap.entrySet()) {
-                        postDto.setExtFile(entry.getValue());
-                        postDto.setPhoto(entry.getKey());
-                    }
-                    postId = postService.createPost(postDto);
-                    return "redirect:/post_view/" + postId;
-                } else {
-                    commonsParams.setCommonParams(modelMap);
-                    return "messages-templates/error";
-                }
-            } catch (Exception e) {
-                log.error(ERROR + NOT_PUBLISH_POST);
-                commonsParams.setCommonParams(modelMap);
-                return "messages-templates/error";
-            }
-        } else {
-            log.error(ERROR + NOT_PUBLISH_POST);
-            commonsParams.setCommonParams(modelMap);
-            return "messages-templates/error";
-        }
+    public String findPostView(@PathVariable long id, ModelMap modelMap) {
+        commonsParams.setCommonParams(modelMap);
+        modelMap.put("post", postService.findById(id));
+        modelMap.put("comments", commentService.findSortedCommentsByDate(id));
+        modelMap.put("countComments", postService.countComments(id));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("countLikes", likesService.countLikesByPostId(id));
+        modelMap.put("isLike", likesService.isLikePostForCurrentUser(id, username));
+        return "posts/view/post";
     }
 
     @GetMapping("/post/new_image")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createNewPostImage(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
-        return "posts/post-new-img";
+        return "posts/new/post-new-img";
     }
 
     @PostMapping("/post/new_image")
@@ -187,7 +173,7 @@ public class PostController {
                 postDto.setExtFile(PNG.getExtension());
                 postDto.setPhoto(filename);
                 postId = postService.createPost(postDto);
-                return "redirect:" + SEPARATOR + "post_view" + SEPARATOR + postId;
+                return "redirect:" + SEPARATOR + "post" + SEPARATOR + postId;
             } catch (Exception e) {
                 log.error(ERROR + NOT_PUBLISH_POST);
                 commonsParams.setCommonParams(modelMap);
@@ -204,7 +190,7 @@ public class PostController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createNewPostS3Image(ModelMap modelMap) {
         commonsParams.setCommonParams(modelMap);
-        return "posts/post-new-s3-img";
+        return "posts/new/post-new-s3-img";
     }
 
     @PostMapping("/post/new_S3_image")
@@ -227,9 +213,53 @@ public class PostController {
                     postDto.setStorageType("S3");
                     postDto.setPhoto("https://" + S3_ADDRESS + SEPARATOR + "handsapp" + SEPARATOR + "img" + SEPARATOR + "users" + SEPARATOR + username + SEPARATOR + multipartFile.getName());
                     postId = postService.createPost(postDto);
-                    return "redirect:/post_view/" + postId;
+                    return "redirect:/post/" + postId;
                 }
-                return "redirect:/post_view/";
+                return "redirect:/post/";
+            } catch (Exception e) {
+                log.error(ERROR + NOT_PUBLISH_POST);
+                commonsParams.setCommonParams(modelMap);
+                return "messages-templates/error";
+            }
+        } else {
+            log.error(ERROR + NOT_PUBLISH_POST);
+            commonsParams.setCommonParams(modelMap);
+            return "messages-templates/error";
+        }
+    }
+
+    @GetMapping("/post/new_video")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String createNewPostVideo(ModelMap modelMap) {
+        commonsParams.setCommonParams(modelMap);
+        return "posts/new/post-new-video";
+    }
+
+    @PostMapping("/post/new_video")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String createNewPostVideo(PostDto postDto, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (file.getSize() > MAX_UPLOAD_VIDEO_FILE_SIZE_IN_MB) {
+            commonsParams.setCommonParams(modelMap);
+            return "messages-templates" + SEPARATOR + "errorVideoSize";
+        }
+        long postId;
+        SaveFile sf = new SaveFile();
+
+        if (!file.isEmpty()) {
+            try {
+                if (file.getContentType().equals(VIDEO_MP4.getType()) || file.getContentType().equals(VIDEO_QT.getType())) {
+                    Map<String, String> filenameMap = sf.saveFile(username, context, file);
+                    for (Map.Entry<String, String> entry : filenameMap.entrySet()) {
+                        postDto.setExtFile(entry.getValue());
+                        postDto.setPhoto(entry.getKey());
+                    }
+                    postId = postService.createPost(postDto);
+                    return "redirect:/post/" + postId;
+                } else {
+                    commonsParams.setCommonParams(modelMap);
+                    return "messages-templates/error";
+                }
             } catch (Exception e) {
                 log.error(ERROR + NOT_PUBLISH_POST);
                 commonsParams.setCommonParams(modelMap);
@@ -248,7 +278,7 @@ public class PostController {
         commonsParams.setCommonParams(modelMap);
         postService.checkAuthority(postId);
         modelMap.put("post", postService.getAsDto(postId));
-        return "posts/post-edit";
+        return "posts/edit/post-edit";
     }
 
     @PostMapping("/post/edit")
@@ -257,34 +287,7 @@ public class PostController {
         // получаем имя юзера для формирования пути сохранения фото
         postService.checkAuthority(postDto.getPostId());
         postService.update(postDto);
-        return "redirect:/post_view/" + postDto.getPostId();
-    }
-
-    @GetMapping("/post_view_of_subscriber/{id}")
-    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String findPostViewSub(@PathVariable long id, ModelMap modelMap) {
-        commonsParams.setCommonParams(modelMap);
-        modelMap.put("post", postService.findById(id));
-        modelMap.put("isClosedProfilebyPostId", postService.isClosedProfileByPostId(id));
-        modelMap.put("comments", commentService.findSortedCommentsByDate(id));
-        modelMap.put("countComments", postService.countComments(id));
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("countLikes", likesService.countLikesByPostId(id));
-        modelMap.put("isLike", likesService.isLikePostForCurrentUser(id, username));
-        return "posts/post-view-subscriber";
-    }
-
-    @GetMapping("/post_view/{id}")
-    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String findPostView(@PathVariable long id, ModelMap modelMap) {
-        commonsParams.setCommonParams(modelMap);
-        modelMap.put("post", postService.findById(id));
-        modelMap.put("comments", commentService.findSortedCommentsByDate(id));
-        modelMap.put("countComments", postService.countComments(id));
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("countLikes", likesService.countLikesByPostId(id));
-        modelMap.put("isLike", likesService.isLikePostForCurrentUser(id, username));
-        return "posts/post-view";
+        return "redirect:/post/" + postDto.getPostId();
     }
 
     @DeleteMapping("/post/delete/{id}")
@@ -298,7 +301,7 @@ public class PostController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String deleteOnePost(@PathVariable long id) {
         postService.delete(id);
-        return "redirect:/posts_detail";
+        return "redirect:/posts";
     }
 
     @GetMapping("/posts_my_likes")
@@ -308,6 +311,6 @@ public class PostController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("posts", postService.findMyLikesPosts(username));
         modelMap.put("countPosts", postService.countMyLikesPosts(username));
-        return "posts/posts-my-likes";
+        return "posts/view/posts-my-likes";
     }
 }

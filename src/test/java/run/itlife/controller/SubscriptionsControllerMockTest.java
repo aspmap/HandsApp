@@ -18,7 +18,7 @@ public class SubscriptionsControllerMockTest {
 
     @Test
     void createSubscribeFromRecommendations() {
-        assertEquals("redirect:/posts", subscriptionsController.createSubscribeFromRecommendations(null, "terminator"));
+        assertEquals("redirect:/my_posts", subscriptionsController.createSubscribeFromRecommendations(null, "terminator"));
     }
 
     @Test

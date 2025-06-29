@@ -33,7 +33,7 @@ public class SubscriptionsController {
         commonsParams.setCommonSubParams(modelMap, user);
         commonsParams.setCommonParams(modelMap);
         modelMap.put("isSub", subscriptionsService.isSubscribe(username, user));
-        return "posts/page-subscriber";
+        return "posts/view/subscriber-page";
     }
 
     /**

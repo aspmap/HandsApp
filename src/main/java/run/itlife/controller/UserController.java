@@ -84,6 +84,12 @@ public class UserController {
         this.informationGatheringArchive = informationGatheringArchive;
     }
 
+    @GetMapping("/register")
+    public String register(ModelMap modelMap) {
+        commonsParams.setCommonConstParams(modelMap);
+        return "register";
+    }
+
     @GetMapping("/login")
     public String login(ModelMap model) {
         Iterable<ClientRegistration> clientRegistrations = null;
@@ -103,53 +109,6 @@ public class UserController {
     public String loginError(ModelMap modelMap) {
         commonsParams.setCommonConstParams(modelMap);
         return "messages-templates/loginError";
-    }
-
-    @GetMapping("/register")
-    public String register(ModelMap modelMap) {
-        commonsParams.setCommonConstParams(modelMap);
-        return "register";
-    }
-
-    @GetMapping("/confidentiality")
-    public String confidentiality(ModelMap modelMap) {
-        return "info/confidentiality";
-    }
-
-    @PostMapping("/register")
-    public String register(ModelMap modelMap, User user) {
-        commonsParams.setCommonConstParams(modelMap);
-        try {
-            userService.create(user);
-            return "messages-templates/registration-success";
-        } catch (EntityExistsException e) {
-            log.error(ERROR + e);
-            return "messages-templates/exist";
-        }
-    }
-
-    @GetMapping("/profile_delete/{user}")
-    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String deleteProfileGet(ModelMap modelMap, @PathVariable String user) {
-        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!username.equals(user)) {
-            commonsParams.setCommonParams(modelMap);
-            return "messages-templates/404";
-        }
-        commonsParams.setCommonParams(modelMap, user);
-        return "profile/profile-delete";
-    }
-
-    @PostMapping("/profile_delete/{user}")
-    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String deleteProfilePost(ModelMap modelMap, @PathVariable String user) {
-        userService.deleteProfile(user);
-        //удаляем папки и файлы пользователя
-        File dir_img = new File(context.getRealPath(PATH_IMAGE_USERS + user));
-        File dir_video = new File(context.getRealPath(PATH_VIDEO_USERS + user));
-        Profile.recursiveFilesDelete(dir_img);
-        Profile.recursiveFilesDelete(dir_video);
-        return "redirect:/";
     }
 
     @GetMapping("/profile_edit/{user}")
@@ -202,7 +161,7 @@ public class UserController {
                 ImageIO.write(resizeImage, FileExtensions.PNG.getExtension(), newFileJPG);
                 stream.flush();
                 stream.close();
-                return "redirect:/posts/";
+                return "redirect:/my_posts/";
             } catch (Exception e) {
                 log.error(ERROR + e);
                 commonsParams.setCommonParams(modelMap);
@@ -213,6 +172,30 @@ public class UserController {
             userService.update(userDto);
             return "redirect:/";
         }
+    }
+
+    @GetMapping("/profile_delete/{user}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String deleteProfileGet(ModelMap modelMap, @PathVariable String user) {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!username.equals(user)) {
+            commonsParams.setCommonParams(modelMap);
+            return "messages-templates/404";
+        }
+        commonsParams.setCommonParams(modelMap, user);
+        return "profile/profile-delete";
+    }
+
+    @PostMapping("/profile_delete/{user}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String deleteProfilePost(ModelMap modelMap, @PathVariable String user) {
+        userService.deleteProfile(user);
+        //удаляем папки и файлы пользователя
+        File dir_img = new File(context.getRealPath(PATH_IMAGE_USERS + user));
+        File dir_video = new File(context.getRealPath(PATH_VIDEO_USERS + user));
+        Profile.recursiveFilesDelete(dir_img);
+        Profile.recursiveFilesDelete(dir_video);
+        return "redirect:/";
     }
 
     @GetMapping("/subscriptions")
@@ -344,6 +327,23 @@ public class UserController {
         commonsParams.setCommonParams(modelMap);
         modelMap.put("isAvailableArchive", isAvailableArchive);
         return "messages-templates/formation-archive";
+    }
+
+    @GetMapping("/confidentiality")
+    public String confidentiality(ModelMap modelMap) {
+        return "info/confidentiality";
+    }
+
+    @PostMapping("/register")
+    public String register(ModelMap modelMap, User user) {
+        commonsParams.setCommonConstParams(modelMap);
+        try {
+            userService.create(user);
+            return "messages-templates/registration-success";
+        } catch (EntityExistsException e) {
+            log.error(ERROR + e);
+            return "messages-templates/exist";
+        }
     }
 
     private void setCommonParamsSynchronized(ModelMap modelMap, String username) {
