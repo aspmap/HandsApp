@@ -5,14 +5,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import run.itlife.dto.PlaylistMusicDto;
 import run.itlife.entity.Music;
 import run.itlife.entity.Playlist;
+import run.itlife.entity.User;
 import run.itlife.service.PlaylistMusicService;
 import run.itlife.service.PlaylistService;
+import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
 
 import static run.itlife.utils.Properties.ErrorMessages.*;
@@ -25,11 +28,13 @@ public class PlaylistMusicController {
     CommonsParams commonsParams;
     private final PlaylistMusicService playlistMusicService;
     private final PlaylistService playlistService;
+    private final UserService userService;
     private static final Logger log = LoggerFactory.getLogger(PlaylistMusicController.class);
 
-    public PlaylistMusicController(PlaylistMusicService playlistMusicService, PlaylistService playlistService) {
+    public PlaylistMusicController(PlaylistMusicService playlistMusicService, PlaylistService playlistService, UserService userService) {
         this.playlistMusicService = playlistMusicService;
         this.playlistService = playlistService;
+        this.userService = userService;
     }
 
     @GetMapping("/{playlistId}")
@@ -52,7 +57,9 @@ public class PlaylistMusicController {
     @PostMapping("/addToPlaylist")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String addMusicToPlaylist(ModelMap modelMap, @RequestParam("playlistName") String playlistName, @RequestParam("musicId") Long musicId) {
-        Long playlistId = playlistService.findPlaylistId(playlistName);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username);
+        Long playlistId = playlistService.findPlaylistId(playlistName, user.getUserId());
         if (playlistId == null) {
             log.error(ERROR + NOT_ADD_SONG_TO_PLAYLIST);
             commonsParams.setCommonParams(modelMap);

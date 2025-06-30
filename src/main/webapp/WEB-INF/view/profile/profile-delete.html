@@ -19,10 +19,10 @@
             </div>
             <div class="frame-content-create-form">
                 <div class="form-create">
-                    <p class="main-text" th:text="'Внимание! После подтверждения будут удалены все ваши посты, фотографии, лайки, комментарии. Вы уверены?'"></p>
+                    <p class="main-text" th:text="#{text_cancel}"></p>
                     <form method="POST" th:action="*{username}" th:object="${userinfo}">
                         <button type="submit" class="btn-delete" th:text="#{button_delete_profile_confirm}"></button>
-                        <a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn-create" th:text="'Отмена'"></a>
+                        <a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn-create" th:text="#{button_cancel}"></a>
                     </form>
                 </div>
             </div>

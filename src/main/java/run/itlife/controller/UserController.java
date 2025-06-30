@@ -161,7 +161,7 @@ public class UserController {
                 ImageIO.write(resizeImage, FileExtensions.PNG.getExtension(), newFileJPG);
                 stream.flush();
                 stream.close();
-                return "redirect:/my_posts/";
+                return "redirect:/my_page";
             } catch (Exception e) {
                 log.error(ERROR + e);
                 commonsParams.setCommonParams(modelMap);
@@ -170,7 +170,7 @@ public class UserController {
         } else {
             userService.checkAuthority(userDto.getUserId());
             userService.update(userDto);
-            return "redirect:/";
+            return "redirect:/my_page";
         }
     }
 

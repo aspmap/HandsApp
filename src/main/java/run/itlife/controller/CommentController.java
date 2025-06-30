@@ -55,14 +55,14 @@ public class CommentController {
         return "redirect:/posts/";
     }
 
-    @GetMapping("/create_comment_in_posts_detail_of_subscriber/{user}")
+    @GetMapping("/create_comment_in_posts_detail_of_subscriber/{user}") ////2
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createCommentInPostsDetailOfSubscriber(CommentDto comment, @PathVariable String user){
         commentService.createComment(comment);
-        return "redirect:/create_comment_in_posts_detail_of_subscriber/" + user;
+        return "redirect:/posts_subscriber/" + user;
     }
 
-    @PostMapping("/create_comment_in_posts_detail_of_subscriber")
+    @PostMapping("/create_comment_in_posts_detail_of_subscriber") ///
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String createCommentDetailSub(CommentDto comment){
         commentService.createComment(comment);

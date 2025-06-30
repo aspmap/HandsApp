@@ -10,5 +10,5 @@ public interface PlaylistService {
     Long createPlaylist(PlaylistDto playlistDto);
     void deletePlaylist(Long id);
     ArrayList<Playlist> findPlaylistsByUserId(Long userId);
-    Long findPlaylistId(String substring);
+    Long findPlaylistId(String substring, Long userId);
 }

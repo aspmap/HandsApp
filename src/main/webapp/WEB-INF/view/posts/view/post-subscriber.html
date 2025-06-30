@@ -88,8 +88,8 @@
                     <div class="div-smiles-messages" th:insert="fragments.html :: smiles-in-comments"></div>
                     <form class="comment-wrapper" method="POST" th:action="@{/comments/create_comment_in_subscriber_post}">
                         <input type="hidden" name="postId" th:value="${post.postId}" />
-                        <input id="smile" th:if="${post.user.isGoogle == false}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'" maxlength="255" required>
-                        <input id="smile" th:if="${post.user.isGoogle == true}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'" maxlength="255" required>
+                        <input id="smile" th:if="${userinfo.isGoogle == false}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${user} + '...'" maxlength="255" required>
+                        <input id="smile" th:if="${userinfo.isGoogle == true}" type="text" class="comment-box description" name="commentText"  th:placeholder="#{input_comment_like} + ' ' + ${userinfo.email} + '...'" maxlength="255" required>
                         <br>
                         <button class="comment-btn" th:text="#{button_publish}"></button>
                     </form>

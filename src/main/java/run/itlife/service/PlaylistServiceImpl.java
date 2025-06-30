@@ -60,7 +60,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public Long findPlaylistId(String substring) {
-        return playlistRepository.findPlaylistId(substring);
+    public Long findPlaylistId(String substring, Long userId) {
+        return playlistRepository.findPlaylistId(substring, userId);
     }
 }

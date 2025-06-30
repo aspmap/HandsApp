@@ -26,19 +26,27 @@
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
-                            <img th:if="${bug.userId.photo == null || bug.userId.photo == ''}"
-                                 th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                            <img th:unless="${bug.userId.photo == null}"
-                                 th:src="@{'/resources/img/users/' + ${bug.userId.username} + '/profile/' + ${bug.userId.photo}}"
-                                 alt="">
+                            <a th:href="@{/page/{user}(user = ${bug.userId.username})}">
+                                <img th:if="${bug.userId.photo == null || bug.userId.photo == ''}" th:src="@{'/resources/img/icons/avatar.jpg'}">
+                                <img th:if="${bug.userId.photo != null and bug.userId.isGoogle == false}" th:src="@{'/resources/img/users/' + ${bug.userId.username} + '/profile/' + ${bug.userId.photo}}">
+                                <img th:if="${bug.userId.photo != null and bug.userId.isGoogle == true}" th:src="${bug.userId.photo}" alt="">
+                            </a>
                         </div>
-                        <p th:text="${bug.userId.username}" class="username"></p>
+                        <a th:if="${bug.userId.isGoogle == false}" th:href="@{/page/{user}(user = ${bug.userId.username})}">
+                            <b class="username">
+                                <span th:text="${bug.userId.username}"></span>
+                            </b>
+                        </a>
+                        <a th:if="${bug.userId.isGoogle == true}" th:href="@{/page/{user}(user = ${bug.userId.username})}">
+                            <b class="username">
+                                <span th:text="${bug.userId.email}"></span>
+                            </b>
+                        </a>
                     </div>
                 </div>
                 <div class="post-content">
                     <span class="description-normal" th:text="${bug.bugText}"></span>
-                    <p class="post-time"
-                       th:text="${#temporals.format(bug.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
+                    <p class="post-time" th:text="${#temporals.format(bug.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
                 </div>
             </div>
 

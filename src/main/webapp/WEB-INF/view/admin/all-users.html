@@ -50,6 +50,7 @@
                         </a>
                         <div>
                           <p th:if="${results.surname != null && results.firstname != null}" class="post-time-comments" th:text="${results.surname} + ' ' + ${results.firstname}"></p>
+                          <p class="post-time-comments" th:text="${#temporals.format(results.createdAt, 'dd.MM.yyyy')} + ' ' + #{text_date_year}"></p>
                         </div>
                       </div>
                     </div>

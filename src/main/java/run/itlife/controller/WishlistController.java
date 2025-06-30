@@ -59,6 +59,21 @@ public class WishlistController {
         return "wishlist/wishlist";
     }
 
+    @GetMapping("/wishlist_subscriber/{user_subscriber}")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    public String findSubWishlist(ModelMap modelMap, @PathVariable String user_subscriber) {
+        commonsParams.setCommonParams(modelMap);
+        modelMap.put("user_sub", user_subscriber);
+        modelMap.put("googleUser_sub", userService.findByUsername(user_subscriber).getEmail());
+        User user = userService.findByUsername(user_subscriber);
+        modelMap.put("userSubInfo", user);
+        modelMap.put("wishlistAll", wishlistService.findAllByUserAndSecretIsFalse(user));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userCurrent = userService.findByUsername(username);
+        modelMap.put("wishlistPrivate", wishlistService.findPrivateWishesByUser(userCurrent.getUserId(), user.getUserId()));
+        return "wishlist/wishlist-sub";
+    }
+
     @GetMapping("/wishlist_my_booking")
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findMyBookingWishlist(ModelMap modelMap) {
@@ -99,19 +114,6 @@ public class WishlistController {
         commonsParams.setCommonParams(modelMap);
         wishlistService.createUnBookingWishlist(user_subscriber, id);
         return "redirect:" + SEPARATOR + "wishlists" + SEPARATOR + "wishlist_my_booking";
-    }
-
-    @GetMapping("/wishlist_subscriber/{user_subscriber}")
-    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
-    public String findSubWishlist(ModelMap modelMap, @PathVariable String user_subscriber) {
-        commonsParams.setCommonParams(modelMap);
-        modelMap.put("user_sub", user_subscriber);
-        User user = userService.findByUsername(user_subscriber);
-        modelMap.put("wishlistAll", wishlistService.findAllByUserAndSecretIsFalse(user));
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User userCurrent = userService.findByUsername(username);
-        modelMap.put("wishlistPrivate", wishlistService.findPrivateWishesByUser(userCurrent.getUserId(), user.getUserId()));
-        return "wishlist/wishlist-sub";
     }
 
     @GetMapping("/add")
