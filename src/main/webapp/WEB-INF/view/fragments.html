@@ -177,37 +177,36 @@
                         <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" class="icon user-profile" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
                         <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" class="icon user-profile" th:src="${userinfo.photo}" alt="">
                         <ul class="nalumes-nucludem">
-                            <li>
+                            <li sec:authorize="hasRole('USER')">
                                 <a th:href="@{/my_page}"><span th:text="#{menu_profile}"></span></a>
                             </li>
-                            <li>
+                            <li sec:authorize="hasRole('USER')">
                                 <a th:href="@{/profile_edit/{user}(user = ${user})}"><span th:text="#{menu_settings}"></span></a>
                             </li>
-                            <li>
+                            <li sec:authorize="hasRole('USER')">
                                 <a th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
                             </li>
-                            <li>
+                            <li sec:authorize="hasRole('USER')">
                                 <a th:href="@{/handshakes/find}"><span th:text="#{text_handshakes}"></span></a>
                             </li>
-                            <li>
+                            <li sec:authorize="hasRole('USER')">
                                 <a th:href="@{/music}"><span th:text="#{menu_my_music}"></span></a>
                             </li>
-                            <li>
+                            <li sec:authorize="hasRole('USER')">
                                 <a th:href="@{/todo}"><span th:text="#{menu_my_todo_list}"></span></a>
                             </li>
-                            <li>
+                            <li sec:authorize="hasRole('USER')">
                                 <a th:href="@{/wishlists}"><span th:text="#{menu_my_wishlist}"></span></a>
                             </li>
-                            <li>
+                            <li sec:authorize="hasRole('USER')">
                                 <a th:href="@{/qrcode}"><span th:text="#{menu_qrcode}"></span></a>
                             </li>
-                            <li>
+                            <li sec:authorize="hasRole('USER')">
                                 <a th:href="@{/profile_archive}"><span th:text="#{menu_my_archive}"></span></a>
                             </li>
-                            <li>
-                                <a th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
+                            <li sec:authorize="hasRole('ADMIN')">
+                                <a th:href="@{/admin/all_users}"><span th:text="#{menu_users}"></span></a>
                             </li>
-                            <b sec:authorize="hasRole('ADMIN')" style="margin-left: 5px" th:text="#{menu_admin}"></b>
                             <li sec:authorize="hasRole('ADMIN')">
                                 <a th:href="@{/bugs}"><span th:text="#{menu_bugs}"></span></a>
                             </li>
@@ -215,16 +214,16 @@
                                 <a th:href="@{/api}"><span th:text="'API'"></span></a>
                             </li>
                             <li sec:authorize="hasRole('ADMIN')">
+                                <a th:href="@{/post/new_S3_image}"><span th:text="#{menu_s3_photo}"></span></a>
+                            </li>
+                            <li sec:authorize="hasRole('ADMIN')">
                                 <a th:href="@{/posts_ms/}"><span th:text="#{menu_my_posts_ms}"></span></a>
                             </li>
                             <li sec:authorize="hasRole('ADMIN')">
                                 <a th:href="@{/posts_infinite_scroll}"><span th:text="#{menu_my_posts_infinite_scroll}"></span></a>
                             </li>
-                            <li sec:authorize="hasRole('ADMIN')">
-                                <a th:href="@{/admin/all_users}"><span th:text="'Пользователи'"></span></a>
-                            </li>
-                            <li sec:authorize="hasRole('ADMIN')">
-                                <a th:href="@{/post/new_S3_image}"><span th:text="#{menu_s3_photo}"></span></a>
+                            <li>
+                                <a th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
                             </li>
                         </ul>
                     </li>
@@ -234,19 +233,23 @@
     </div>
     <div class="second-menu">
         <div class="second-menu-info">
-            <a class="second-menu-add" th:href="@{/my_page}"><span th:text="#{menu_profile}"></span></a>
-            <a class="second-menu-add" th:href="@{/profile_edit/{user}(user = ${user})}"><span th:text="#{menu_settings}"></span></a>
-            <a class="second-menu-add" th:href="@{/post/new_image}"><span th:text="#{menu_photo}"></span></a>
-            <a class="second-menu-add" th:href="@{/post/new_video}"><span th:text="#{menu_video}"></span></a>
-            <a class="second-menu-add" th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
-            <a class="second-menu-add" th:href="@{/handshakes/find}"><span th:text="#{text_handshakes}"></span></a>
-            <a class="second-menu-add" th:href="@{/music}"><span th:text="#{menu_my_music}"></span></a>
-            <a class="second-menu-add" th:href="@{/todo}"><span th:text="#{menu_my_todo_list}"></span></a>
-            <a class="second-menu-add" th:href="@{/wishlists}"><span th:text="#{menu_my_wishlist}"></span></a>
-            <a class="second-menu-add" th:href="@{/qrcode}"><span th:text="#{menu_qrcode}"></span></a>
-            <a class="second-menu-add" th:href="@{/profile_archive}"><span th:text="#{menu_my_archive}"></span></a>
-            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/admin/all_users}"><span th:text="'Пользователи'"></span></a>
+            <a sec:authorize="hasRole('USER')" class="second-menu-add" th:href="@{/my_page}"><span th:text="#{menu_profile}"></span></a>
+            <a sec:authorize="hasRole('USER')" class="second-menu-add" th:href="@{/profile_edit/{user}(user = ${user})}"><span th:text="#{menu_settings}"></span></a>
+            <a sec:authorize="hasRole('USER')" class="second-menu-add" th:href="@{/post/new_image}"><span th:text="#{menu_photo}"></span></a>
+            <a sec:authorize="hasRole('USER')" class="second-menu-add" th:href="@{/post/new_video}"><span th:text="#{menu_video}"></span></a>
+            <a sec:authorize="hasRole('USER')" class="second-menu-add" th:href="@{/posts_my_likes}"><span th:text="#{menu_my_likes}"></span></a>
+            <a sec:authorize="hasRole('USER')" class="second-menu-add" th:href="@{/handshakes/find}"><span th:text="#{text_handshakes}"></span></a>
+            <a sec:authorize="hasRole('USER')" class="second-menu-add" th:href="@{/music}"><span th:text="#{menu_my_music}"></span></a>
+            <a sec:authorize="hasRole('USER')" class="second-menu-add" th:href="@{/todo}"><span th:text="#{menu_my_todo_list}"></span></a>
+            <a sec:authorize="hasRole('USER')" class="second-menu-add" th:href="@{/wishlists}"><span th:text="#{menu_my_wishlist}"></span></a>
+            <a sec:authorize="hasRole('USER')" class="second-menu-add" th:href="@{/qrcode}"><span th:text="#{menu_qrcode}"></span></a>
+            <a sec:authorize="hasRole('USER')" class="second-menu-add" th:href="@{/profile_archive}"><span th:text="#{menu_my_archive}"></span></a>
+            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/admin/all_users}"><span th:text="#{menu_users}"></span></a>
             <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/bugs}"><span th:text="#{menu_bugs}"></span></a>
+            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/api}"><span th:text="'API'"></span></a>
+            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/post/new_S3_image}"><span th:text="#{menu_s3_photo}"></span></a>
+            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/posts_ms/}"><span th:text="#{menu_my_posts_ms}"></span></a>
+            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/posts_infinite_scroll}"><span th:text="#{menu_my_posts_infinite_scroll}"></span></a>
             <a class="second-menu-add" th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
         </div>
     </div>

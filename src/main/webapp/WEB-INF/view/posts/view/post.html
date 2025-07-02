@@ -22,13 +22,17 @@
                             <td class="td-post-photo">
                                 <div class="user">
                                     <div class="profile-pic">
-                                        <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                        <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${userinfo.username} + '/profile/' + ${userinfo.photo}}" alt="">
-                                        <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
-                                        <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
+                                        <a th:href="@{/my_page}">
+                                            <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${userinfo.username} + '/profile/' + ${userinfo.photo}}" alt="">
+                                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
+                                            <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
+                                        </a>
                                     </div>
-                                    <p th:if="${userinfo.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
-                                    <p th:if="${userinfo.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
+                                    <a th:href="@{/my_page}">
+                                        <p th:if="${userinfo.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
+                                        <p th:if="${userinfo.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
+                                    </a>
                                 </div>
                             </td>
                             <td class="td-post-icon-edit">
