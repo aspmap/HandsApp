@@ -18,7 +18,7 @@
                 <img th:src="@{'/resources/img/icons/face.png'}" alt="">
                 <h1 class="h3 mb-3 font-weight-normal no_public" th:text="#{text_no_subscriptions_yet}"></h1>
             </div>
-            <div th:unless="${countPosts == 0}" class="post" th:each="post_sub, stat: ${posts_sub}">
+            <div th:unless="${countPosts == 0}" class="post" th:each="post_sub: ${posts_sub}">
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
@@ -46,7 +46,7 @@
                          class="post-image" alt="">
                     <img th:if="${(post_sub.extFile == 'png' || post_sub.extFile == 'jpg') && post_sub.storageType == 'S3'}"
                          th:src="@{${post_sub.photo}}" class="post-image" alt="">
-                    <video th:if="${post_sub.extFile == 'mp4' || post_sub.extFile == 'mov'}" width="100%" controls autoplay loop muted th:onplay="'switchVideo(\'' + ${stat.index} + '\');'">
+                    <video th:if="${post_sub.extFile == 'mp4' || post_sub.extFile == 'mov'}" width="100%" controls autoplay loop muted>
                         <source th:src="@{'/resources/video/users/' + ${post_sub.user.username} + '/' + ${post_sub.photo}}"
                                 type=video/mp4>
                     </video>
@@ -141,9 +141,6 @@
         <div th:insert="fragments.html :: right-column"></div>
     </div>
 </section>
-
-<script type="text/javascript" th:src="@{/resources/js/video-play.js}"></script>
-<script type="text/javascript" th:src="@{/resources/js/switch-video.js}"></script>
 
 </body>
 </html>

@@ -22,16 +22,16 @@
                             <td class="td-post-photo">
                                 <div class="user">
                                     <div class="profile-pic">
-                                        <a th:href="@{/my_page}">
-                                            <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == false}" th:src="@{'/resources/img/users/' + ${userinfo.username} + '/profile/' + ${userinfo.photo}}" alt="">
-                                            <img th:if="${userinfo.photo != null and userinfo.isGoogle == true}" th:src="${userinfo.photo}" alt="">
+                                        <a th:href="@{/page/{user}(user = ${post.user.username})}">
+                                            <img th:if="${post.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                            <img th:if="${post.user.photo != null and post.user.isGoogle == false}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/profile/' + ${post.user.photo}}" alt="">
+                                            <img th:if="${post.user.photo != null and post.user.isGoogle == true}" th:src="${post.user.photo}" alt="">
                                             <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
                                         </a>
                                     </div>
-                                    <a th:href="@{/my_page}">
-                                        <p th:if="${userinfo.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
-                                        <p th:if="${userinfo.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
+                                    <a th:href="@{/page/{user}(user = ${post.user.username})}">
+                                        <p th:if="${post.user.isGoogle == false}" class="username" th:text="${post.user.username}"></p>
+                                        <p th:if="${post.user.isGoogle == true}" class="username" th:text="${post.user.email}"></p>
                                     </a>
                                 </div>
                             </td>

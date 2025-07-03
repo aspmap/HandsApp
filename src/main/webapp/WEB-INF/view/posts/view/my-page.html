@@ -55,12 +55,12 @@
                                 <img th:src="@{'/resources/img/icons/face.png'}" alt="">
                                 <h1 class="h3 mb-3 font-weight-normal no_public" th:text="#{text_no_posts_yet}"></h1>
                             </div>
-                            <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post, stat: ${posts}" th:id="'post-' + ${post.postId}">
+                            <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
                                 <a th:href="@{/posts#post-} + ${post.postId}">
                                     <div class="card mb-4">
                                         <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType != 'S3'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
                                         <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType == 'S3'}" th:src="@{${post.photo}}">
-                                        <video th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" height="100%" controls autoplay loop muted th:onplay="'switchVideo(\'' + ${stat.index} + '\');'">
+                                        <video th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" height="100%" controls autoplay loop muted>
                                             <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}" type=video/mp4>
                                         </video>
                                     </div>
@@ -76,9 +76,6 @@
         </div>
     </div>
 </section>
-
-<script type="text/javascript" th:src="@{/resources/js/video-play.js}"></script>
-<script type="text/javascript" th:src="@{/resources/js/switch-video.js}"></script>
 
 </body>
 </html>

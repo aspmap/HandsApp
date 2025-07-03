@@ -14,7 +14,7 @@
 <section class="main" sec:authorize="isAuthenticated()">
     <div class="wrapper">
         <div class="left-col">
-            <div class="post" th:each="post, stat: ${posts}" th:id="'post-' + ${post.postId}" th:name="'post-' + ${post.postId}">
+            <div class="post" th:each="post: ${posts}" th:id="'post-' + ${post.postId}" th:name="'post-' + ${post.postId}">
                 <div class="info">
                     <table class="table-post">
                         <tr>
@@ -49,7 +49,7 @@
                 <a th:href="@{/post/{postId}(postId = ${post.postId})}">
                     <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType != 'S3'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
                     <img th:if="${(post.extFile == 'png' || post.extFile == 'jpg') && post.storageType == 'S3'}" th:src="@{${post.photo}}" class="post-image" alt="">
-                    <video th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" width="100%" controls autoplay loop muted th:onplay="'switchVideo(\'' + ${stat.index} + '\');'">
+                    <video th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" width="100%" controls autoplay loop muted>
                         <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}" type=video/mp4>
                     </video>
                 </a>
@@ -125,9 +125,6 @@
         <div th:insert="fragments.html :: right-column"></div>
     </div>
 </section>
-
-<script type="text/javascript" th:src="@{/resources/js/video-play.js}"></script>
-<script type="text/javascript" th:src="@{/resources/js/switch-video.js}"></script>
 
 </body>
 </html>
