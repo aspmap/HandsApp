@@ -17,6 +17,15 @@
       <div class="post">
         <div class="info">
           <div class="user">
+            <p class="comments-logo" th:text="'Пользователи'"></p>
+          </div>
+          <a class="audio-add" th:href="@{/admin/all_users}"><span th:text="'В порядке регистрации'"></span></a>
+          <a class="audio-add" th:href="@{/admin/active_users}"><span th:text="'В порядке авторизации'"></span></a>
+        </div>
+      </div>
+      <div class="post">
+        <div class="info">
+          <div class="user">
             <p class="comments-logo" th:text="#{text_found_users}"></p>
             <p class="comments-logo" th:text="'(' + ${countSearchUsers} + ')'"></p>
           </div>

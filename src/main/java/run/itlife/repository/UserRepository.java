@@ -77,4 +77,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u.* from users u " +
             "order by u.created_at desc ", nativeQuery = true)
     List<User> findAllUsers();
+
+    @Query(value = "select u.* from users u " +
+            "order by u.last_visit desc ", nativeQuery = true)
+    List<User> findActiveUsers();
 }

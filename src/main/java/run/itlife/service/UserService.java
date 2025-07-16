@@ -11,6 +11,7 @@ public interface UserService extends UserDetailsService {
     User findByUsername(String username);
     List<User> findAll();
     List<User> findAllUsers();
+    List<User> findActiveUsers();
     void create(User user);
     void createGoogleUser(User user);
     void update(UserDto userDto);

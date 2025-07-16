@@ -53,6 +53,15 @@ public class UserAdminController {
         return "admin/all-users";
     }
 
+    @GetMapping("/active_users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String findActiveUsers(ModelMap modelMap) {
+        commonsParams.setCommonParams(modelMap);
+        modelMap.put("countSearchUsers", userService.findAllUsers().size());
+        modelMap.put("findActiveUsers", userService.findActiveUsers());
+        return "admin/active-users";
+    }
+
     @GetMapping("/user_profile_delete/{user}")
     @PreAuthorize("hasRole('ADMIN')")
     public String deleteUserProfileGet(ModelMap modelMap, @PathVariable String user) {
