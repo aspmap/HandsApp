@@ -17,6 +17,7 @@ public class Properties {
         String PATH_IMAGE_USERS = "/resources/img/users/";
         String PATH_MUSIC_USERS = "/resources/music/users/";
         String PATH_FILES = "/resources/users_archive/users/";
+        String PATH_COMMON_FILES = "/resources/common/utils/";
         String SEPARATOR = "/";
         String COMMA = ",";
         String POINT = ".";

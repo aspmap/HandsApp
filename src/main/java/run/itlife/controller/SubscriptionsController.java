@@ -8,31 +8,60 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import run.itlife.service.PostService;
 import run.itlife.service.SubscriptionsService;
 import run.itlife.service.UserService;
 import run.itlife.utils.CommonsParams;
+import run.itlife.utils.VersionProject;
+
+import javax.servlet.ServletContext;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/page")
 public class SubscriptionsController {
     private final UserService userService;
     private final SubscriptionsService subscriptionsService;
+    private final PostService postService;
+    private final ServletContext context;
+    private final VersionProject versionProject;
     @Autowired
     CommonsParams commonsParams;
 
     @Autowired
-    public SubscriptionsController(UserService userService, SubscriptionsService subscriptionsService) {
+    public SubscriptionsController(UserService userService, SubscriptionsService subscriptionsService, PostService postService, ServletContext context, VersionProject versionProject) {
         this.userService = userService;
         this.subscriptionsService = subscriptionsService;
+        this.postService = postService;
+        this.context = context;
+        this.versionProject = versionProject;
     }
 
     @GetMapping("/{user}")
-    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findPostsSub(ModelMap modelMap, @PathVariable String user) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        commonsParams.setCommonSubParams(modelMap, user);
-        commonsParams.setCommonParams(modelMap);
-        modelMap.put("isSub", subscriptionsService.isSubscribe(username, user));
+        if (!username.equals("anonymousUser")) {
+            commonsParams.setCommonSubParams(modelMap, user);
+            commonsParams.setCommonParams(modelMap);
+            modelMap.put("isSub", subscriptionsService.isSubscribe(username, user));
+        } else {
+            modelMap.put("userinfo_sub", userService.findByUsername(user));
+            modelMap.put("user_sub", user);
+            modelMap.put("posts", postService.findSortedPostsByDate(user));
+            modelMap.put("countPosts", postService.countPosts(user));
+            modelMap.put("isClosedProfile", postService.isClosedProfile(user));
+            modelMap.put("countSubscribe", subscriptionsService.countSubscribe(user));
+            modelMap.put("countSubscribers", subscriptionsService.countSubscribers(user));
+            modelMap.put("users", userService.findAll());
+            modelMap.put("userslist", userService.findAll());
+            modelMap.put("userOnlyList", userService.findUsersOnly());
+            modelMap.put("contextPath", context.getContextPath());
+            modelMap.put("majorVersion", versionProject.getMajorVersion());
+            modelMap.put("minorVersion", versionProject.getMinorVersion());
+            modelMap.put("microVersion", versionProject.getMicroVersion());
+            modelMap.put("stageVersion", versionProject.getStageVersion());
+            modelMap.put("currentYear", LocalDateTime.now().getYear());
+        }
         return "posts/view/subscriber-page";
     }
 

@@ -79,6 +79,7 @@ public class MusicController {
     @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String confirmMusic(MusicDto musicDto, ModelMap modelMap, @RequestParam("file") MultipartFile file) throws IOException, CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException {
         commonsParams.setCommonParams(modelMap);
+        // TODO Добавить try
         if (!file.isEmpty()) {
             musicFile = file.getBytes();
             final String username = SecurityContextHolder.getContext().getAuthentication().getName();

@@ -18,6 +18,7 @@ import run.itlife.repository.UserRepository;
 import run.itlife.service.*;
 import run.itlife.utils.CommonsParams;
 import run.itlife.utils.SaveFile;
+import run.itlife.utils.VersionProject;
 
 import javax.servlet.ServletContext;
 import java.io.File;
@@ -25,12 +26,14 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
-import static run.itlife.enums.FileExtensions.*;
-import static run.itlife.enums.FileTypes.*;
+import static run.itlife.enums.FileExtensions.PNG;
+import static run.itlife.enums.FileTypes.VIDEO_MP4;
+import static run.itlife.enums.FileTypes.VIDEO_QT;
 import static run.itlife.service.S3ServiceImpl.S3_ADDRESS;
-import static run.itlife.utils.Properties.ErrorMessages.*;
-import static run.itlife.utils.Properties.Files.*;
-import static run.itlife.utils.Properties.Paths.*;
+import static run.itlife.utils.Properties.ErrorMessages.ERROR;
+import static run.itlife.utils.Properties.ErrorMessages.NOT_PUBLISH_POST;
+import static run.itlife.utils.Properties.Files.MAX_UPLOAD_VIDEO_FILE_SIZE_IN_MB;
+import static run.itlife.utils.Properties.Paths.SEPARATOR;
 
 //Контроллер для постов (создание, редактирование, удаление)
 @Controller
@@ -42,6 +45,7 @@ public class PostController {
     private final SubscriptionsService subscriptionsService;
     private final UserRepository userRepository;
     private final ServletContext context;
+    private final VersionProject versionProject;
     @Autowired
     CommonsParams commonsParams;
     private static final Logger log = LoggerFactory.getLogger(PostController.class);
@@ -51,7 +55,7 @@ public class PostController {
     private S3Service service;
 
     @Autowired
-    public PostController(PostService postsService, LikesService likesService, UserService userService, CommentService commentService, ServletContext context, SubscriptionsService subscriptionsService, UserRepository userRepository) {
+    public PostController(PostService postsService, LikesService likesService, UserService userService, CommentService commentService, ServletContext context, SubscriptionsService subscriptionsService, UserRepository userRepository, VersionProject versionProject) {
         this.postService = postsService;
         this.likesService = likesService;
         this.userService = userService;
@@ -59,6 +63,7 @@ public class PostController {
         this.subscriptionsService = subscriptionsService;
         this.context = context;
         this.userRepository = userRepository;
+        this.versionProject = versionProject;
     }
 
     @GetMapping("/main")
@@ -137,15 +142,33 @@ public class PostController {
     }
 
     @GetMapping("/post/{id}")
-    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String findPostView(@PathVariable long id, ModelMap modelMap) {
-        commonsParams.setCommonParams(modelMap);
-        modelMap.put("post", postService.findById(id));
-        modelMap.put("comments", commentService.findSortedCommentsByDate(id));
-        modelMap.put("countComments", postService.countComments(id));
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("countLikes", likesService.countLikesByPostId(id));
-        modelMap.put("isLike", likesService.isLikePostForCurrentUser(id, username));
+        if (!username.equals("anonymousUser")) {
+            commonsParams.setCommonParams(modelMap);
+            modelMap.put("post", postService.findById(id));
+            modelMap.put("comments", commentService.findSortedCommentsByDate(id));
+            modelMap.put("countComments", postService.countComments(id));
+            modelMap.put("countLikes", likesService.countLikesByPostId(id));
+            modelMap.put("isLike", likesService.isLikePostForCurrentUser(id, username));
+        }
+        else {
+            modelMap.put("users", userService.findAll());
+            modelMap.put("userslist", userService.findAll());
+            modelMap.put("userOnlyList", userService.findUsersOnly());
+            modelMap.put("contextPath", context.getContextPath());
+            modelMap.put("majorVersion", versionProject.getMajorVersion());
+            modelMap.put("minorVersion", versionProject.getMinorVersion());
+            modelMap.put("microVersion", versionProject.getMicroVersion());
+            modelMap.put("stageVersion", versionProject.getStageVersion());
+            modelMap.put("currentYear", LocalDateTime.now().getYear());
+            modelMap.put("post", postService.findById(id));
+            modelMap.put("comments", commentService.findSortedCommentsByDate(id));
+            modelMap.put("countComments", postService.countComments(id));
+            modelMap.put("countLikes", likesService.countLikesByPostId(id));
+        }
+
         return "posts/view/post";
     }
 

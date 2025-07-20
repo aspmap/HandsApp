@@ -15,6 +15,7 @@ import static run.itlife.utils.OtherUtils.generateFileName;
 import static run.itlife.utils.Properties.Files.*;
 import static run.itlife.utils.Properties.Paths.*;
 
+// TODO Добавить везде try???
 public class SaveFile {
     public Map<String, String> saveFile(String username, ServletContext context, MultipartFile file) throws IOException {
         Map<String, String> filenameMap = new HashMap<>();

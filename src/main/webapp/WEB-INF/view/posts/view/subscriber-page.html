@@ -4,15 +4,24 @@
 <head>
     <title th:if="${userinfo_sub.isGoogle == false}" th:text="#{page_label_user_profile} + ' ' + ${user_sub} + ' - ' + #{application_name}"></title>
     <title th:if="${userinfo_sub.isGoogle == true}" th:text="#{page_label_user_profile} + ' ' + ${userinfo_sub.email} + ' - ' + #{application_name}"></title>
-    <th:block th:include="fragments.html :: header"/>
+    <meta sec:authorize="!isAuthenticated()" th:if="${userinfo_sub.isGoogle == false}" name="description" th:content="${user_sub}">
+    <meta sec:authorize="!isAuthenticated()" th:if="${userinfo_sub.isGoogle == true}" name="description" th:content="${userinfo_sub.email}">
+    <meta sec:authorize="!isAuthenticated()" th:if="${userinfo_sub.isGoogle == false}" property="og:description" th:content="${user_sub}">
+    <meta sec:authorize="!isAuthenticated()" th:if="${userinfo_sub.isGoogle == true}" property="og:description" th:content="${userinfo_sub.email}">
+    <meta sec:authorize="!isAuthenticated()" th:if="${userinfo_sub.photo != null and userinfo_sub.isGoogle == false}" property="og:image" th:content="@{'/resources/img/users/' + ${user_sub} + '/profile/' + ${userinfo_sub.photo}}" />
+    <meta sec:authorize="!isAuthenticated()" th:if="${userinfo_sub.photo != null and userinfo_sub.isGoogle == true}" property="og:image" th:content="@{${userinfo_sub.photo}}" />
+    <meta sec:authorize="!isAuthenticated()" th:if="${userinfo_sub.photo == null}" property="og:image" th:content="@{'/resources/img/icons/avatar.jpg'}" />
+    <th:block sec:authorize="isAuthenticated()" th:include="fragments.html :: header"/>
+    <th:block sec:authorize="!isAuthenticated()" th:include="fragments.html :: header-without-authentication"/>
 </head>
 
 <!-- Navigation -->
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+<nav sec:authorize="isAuthenticated()" class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+<nav sec:authorize="!isAuthenticated()" class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation-without-authentication"></nav>
 
 <!-- Page Content -->
-<section class="main-post" sec:authorize="isAuthenticated()">
+<section class="main-post">
     <div class="wrapper-posts">
         <div class="left-col">
             <section class="text-center">
