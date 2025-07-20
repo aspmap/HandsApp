@@ -271,7 +271,7 @@
                                 <a th:href="@{/posts_infinite_scroll}"><span th:text="#{menu_my_posts_infinite_scroll}"></span></a>
                             </li>
                             <li sec:authorize="hasRole('ADMIN')">
-                                <a th:href="@{/utils/change_date}"><span th:text="'Смена даты'"></span></a>
+                                <a th:href="@{/utils/change_date}"><span th:text="'Изменение даты'"></span></a>
                             </li>
                             <li>
                                 <a sec:authorize="isAuthenticated()" th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
@@ -302,7 +302,7 @@
             <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/post/new_S3_image}"><span th:text="#{menu_s3_photo}"></span></a>
             <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/posts_ms/}"><span th:text="#{menu_my_posts_ms}"></span></a>
             <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/posts_infinite_scroll}"><span th:text="#{menu_my_posts_infinite_scroll}"></span></a>
-            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/utils/change_date}"><span th:text="'Смена даты'"></span></a>
+            <a sec:authorize="hasRole('ADMIN')" class="second-menu-add" th:href="@{/utils/change_date}"><span th:text="'Изменение даты'"></span></a>
             <a class="second-menu-add" th:href="@{/logout}"><span th:text="#{menu_logout}"></span></a>
         </div>
     </div>
