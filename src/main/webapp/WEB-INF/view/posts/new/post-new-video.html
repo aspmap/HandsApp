@@ -4,6 +4,7 @@
 <head>
     <title th:text="#{page_label_new_post} + ' - ' + #{application_name}"></title>
     <th:block th:include="fragments.html :: header"/>
+    <script type="text/javascript" th:src="@{/resources/js/upload_video_change.js}"></script>
 </head>
 
 <!-- Navigation -->
@@ -19,10 +20,11 @@
             </div>
             <div class="frame-content-create-form">
                 <div class="form-create">
-                    <form method="POST" th:action="@{/post/new_video}" enctype="multipart/form-data">
+                    <form method="POST" th:action="@{/post/new_video}" enctype="multipart/form-data" id="uploadFile">
                         <label>
-                            <input class="input-fields" type="file" name="file" accept="video/mp4, video/quicktime" style="display: none;">
-                            <img class="image-upload-file" id="profilePicture" th:src="@{/resources/img/icons/upload.png}">
+                            <input class="input-fields" type="file" id="fileInput" onchange="handleFileSelect()" name="file" accept="video/mp4, video/quicktime" style="display: none;">
+                            <img class="image-upload-file" id="uploadButton" th:src="@{/resources/img/icons/upload.png}">
+                            <img class="image-upload-file" id="uploadedButton" style="display:none;" th:src="@{/resources/img/icons/upload_ok.png}">
                         </label>
                         <textarea id="smile" name="content" class="input-fields" rows="5" th:placeholder="#{input_enter_post_text}" maxlength="255" required></textarea>
                         <div class="smiles-create-form" th:insert="fragments.html :: smiles-in-post"></div>
