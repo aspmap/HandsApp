@@ -2,7 +2,7 @@ function posts() {
     const username = user;
     var token = bToken;
     $.ajax({
-            url: msServiceUrl + '/my_posts',
+            url: msServiceUrl + '/posts',
             type: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`

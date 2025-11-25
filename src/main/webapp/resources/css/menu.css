@@ -48,7 +48,7 @@ nav ul li a, nav ul li a:visited {
     text-decoration: none;
     /*   text-transform: uppercase;*/
     font-size: 14px;
-    width: 120px;
+    width: 170px;
 }
 
 nav ul li a:hover, nav ul li a:visited:hover {
@@ -121,7 +121,7 @@ nav ul li ul li a {
     }
 
     .nalumes-nucludem {
-        /*position: static;*/
+        position: static;
     }
 }
 
@@ -132,7 +132,6 @@ nav ul li ul li a {
 
     .nav-list li:hover .nalumes-nucludem {
         display: block !important;
-        margin-left: -50px;
     }
 }
 
@@ -180,31 +179,4 @@ nav ul li ul li a {
 
 #sadas-polnyus.active span:after {
     transform: rotate(-45deg);
-}
-
-.second-menu {
-    width: 100%;
-    /*height: auto;*/
-    background: #fff;
-    border: 1px solid #898989;
-    margin-top: 5px;
-    font-size: 0.7em;
-    text-align: center;
-}
-
-.second-menu-info {
-    width: 100%;
-/*    height: 60px;*/
-    display: ruby;
-    /*justify-content: space-between;*/
-    align-items: center;
-   /* padding: 0 15px;*/
-}
-
-.second-menu-add {
-    text-align: left;
-    /*font-size: 14px;*/
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
 }

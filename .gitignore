@@ -11,6 +11,8 @@ src/main/gen
 target/
 src/main/webapp/resources/img/users
 src/main/webapp/resources/video
+src/main/webapp/resources/music
+src/main/webapp/resources/users_archive
 src/main/webapp/resources/access
 src/main/resources/handsapp1.cer
 
